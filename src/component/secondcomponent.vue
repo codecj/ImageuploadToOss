@@ -50,7 +50,7 @@ export default {
     console.log('dataId: ' + this.$route.query.dataId);
   },
   mounted: function() {
-    Indicator.open({
+        Indicator.open({
           text: '加载中...',
           spinnerType: 'triple-bounce'
         });
