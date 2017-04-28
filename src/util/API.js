@@ -49,7 +49,7 @@ export default {
         },
 
         //post参数，使用axios.post(url,{},config);如果没有额外的也必须要用一个空对象，否则会报错
-       // data: this.appendData(data),
+        data: this.appendData(data),
 
         //设置超时时间
         timeout: 5000,
