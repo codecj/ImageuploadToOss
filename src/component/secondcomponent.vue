@@ -1,16 +1,14 @@
 <template>
   <div id="secondcomponent">
     <ul>
-      <li class="clearfix"  v-for="item in sections.items" @click="index(item)">
-       <!--  <router-link :to="'/'"> -->
+      <li class="clearfix"  v-for="item in sections.items" @click.stop="index(item)">
           <a class="flag-img"><img :src="item.imgSrc"></a>
           <div>
             <div class="flag-title">{{item.poductName}}</div>
             <div class="flag-price"><span>双11价</span><strong>¥{{item.price}}</strong><small>({{item.preferential}})</small></div>
             <div class="flag-type">{{item.activityType}}</div>
-            <input type='button' class="flag-btn" @click.native="buy(item)">{{item.activeName}}</btn>
+            <input type='button' class="flag-btn" :value="item.activeName" @click.stop="buy(item)">
           </div>
-      <!--   </router-link> -->
       </li>
     </ul>
   </div>
