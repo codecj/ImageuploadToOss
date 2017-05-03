@@ -1,3 +1,4 @@
+import './static/css/reset.css'
 import Vue from 'vue'
 import 'lib-flexible'
 import MintUI from 'mint-ui'

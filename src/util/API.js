@@ -57,5 +57,40 @@ export default {
         responseType: 'json', // default
       }
       return axios.post(this.url,this.appendData(data), this.config)
+  },
+  jsBbridge: function(callback) {
+      if (window.WebViewJavascriptBridge) {
+          return callback(WebViewJavascriptBridge);
+      } else {
+          document.addEventListener(
+              'WebViewJavascriptBridgeReady',
+              function() {
+                  callback(WebViewJavascriptBridge)
+              },
+              false
+          );
+      }
+      if (window.WVJBCallbacks) {
+          return window.WVJBCallbacks.push(callback);
+      }
+      window.WVJBCallbacks = [callback];
+      var WVJBIframe = document.createElement('iframe');
+      WVJBIframe.style.display = 'none';
+      WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+      document.documentElement.appendChild(WVJBIframe);
+      setTimeout(function() {
+          document.documentElement.removeChild(WVJBIframe)
+      }, 0);
   }
 }
+
+// jsBbridge调用方法
+// jsBbridge(function(bridge) {
+//     bridge.callHandler(
+//         '方法名', {
+//             '参数': '1'
+//         },
+//          回调函数
+//         function(responseData) {}
+//     )
+// })
