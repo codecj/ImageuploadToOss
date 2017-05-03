@@ -5,7 +5,6 @@ import 'mint-ui/lib/style.css'
 Vue.use(MintUI)
 import App from './App.vue';
 import VueRouter from "vue-router";
-import VueResource from 'vue-resource';
 
 
 //开启debug模式
