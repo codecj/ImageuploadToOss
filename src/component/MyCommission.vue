@@ -12,12 +12,12 @@
 		<div class="content">
 			<span>上月已结算佣金</span>
 			<span>￥668.00</span>
-			<img src="" class="right">
+			<img src="../assets/icon17.png" class="right">
 		</div>
 		<div class="footer">
-			<img src="" alt="" class="left">
+			<img src="../assets/icon21.png" class="left">
 			<span>提现</span>
-			<img src="" alt="" class="right">
+			<img src="../assets/icon17.png" class="right">
 		</div>
 	</div>
 
@@ -97,9 +97,9 @@
 	.content img {
 		position: absolute;
 		left: 705px;
-		top: 45px;
-		width: 12px;
-		height: 22px;
+		top: 40px;
+		width: 32px;
+		height: 32px;
 	}
 	.footer {
 		position: relative;
@@ -111,9 +111,9 @@
 	.footer img.left {
 		position: absolute;
 		left: 35px;
-		top: 42px;
-		width: 37px;
-		height: 28px;
+		top: 36px;
+		width: auto;
+		height: 40px;
 	}
 	.footer span {
 		position: absolute;
@@ -126,7 +126,7 @@
 		position: absolute;
 		left: 705px;
 		top: 45px;
-		width: 12px;
-		height: 22px;
+		width: 32px;
+		height: 32px;
 	}
 </style>

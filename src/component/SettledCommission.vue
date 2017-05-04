@@ -11,13 +11,32 @@
 					<h4 class="goodsName">墨西哥辣鸡点心面两行位置啊啊啊啊啊</h4>
 					<span class="specification">规格：3434*33</span>
 					<span class="price">￥200.00</span>
-					<img src="" alt="" class="praiseImg">
+					<span class="praise">奖</span>
 					<span class="praisePrice">￥8.00</span>
 					<span class="goodsCount">x3</span>
 				</div>
 				<div class="footer">
 					<span class="commissionTime">结算时间 2017.4.11 16：30</span>
-					<img src="" alt="" class="praiseImg">
+					<span class="praise">奖</span>
+					<span class="commissionPrice">￥24.00</span>
+				</div>
+			</li>
+			<li>
+				<div class="header">
+					<h3>好又多超市</h3>
+				</div>
+				<div class="content">
+					<img src="" alt="" class="goodsImg">
+					<h4 class="goodsName">墨西哥辣鸡啊</h4>
+					<span class="specification">规格：3434*33</span>
+					<span class="price">￥200.00</span>
+					<span class="praise">奖</span>
+					<span class="praisePrice">￥8.00</span>
+					<span class="goodsCount">x3</span>
+				</div>
+				<div class="footer">
+					<span class="commissionTime">结算时间 2017.4.11 16：30</span>
+					<span class="praise">奖</span>
 					<span class="commissionPrice">￥24.00</span>
 				</div>
 			</li>
@@ -30,32 +49,13 @@
 					<h4 class="goodsName">墨西哥辣鸡点心面两行位置啊啊啊啊啊</h4>
 					<span class="specification">规格：3434*33</span>
 					<span class="price">￥200.00</span>
-					<img src="" alt="" class="praiseImg">
+					<span class="praise">奖</span>
 					<span class="praisePrice">￥8.00</span>
 					<span class="goodsCount">x3</span>
 				</div>
 				<div class="footer">
 					<span class="commissionTime">结算时间 2017.4.11 16：30</span>
-					<img src="" alt="" class="praiseImg">
-					<span class="commissionPrice">￥24.00</span>
-				</div>
-			</li>
-			<li>
-				<div class="header">
-					<h3>好又多超市</h3>
-				</div>
-				<div class="content">
-					<img src="" alt="" class="goodsImg">
-					<h4 class="goodsName">墨西哥辣鸡点心面两行位置啊啊啊啊啊</h4>
-					<span class="specification">规格：3434*33</span>
-					<span class="price">￥200.00</span>
-					<img src="" alt="" class="praiseImg">
-					<span class="praisePrice">￥8.00</span>
-					<span class="goodsCount">x3</span>
-				</div>
-				<div class="footer">
-					<span class="commissionTime">结算时间 2017.4.11 16：30</span>
-					<img src="" alt="" class="praiseImg">
+					<span class="praise">奖</span>
 					<span class="commissionPrice">￥24.00</span>
 				</div>
 			</li>
@@ -127,13 +127,17 @@
 		font-size: 30px;
 		color: #FF783C;
 	}
-	#settledCommission .content .praiseImg {
+	#settledCommission .content .praise {
 		position: absolute;
 		left: 414px;
-		top: 220px;
+		top: 217px;
 		border: 1px solid #fff;
-		width: 18px;
-		height: 25px;
+		height: 28px;
+		line-height: 29px;
+		border-radius: 5px;
+		font-size: 18px;
+		color: #FFFFFF;
+		background-color: #FF783C;
 	}
 	#settledCommission .content .praisePrice{
 		position: absolute;
@@ -161,13 +165,17 @@
 		font-size: 26px;
 		color: #9DA2B5;
 	}
-	#settledCommission .footer .praiseImg {
+	#settledCommission .footer .praise {
 		position: absolute;
 		left: 520px;
-		top: 50px;
+		top: 44px;
 		border: 1px solid #fff;
-		width: 18px;
-		height: 25px;
+		height: 28px;
+		line-height: 29px;
+		border-radius: 5px;
+		font-size: 18px;
+		color: #FFFFFF;
+		background-color: #FF783C;
 	}
 	#settledCommission .footer .commissionPrice {
 		position: absolute;
@@ -175,7 +183,7 @@
 		top: 22px;
 		font-size: 48px;
 		color: #FF783C;
-		height: 69px
+		height: 69px;
 	}
 	
 </style>

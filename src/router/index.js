@@ -10,7 +10,7 @@ export default {
         path: '/second',
         component: secondcomponent
     }, {
-        path: '/mycommission', // 我的佣金
+        path: '/myCommission', // 我的佣金
         component: MyCommission
     }, {
         path: '/settleCommission', // 佣金结算明细->已结算
