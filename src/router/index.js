@@ -1,4 +1,5 @@
 import secondcomponent from '../component/secondcomponent.vue'
+import clientServer from '../component/clientServer.vue'
 import  First from '../component/firstcomponent.vue'
 
 export default{
@@ -10,6 +11,10 @@ export default{
     {
       path: '/second',
       component: secondcomponent
+    },
+    {
+      path: '/clientServer',
+      component: clientServer
     }
   ]
 }
