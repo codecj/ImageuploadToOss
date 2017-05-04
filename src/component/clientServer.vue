@@ -10,7 +10,7 @@
       </div>
       <div class="right activeTap"></div>
     </div>
-    <div v-if="userFliter" class="fliter">
+    <div v-show="userFliter" class="fliter">
       <div class="fliterBar activeTap">
         <p class="fl">{{address}}</p>
         <p class="fr"></p>
@@ -24,6 +24,9 @@
       <div @click="fliterSure()" class="sureBtn">
         确定
       </div>
+    </div>
+    <div v-show="!userFliter" class="listBox">
+      
     </div>
   </div>
 </template>
@@ -54,7 +57,7 @@ export default {
         Vue.set(items,'isShow',false);
       })
     })
-    this.items[2].isShow=true
+    this.items[0].isShow=true
   },
   methods: {
        fliterToggle(){
@@ -99,6 +102,7 @@ export default {
 #clientServer .topHead .right{ right: 0; border-left: 2px solid #F1F2F7; background: url('../assets/icon44.png') center no-repeat; background-size: 42px; }
 #clientServer .topHead .mid{ left: 95px; right:95px; top: 0;bottom: 0 ;padding: 30px 20px 30px 31px; font-size: 26px}
 #clientServer input{ width: 100%; height: 37px; border:none; padding-left: 53px; background: url('../assets/icon20.png') left no-repeat; background-size: 44px;}
+#clientServer .fliter{ z-index: 999; }
 #clientServer .fliterBar{padding:29px 33px; border-bottom: 2px solid #F1F2F7; background-color: #fff; overflow: hidden;}
 #clientServer .fliterBar .fl{ float: left; background: url(../assets/icon7.png) left no-repeat; padding-left: 46px; min-width: 30px; min-height: 30px; background-size: 30px; color: #3B456C; line-height: 35px; font-size: 26px; }
 #clientServer .fliterBar .fr{ float: right; margin-right: -0.15rem; min-width: 35px; min-height: 35px; background: url('../assets/icon17.png') right no-repeat; background-size: 35px; }
@@ -110,4 +114,5 @@ export default {
 #clientServer .sureBtn{ width: 588px; font-size: 30px; padding: 19px 0; color: #fff;background-image: linear-gradient(3deg, #FF8739 0%, #FF4848 100%); background-image: -webkit-linear-gradient(3deg, #FF8739 0%, #FF4848 100%);
 box-shadow: 0 8px 16px 0 rgba(255,77,0,0.40);
 border-radius: 2.25px; text-align: center; margin: 64px auto; }
+#clientServer .listBox{ position: absolute; top: 119px; bottom: 0; width: 100%;overflow-y: scroll; -webkit-overflow-scrolling: touch;}
 </style>
