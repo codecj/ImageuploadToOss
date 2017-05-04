@@ -1,30 +1,28 @@
 <template>
   <div id="app">
-    <p>{{message}}</p>
-    <input type="text" v-model="message"/>
-    <ul>
+   <!--  <ul>
         <li>
           <router-link :to="'/'">点我跳转到第一页</router-link>
         </li>
         <li>
-          <router-link :to="{path:'second',query:{dataId:userName}}">点我跳转到第二页</router-link>
+          <router-link :to="{path:'second',query:{dataId:userName}}">客户搜索</router-link>
         </li>
-    </ul>
+    </ul> -->
      <!-- 路由外链 -->
   <router-view></router-view>
   </div>
 </template>
 
 <script>
-import firstcomponent from './component/firstcomponent.vue'
+import customermanagement from './component/customermanagement.vue'
 export default {
   data () {
     return {
-      userName:'meixiaofeng',
-      message: 'Welcome to Your Vue.js App'
+      userName:'kehuguanli',
+      message: '13'
     }
   },
-  components:{ firstcomponent }
+  components:{ customermanagement }
 }
 </script>
 
