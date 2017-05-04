@@ -1,7 +1,8 @@
 <template>
   <div id="clientServer">
+    <div class="shadowLine"></div>
     <div class="topHead">
-      <div class="activeTap" @click="(userFliter==false ? userFliter=true : userFliter=false)" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
+      <div class="activeTap" @click="fliterToggle()" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
       <div class="mid">
         <form>
           <input placeholder="请输入要搜索的客户" type="search">
@@ -11,7 +12,7 @@
     </div>
     <div v-if="userFliter" class="fliter">
       <div class="fliterBar activeTap">
-        <p class="fl">全部区域</p>
+        <p class="fl">{{address}}</p>
         <p class="fr"></p>
       </div>
       <div class="fliterType">
@@ -34,11 +35,12 @@ export default {
   name:'clientServer',
   data () {
     return {
+      address:'全部区域',
       select:'',
-      index:'',
+      index:'0',
       userFliter: false,
       userType: false,
-      type:'',
+      type:'全部',
   　　 items: [
   　　　　　{select:'全部',isShow:true},
   　　　　　{select:'我的客户',isShow:false},
@@ -46,22 +48,39 @@ export default {
   　　 ]
     }
   },
+  mounted:function(){
+    this.$nextTick(function(){
+      this.items.forEach(function(items){
+        Vue.set(items,'isShow',false);
+      })
+    })
+    this.items[2].isShow=true
+  },
   methods: {
+       fliterToggle(){
+          this.userFliter = !this.userFliter;
+          this.items[this.index].isShow=true;
+       },
 　　　　selectStyle (item, index, select) {
-          var vm = this
+          let vm = this;
 　　　　　　this.$nextTick(function () {
 　　　　　　　　this.items.forEach(function (item) {
                 Vue.set(item,'isShow',false);
                 Vue.set(item,'userType',false);
 　　　　　　　　});
-                Vue.set(item,'userType',true);
-                this.type=select;
-                console.log(vm.type)
+              Vue.set(item,'userType',true);
+              this.type=select;
+              this.index=index;
 　　　　　　});
 　　　　},
        fliterSure (){
         this.userType=false;
         this.userFliter=false;
+        this.$nextTick(function(){
+          this.items.forEach(function(items){
+            Vue.set(items,'isShow',false);
+          })
+        })
        }
 　　}
 }
@@ -71,6 +90,7 @@ export default {
 [v-cloak] {
   display: none;
 }
+#clientServer .shadowLine{background: #FFFFFF;box-shadow: 0 6px 12px 0 rgba(193,193,193,0.50);}
 #clientServer .topHead{ margin-top: 25px; width: 100%; height: 94px; background-color: #fff; position: relative; border-bottom: 2px solid #F1F2F7;}
 #clientServer .topHead .left,#clientServer .topHead .mid,#clientServer .topHead .right{ position: absolute; }
 #clientServer .topHead .left,#clientServer .topHead .right{ width: 95px; height: 95px; }
