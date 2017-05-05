@@ -1,5 +1,6 @@
 import secondcomponent from '../component/secondcomponent.vue'
 import  First from '../component/firstcomponent.vue'
+import  order from '../component/order.vue'
 
 export default{
 	routes: [
@@ -10,6 +11,10 @@ export default{
     {
       path: '/second',
       component: secondcomponent
-    }
+    },{
+			path:'/order',
+			component: order
+
+		}
   ]
 }
