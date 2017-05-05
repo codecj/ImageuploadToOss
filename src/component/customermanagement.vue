@@ -1,6 +1,6 @@
 <template>
-	<div class="wrap" >
-		<div class="list"  @click="show=!show">
+	<div class="wrap " >
+		<div class="list activeTap"  @click="show=!show">
 			<div class="list-left"><img src="src/assets/logo.png"></div>
 			<div class="list-mid">
 				<div class="list-names">锦江一号</div>
@@ -42,7 +42,7 @@
 	}
 </script>
 <style type="text/css">
-.wrap{width: 100%;height: 224px; }
+.wrap{width: 100%;height: 224px;background-color: #fff }
 .wrap .list{overflow: hidden;}
 .wrap .list .list-left{float: left;padding: 41px 21px 43px 32px}
 .wrap .list .list-left img{width: 140px;}
