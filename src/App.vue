@@ -1,6 +1,9 @@
 <template>
   <div id="app">
    <!--  <ul>
+    <!-- <p>{{message}}</p>
+    <input type="text" v-model="message"/>
+    <ul>
         <li>
           <router-link :to="'/'">点我跳转到第一页</router-link>
         </li>
@@ -24,6 +27,16 @@
 //   },
 //   components:{ customermanagement }
 // }
+import firstcomponent from './component/firstcomponent.vue'
+export default {
+  data () {
+    return {
+      userName:'meixiaofeng',
+      message: 'Welcome to Your Vue.js App'
+    }
+  }
+  // components:{ firstcomponent }
+}
 </script>
 
 <style>
