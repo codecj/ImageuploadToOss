@@ -1,6 +1,6 @@
 <template>
-  <!-- <div id="app">
-    <p>{{message}}</p>
+  <div id="app">
+    <!-- <p>{{message}}</p>
     <input type="text" v-model="message"/>
     <ul>
         <li>
@@ -12,7 +12,7 @@
     </ul> -->
      <!-- 路由外链 -->
   <router-view></router-view>
-  <!-- </div> -->
+  </div>
 </template>
 
 <script>

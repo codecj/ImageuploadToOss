@@ -67,7 +67,7 @@ export default {
   }
   .content{
     position: relative;
-    border-bottom: 1px solid #F1F2F7;
+    border-bottom: 2px solid #F1F2F7;
     padding: 20px 0 50px 170px;
   }
   .content .pic{
@@ -102,7 +102,7 @@ export default {
     padding-left: 38px;
     padding-top: 38px;
     padding-bottom: 38px;
-    border-bottom: 1px solid #F1F2F7;
+    border-bottom: 2px solid #F1F2F7;
   }
   .activity .msg{
     color: #FF783C;
@@ -121,7 +121,7 @@ export default {
     font-size: 30px;
     color: #3B456C;
     overflow: hidden;
-    border-bottom: 1px solid #F1F2F7;
+    border-bottom: 2px solid #F1F2F7;
   }
   .guige ul{
     padding-top: 30px;
