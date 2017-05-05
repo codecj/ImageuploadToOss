@@ -14,16 +14,16 @@
 </template>
 
 <script>
-import customermanagement from './component/customermanagement.vue'
-export default {
-  data () {
-    return {
-      userName:'kehuguanli',
-      message: '13'
-    }
-  },
-  components:{ customermanagement }
-}
+// import customermanagement from './component/customermanagement.vue'
+// export default {
+//   data () {
+//     return {
+//       userName:'kehuguanli',
+//       message: '13'
+//     }
+//   },
+//   components:{ customermanagement }
+// }
 </script>
 
 <style>

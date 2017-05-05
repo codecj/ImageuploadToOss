@@ -1,15 +1,72 @@
 <template>
-	<div class="wrap">
-		<div class="header">
-			<span class="left">1</span>
-			<span class="mid">2</span>
-			<span class="right">3</span>
+	<div class="wrap" >
+		<div class="list"  @click="show=!show">
+			<div class="list-left"><img src="src/assets/logo.png"></div>
+			<div class="list-mid">
+				<div class="list-names">锦江一号</div>
+				<div class="list-map"><img src="src/assets/icon12.png">东坡路</div>
+				<div class="list-time">1分钟前下过单</div>
+			</div>
+			<div class="list-right">
+				<span>0.01km</span>
+			</div>
+		</div>
+		<div class="list-menu" v-show="show">
+			<a><img src="../assets/icon45.png">下单</a>
+			<a><img src="../assets/icon45.png">车销</a>
+			<a @click="show1=!show1"><img src="../assets/icon45.png">联系</a>
+			<a><img src="../assets/icon45.png">更多</a>
+		</div>
+		<div class="wrap-popup" v-show="show1">
+			<div class="content-popup">
+				<ul>
+					<li class="popup-names"><span>付灿</span><span><img @click="show1=false" src="../assets/icon18.png"></span></li>
+					<li class="popup-tel"><a href="tel:15716444430">15716444430<img src="../assets/icon1.png"></a></li>
+					<li class="popup-tel"><a href="tel:15716444430">15716444430<img src="../assets/icon1.png"></a></li>
+					
+
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
-
 <script type="text/javascript">
-console.log("132")
+	export default {
+	  data () {
+	    return {
+	      show:false,
+	      show1:false
+	    }
+	  }
+	  
+	}
 </script>
 <style type="text/css">
+.wrap{width: 100%;height: 224px; }
+.wrap .list{overflow: hidden;}
+.wrap .list .list-left{float: left;padding: 41px 21px 43px 32px}
+.wrap .list .list-left img{width: 140px;}
+.wrap .list .list-mid{float: left;}
+.wrap .list .list-mid img{width: 36.8px}
+.wrap .list .list-mid .list-names{font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 30px;padding: 42px 0 20px 0;font-weight: 600}
+.wrap .list .list-mid .list-map{line-height: 50px;font-size: 26px;color: #9DA2B5;}
+.wrap .list .list-mid .list-time{font-size: 26px;color: #9DA2B5;}
+.wrap .list .list-mid .list-map img{vertical-align:middle;padding-right: 8.2px;width:36.8px }
+
+.wrap .list .list-right{float: right;padding: 29px 29px;}
+.wrap .list .list-right span{font-size: 22px;color: #9DA2B5;}
+.wrap .list-menu{clear: both;background-color:#4D5679; height: 96px;line-height: 96px;display:flex;}
+.wrap .list-menu a{color: #fff;text-align: center;width: 25%;font-size: 24px;height:64px ;line-height: 76px;margin-top: 15px}
+.wrap .list-menu a img{vertical-align:middle;width: 30px;padding-right: 17px}
+.wrap .list-menu a:nth-child(2){border-right: 2px solid rgba(255,255,255,0.5);border-left: 2px solid rgba(255,255,255,0.5);}
+.wrap .list-menu a:nth-child(3){border-right: 2px solid rgba(255,255,255,0.5)}
+.wrap-popup{width: 100%;height: 100%;background-color:rgba(0,0,0,0.3);position: fixed;z-index: 99;top: 0}
+.wrap-popup .content-popup{width: 526px;height: 320px;position: absolute;left: 50%;margin-left: -263px;background-color: #fff;top: 50%;margin-top: -160px}
+.popup-names {line-height: 94px;padding-left: 42.5%;color: #3B456C;font-size: 36px}
+.popup-names img{width: 30px;vertical-align:middle;float: right;margin: 31px 31px} 
+.popup-tel img{width: 40px;float: right;margin: 32px 32px;}
+.popup-tel{line-height: 111px;}
+.popup-tel a{display: block;overflow: hidden;padding-left: 32px;font-size: 30px;
+color: #3B456C;}
+.popup-tel a:nth-child(1){border-top:  2px solid #F1F2F7;border-bottom: 2px solid #F1F2F7;}
 </style>
