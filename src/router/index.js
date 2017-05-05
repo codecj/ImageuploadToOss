@@ -3,6 +3,10 @@ import clientServer from '../component/clientServer.vue'
 import  First from '../component/firstcomponent.vue'
 import  order from '../component/order.vue'
 
+import  customer from '../component/customermanagement.vue'
+
+
+
 export default{
 	routes: [
     {
@@ -12,10 +16,18 @@ export default{
     {
       path: '/second',
       component: secondcomponent
+
     },{
 			path:'/order',
 			component: order
 
-		}
+		},
+    {
+      path: '/clientServer',
+      component: clientServer
+    },{
+      path: '/customer',//客户列表
+      component: customer
+    }
   ]
 }
