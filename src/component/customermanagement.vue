@@ -43,7 +43,7 @@
 .wrap{width: 100%;height: 224px;background-color: #fff }
 .wrap .list{overflow: hidden;}
 .wrap .list .list-left{float: left;padding: 41px 21px 43px 32px}
-.wrap .list .list-left img{width: 140px;}
+.wrap .list .list-left img{width: 140px;height: 140px}
 .wrap .list .list-mid{float: left;}
 .wrap .list .list-mid img{width: 36.8px}
 .wrap .list .list-mid .list-names{font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 30px;padding: 42px 0 20px 0;font-weight: 600}
