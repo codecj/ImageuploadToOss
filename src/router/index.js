@@ -2,6 +2,8 @@ import secondcomponent from '../component/secondcomponent.vue'
 import clientServer from '../component/clientServer.vue'
 import  First from '../component/firstcomponent.vue'
 import  customer from '../component/customermanagement.vue'
+import searchList from '../component/listcomponent.vue'
+import search from '../component/customersearch.vue'
 
 
 export default{
@@ -20,6 +22,12 @@ export default{
     },{
       path: '/customer',//客户列表
       component: customer
+    }, {
+      path: '/list',
+      component: searchList
+    },{
+      path:'/search',
+      component:search
     }
   ]
 }
