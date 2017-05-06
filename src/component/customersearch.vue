@@ -4,7 +4,7 @@
         <form @submit.prevent="submit">
             <div class="input-wrap">
                 <div>
-                    <input type="text" v-model="newTodo"><img v-on:click="removeTodo" src="../assets/icon18.png"></div>
+                    <input type="search" :value="keyword" v-model="keyword"><img v-on:click="removeTodo" src="../assets/icon18.png"></div>
             </div>
         </form>
     </div>
@@ -15,8 +15,8 @@ import Request from "../util/API";
 export default {
     data() {
             return {
-                newTodo: '',
-                page:{pageno:"1",pagesize:"20"}
+                page:{pageno:"1",pagesize:"20"},
+                keyword:''
             }
         }, mounted: function() {
 
@@ -30,7 +30,7 @@ export default {
                     pagination: JSON.stringify(this.page),
                     oper: 'getShopList',
                     type: 'wqCustomer',
-                    para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
+                    para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": '+this.keyword+', "picno": "355328","type": 0}'
                 }
                 //ajax调用
                 Request.post(pargrm).then(function(res) {
