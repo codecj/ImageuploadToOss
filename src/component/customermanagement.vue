@@ -2,7 +2,7 @@
 	<div class="wrap " >
 		<div v-for="item in listDate" class="listWrap" :key="item">
 			<div class="list activeTap"  @click="show=!show">
-				<div class="list-left"><img :src="item.SHOP_IMAGE"></div>
+				<div class="list-left"><img v-lazy="item.SHOP_IMAGE"></div>
 				<div class="list-mid">
 					<div class="list-names">{{item.SHOP_NAME}}</div>
 					<div class="list-map"><img src="src/assets/icon12.png">{{item.ADDRESS}}</div>

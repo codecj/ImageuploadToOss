@@ -33,13 +33,20 @@
     </div>
 </template>
 <script type="text/javascript">
-import Request from "../util/API";
+import { Lazyload } from 'mint-ui'
+import Request from "../util/API"
 import Vue from 'vue'
-import {
-    Toast,
-    Indicator
-} from 'mint-ui';
+import { Toast, Indicator } from 'mint-ui'
 import customerlIst from './customermanagement.vue'
+
+Vue.use(Lazyload,{
+    preLoad: 1.3,
+    lazyComponent: true,
+    error: require('../assets/icon2.png'),
+    loading: require('../assets/icon2.png'),
+    listenEvents: ['scroll']
+})
+
 export default {
     name: 'clientServer',
     data() {
@@ -294,7 +301,7 @@ export default {
 
 #clientServer .listBox {
     position: absolute;
-    top: 119px;
+    top: 120px;
     bottom: 0;
     width: 100%;
     overflow-y: scroll;
