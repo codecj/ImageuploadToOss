@@ -16,15 +16,15 @@
 </template>
 
 <script>
-import firstcomponent from './component/firstcomponent.vue'
+import order from './component/order.vue'
 export default {
   data () {
     return {
-      userName:'meixiaofeng',
+      userName:'order',
       message: 'Welcome to Your Vue.js App'
     }
-  }
-  // components:{ firstcomponent }
+  },
+  components:{order}
 }
 </script>
 
