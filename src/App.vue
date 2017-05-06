@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="position: absolute;height: 100%;width: 100%;">
    <!--  <p>{{message}}</p>
     <input type="text" v-model="message"/>
     <ul>
@@ -29,7 +29,7 @@
 </script>
 
 <style>
-#app {
+/*#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -41,10 +41,10 @@
           box-sizing: border-box;
   padding:0;
   margin:0;
-}
+}*/
 
 /* 清除浮动 */
-.clearfix::before,
+/*.clearfix::before,
 .clearfix::after{
   content:'';
   display: block;
@@ -58,7 +58,7 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-
+*/
 /*h1, h2 {
   font-weight: normal;
 }
