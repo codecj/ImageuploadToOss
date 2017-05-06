@@ -25,15 +25,20 @@
                 确定
             </div>
         </div>
-        <div v-show="!userFliter" class="listBox">
-            <customerlIst></customerlIst>
+        <div v-show="!userFliter" class="listBox" v-infinite-scroll="loadMore"
+  infinite-scroll-disabled="loading"
+  infinite-scroll-distance="10">
+            <customerlIst :listDate='listDate'></customerlIst>
         </div>
     </div>
 </template>
 <script type="text/javascript">
-import Request from  "../util/API";
+import Request from "../util/API";
 import Vue from 'vue'
-import {Toast,Indicator} from 'mint-ui';
+import {
+    Toast,
+    Indicator
+} from 'mint-ui';
 import customerlIst from './customermanagement.vue'
 export default {
     name: 'clientServer',
@@ -45,7 +50,7 @@ export default {
             userFliter: false,
             userType: false,
             type: '全部',
-            　　items: [　　　　　{
+            items: [{
                 select: '全部',
                 isShow: true
             }, 　　　　　 {
@@ -54,64 +59,80 @@ export default {
             }, 　　　　　 {
                 select: '企业客户',
                 isShow: false
-            }, 　　],
-            page:'{pageno:"1",pagesize:"20"}'
+            }],
+            listDate: [],
+            page:{pageno:"0",pagesize:"20"}
         }
     },
     components: {
         customerlIst
     },
     mounted: function() {
-        this.$nextTick(function() {
-            this.items.forEach(function(items) {
-                Vue.set(items, 'isShow', false);
-            })
-        })
-        this.items[0].isShow = true
-        // let pargrm = {
-        //   pagination:this.page,
-        //   oper:'getShopList',
-        //   type:'wqCustomer',
-        //   para:'{"latitude":"30.32765","longitude":"120.17237","keywords":"","picno":"355328","type":0}'
-        // }
-        // //ajax调用
-        // Request.post(pargrm).then(function (res) {
-        //   console.log(res)
-        //   Indicator.close();
-        // }).catch(function (error) {
-        //   Indicator.close();
-        //   if (error.response) {
-        //     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-        //     console.log(error.response.status);
-        //     Toast({
-        //       message: error.response.status,
-        //       duration: 2000
-        //     });
-        //   } else {
-        //     console.log('Error', error.message);
-        //     Toast({
-        //       message: error.message,
-        //       duration: 2000
-        //     });
-        //   }
-        // })
+        // this.ajax()
     },
     methods: {
+        extend (obj1,obj2){
+          for(var key in obj2){ 
+            // if(obj1.hasOwnProperty(key))continue;//有相同的属性则略过 
+            obj1[key]=obj2[key]; 
+         } 
+         return obj1;
+        },
+        ajax() {
+          var _this = this
+          Indicator.open();
+          this.$nextTick(function() {
+              this.items.forEach(function(items) {
+                  Vue.set(items, 'isShow', false);
+              })
+          })
+          this.items[0].isShow = true;
+          let pargrmList = {
+            pagination: JSON.stringify(this.page),
+            oper: 'getShopList',
+            type: 'wqCustomer',
+            para: '{"latitude":"30.32765","longitude":"120.17237","keywords":"","picno":"355328","type":0}'
+          }
+          //ajax调用
+          Request.post(pargrmList).then(function(res) {
+              for (var i = 0 ; i <JSON.parse(res.data.result).data.shopslist.length ; i++) {
+                _this.listDate.push(JSON.parse(res.data.result).data.shopslist[i])
+              }
+              console.log(_this.listDate )
+              Indicator.close();
+          }).catch(function(error) {
+              Indicator.close();
+              if (error.response) {
+                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                  console.log(error.response.status);
+                  Toast({
+                      message: error.response.status,
+                      duration: 2000
+                  });
+              } else {
+                  console.log('Error', error.message);
+                  Toast({
+                      message: error.message,
+                      duration: 2000
+                  });
+              }
+          })
+        },
         fliterToggle() {
             this.userFliter = !this.userFliter;
             this.items[this.index].isShow = true;
         },
-        　　　　selectStyle(item, index, select) {
-            let vm = this;　　　　　　
-            this.$nextTick(function() {　　　　　　　　
-                this.items.forEach(function(item) {
-                    Vue.set(item, 'isShow', false);
-                    Vue.set(item, 'userType', false);　　　　　　　　
-                });
-                Vue.set(item, 'userType', true);
-                this.type = select;
-                this.index = index;　　　　　　
-            });　　　　
+        selectStyle(item, index, select) {
+          let vm = this;　　　　　　
+          this.$nextTick(function() {　　　　　　　　
+            this.items.forEach(function(item) {
+                Vue.set(item, 'isShow', false);
+                Vue.set(item, 'userType', false);　　　　　　　　
+            });
+            Vue.set(item, 'userType', true);
+            this.type = select;
+            this.index = index;　　　　　　
+          });　　　　
         },
         fliterSure() {
             this.userType = false;
@@ -121,6 +142,12 @@ export default {
                     Vue.set(items, 'isShow', false);
                 })
             })
+        },
+        loadMore() {
+          this.loading = true;
+          this.page.pageno=parseInt(this.page.pageno)+1;
+          console.log(this.page)
+          this.ajax()
         }　　
     }
 }

@@ -1,29 +1,31 @@
 <template>
 	<div class="wrap " >
-		<div class="list activeTap"  @click="show=!show">
-			<div class="list-left"><img src="src/assets/logo.png"></div>
-			<div class="list-mid">
-				<div class="list-names">锦江一号</div>
-				<div class="list-map"><img src="src/assets/icon12.png">东坡路</div>
-				<div class="list-time">1分钟前下过单</div>
+		<div v-for="item in listDate" class="listWrap" :key="item">
+			<div class="list activeTap"  @click="show=!show">
+				<div class="list-left"><img :src="item.SHOP_IMAGE"></div>
+				<div class="list-mid">
+					<div class="list-names">{{item.SHOP_NAME}}</div>
+					<div class="list-map"><img src="src/assets/icon12.png">{{item.ADDRESS}}</div>
+					<div class="list-time">{{item.ORDERINFOR}}</div>
+				</div>
+				<div class="list-right">
+					<span>{{item.DISTANCE}}km</span>
+				</div>
 			</div>
-			<div class="list-right">
-				<span>0.01km</span>
+			<div class="list-menu" v-show="show">
+				<a class="menu-1">下单</a>
+				<a class="menu-2">车销</a>
+				<a class="menu-3" @click="show1=!show1">联系</a>
+				<a class="menu-4">更多</a>
 			</div>
-		</div>
-		<div class="list-menu" v-show="show">
-			<a class="menu-1">下单</a>
-			<a class="menu-2">车销</a>
-			<a class="menu-3" @click="show1=!show1">联系</a>
-			<a class="menu-4">更多</a>
-		</div>
-		<div class="wrap-popup" v-show="show1">
-			<div class="content-popup">
-				<ul>
-					<li class="popup-names"><span>付灿</span><span><img @click="show1=false" src="../assets/icon18.png"></span></li>
-					<li class="popup-tel"><a href="tel:15716444430">15716444430<img src="../assets/icon1.png"></a></li>
-					<li class="popup-tel"><a href="tel:15716444430">15716444430<img src="../assets/icon1.png"></a></li>
-				</ul>
+			<div class="wrap-popup" v-show="show1">
+				<div class="content-popup">
+					<ul>
+						<li class="popup-names"><span>付灿</span><span><img @click="show1=false" src="../assets/icon18.png"></span></li>
+						<li class="popup-tel"><a href="tel:15716444430">15716444430<img src="../assets/icon1.png"></a></li>
+						<li class="popup-tel"><a href="tel:15716444430">15716444430<img src="../assets/icon1.png"></a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -35,12 +37,13 @@
 	      show:false,
 	      show1:false
 	    }
-	  }
+	  },
+	  props:['listDate']
 	  
 	}
 </script>
 <style scoped>
-.wrap{width: 100%;height: 224px;background-color: #fff }
+.wrap{width: 100%;height: auto;background-color: #fff }
 .wrap .list{overflow: hidden;}
 .wrap .list .list-left{float: left;padding: 41px 21px 43px 32px}
 .wrap .list .list-left img{width: 140px;height: 140px}
@@ -48,8 +51,8 @@
 .wrap .list .list-mid img{width: 36.8px}
 .wrap .list .list-mid .list-names{font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 30px;padding: 42px 0 20px 0;font-weight: 600}
 .wrap .list .list-mid .list-map{line-height: 50px;font-size: 26px;color: #9DA2B5;}
-.wrap .list .list-mid .list-time{font-size: 26px;color: #9DA2B5;}
-.wrap .list .list-mid .list-map img{vertical-align:middle;padding-right: 8.2px;width:36.8px }
+.wrap .list .list-mid .list-time{font-size: 26px;color: #9DA2B5; margin-top: 11px;}
+.wrap .list .list-mid .list-map img{vertical-align:sub;padding-right: 8.2px;width:36.8px }
 .wrap .list .list-right{float: right;padding: 29px 29px;}
 .wrap .list .list-right span{font-size: 22px;color: #9DA2B5;}
 .wrap .list-menu{clear: both;background-color:#4D5679; height: 96px;line-height: 96px;display:flex;}
