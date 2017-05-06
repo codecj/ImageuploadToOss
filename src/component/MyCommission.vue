@@ -24,7 +24,55 @@
 </template>
 
 <script type="text/javascript">
-	
+	import Request from "../util/API";
+	import Vue from 'vue'
+	import {
+    	Toast,
+    	Indicator
+	} from 'mint-ui';
+	export default {
+		data(){
+			return {
+				ALREADY_PRICE:'',
+				PLACE_PRICE:''
+			}
+		},
+		mounted(){
+			this.ajax();
+		},
+		methods: {
+			ajax:function(){
+				var _this = this
+				Indicator.open();
+				let pargrmList = {
+		            oper: 'findCommissionTotalPrice',
+		            type: 'wqOrder',
+		            para: '{"userid":"354858"}'
+          		};
+          		Request.post(pargrmList).then(function(response){
+          			Indicator.close();
+          			console.log(response);
+
+          		}).catch(function(error){
+          			Indicator.close();
+          		    if (error.response) {
+                  	// 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                   		console.log(error.response.status);
+                  		Toast({
+                      		message: error.response.status,
+                      		duration: 2000
+                  		});
+             	 	} else {
+                  		console.log('Error', error.message);
+                  		Toast({
+                      		message: error.message,
+                      		duration: 2000
+                  		});
+              		}
+          		})
+			},
+		}
+	}
 </script>
 
 <style scoped>

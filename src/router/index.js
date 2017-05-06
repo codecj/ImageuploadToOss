@@ -12,6 +12,7 @@ export default {
     }, {
         path: '/myCommission', // 我的佣金
         component: MyCommission
+
     }, {
         path: '/settleCommission', // 佣金结算明细->已结算
         component: SettledCommission
