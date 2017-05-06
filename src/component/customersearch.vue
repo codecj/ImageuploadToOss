@@ -14,14 +14,16 @@
  export default {
 	  data () {
 	    return {
-	    	newTodo:'测试测试测试',
+	    	newTodo:'',
 	    }
+},  mounted: function() {
+
 },
 	    methods:{
 	    removeTodo:function () {
 	    	this.newTodo=''
 	    },
-	    function () {
+	    ajax () {
         let pargrm = {
           pagination:JSON.stringify(this.page),
           sign: "",
