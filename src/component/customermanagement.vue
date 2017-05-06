@@ -1,5 +1,5 @@
 <template>
-	<div class="wrap " >
+	<div class="wrap" >
 		<div class="list activeTap"  @click="show=!show">
 			<div class="list-left"><img src="src/assets/logo.png"></div>
 			<div class="list-mid">
@@ -41,16 +41,16 @@
 </script>
 <style scoped>
 .wrap{width: 100%;height: 224px;background-color: #fff }
-.wrap .list{overflow: hidden;}
-.wrap .list .list-left{float: left;padding: 41px 21px 43px 32px}
+.wrap .list{display: flex;width: 100%}
+.wrap .list .list-left{display: inline-block; padding: 41px 21px 43px 32px;width: 140px;height: 140px}
 .wrap .list .list-left img{width: 140px;height: 140px}
-.wrap .list .list-mid{float: left;}
+.wrap .list .list-mid{ flex-grow: 1;overflow: hidden;}
 .wrap .list .list-mid img{width: 36.8px}
-.wrap .list .list-mid .list-names{font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 30px;padding: 42px 0 20px 0;font-weight: 600}
-.wrap .list .list-mid .list-map{line-height: 50px;font-size: 26px;color: #9DA2B5;}
+.wrap .list .list-mid .list-names{font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 30px;padding: 42px 22px 20px 0px;font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.wrap .list .list-mid .list-map{line-height: 50px;font-size: 26px;color: #9DA2B5;overflow:hidden; text-overflow: ellipsis; white-space: nowrap;}
 .wrap .list .list-mid .list-time{font-size: 26px;color: #9DA2B5;}
 .wrap .list .list-mid .list-map img{vertical-align:middle;padding-right: 8.2px;width:36.8px }
-.wrap .list .list-right{float: right;padding: 29px 29px;}
+.wrap .list .list-right{-webkit-box-flex: 1;padding: 29px 29px;}
 .wrap .list .list-right span{font-size: 22px;color: #9DA2B5;}
 .wrap .list-menu{clear: both;background-color:#4D5679; height: 96px;line-height: 96px;display:flex;}
 .wrap .list-menu a{color: #fff;text-align: center;width: 25%;font-size: 24px;height:64px ;line-height: 76px;margin-top: 15px;padding-left: 44px}
