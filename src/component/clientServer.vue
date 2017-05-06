@@ -68,25 +68,17 @@ export default {
         customerlIst
     },
     mounted: function() {
-        // this.ajax()
+        this.$nextTick(function() {
+          this.items.forEach(function(items) {
+              Vue.set(items, 'isShow', false);
+          })
+        })
+        this.items[0].isShow = true;
     },
     methods: {
-        extend (obj1,obj2){
-          for(var key in obj2){ 
-            // if(obj1.hasOwnProperty(key))continue;//有相同的属性则略过 
-            obj1[key]=obj2[key]; 
-         } 
-         return obj1;
-        },
         ajax() {
-          var _this = this
+          let _this = this
           Indicator.open();
-          this.$nextTick(function() {
-              this.items.forEach(function(items) {
-                  Vue.set(items, 'isShow', false);
-              })
-          })
-          this.items[0].isShow = true;
           let pargrmList = {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
@@ -95,7 +87,7 @@ export default {
           }
           //ajax调用
           Request.post(pargrmList).then(function(res) {
-              for (var i = 0 ; i <JSON.parse(res.data.result).data.shopslist.length ; i++) {
+              for (let i = 0 ; i <JSON.parse(res.data.result).data.shopslist.length ; i++) {
                 _this.listDate.push(JSON.parse(res.data.result).data.shopslist[i])
               }
               console.log(_this.listDate )
