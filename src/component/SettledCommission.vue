@@ -89,6 +89,7 @@
 		left: 32px;
 		width: 150px;
 		height: 40px;
+		font-weight: 800;
 	}
 	#settledCommission .content {
 		height: 298px;
