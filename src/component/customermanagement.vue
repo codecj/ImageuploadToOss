@@ -12,7 +12,7 @@
                     <span>{{item.DISTANCE}}km</span>
                 </div>
             </div>
-            <div :class="{ 'list-menu showb' : item.action, 'list-menu shown': !item.action}" v-show="item.whichTab">
+            <div class="list-menu" v-show="item.whichTab">
                 <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
@@ -45,7 +45,6 @@ export default {
                     this.$set(item, 'whichTab', false);
                 })
                 this.$set(item, 'whichTab', true);
-                this.$set(item, 'action', false);
 
             },
             telbox(item) {

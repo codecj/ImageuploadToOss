@@ -18,7 +18,7 @@
             <div class="fliterType">
                 <p>客户类型</p>
                 <ul>
-                    <li :data-type="item.type" v-for="(item,$index) in items" @click="selectStyle(item, $index,item.select)" :class="{'active':item.userType||item.isShow,'unactive':!item.userType||item.isShow}">{{item.select}}</li>
+                    <li data-type="item.type" v-for="(item,$index) in items" @click="selectStyle(item, $index,item.select)" :class="{'active':item.userType||item.isShow,'unactive':!item.userType||item.isShow}">{{item.select}}</li>
                 </ul>
             </div>
             <div @click="fliterSure()" class="sureBtn">
@@ -51,6 +51,8 @@ export default {
     name: 'clientServer',
     data() {
         return {
+            latitude:'30.32765',
+            longitude:'120.17237',
             address: '全部区域',
             select: '',
             index: '0',
@@ -72,7 +74,7 @@ export default {
             }],
             listDate: [],
             page:{pageno:"0",pagesize:"20"},
-            type:0
+            typeD:0
         }
     },
     components: {
@@ -94,7 +96,7 @@ export default {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
             type: 'wqCustomer',
-            para: '{"latitude":"30.32765","longitude":"120.17237","keywords":"","picno":"355328","type":'+this.type+'}'
+            para: '{"latitude":"'+this.latitude+'","longitude":"'+this.longitude+'","keywords":"","picno":"355328","type":"'+this.typeD+'"}'
           }
           //ajax调用
           Request.post(pargrmList).then(res=>{
@@ -128,7 +130,7 @@ export default {
                 this.$set(item, 'userType', false);　　　　　　　　
             });
             this.$set(item, 'userType', true);
-            this.type = select;
+            this.typeD = item.type;
             this.index = index;　　　　　　
           });　　　　
         },
@@ -140,6 +142,9 @@ export default {
                     this.$set(items, 'isShow', false);
                 })
             })
+            this.listDate=[]
+            console.log(this.typeD)
+            this.ajax()
         },
         loadMore() {
           this.loading = true;
