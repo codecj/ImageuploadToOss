@@ -1,22 +1,31 @@
 <template>
-    <div class="heards">
-        <span><img src="../assets/icon10.png"></span>
-        <form @submit.prevent="submit">
-            <div class="input-wrap">
-                <div>
-                    <input type="text" v-model="newTodo"><img v-on:click="removeTodo" src="../assets/icon18.png"></div>
-            </div>
-        </form>
+    <div class="">
+        <div class="heards">
+            <span><img src="../assets/icon10.png"></span>
+            <form @submit.prevent="submit">
+                <div class="input-wrap">
+                    <div>
+                        <input type="text" v-model="newTodo"><img v-on:click="removeTodo" src="../assets/icon18.png"></div>
+                </div>
+            </form>
+        </div>
+        <div class="content-1"></div>
     </div>
 </template>
 <script type="text/javascript">
-import { Toast, Indicator } from 'mint-ui'
+import {
+    Toast,
+    Indicator
+} from 'mint-ui'
 import Request from "../util/API";
 export default {
     data() {
             return {
                 newTodo: '',
-                page:{pageno:"1",pagesize:"20"}
+                page: {
+                    pageno: "1",
+                    pagesize: "20"
+                }
             }
         }, mounted: function() {
 
@@ -27,12 +36,12 @@ export default {
             },
             submit: function() {
                 let pargrm = {
-                    pagination: JSON.stringify(this.page),
-                    oper: 'getShopList',
-                    type: 'wqCustomer',
-                    para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
-                }
-                //ajax调用
+                        pagination: JSON.stringify(this.page),
+                        oper: 'getShopList',
+                        type: 'wqCustomer',
+                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
+                    }
+                    //ajax调用
                 Request.post(pargrm).then(function(res) {
                     console.log(res)
                     Indicator.close();
@@ -62,6 +71,8 @@ export default {
     width: 100%;
     height: 84px;
     background-color: #fff;
+    position: absolute;
+    top: 0;
 }
 
 .heards span img {
@@ -100,5 +111,14 @@ export default {
 .heards .input-wrap img {
     width: 20.4px;
     line-height: 62px
+}
+
+.content-1 {
+    width: 100%;
+    position: absolute;
+    top: 84px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    bottom: 0;
 }
 </style>
