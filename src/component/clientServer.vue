@@ -51,8 +51,11 @@ export default {
     name: 'clientServer',
     data() {
         return {
-            latitude:'30.32765',
-            longitude:'120.17237',
+            gps:{
+              latitude:'30.32765',
+              longitude:'120.17237'
+            },
+            picno:'355328',
             address: '全部区域',
             select: '',
             index: '0',
@@ -90,13 +93,12 @@ export default {
     },
     methods: {
         ajax() {
-          // let _this = this
           Indicator.open();
           const pargrmList = {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
             type: 'wqCustomer',
-            para: '{"latitude":"'+this.latitude+'","longitude":"'+this.longitude+'","keywords":"","picno":"355328","type":'+this.typeD+'}'
+            para: '{"latitude":"'+this.gps.latitude+'","longitude":"'+this.gps.longitude+'","keywords":"","picno":"'+this.picno+'","type":'+this.typeD+'}'
           }
           //ajax调用
           Request.post(pargrmList).then(res=>{
@@ -136,10 +138,11 @@ export default {
             });
             this.$set(item, 'userType', true);
             this.typeD = item.type;
-            this.index = index;　　　　　　
+            this.index = index;　
           });　　　　
         },
         fliterSure() {
+            this.page.pageno='1';
             this.userType = false;
             this.userFliter = false;
             this.$nextTick(()=>{
