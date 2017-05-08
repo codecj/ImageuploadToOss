@@ -1,11 +1,39 @@
 <template>
     <div class="wrap ">
-        <div v-for="(item, index) in listDate" class="listWrap" :key="index">
+        <!-- <div v-for="(item, index) in listDate" class="listWrap" :key="index">
             <div class="list activeTap" @click="tabChose(item)">
                 <div class="list-left"><img v-lazy="item.SHOP_IMAGE"></div>
                 <div class="list-mid">
                     <div class="list-names">{{item.SHOP_NAME}}</div>
                     <div class="list-map"><img src="src/assets/icon12.png">{{item.ADDRESS}}</div>
+                    <div class="list-time">{{item.ORDERINFOR}}</div>
+                </div>
+                <div class="list-right">
+                    <span>{{item.DISTANCE}}km</span>
+                </div>
+            </div>
+            <div class="list-menu" v-show="item.whichTab">
+                <a class="menu-1">下单</a>
+                <a class="menu-2">车销</a>
+                <a class="menu-3" @click="telbox(item)">联系</a>
+                <a class="menu-4">更多</a>
+            </div>
+            <div class="wrap-popup" v-show="item.telBox">
+                <div class="content-popup">
+                    <ul>
+                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="item.telBox=!item.telBox" src="../assets/icon18.png"></span></li>
+                        <li v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
+                        <li v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+        <div v-for="(item, index) in listDate" class="listWrap" :key="index">
+            <div class="list activeTap" @click="tabChose(item)">
+                <div class="list-left"><img v-lazy="item.SHOP_IMAGE"></div>
+                <div class="list-mid">
+                    <div class="list-names">{{item.SHOP_NAME}}</div>
+                    <div class="list-map"><img src="../assets/icon12.png">{{item.ADDRESS}}</div>
                     <div class="list-time">{{item.ORDERINFOR}}</div>
                 </div>
                 <div class="list-right">
