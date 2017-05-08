@@ -20,7 +20,6 @@
 			<img src="../assets/icon17.png" class="right">
 		</div>
 	</div>
-
 </template>
 
 <script type="text/javascript">
