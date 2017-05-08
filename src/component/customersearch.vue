@@ -10,7 +10,10 @@
     </div>
 </template>
 <script type="text/javascript">
-import { Toast, Indicator } from 'mint-ui'
+import {
+    Toast,
+    Indicator
+} from 'mint-ui'
 import Request from "../util/API";
 export default {
     data() {
@@ -62,6 +65,8 @@ export default {
     width: 100%;
     height: 84px;
     background-color: #fff;
+    position: absolute;
+    top: 0;
 }
 
 .heards span img {
@@ -100,5 +105,14 @@ export default {
 .heards .input-wrap img {
     width: 20.4px;
     line-height: 62px
+}
+
+.content-1 {
+    width: 100%;
+    position: absolute;
+    top: 84px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    bottom: 0;
 }
 </style>
