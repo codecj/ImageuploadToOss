@@ -1,6 +1,7 @@
 import secondcomponent from '../component/secondcomponent.vue'
 import MyCommission from '../component/MyCommission.vue'
 import SettledCommission from '../component/SettledCommission.vue'
+import PresettleCommission from '../component/PresettleCommission.vue'
 import clientServer from '../component/clientServer.vue'
 import First from '../component/firstcomponent.vue'
 import order from '../component/order.vue'
@@ -42,5 +43,8 @@ export default {
     }, {
         path: '/settleCommission', // 佣金结算明细->已结算
         component: SettledCommission
+    }, {
+        path: '/presettleCommission', // 佣金结算明细 -> 待结算
+        component: PresettleCommission
     }]
 }
