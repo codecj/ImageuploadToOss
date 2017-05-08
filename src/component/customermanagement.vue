@@ -22,8 +22,8 @@
                 <div class="content-popup">
                     <ul>
                         <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="item.telBox=!item.telBox" src="../assets/icon18.png"></span></li>
-                        <li class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
-                        <li class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
+                        <li v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
+                        <li v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
                     </ul>
                 </div>
             </div>
