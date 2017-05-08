@@ -12,7 +12,7 @@
     </ul> -->
      <!-- 路由外链 -->
   <router-view></router-view>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style>
-#app {
+/*#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -41,10 +41,10 @@ export default {
           box-sizing: border-box;
   padding:0;
   margin:0;
-}
+}*/
 
 /* 清除浮动 */
-.clearfix::before,
+/*.clearfix::before,
 .clearfix::after{
   content:'';
   display: block;
@@ -58,7 +58,7 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-
+*/
 /*h1, h2 {
   font-weight: normal;
 }
