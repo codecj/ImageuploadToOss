@@ -96,17 +96,22 @@ export default {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
             type: 'wqCustomer',
-            para: '{"latitude":"'+this.latitude+'","longitude":"'+this.longitude+'","keywords":"","picno":"355328","type":"'+this.typeD+'"}'
+            para: '{"latitude":"'+this.latitude+'","longitude":"'+this.longitude+'","keywords":"","picno":"355328","type":'+this.typeD+'}'
           }
           //ajax调用
           Request.post(pargrmList).then(res=>{
               const getData = JSON.parse(res.data.result)
-              if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
               getData.data.shopslist.forEach(value=> {
                 this.listDate.push(value)
               })
+              if(this.listDate.length==getData.pagination.totalcount) {
+                Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+                Indicator.close();
+                return
+              }
+              if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
               Indicator.close();
-              console.log(this.listDate)
+              console.log(this.listDate.length)
           }).catch(error=>{
               Indicator.close();
               if (error.response) {
@@ -147,8 +152,9 @@ export default {
             this.ajax()
         },
         loadMore() {
+          // console.log(this.pageLength+this.listDate)
           this.loading = true;
-          this.page.pageno=parseInt(this.page.pageno)+1;
+          this.page.pageno=parseInt(this.page.pageno)+1
           console.log(this.page)
           this.ajax()
         }　　
