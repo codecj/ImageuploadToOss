@@ -208,27 +208,27 @@ export default {
 
 .wrap-popup .content-popup {
     width: 526px;
-    height: 320px;
+    height: auto;
     position: absolute;
     left: 50%;
-    margin-left: -263px;
+    transform: translate(-50%,-50%);
     background-color: #fff;
     top: 50%;
-    margin-top: -160px
 }
 
 .popup-names {
     line-height: 94px;
-    padding-left: 42.5%;
+    text-align: center;
     color: #3B456C;
     font-size: 36px
 }
 
 .popup-names img {
     width: 30px;
-    vertical-align: middle;
     float: right;
-    margin: 31px 31px
+    margin: 31px 31px;
+    position: absolute;
+    right: 31px;
 }
 
 .popup-tel img {
@@ -240,16 +240,17 @@ export default {
 .popup-tel {
     line-height: 111px;
 }
-
+.popup-tel:nth-child(2){
+    border-top: 2px solid #F1F2F7
+}
+.popup-tel:nth-child(3){
+    border-top: 2px solid #F1F2F7
+}
 .popup-tel a {
     display: block;
     overflow: hidden;
     padding-left: 32px;
     font-size: 30px;
     color: #3B456C;
-}
-
-.popup-tel a:nth-child(1) {
-    border-top: 2px solid #F1F2F7
 }
 </style>
