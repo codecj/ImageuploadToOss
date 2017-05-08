@@ -1,4 +1,4 @@
-<!-- 佣金结算明细  已结算-->
+<!-- 佣金结算明细  findAlreadyCommission已结算-->
 <template>
 	<div id="settledCommission">
 		<ul>
@@ -21,47 +21,50 @@
 					<span class="commissionPrice">￥24.00</span>
 				</div>
 			</li>
-			<li>
-				<div class="header">
-					<h3>好又多超市</h3>
-				</div>
-				<div class="content">
-					<img src="" alt="" class="goodsImg">
-					<h4 class="goodsName">墨西哥辣鸡啊</h4>
-					<span class="specification">规格：3434*33</span>
-					<span class="price">￥200.00</span>
-					<span class="praise">奖</span>
-					<span class="praisePrice">￥8.00</span>
-					<span class="goodsCount">x3</span>
-				</div>
-				<div class="footer">
-					<span class="commissionTime">结算时间 2017.4.11 16：30</span>
-					<span class="praise">奖</span>
-					<span class="commissionPrice">￥24.00</span>
-				</div>
-			</li>
-			<li>
-				<div class="header">
-					<h3>好又多超市</h3>
-				</div>
-				<div class="content">
-					<img src="" alt="" class="goodsImg">
-					<h4 class="goodsName">墨西哥辣鸡点心面两行位置啊啊啊啊啊</h4>
-					<span class="specification">规格：3434*33</span>
-					<span class="price">￥200.00</span>
-					<span class="praise">奖</span>
-					<span class="praisePrice">￥8.00</span>
-					<span class="goodsCount">x3</span>
-				</div>
-				<div class="footer">
-					<span class="commissionTime">结算时间 2017.4.11 16：30</span>
-					<span class="praise">奖</span>
-					<span class="commissionPrice">￥24.00</span>
-				</div>
-			</li>
 		</ul>
 	</div>
 </template>
+
+<script type="text/javascript">
+	import Request from "../util/API";
+	import Vue from 'vue'
+	import {
+    	Toast,
+    	Indicator
+	} from 'mint-ui';
+	export default {
+		data(){
+			return {
+				dataArray:'', // 数据源数组
+				marketName:'', // 超市名
+				stkName:'', // 商品名
+				uom:'', // 规格
+				net_price:'', // 商品价格
+				commission_price:'', // 单个商品的佣金
+				uom_qty:'', // 总数量
+				real_commission_price: '', // 总佣金
+			}
+		},
+		mounted:function(){
+
+		},
+		methods:{
+			ajax(){
+				Indicator.open();
+				let pargrmList = {
+		            oper: 'findAlreadyCommission',
+		            type: 'wqOrder',
+		            para: '{"userid":"354858"}'
+          		};
+          		Request.post(pargrmList).then(function(response){
+          			Indicator.close();
+          		}).catch(function(error){
+          			Indicator.close();
+          		})
+			},
+		}
+	}
+</script>
 
 <style scoped>
 	#settledCommission ul{
