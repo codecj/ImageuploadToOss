@@ -5,7 +5,6 @@
       <input type="text" placeholder="请输入关键字搜索商品">
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
     </header>
-    <div class="border"></div>
     <div class="selectList">
       <ul>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
@@ -21,7 +20,7 @@
 </template>
 
 <script type="text/javascript">
-  import proLists from "./childcomponent/prodlistcomponent.vue"
+  import proLists from "./prodlistcomponent.vue"
   export default({
     name:"prods",
     components: {
@@ -79,6 +78,7 @@ header{
   position: fixed;
   top:0;
   background:#fff;
+  width:100%;
 }
 header .statusactive{
   width:88px;
@@ -127,19 +127,9 @@ header div:nth-child(1) img{
   vertical-align: middle;
 
 }
-.border{
-  height:24px;
-  background:#EBECF0;
-  position: fixed;
-  top:88px;
-  left:0;
-  overflow: hidden;
-  width:100%;
-}
 .selectList {
   position: fixed;
   top:110px;
-
 }
 .selectList ul{
   width:630px;
