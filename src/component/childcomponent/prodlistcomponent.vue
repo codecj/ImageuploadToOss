@@ -104,7 +104,6 @@ import { Lazyload } from 'mint-ui';
               prodPrice:"￥20.00"
            }, {
               prodImg:require("../../assets/icon4.png"),
-              prodName:"墨西哥辣鸡点心啊啊啊啊啊啊啊啊啊啊啊",
               prodName:"墨西哥辣鸡点心啊啊啊啊啊1213131321啊啊啊啊啊啊",
               prodSize:"4444*777",
               prodPrice:"￥20.00"
