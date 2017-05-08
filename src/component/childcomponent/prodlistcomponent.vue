@@ -105,6 +105,7 @@ import { Lazyload } from 'mint-ui';
            }, {
               prodImg:require("../../assets/icon4.png"),
               prodName:"墨西哥辣鸡点心啊啊啊啊啊啊啊啊啊啊啊",
+              prodName:"墨西哥辣鸡点心啊啊啊啊啊1213131321啊啊啊啊啊啊",
               prodSize:"4444*777",
               prodPrice:"￥20.00"
            },
@@ -188,6 +189,13 @@ import { Lazyload } from 'mint-ui';
   letter-spacing: 0;
   line-height: 40px;
   margin:19px 14px 0 23px;
+  overflow:hidden;
+  /*white-space: nowrap;*/
+  text-overflow: ellipsis;
+  word-break: normal;
+  display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+  -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+  -webkit-line-clamp: 2; /** 显示的行数 **/
 }
 .content .searchItem>p:nth-child(3){
   font-size: 22px;
