@@ -7,16 +7,27 @@ Vue.use(MintUI)
 import App from './App.vue';
 import VueRouter from "vue-router";
 import  routerConfig from './router'
+// import VueLazyload from 'vue-lazyload'
+// import { Lazyload } from 'mint-ui';
 
 //开启debug模式
 Vue.config.debug = true;
 
 Vue.use(VueRouter);
-
 const router=new VueRouter(routerConfig);
 
 const app = new Vue({
     router: router,
     render: h => h(App)
 }).$mount('#app')
-// lib
+// 懒加载部分
+
+// Vue.use(Lazyload, {
+//     preLoad: 1.3,
+//     lazyComponent: true,
+//     error: require('./assets/icon2.png'),
+//     loading: require('./assets/icon2.png'),
+//     listenEvents: ['scroll'],
+//     attempt: 1
+// })
+
