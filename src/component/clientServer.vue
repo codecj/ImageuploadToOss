@@ -143,7 +143,7 @@ export default {
                 })
             })
             this.listDate=[]
-            console.log(this.typeD)
+            // console.log(this.typeD)
             this.ajax()
         },
         loadMore() {
