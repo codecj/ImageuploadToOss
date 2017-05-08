@@ -18,7 +18,7 @@
             <div class="fliterType">
                 <p>客户类型</p>
                 <ul>
-                    <li :data-type="item.select" v-for="(item,$index) in items" @click="selectStyle(item, $index,item.select)" :class="{'active':item.userType||item.isShow,'unactive':!item.userType||item.isShow}">{{item.select}}</li>
+                    <li data-type="item.type" v-for="(item,$index) in items" @click="selectStyle(item, $index,item.select)" :class="{'active':item.userType||item.isShow,'unactive':!item.userType||item.isShow}">{{item.select}}</li>
                 </ul>
             </div>
             <div @click="fliterSure()" class="sureBtn">
@@ -42,8 +42,8 @@ import customerlIst from './customermanagement.vue'
 Vue.use(Lazyload,{
     preLoad: 1.3,
     lazyComponent: true,
-    error: require('../assets/icon2.png'),
-    loading: require('../assets/icon2.png'),
+    error: require('../assets/holde.png'),
+    loading: require('../assets/holde.png'),
     listenEvents: ['scroll']
 })
 
@@ -51,6 +51,8 @@ export default {
     name: 'clientServer',
     data() {
         return {
+            latitude:'30.32765',
+            longitude:'120.17237',
             address: '全部区域',
             select: '',
             index: '0',
@@ -58,60 +60,60 @@ export default {
             userType: false,
             type: '全部',
             items: [{
+                type:0,
                 select: '全部',
                 isShow: true
             }, 　　　　　 {
+                type:1,
                 select: '我的客户',
                 isShow: false
             }, 　　　　　 {
+                type:2,
                 select: '企业客户',
                 isShow: false
             }],
             listDate: [],
-            page:{pageno:"0",pagesize:"20"}
+            page:{pageno:"0",pagesize:"20"},
+            typeD:0
         }
     },
     components: {
         customerlIst
     },
     mounted: function() {
-        this.$nextTick(function() {
-          this.items.forEach(function(items) {
-              Vue.set(items, 'isShow', false);
+        this.$nextTick(()=> {
+          this.items.forEach(items=>{
+              this.$set(items, 'isShow', false);
           })
         })
         this.items[0].isShow = true;
     },
     methods: {
         ajax() {
-          let _this = this
+          // let _this = this
           Indicator.open();
-          let pargrmList = {
+          const pargrmList = {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
             type: 'wqCustomer',
-            para: '{"latitude":"30.32765","longitude":"120.17237","keywords":"","picno":"355328","type":0}'
+            para: '{"latitude":"'+this.latitude+'","longitude":"'+this.longitude+'","keywords":"","picno":"355328","type":"'+this.typeD+'"}'
           }
           //ajax调用
-          Request.post(pargrmList).then(function(res) {
-              for (let i = 0 ; i <JSON.parse(res.data.result).data.shopslist.length ; i++) {
-                _this.listDate.push(JSON.parse(res.data.result).data.shopslist[i])
-              }
-              console.log(_this.listDate )
+          Request.post(pargrmList).then(res=>{
+              const getData = JSON.parse(res.data.result)
+              if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+              getData.data.shopslist.forEach(value=> {
+                this.listDate.push(value)
+              })
               Indicator.close();
-          }).catch(function(error) {
+              console.log(this.listDate)
+          }).catch(error=>{
               Indicator.close();
               if (error.response) {
                   // 请求已发出，但服务器响应的状态码不在 2xx 范围内
                   console.log(error.response.status);
                   Toast({
                       message: error.response.status,
-                      duration: 2000
-                  });
-              } else {
-                  console.log('Error', error.message);
-                  Toast({
-                      message: error.message,
                       duration: 2000
                   });
               }
@@ -121,26 +123,28 @@ export default {
             this.userFliter = !this.userFliter;
             this.items[this.index].isShow = true;
         },
-        selectStyle(item, index, select) {
-          let vm = this;　　　　　　
-          this.$nextTick(function() {　　　　　　　　
-            this.items.forEach(function(item) {
-                Vue.set(item, 'isShow', false);
-                Vue.set(item, 'userType', false);　　　　　　　　
+        selectStyle(item, index, select) {　　　　
+          this.$nextTick(()=>{　　　　　　　　
+            this.items.forEach(item=>{
+                this.$set(item, 'isShow', false);
+                this.$set(item, 'userType', false);　　　　　　　　
             });
-            Vue.set(item, 'userType', true);
-            this.type = select;
+            this.$set(item, 'userType', true);
+            this.typeD = item.type;
             this.index = index;　　　　　　
           });　　　　
         },
         fliterSure() {
             this.userType = false;
             this.userFliter = false;
-            this.$nextTick(function() {
-                this.items.forEach(function(items) {
-                    Vue.set(items, 'isShow', false);
+            this.$nextTick(()=>{
+                this.items.forEach(items=>{
+                    this.$set(items, 'isShow', false);
                 })
             })
+            this.listDate=[]
+            // console.log(this.typeD)
+            this.ajax()
         },
         loadMore() {
           this.loading = true;

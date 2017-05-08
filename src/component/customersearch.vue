@@ -1,15 +1,12 @@
 <template>
-    <div class="">
-        <div class="heards">
-            <span><img src="../assets/icon10.png"></span>
-            <form @submit.prevent="submit">
-                <div class="input-wrap">
-                    <div>
-                        <input type="text" v-model="newTodo"><img v-on:click="removeTodo" src="../assets/icon18.png"></div>
-                </div>
-            </form>
-        </div>
-        <div class="content-1"></div>
+    <div class="heards">
+        <span><img src="../assets/icon10.png"></span>
+        <form @submit.prevent="submit">
+            <div class="input-wrap">
+                <div>
+                    <input type="search" :value="keyword" v-model="keyword"><img v-on:click="removeTodo" src="../assets/icon18.png"></div>
+            </div>
+        </form>
     </div>
 </template>
 <script type="text/javascript">
@@ -21,11 +18,8 @@ import Request from "../util/API";
 export default {
     data() {
             return {
-                newTodo: '',
-                page: {
-                    pageno: "1",
-                    pagesize: "20"
-                }
+                page:{pageno:"1",pagesize:"20"},
+                keyword:''
             }
         }, mounted: function() {
 
@@ -36,12 +30,12 @@ export default {
             },
             submit: function() {
                 let pargrm = {
-                        pagination: JSON.stringify(this.page),
-                        oper: 'getShopList',
-                        type: 'wqCustomer',
-                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
-                    }
-                    //ajax调用
+                    pagination: JSON.stringify(this.page),
+                    oper: 'getShopList',
+                    type: 'wqCustomer',
+                    para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": '+this.keyword+', "picno": "355328","type": 0}'
+                }
+                //ajax调用
                 Request.post(pargrm).then(function(res) {
                     console.log(res)
                     Indicator.close();
