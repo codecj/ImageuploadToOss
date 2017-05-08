@@ -3,9 +3,9 @@
         <div class="shadowLine"></div>
         <div class="topHead">
             <div class="activeTap" @click="fliterToggle()" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
-            <div class="mid">
+            <div @click="toSearch()" class="mid">
                 <form>
-                    <input @click="toSearch()" placeholder="请输入要搜索的客户" type="search">
+                    <input disabled placeholder="请输入要搜索的客户" type="search">
                 </form>
             </div>
             <div class="right activeTap"></div>
@@ -96,9 +96,7 @@ export default {
         toSearch(){
           Request.jsBbridge(bridge=> {
               bridge.callHandler(
-                  'pushSearchWebClick',
-                  {'url':window.location.host+'/resources/wq360/index.html#/search'}, 
-                  responseData=> {}
+                  'pushSearchWebClick'
               )
           })
         },
