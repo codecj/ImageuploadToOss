@@ -2,7 +2,7 @@
 	<div id="addCar">
         <div class="inner_hide product_show">
             <div class="goodInfo">
-                <div class="goodsImg">
+                <div v-show="imgShow" class="goodsImg">
                     <img src='../assets/holde.png' height="300" width="300" alt="">
                 </div>
                 <div class="goodsMsg">
@@ -13,7 +13,7 @@
                 <img class="close" src="../assets/icon18.png" alt="">
             </div>
             <div class="overscroll"> 
-                <p class="activity activeTap">
+                <p @click="goActive()" class="activity activeTap">
                     该商品正在参与活动,查看活动信息
                     <img src="../assets/icon17.png" alt="">
                 </p>
@@ -34,25 +34,56 @@
             </div>
             <div class="addBtn">加入购物车</div>
         </div>
+        <transition tag="div" :name="transitionName">
+            <div class="activeList">
+                <span @click="goBack()">返回</span>
+            </div>
+        </transition>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            isHide:true
+            imgShow:true,
+            isHide:true,
+            transitionName: ''
         }
     },
     mounted: function() {
     },
     methods: {
+        goBack(){
+            this.transitionName = 'slide-right'
+            this.imgShow=true;
+        },
+        goActive(){
+            this.transitionName = 'slide-left'
+            this.imgShow=false;
+        }
     }
 }
 </script>
 .overscroll{}
 <style scoped>
 html{ background: transparent !important; }
+.slide-left-enter,
+.slide-right-leave-active {
+    opacity: 0;
+    -webkit-transform: translate(375px, 0);
+    transform: translate(375px, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+    opacity: 0;
+    -webkit-transform: translate(-375px, 0);
+    transform: translate(-375px, 0);
+}
 .overscroll{ position: absolute; width: 100%; top: 216px; bottom: 98px; }
+.activeList{ position: absolute; bottom: 0;width: 100%;
+    background-color: #fff;
+    height: 1000px; z-index: 10;}
 .product_show {
     position: absolute;
     padding-bottom: 0;
@@ -68,7 +99,7 @@ html{ background: transparent !important; }
     height: 1000px;
 }
 #addCar div.inner_hide {
-    z-index: 999;
+    z-index: 9;
     position: absolute;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);

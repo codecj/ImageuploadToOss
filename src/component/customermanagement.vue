@@ -65,7 +65,7 @@ export default {
                     Request.jsBbridge(bridge=> {
                         bridge.callHandler(
                             'menuClicked',
-                            {menu:menu}
+                            {menu:menu,shopItem:item}
                         )
                     })
                 }
