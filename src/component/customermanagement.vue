@@ -145,6 +145,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-right: 2.5rem;
 }
 
 .wrap .list .list-mid .list-time {
@@ -159,6 +160,7 @@ export default {
 }
 
 .wrap .list .list-right {
+	position: relative;
     -webkit-box-flex: 1;
     padding: 29px 29px;
 }
@@ -166,6 +168,9 @@ export default {
 .wrap .list .list-right span {
     font-size: 22px;
     color: #9DA2B5;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .wrap .list-menu {
@@ -268,7 +273,7 @@ export default {
     float: right;
     margin: 31px 31px;
     position: absolute;
-    right: 31px;
+    right: 0;
 }
 
 .popup-tel img {
