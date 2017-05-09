@@ -13,10 +13,11 @@
                 </div>
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
-                <a class="menu-1">下单</a>
+                <a class="menu-1" v-for="(menu,index) in menuList" :style="{background:url('http://img-test.qpwa.cn/sys/ico/EYKHF-YRMRN-LVGJY-AHNCJ-LHNQL.png')}">{{menu.name}}</a>
+               <!--  <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
-                <a class="menu-4">更多</a>
+                <a class="menu-4">更多</a> -->
             </div>
             <div class="wrap-popup" v-show="item.telBox">
                 <div class="content-popup">
@@ -34,10 +35,14 @@
 export default {
     data() {
             return {
-                isHide:true
+                isHide:true,
+                activeColor: 'red'
             }
         },
-        props: ['listDate'],
+        props: {
+            listDate:Array,
+            menuList:Array
+        },
         mounted: function() {
         },
         methods: {
@@ -181,19 +186,19 @@ export default {
 }
 
 .list-menu .menu-1 {
-    background: url(../assets/icon49.png) no-repeat;
+    /*background: url(../assets/icon49.png) no-repeat;*/
     background-size: 30px;
     background-position: 49px 21px;
 }
 
 .list-menu .menu-2 {
-    background: url(../assets/icon50.png) no-repeat;
+    /*background: url(../assets/icon50.png) no-repeat;*/
     background-size: 30px;
     background-position: 49px 21px;
 }
 
 .list-menu .menu-3 {
-    background: url(../assets/icon51.png) no-repeat;
+    /*background: url(../assets/icon51.png) no-repeat;*/
     background-size: 30px;
     background-position: 49px 21px;
 }
