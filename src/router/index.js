@@ -4,8 +4,7 @@ import SettledCommission from '../component/SettledCommission.vue'
 import PresettleCommission from '../component/PresettleCommission.vue'
 import clientServer from '../component/clientServer.vue'
 import First from '../component/firstcomponent.vue'
-import order from '../component/order.vue'
-
+import addCar from '../component/addCar.vue'
 import customer from '../component/customermanagement.vue'
 import searchList from '../component/listcomponent.vue'
 import search from '../component/customersearch.vue'
@@ -17,10 +16,6 @@ export default {
     }, {
         path: '/second',
         component: secondcomponent
-
-    }, {
-        path: '/order',
-        component: order
 
     }, {
         path: '/clientServer',
@@ -43,5 +38,8 @@ export default {
     }, {
         path: '/presettleCommission', // 佣金结算明细 -> 待结算
         component: PresettleCommission
-    }]
+    },{
+      path:'/addCar',
+      component: addCar
+    },]
 }

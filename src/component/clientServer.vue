@@ -25,10 +25,10 @@
                 确定
             </div>
         </div>
-        <div v-show="!userFliter" class="listBox" v-infinite-scroll="loadMore"
+        <div v-show="!userFliter" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
-            <customerlIst :listDate='listDate'></customerlIst>
+            <customerlIst @listSay="overHide" :listDate='listDate'></customerlIst>
         </div>
     </div>
 </template>
@@ -51,6 +51,7 @@ export default {
     name: 'clientServer',
     data() {
         return {
+            listH:'',
             gps:{
               latitude:this.$route.query.latitude,
               longitude:this.$route.query.longitude
@@ -93,6 +94,9 @@ export default {
         this.items[0].isShow = true;
     },
     methods: {
+        overHide(isHide){
+          this.listH=isHide
+        },
         toSearch(){
           Request.jsBbridge(bridge=> {
               bridge.callHandler(
@@ -132,12 +136,10 @@ export default {
               }
               if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
               Indicator.close();
-              console.log(this.listDate.length)
           }).catch(error=>{
               Indicator.close();
               if (error.response) {
                   // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                  console.log(error.response.status);
                   Toast({
                       message: error.response.status,
                       duration: 2000
@@ -170,14 +172,11 @@ export default {
                 })
             })
             this.listDate=[]
-            // console.log(this.typeD)
             this.ajax()
         },
         loadMore() {
-          // console.log(this.pageLength+this.listDate)
           this.loading = true;
           this.page.pageno=parseInt(this.page.pageno)+1
-          console.log(this.listDate)
           this.ajax()
         }　　
     }
@@ -187,7 +186,7 @@ export default {
 [v-cloak] {
     display: none;
 }
-
+.overhide{ overflow-y: hidden !important; }
 #clientServer .shadowLine {
     background: #FFFFFF;
     box-shadow: 0 6px 12px 0 rgba(193, 193, 193, 0.50);
@@ -198,7 +197,7 @@ export default {
     width: 100%;
     height: 94px;
     background-color: #fff;
-    position: relative;
+    position: absolute;
     border-bottom: 2px solid #F1F2F7;
 }
 
@@ -333,7 +332,7 @@ export default {
 
 #clientServer .listBox {
     position: absolute;
-    top: 120px;
+    top: 121px;
     bottom: 0;
     width: 100%;
     overflow-y: scroll;
