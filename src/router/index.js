@@ -10,8 +10,6 @@ import customer from '../component/customermanagement.vue'
 import searchList from '../component/listcomponent.vue'
 import search from '../component/customersearch.vue'
 
-
-
 export default {
     routes: [{
         path: '/',
@@ -39,7 +37,6 @@ export default {
     }, {
         path: '/myCommission', // 我的佣金
         component: MyCommission
-
     }, {
         path: '/settleCommission', // 佣金结算明细->已结算
         component: SettledCommission

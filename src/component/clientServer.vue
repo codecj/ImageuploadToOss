@@ -3,22 +3,22 @@
         <div class="shadowLine"></div>
         <div class="topHead">
             <div class="activeTap" @click="fliterToggle()" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
-            <div class="mid">
+            <div @click="toSearch()" class="mid">
                 <form>
-                    <input placeholder="请输入要搜索的客户" type="search">
+                    <input disabled placeholder="请输入要搜索的客户" type="search">
                 </form>
             </div>
             <div class="right activeTap"></div>
         </div>
         <div v-show="userFliter" class="fliter">
-            <div class="fliterBar activeTap">
+            <div @click="getGps()" class="fliterBar activeTap">
                 <p class="fl">{{address}}</p>
                 <p class="fr"></p>
             </div>
             <div class="fliterType">
                 <p>客户类型</p>
                 <ul>
-                    <li :data-type="item.select" v-for="(item,$index) in items" @click="selectStyle(item, $index,item.select)" :class="{'active':item.userType||item.isShow,'unactive':!item.userType||item.isShow}">{{item.select}}</li>
+                    <li data-type="item.type" v-for="(item,$index) in items" @click="selectStyle(item, $index,item.select)" :class="{'active':item.userType||item.isShow,'unactive':!item.userType||item.isShow}">{{item.select}}</li>
                 </ul>
             </div>
             <div @click="fliterSure()" class="sureBtn">
@@ -33,17 +33,29 @@
     </div>
 </template>
 <script type="text/javascript">
-import Request from "../util/API";
+import { Lazyload } from 'mint-ui'
+import Request from "../util/API"
 import Vue from 'vue'
-import {
-    Toast,
-    Indicator
-} from 'mint-ui';
+import { Toast, Indicator } from 'mint-ui'
 import customerlIst from './customermanagement.vue'
+
+Vue.use(Lazyload,{
+    preLoad: 1.3,
+    lazyComponent: true,
+    error: require('../assets/holde.png'),
+    loading: require('../assets/holde.png'),
+    listenEvents: ['scroll']
+})
+
 export default {
     name: 'clientServer',
     data() {
         return {
+            gps:{
+              latitude:this.$route.query.latitude,
+              longitude:this.$route.query.longitude
+            },
+            picno:this.$route.query.picno,
             address: '全部区域',
             select: '',
             index: '0',
@@ -51,60 +63,83 @@ export default {
             userType: false,
             type: '全部',
             items: [{
+                type:0,
                 select: '全部',
                 isShow: true
             }, 　　　　　 {
+                type:1,
                 select: '我的客户',
                 isShow: false
             }, 　　　　　 {
+                type:2,
                 select: '企业客户',
                 isShow: false
             }],
             listDate: [],
-            page:{pageno:"0",pagesize:"20"}
+            page:{pageno:"0",pagesize:"20"},
+            typeD:0,
+            areaid:''
         }
     },
     components: {
         customerlIst
     },
     mounted: function() {
-        this.$nextTick(function() {
-          this.items.forEach(function(items) {
-              Vue.set(items, 'isShow', false);
+        this.$nextTick(()=> {
+          this.items.forEach(items=>{
+              this.$set(items, 'isShow', false);
           })
         })
         this.items[0].isShow = true;
     },
     methods: {
+        toSearch(){
+          Request.jsBbridge(bridge=> {
+              bridge.callHandler(
+                  'pushSearchWebClick'
+              )
+          })
+        },
+        getGps() {
+          Request.jsBbridge(bridge=> {
+              bridge.callHandler(
+                  'showAddressPicker', 
+                  responseData=> {
+                    this.areaid=responseData.areaid;
+                    responseData.areaid=='' ? this.address='全部区域' : this.address=responseData.address;
+                  }
+              )
+          })
+        },
         ajax() {
-          let _this = this
           Indicator.open();
-          let pargrmList = {
+          const pargrmList = {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
             type: 'wqCustomer',
-            para: '{"latitude":"30.32765","longitude":"120.17237","keywords":"","picno":"355328","type":0}'
+            para: '{"latitude":"'+this.gps.latitude+'","longitude":"'+this.gps.longitude+'","keywords":"","picno":"'+this.picno+'","type":'+this.typeD+',"areaid":"'+this.areaid+'"}'
           }
           //ajax调用
-          Request.post(pargrmList).then(function(res) {
-              for (let i = 0 ; i <JSON.parse(res.data.result).data.shopslist.length ; i++) {
-                _this.listDate.push(JSON.parse(res.data.result).data.shopslist[i])
+          Request.post(pargrmList).then(res=>{
+              const getData = JSON.parse(res.data.result)
+              getData.data.shopslist.forEach(value=> {
+                this.listDate.push(value)
+              })
+              if(this.listDate.length==getData.pagination.totalcount) {
+                Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+                Indicator.close();
+                return
               }
-              console.log(_this.listDate )
+              if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
               Indicator.close();
-          }).catch(function(error) {
+              console.log(this.listDate.length)
+          }).catch(error=>{
               Indicator.close();
               if (error.response) {
                   // 请求已发出，但服务器响应的状态码不在 2xx 范围内
                   console.log(error.response.status);
                   Toast({
                       message: error.response.status,
-                      duration: 2000
-                  });
-              } else {
-                  console.log('Error', error.message);
-                  Toast({
-                      message: error.message,
                       duration: 2000
                   });
               }
@@ -114,31 +149,35 @@ export default {
             this.userFliter = !this.userFliter;
             this.items[this.index].isShow = true;
         },
-        selectStyle(item, index, select) {
-          let vm = this;　　　　　　
-          this.$nextTick(function() {　　　　　　　　
-            this.items.forEach(function(item) {
-                Vue.set(item, 'isShow', false);
-                Vue.set(item, 'userType', false);　　　　　　　　
+        selectStyle(item, index, select) {　　　　
+          this.$nextTick(()=>{　　　　　　　　
+            this.items.forEach(item=>{
+                this.$set(item, 'isShow', false);
+                this.$set(item, 'userType', false);　　　　　　　　
             });
-            Vue.set(item, 'userType', true);
-            this.type = select;
-            this.index = index;　　　　　　
+            this.$set(item, 'userType', true);
+            this.typeD = item.type;
+            this.index = index;　
           });　　　　
         },
         fliterSure() {
+            this.page.pageno='1';
             this.userType = false;
             this.userFliter = false;
-            this.$nextTick(function() {
-                this.items.forEach(function(items) {
-                    Vue.set(items, 'isShow', false);
+            this.$nextTick(()=>{
+                this.items.forEach(items=>{
+                    this.$set(items, 'isShow', false);
                 })
             })
+            this.listDate=[]
+            // console.log(this.typeD)
+            this.ajax()
         },
         loadMore() {
+          // console.log(this.pageLength+this.listDate)
           this.loading = true;
-          this.page.pageno=parseInt(this.page.pageno)+1;
-          console.log(this.page)
+          this.page.pageno=parseInt(this.page.pageno)+1
+          console.log(this.listDate)
           this.ajax()
         }　　
     }
@@ -294,7 +333,7 @@ export default {
 
 #clientServer .listBox {
     position: absolute;
-    top: 119px;
+    top: 120px;
     bottom: 0;
     width: 100%;
     overflow-y: scroll;

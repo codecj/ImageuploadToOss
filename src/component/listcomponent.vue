@@ -5,13 +5,14 @@
       <input type="text" placeholder="请输入关键字搜索商品">
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
     </header>
-    <div class="border"></div>
     <div class="selectList">
       <ul>
-        <li>综合</li>
-        <li>销量</li>
-        <li @click="changePrice" :class="{'lowprice':price,'topprice':!price}">价格</li>
-        <li>筛选</li>
+        <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
+          {{item.title}}
+        </li>
+        <li>
+            筛选
+        </li>
       </ul>
     </div>
     <proLists :listStatus="listStatus"></proLists>
@@ -29,28 +30,55 @@
       return{
         status:false,
         listStatus:false,
-        price:true
+        price:true,
+        change:[
+          {
+            title:"综合",
+            show:true
+          },
+          {
+            title:"销量",
+            show:false
+          },
+          {
+            title:"价格",
+            show:false
+          }
+        ] 
       }
     },
     methods:{
-      changeList:function(){
+      changeList: function(){
         this.status=!this.status;
         this.listStatus=!this.listStatus
       },
-      changePrice:function(){
+      changeSort: function(item,index){
         this.price=!this.price;
-      }
+          this.$nextTick(function () {
+          let that=this;
+          this.change.forEach(function(item){
+             that.$set(item,"show",false);
+          })
+         that.$set(item,"show",true);
+        })       
+      },
     }
   })
 </script>
 
 <style>
+
+#prods{
+  position: absolute;
+    height: 100%;
+    width: 100%;}
 header{
   height:88px;
   line-height:88px;
   position: fixed;
   top:0;
   background:#fff;
+  width:100%;
 }
 header .statusactive{
   width:88px;
@@ -99,19 +127,9 @@ header div:nth-child(1) img{
   vertical-align: middle;
 
 }
-.border{
-  height:24px;
-  background:#EBECF0;
-  position: fixed;
-  top:88px;
-  left:0;
-  overflow: hidden;
-  width:100%;
-}
 .selectList {
   position: fixed;
   top:110px;
-
 }
 .selectList ul{
   width:630px;
@@ -126,7 +144,7 @@ header div:nth-child(1) img{
   font-size: 26px;
   color: #343657;
   letter-spacing: 0;
-  margin-right:105px;
+  margin-right:70px;
 }
 .selectList ul li:nth-last-child(){
   margin-right:0;
@@ -151,6 +169,14 @@ header div:nth-child(1) img{
   width:100px;
   background: url(../assets/icon6.png) no-repeat right;
   background-size:30%;
+}
+/*.selectList ul .show{
+  width:100px;
+  background: url(../assets/icon6.png) no-repeat right;
+  background-size:30%;
+}*/
+.selectList ul .show{
+  background:none;
 }
 .selectList ul li:nth-child(4){
   width:100px;
