@@ -103,11 +103,7 @@ export default {
               this.loading = true;
               this.page.pageno=parseInt(this.page.pageno)+1
               console.log(this.page)
-<<<<<<< HEAD
-//            this.submit()
-            }　　
-=======
-              this.submit()
+//            this.submit()　
             },
             back(){
                 Request.jsBbridge(bridge=> {
@@ -116,7 +112,6 @@ export default {
                     )
                 })   　　
             }
->>>>>>> 1d969f8f6a016d1f2f556cef2a24c3f9031d602b
         }
 }
 </script>
