@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="heards">
-            <span><img src="../assets/icon10.png"></span>
+            <span><img @click="back()" src="../assets/icon10.png"></span>
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
@@ -103,8 +103,20 @@ export default {
               this.loading = true;
               this.page.pageno=parseInt(this.page.pageno)+1
               console.log(this.page)
+<<<<<<< HEAD
 //            this.submit()
             }　　
+=======
+              this.submit()
+            },
+            back(){
+                Request.jsBbridge(bridge=> {
+                    bridge.callHandler(
+                        'popSuperiorClick'
+                    )
+                })   　　
+            }
+>>>>>>> 1d969f8f6a016d1f2f556cef2a24c3f9031d602b
         }
 }
 </script>

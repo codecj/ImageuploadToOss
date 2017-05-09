@@ -13,7 +13,11 @@
                 </div>
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
+<<<<<<< HEAD
                 <a class="menu-1" v-for="(menu,index) in menuList" :style="{background:'url(menu.Src)'}">{{menu.name}}</a>
+=======
+                <a @click="menuTouchUpInside(menu,item)" class="menu-1" v-for="(menu,index) in menuList" :style="{backgroundImage:'url('+ menu.imgSrc+')'}">{{menu.name}}</a>
+>>>>>>> 1d969f8f6a016d1f2f556cef2a24c3f9031d602b
                <!--  <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
@@ -32,6 +36,7 @@
     </div>
 </template>
 <script type="text/javascript">
+import Request from "../util/API"
 export default {
     data() {
             return {
@@ -56,6 +61,18 @@ export default {
             	this.listDate.forEach(items => {
                     if(items.SHOP_CODE!=item.SHOP_CODE ) this.$set(items, 'whichTab', false)
                 })
+            },
+            menuTouchUpInside(menu,item){
+                if (menu.url=='lianxi'){
+                    this.telbox(item);
+                }else{
+                    Request.jsBbridge(bridge=> {
+                        bridge.callHandler(
+                            'menuClicked',
+                            {menu:menu}
+                        )
+                    })
+                }
             },
             telbox(item) {
                 this.isHide=true
@@ -174,12 +191,6 @@ export default {
     padding-left: 44px
 }
 
-.wrap .list-menu a img {
-    vertical-align: middle;
-    width: 30px;
-    padding-right: 17px
-}
-
 .wrap .list-menu a:nth-child(2) {
     border-right: 2px solid rgba(255, 255, 255, 0.5);
     border-left: 2px solid rgba(255, 255, 255, 0.5);
@@ -189,30 +200,7 @@ export default {
     /*background: url(../assets/icon49.png) no-repeat;*/
     background-size: 30px;
     background-position: 49px 21px;
-}
-
-.list-menu .menu-2 {
-    /*background: url(../assets/icon50.png) no-repeat;*/
-    background-size: 30px;
-    background-position: 49px 21px;
-}
-
-.list-menu .menu-3 {
-    /*background: url(../assets/icon51.png) no-repeat;*/
-    background-size: 30px;
-    background-position: 49px 21px;
-}
-
-.list-menu .menu-5 {
-    background: url(../assets/icon52.png) no-repeat;
-    background-size: 30px;
-    background-position: 49px 21px;
-}
-
-.list-menu .menu-4 {
-    background: url(../assets/icon53.png) no-repeat;
-    background-size: 30px;
-    background-position: 49px 21px;
+    background-repeat: no-repeat;
 }
 
 .wrap .list-menu a:nth-child(3) {

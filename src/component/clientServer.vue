@@ -175,8 +175,8 @@ export default {
                     Toast({message: getData.msg,duration: 2000});
                   }else{
                     this.menuList = getData.data.slice(0,2);
-                    this.menuList.push({imgSrc:'../assets/icon52.png',name:'联系',url:'lianxi',urlType:'N'});
-                    this.menuList.push({imgSrc:'../assets/icon53.png',name:'更多',url:'gengduo',urlType:'N'});
+                    this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
+                    this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
                     console.log(this.menuList);
                   }   
             }).catch(error=>{
