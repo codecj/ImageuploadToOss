@@ -121,7 +121,7 @@ export default {
     color: #3B456C;
     letter-spacing: 0;
     line-height: 30px;
-    padding: 42px 22px 20px 0px;
+    padding: 42px 142px 20px 0px;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -159,8 +159,8 @@ export default {
     font-size: 22px;
     color: #9DA2B5;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 29px;
+    right: 29px;
 }
 
 .wrap .list-menu {
