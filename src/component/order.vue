@@ -59,8 +59,10 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+
  /* .top{
+>>>>>>> 0c7bbf0aae9e31fa1ca1b8f5f62506f2935df18e
     background-color: #000;
     opacity: 0.3;
     height: 334px;
