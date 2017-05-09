@@ -126,7 +126,6 @@
 
 <style scoped>
 	#MyCommission {
-		height: 1500px;
 		position: relative;
 		background-color: rgb(239,240,246);
 	}
@@ -178,12 +177,12 @@
 		color: #3B456C;
 		position: absolute;
 		right: 70px;
-		top: 37px;
+		top: 38px;
 	}
 	.content img {
 		position: absolute;
 		left: 705px;
-		top: 40px;
+		top: 43px;
 		width: 32px;
 		height: 32px;
 	}
