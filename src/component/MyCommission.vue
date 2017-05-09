@@ -9,12 +9,12 @@
 				<span>{{PLACE_PRICE_SIGLE}}</span>
 			</div>
 		</div>
-		<div class="content">
+		<div class="content" @click='jumpToNativeCommission'>
 			<span>上月已结算佣金</span>
 			<span>￥{{ALREADY_PRICE}}</span>
 			<img src="../assets/icon17.png" class="right">
 		</div>
-		<div class="footer">
+		<div class="footer" @click='jumpToNativeMyAmount'>
 			<img src="../assets/icon21.png" class="left">
 			<span>提现</span>
 			<img src="../assets/icon17.png" class="right">
@@ -41,7 +41,6 @@
 		},
 		mounted(){
 			this.ajax();
-			alert(1);
 		},
 		methods: {
 			ajax:function(){
@@ -97,6 +96,21 @@
               		}
           		})
 			},
+			jumpToNativeCommission(){ // 跳转到结算佣金的详情
+				Request.jsBbridge(bridge=>{
+					bridge.callHandler(
+						'jumpToCommissionDetail'
+					)
+				})
+			},
+			jumpToNativeMyAmount(){
+				Request.jsBbridge(bridge=>{
+					bridge.callHandler(
+						"jumpToMyWallet"
+					)
+				})
+			}
+
 			// jsBbridge(function(bridge) {
 			//     bridge.callHandler(
 			//         '方法名', {
