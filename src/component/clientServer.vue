@@ -8,7 +8,7 @@
                     <input disabled placeholder="请输入要搜索的客户" type="search">
                 </form>
             </div>
-            <div class="right activeTap"></div>
+            <div @click="createClient()" class="right activeTap"></div>
         </div>
         <div v-show="userFliter" class="fliter">
             <div @click="getGps()" class="fliterBar activeTap">
@@ -28,7 +28,7 @@
         <div v-show="!userFliter" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
-            <customerlIst @listSay="overHide" :listDate='listDate'></customerlIst>
+            <customerlIst @listSay="overHide" :listDate='listDate' :menuList='menuList'></customerlIst>
         </div>
     </div>
 </template>
@@ -56,6 +56,11 @@ export default {
               latitude:this.$route.query.latitude,
               longitude:this.$route.query.longitude
             },
+            //请求资源菜单的参数
+            paragrams:{
+                userName:this.$route.query.userName,
+                menuId:this.$route.query.menuId
+            },
             picno:this.$route.query.picno,
             address: '全部区域',
             select: '',
@@ -77,6 +82,7 @@ export default {
                 isShow: false
             }],
             listDate: [],
+            menuList:[],//资源菜单
             page:{pageno:"0",pagesize:"20"},
             typeD:0,
             areaid:''
@@ -92,6 +98,7 @@ export default {
           })
         })
         this.items[0].isShow = true;
+        this.requestMenus();
     },
     methods: {
         overHide(isHide){
@@ -101,6 +108,13 @@ export default {
           Request.jsBbridge(bridge=> {
               bridge.callHandler(
                   'pushSearchWebClick'
+              )
+          })
+        },
+        createClient(){
+            Request.jsBbridge(bridge=> {
+              bridge.callHandler(
+                  'pushCreateCustomerClick'
               )
           })
         },
@@ -146,6 +160,35 @@ export default {
                   });
               }
           })
+        },
+        requestMenus(){
+            const pargrmList = {
+                oper: 'findResources',
+                type: 'user',
+                para: JSON.stringify(this.paragrams)
+            };
+            //ajax调用
+            Request.post(pargrmList).then(res=>{
+                  const getData = JSON.parse(res.data.result);
+                  if (parseInt(getData.code) !=200){
+                    console.log(getData.msg);
+                    Toast({message: getData.msg,duration: 2000});
+                  }else{
+                    this.menuList = getData.data.slice(0,2);
+                    this.menuList.push({imgSrc:'../assets/icon52.png',name:'联系',url:'lianxi',urlType:'N'});
+                    this.menuList.push({imgSrc:'../assets/icon53.png',name:'更多',url:'gengduo',urlType:'N'});
+                    console.log(this.menuList);
+                  }   
+            }).catch(error=>{
+             
+              if (error.response) {
+                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                  Toast({
+                      message: error.response.status,
+                      duration: 2000
+                  });
+              }
+            })
         },
         fliterToggle() {
             this.userFliter = !this.userFliter;
