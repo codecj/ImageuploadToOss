@@ -1,7 +1,7 @@
 <!-- 未结算佣金  findAlreadyCommission已结算-->
 <template>
 	<div>
-		<commissionList :commissionData='commissionData'></commissionList>
+		<commissionList :commissionData='dataType'></commissionList>
 	</div>
 </template>
 
@@ -10,7 +10,7 @@
 	export default {
 		data(){
 			return {
-				commissionData:'{"type":"already"}'
+				dataType:'{"type":"already"}'
 			}
 		},
 		components:{

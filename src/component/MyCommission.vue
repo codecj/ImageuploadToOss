@@ -41,6 +41,7 @@
 		},
 		mounted(){
 			this.ajax();
+			alert(1);
 		},
 		methods: {
 			ajax:function(){
