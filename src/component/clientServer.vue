@@ -240,7 +240,7 @@ export default {
     width: 100%;
     height: 94px;
     background-color: #fff;
-    position: absolute;
+    position: relative;
     border-bottom: 2px solid #F1F2F7;
 }
 
