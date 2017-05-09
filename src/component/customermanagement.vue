@@ -40,7 +40,7 @@
                     <span>{{item.DISTANCE}}km</span>
                 </div>
             </div>
-            <div class="list-menu" v-show="item.whichTab">
+            <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
                 <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
@@ -49,7 +49,7 @@
             <div class="wrap-popup" v-show="item.telBox">
                 <div class="content-popup">
                     <ul>
-                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="item.telBox=!item.telBox" src="../assets/icon18.png"></span></li>
+                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="telClose(item)" src="../assets/icon18.png"></span></li>
                         <li v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
                         <li v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
                     </ul>
@@ -62,20 +62,27 @@
 export default {
     data() {
             return {
-				
+                isHide:true
             }
         },
         props: ['listDate'],
-        mounted: function() {},
+        mounted: function() {
+        },
         methods: {
+            telClose(item){
+                this.isHide=false
+                this.$emit('listSay',this.isHide);
+                item.telBox=!item.telBox
+            },
             tabChose(item) {
-            	this.listDate.forEach((item) => {
-                    this.$set(item, 'whichTab', false);
+                item.whichTab ? this.$set(item, 'whichTab', false):this.$set(item, 'whichTab', true);
+            	this.listDate.forEach(items => {
+                    if(items.SHOP_CODE!=item.SHOP_CODE ) this.$set(items, 'whichTab', false)
                 })
-                this.$set(item, 'whichTab', true);
-
             },
             telbox(item) {
+                this.isHide=true
+                this.$emit('listSay',this.isHide);
                 this.listDate.forEach((item) => {
                     this.$set(item, 'telBox', false);
                 })
@@ -164,11 +171,16 @@ export default {
 .wrap .list-menu {
     clear: both;
     background-color: #4D5679;
-    height: 96px;
+    height: 0;
     line-height: 96px;
     display: flex;
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+    overflow: hidden;
 }
-
+.wrap .list-menu.show {
+    height: 96px;
+}
 .wrap .list-menu a {
     color: #fff;
     text-align: center;
