@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="css">
-  .top{
+ /* .top{
     background-color: #000;
     opacity: 0.3;
     height: 334px;
@@ -168,5 +168,5 @@ export default {
     height: 98px;
     color: #FFF;
     font-size: 30px;
-  }
+  }*/
 </style>
