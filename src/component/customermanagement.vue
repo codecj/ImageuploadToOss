@@ -13,11 +13,7 @@
                 </div>
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
-<<<<<<< HEAD
-                <a class="menu-1" v-for="(menu,index) in menuList" :style="{background:'url(menu.Src)'}">{{menu.name}}</a>
-=======
                 <a @click="menuTouchUpInside(menu,item)" class="menu-1" v-for="(menu,index) in menuList" :style="{backgroundImage:'url('+ menu.imgSrc+')'}">{{menu.name}}</a>
->>>>>>> 1d969f8f6a016d1f2f556cef2a24c3f9031d602b
                <!--  <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
