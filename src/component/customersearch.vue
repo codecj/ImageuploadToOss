@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="heards">
-            <span><img src="../assets/icon10.png"></span>
+            <span><img @click="back()" src="../assets/icon10.png"></span>
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
@@ -11,7 +11,7 @@
             </form>
         </div>
         <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <customerlIst :listDate='listDate'></customerlIst>
+            <customerlIst :listDate='listDate' :menuList='menuList'></customerlIst>
         </div>
     </div>
 </template>
@@ -41,24 +41,31 @@ export default {
                 keyword: '',
                 listDate: [],
                 page:{pageno:"0",pagesize:"20"},
-           		typeD:0
+           		typeD:0,
+                paragrams:{
+                    userName:this.$route.query.userName,
+                    menuId:this.$route.query.menuId
+                },
+           		menuList:[]
             }
         },
         components: {
             customerlIst
         },
         mounted: function() {
-
-        },
+        this.requestMenus();
+    },
         methods: {
             submit() {
             	 Indicator.open();
-                let pargrm = {
+//          	 this.listDate=[]
+            	 console.log(this.keyword)
+                const pargrm = {
                         pagination: JSON.stringify(this.page),
                         oper: 'getShopList',
                         type: 'wqCustomer',
-                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
-                    }
+                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords":"'+this.keyword+'", "picno": "355328","type": 0}'
+                   }
                     //ajax调用
                 Request.post(pargrm).then((res) => {
                     console.log(res)
@@ -99,13 +106,50 @@ export default {
                     }
                 })
             },
+             requestMenus(){
+            const pargrmList = {
+                oper: 'findResources',
+                type: 'user',
+                para: JSON.stringify(this.paragrams)
+            };
+            //ajax调用
+            Request.post(pargrmList).then(res=>{
+                  const getData = JSON.parse(res.data.result);
+                  if (parseInt(getData.code) !=200){
+                    console.log(getData.msg);
+                    Toast({message: getData.msg,duration: 2000});
+                  }else{
+                    this.menuList = getData.data.slice(0,2);
+                    this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
+                    this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
+                    console.log(this.menuList);
+                  }   
+            }).catch(error=>{
+             
+              if (error.response) {
+                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                  Toast({
+                      message: error.response.status,
+                      duration: 2000
+                  });
+              }
+            })
+        },
+        
             loadMore() {
               // console.log(this.pageLength+this.listDate)
               this.loading = true;
               this.page.pageno=parseInt(this.page.pageno)+1
               console.log(this.page)
-              this.submit()
-            }　　
+//            this.submit()　
+            },
+            back(){
+                Request.jsBbridge(bridge=> {
+                    bridge.callHandler(
+                        'popSuperiorClick'
+                    )
+                })   　　
+            }
         }
 }
 </script>
