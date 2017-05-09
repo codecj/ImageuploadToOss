@@ -9,6 +9,9 @@ import VueRouter from "vue-router";
 import  routerConfig from './router'
 import FastClick from 'fastclick'
 
+//开启debug模式
+Vue.config.debug = true;
+
 if ('addEventListener' in document) {  
   document.addEventListener('DOMContentLoaded', function() {  
     FastClick.attach(document.body);  
