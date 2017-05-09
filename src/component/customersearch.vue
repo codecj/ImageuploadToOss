@@ -11,7 +11,7 @@
             </form>
         </div>
         <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <customerlIst :listDate='listDate'></customerlIst>
+            <customerlIst :listDate='listDate' :menuList='menuList'></customerlIst>
         </div>
     </div>
 </template>
@@ -41,12 +41,16 @@ export default {
                 keyword: '',
                 listDate: [],
                 page:{pageno:"0",pagesize:"20"},
-           		typeD:0
+           		typeD:0,
+           		menuList:[]
             }
         },
         components: {
             customerlIst
         },
+        mounted: function() {
+        this.requestMenus();
+    },
         methods: {
             submit() {
             	 Indicator.open();
@@ -98,6 +102,36 @@ export default {
                     }
                 })
             },
+             requestMenus(){
+            const pargrmList = {
+                oper: 'findResources',
+                type: 'user',
+                para: JSON.stringify(this.paragrams)
+            };
+            //ajax调用
+            Request.post(pargrmList).then(res=>{
+                  const getData = JSON.parse(res.data.result);
+                  if (parseInt(getData.code) !=200){
+                    console.log(getData.msg);
+                    Toast({message: getData.msg,duration: 2000});
+                  }else{
+                    this.menuList = getData.data.slice(0,2);
+                    this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
+                    this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
+                    console.log(this.menuList);
+                  }   
+            }).catch(error=>{
+             
+              if (error.response) {
+                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                  Toast({
+                      message: error.response.status,
+                      duration: 2000
+                  });
+              }
+            })
+        },
+        
             loadMore() {
               // console.log(this.pageLength+this.listDate)
               this.loading = true;
