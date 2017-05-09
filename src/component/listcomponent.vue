@@ -2,7 +2,7 @@
   <div id="prods">
     <header>
       <div><img src="../assets/icon10.png" alt=""/></div>
-      <input type="text" placeholder="请输入关键字搜索商品">
+      <form action=""><input type="text" placeholder="请输入关键字搜索商品"></form>
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
     </header>
     <div class="selectList">
@@ -15,17 +15,27 @@
         </li>
       </ul>
     </div>
-    <proLists :listStatus="listStatus"></proLists>
+    <!-- <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
+      <proLists :listStatus="listStatus"></proLists>
+    <!-- </div> -->
   </div>
 </template>
 
 <script type="text/javascript">
+  import Vue from 'vue'
   import proLists from "./prodlistcomponent.vue"
+  import { Lazyload } from 'mint-ui'
+  import { Toast,Indicator } from 'mint-ui'
+  // 懒加载效果
+  Vue.use(Lazyload, {
+    preLoad: 1.3,
+    error: require('../assets/holde.png'),
+    loading: require('../assets/holde.png'),
+    attempt: 1
+  })
+
   export default({
     name:"prods",
-    components: {
-      proLists
-    },
     data() {
       return{
         status:false,
@@ -44,10 +54,56 @@
             title:"价格",
             show:false
           }
-        ] 
+        ] ,
+        listDate:[],
+        page:{
+          pageno:"0",
+          pagesize:"20"
+        }
       }
     },
-    methods:{
+    components: {
+      proLists
+    },
+    mounted: function() {},
+    methods:{ 
+      ajax() {
+        Indicator.open();
+        const pargrmList = {
+          pagination: JSON.stringify(this.page),
+          oper: 'findStkNewsAppNew',
+          type: 'wqProduct',
+          para: '{"userno":"","catid":"","spusername":""}'
+        }
+        //ajax调用
+        // Request.post(pargrmList).then(res=>{console.log(res)
+        //     const getData = JSON.parse(res.data.result)
+        //     getData.data.shopslist.forEach(value=> {
+        //       this.listDate.push(value)
+        //     })
+        //     if(this.listDate.length==getData.pagination.totalcount) {
+        //       Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+        //       Indicator.close();
+        //       return
+        //     }
+        //     if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+        //     Indicator.close();
+        // }).catch(error=>{
+        //     Indicator.close();
+        //     if (error.response) {
+        //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+        //         Toast({
+        //             message: error.response.status,
+        //             duration: 2000
+        //         });
+        //     }
+        // })
+      },
+      // loadMore() {
+      //   this.loading = true;
+      //   this.page.pageno=parseInt(this.page.pageno)+1;
+      //   this.ajax();
+      // },　
       changeList: function(){
         this.status=!this.status;
         this.listStatus=!this.listStatus

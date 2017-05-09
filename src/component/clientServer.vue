@@ -103,6 +103,7 @@ export default {
           //ajax调用
           Request.post(pargrmList).then(res=>{
               const getData = JSON.parse(res.data.result)
+              console.log(getData)
               getData.data.shopslist.forEach(value=> {
                 this.listDate.push(value)
               })
@@ -158,7 +159,7 @@ export default {
           // console.log(this.pageLength+this.listDate)
           this.loading = true;
           this.page.pageno=parseInt(this.page.pageno)+1
-          console.log(this.listDate)
+          // console.log(this.listDate)
           this.ajax()
         }　　
     }

@@ -20,14 +20,5 @@ const app = new Vue({
     router: router,
     render: h => h(App)
 }).$mount('#app')
-// 懒加载部分
 
-// Vue.use(Lazyload, {
-//     preLoad: 1.3,
-//     lazyComponent: true,
-//     error: require('./assets/icon2.png'),
-//     loading: require('./assets/icon2.png'),
-//     listenEvents: ['scroll'],
-//     attempt: 1
-// })
 

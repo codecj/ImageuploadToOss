@@ -44,6 +44,7 @@
             <img src="../assets/icon43.png" alt="" class="gocart">
           </p>
         </div>
+        <getbottom></getbottom>
         <!-- //////////////////////////////////////////// -->
    </div>
    <div class="over">
@@ -58,19 +59,13 @@
        
     </div> 
     </div>
+
    
   </div>
 </template>
 
 <script type="text/javascript">
-import Vue from 'vue'
-import { Lazyload } from 'mint-ui';
-  Vue.use(Lazyload, {
-    preLoad: 1.3,
-    error: require('../assets/holde.png'),
-    loading: require('../assets/holde.png'),
-    attempt: 1
-  });
+  import getbottom from "./getbottom.vue"
   export default({
     name:"prodsList",
     data() {
@@ -111,7 +106,11 @@ import { Lazyload } from 'mint-ui';
           ]
         }
     },
+    components: {
+      getbottom
+    },
     props:["listStatus"],
+    mounted: function() {},
     methods:{
       onScroll:function() {
         this.scrolled=document.getElementById("prodsList").scrollTop;
@@ -142,7 +141,7 @@ import { Lazyload } from 'mint-ui';
   bottom:0;
   overflow-y:scroll;
   -webkit-overflow-scrolling: touch;
-  padding-bottom:200px;
+  /*padding-bottom:200px;*/
   background:#ebecf0;
 }
 .proList{
