@@ -42,6 +42,10 @@ export default {
                 listDate: [],
                 page:{pageno:"0",pagesize:"20"},
            		typeD:0,
+                paragrams:{
+                    userName:this.$route.query.userName,
+                    menuId:this.$route.query.menuId
+                },
            		menuList:[]
             }
         },
