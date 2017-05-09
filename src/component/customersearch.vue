@@ -47,18 +47,17 @@ export default {
         components: {
             customerlIst
         },
-        mounted: function() {
-
-        },
         methods: {
             submit() {
             	 Indicator.open();
-                let pargrm = {
+//          	 this.listDate=[]
+            	 console.log(this.keyword)
+                const pargrm = {
                         pagination: JSON.stringify(this.page),
                         oper: 'getShopList',
                         type: 'wqCustomer',
-                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
-                    }
+                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords":"'+this.keyword+'", "picno": "355328","type": 0}'
+                   }
                     //ajax调用
                 Request.post(pargrm).then((res) => {
                     console.log(res)
@@ -104,7 +103,7 @@ export default {
               this.loading = true;
               this.page.pageno=parseInt(this.page.pageno)+1
               console.log(this.page)
-              this.submit()
+//            this.submit()
             }　　
         }
 }

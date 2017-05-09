@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
-                <a class="menu-1" v-for="(menu,index) in menuList" :style="{background:url('http://img-test.qpwa.cn/sys/ico/EYKHF-YRMRN-LVGJY-AHNCJ-LHNQL.png')}">{{menu.name}}</a>
+                <a class="menu-1" v-for="(menu,index) in menuList" :style="{background:'url(menu.Src)'}">{{menu.name}}</a>
                <!--  <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
