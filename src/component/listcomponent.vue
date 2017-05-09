@@ -1,7 +1,7 @@
 <template>
   <div id="prods">
     <header>
-      <div><img src="../assets/icon10.png" alt=""/></div>
+      <div id="backClick" @click="backClick"><img src="../assets/icon10.png" alt=""/></div>
       <input type="text" placeholder="请输入关键字搜索商品">
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
     </header>
@@ -44,7 +44,7 @@
             title:"价格",
             show:false
           }
-        ] 
+        ]
       }
     },
     methods:{
@@ -60,10 +60,44 @@
              that.$set(item,"show",false);
           })
          that.$set(item,"show",true);
-        })       
+        })
       },
+      backClick: function(){
+        console.log("执行");
+						setupWebViewJavascriptBridge(function(bridge) {
+							bridge.callHandler(
+								'pushSearchWebClick'
+							)
+						})
+      }
     }
   })
+
+  /*JSbridge通用方法*/
+		function setupWebViewJavascriptBridge(callback) {
+			if(window.WebViewJavascriptBridge) {
+				return callback(WebViewJavascriptBridge);
+			} else {
+				document.addEventListener(
+					'WebViewJavascriptBridgeReady',
+					function() {
+						callback(WebViewJavascriptBridge)
+					},
+					false
+				);
+			}
+			if(window.WVJBCallbacks) {
+				return window.WVJBCallbacks.push(callback);
+			}
+			window.WVJBCallbacks = [callback];
+			var WVJBIframe = document.createElement('iframe');
+			WVJBIframe.style.display = 'none';
+			WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+			document.documentElement.appendChild(WVJBIframe);
+			setTimeout(function() {
+				document.documentElement.removeChild(WVJBIframe)
+			}, 0);
+		}
 </script>
 
 <style>
@@ -135,7 +169,7 @@ header div:nth-child(1) img{
   width:630px;
   height:37px;
   background:#fff;
-  padding:30px 48px 29px 72px;  
+  padding:30px 48px 29px 72px;
   text-align: left;
 
 }
