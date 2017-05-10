@@ -6,7 +6,7 @@
                 <div class="input-wrap">
                     <div>
                         <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
-                        <input ref="input" autofocus="true" type="search"  class="mint-searchbar-core" :value="keyword" v-model="keyword">
+                        <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
                     </div>
                 </div>
             </form>
@@ -32,8 +32,6 @@
 		loading: require('../assets/holde.png'),
 		listenEvents: ['scroll']
 	})
-    // 注册一个全局自定义指令 v-focus
-
 	export default {
 		data() {
 			return {
