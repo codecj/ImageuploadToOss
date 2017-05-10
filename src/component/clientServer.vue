@@ -8,7 +8,7 @@
                     <input disabled placeholder="请输入要搜索的客户" type="search">
                 </form>
             </div>
-            <div class="right activeTap"></div>
+            <div @click="createClient()" class="right activeTap"></div>
         </div>
         <div v-show="userFliter" class="fliter">
             <div @click="getGps()" class="fliterBar activeTap">
@@ -25,10 +25,10 @@
                 确定
             </div>
         </div>
-        <div v-show="!userFliter" class="listBox" v-infinite-scroll="loadMore"
+        <div v-show="!userFliter" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
-            <customerlIst :listDate='listDate'></customerlIst>
+            <customerlIst @listSay="overHide" :listDate='listDate' :menuList='menuList'></customerlIst>
         </div>
     </div>
 </template>
@@ -51,9 +51,15 @@ export default {
     name: 'clientServer',
     data() {
         return {
+            listH:'',
             gps:{
               latitude:this.$route.query.latitude,
               longitude:this.$route.query.longitude
+            },
+            //请求资源菜单的参数
+            paragrams:{
+                userName:this.$route.query.userName,
+                menuId:this.$route.query.menuId
             },
             picno:this.$route.query.picno,
             address: '全部区域',
@@ -76,6 +82,7 @@ export default {
                 isShow: false
             }],
             listDate: [],
+            menuList:[],//资源菜单
             page:{pageno:"0",pagesize:"20"},
             typeD:0,
             areaid:''
@@ -91,12 +98,23 @@ export default {
           })
         })
         this.items[0].isShow = true;
+        this.requestMenus();
     },
     methods: {
+        overHide(isHide){
+          this.listH=isHide
+        },
         toSearch(){
           Request.jsBbridge(bridge=> {
               bridge.callHandler(
                   'pushSearchWebClick'
+              )
+          })
+        },
+        createClient(){
+            Request.jsBbridge(bridge=> {
+              bridge.callHandler(
+                  'pushCreateCustomerClick'
               )
           })
         },
@@ -133,18 +151,45 @@ export default {
               }
               if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
               Indicator.close();
-              console.log(this.listDate.length)
           }).catch(error=>{
               Indicator.close();
               if (error.response) {
                   // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                  console.log(error.response.status);
                   Toast({
                       message: error.response.status,
                       duration: 2000
                   });
               }
           })
+        },
+        requestMenus(){
+            const pargrmList = {
+                oper: 'findResources',
+                type: 'user',
+                para: JSON.stringify(this.paragrams)
+            };
+            //ajax调用
+            Request.post(pargrmList).then(res=>{
+                  const getData = JSON.parse(res.data.result);
+                  if (parseInt(getData.code) !=200){
+                    console.log(getData.msg);
+                    Toast({message: getData.msg,duration: 2000});
+                  }else{
+                    this.menuList = getData.data.slice(0,2);
+                    this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
+                    this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
+                    console.log(this.menuList);
+                  }   
+            }).catch(error=>{
+             
+              if (error.response) {
+                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                  Toast({
+                      message: error.response.status,
+                      duration: 2000
+                  });
+              }
+            })
         },
         fliterToggle() {
             this.userFliter = !this.userFliter;
@@ -171,14 +216,15 @@ export default {
                 })
             })
             this.listDate=[]
-            // console.log(this.typeD)
             this.ajax()
         },
         loadMore() {
-          // console.log(this.pageLength+this.listDate)
           this.loading = true;
           this.page.pageno=parseInt(this.page.pageno)+1
+<<<<<<< HEAD
           // console.log(this.listDate)
+=======
+>>>>>>> 2b5b86c7e2b64c63cddc393faf02f3a17f3cb8c2
           this.ajax()
         }　　
     }
@@ -188,7 +234,7 @@ export default {
 [v-cloak] {
     display: none;
 }
-
+.overhide{ overflow-y: hidden !important; }
 #clientServer .shadowLine {
     background: #FFFFFF;
     box-shadow: 0 6px 12px 0 rgba(193, 193, 193, 0.50);
@@ -334,7 +380,7 @@ export default {
 
 #clientServer .listBox {
     position: absolute;
-    top: 120px;
+    top: 121px;
     bottom: 0;
     width: 100%;
     overflow-y: scroll;

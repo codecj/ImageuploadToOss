@@ -1,33 +1,5 @@
 <template>
     <div class="wrap ">
-        <!-- <div v-for="(item, index) in listDate" class="listWrap" :key="index">
-            <div class="list activeTap" @click="tabChose(item)">
-                <div class="list-left"><img v-lazy="item.SHOP_IMAGE"></div>
-                <div class="list-mid">
-                    <div class="list-names">{{item.SHOP_NAME}}</div>
-                    <div class="list-map"><img src="src/assets/icon12.png">{{item.ADDRESS}}</div>
-                    <div class="list-time">{{item.ORDERINFOR}}</div>
-                </div>
-                <div class="list-right">
-                    <span>{{item.DISTANCE}}km</span>
-                </div>
-            </div>
-            <div class="list-menu" v-show="item.whichTab">
-                <a class="menu-1">下单</a>
-                <a class="menu-2">车销</a>
-                <a class="menu-3" @click="telbox(item)">联系</a>
-                <a class="menu-4">更多</a>
-            </div>
-            <div class="wrap-popup" v-show="item.telBox">
-                <div class="content-popup">
-                    <ul>
-                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="item.telBox=!item.telBox" src="../assets/icon18.png"></span></li>
-                        <li v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
-                        <li v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div> -->
         <div v-for="(item, index) in listDate" class="listWrap" :key="index">
             <div class="list activeTap" @click="tabChose(item)">
                 <div class="list-left"><img v-lazy="item.SHOP_IMAGE"></div>
@@ -40,16 +12,17 @@
                     <span>{{item.DISTANCE}}km</span>
                 </div>
             </div>
-            <div class="list-menu" v-show="item.whichTab">
-                <a class="menu-1">下单</a>
+            <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
+                <a @click="menuTouchUpInside(menu,item)" class="menu-1" v-for="(menu,index) in menuList" :style="{backgroundImage:'url('+ menu.imgSrc+')'}">{{menu.name}}</a>
+               <!--  <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
-                <a class="menu-4">更多</a>
+                <a class="menu-4">更多</a> -->
             </div>
             <div class="wrap-popup" v-show="item.telBox">
                 <div class="content-popup">
                     <ul>
-                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="item.telBox=!item.telBox" src="../assets/icon18.png"></span></li>
+                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="telClose(item)" src="../assets/icon18.png"></span></li>
                         <li v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
                         <li v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
                     </ul>
@@ -59,23 +32,47 @@
     </div>
 </template>
 <script type="text/javascript">
+import Request from "../util/API"
 export default {
     data() {
             return {
-				
+                isHide:true,
+                activeColor: 'red'
             }
         },
-        props: ['listDate'],
-        mounted: function() {},
+        props: {
+            listDate:Array,
+            menuList:Array
+        },
+        mounted: function() {
+        },
         methods: {
+            telClose(item){
+                this.isHide=false
+                this.$emit('listSay',this.isHide);
+                item.telBox=!item.telBox
+            },
             tabChose(item) {
-            	this.listDate.forEach((item) => {
-                    this.$set(item, 'whichTab', false);
+                item.whichTab ? this.$set(item, 'whichTab', false):this.$set(item, 'whichTab', true);
+            	this.listDate.forEach(items => {
+                    if(items.SHOP_CODE!=item.SHOP_CODE ) this.$set(items, 'whichTab', false)
                 })
-                this.$set(item, 'whichTab', true);
-
+            },
+            menuTouchUpInside(menu,item){
+                if (menu.url=='lianxi'){
+                    this.telbox(item);
+                }else{
+                    Request.jsBbridge(bridge=> {
+                        bridge.callHandler(
+                            'menuClicked',
+                            {menu:menu,shopItem:item}
+                        )
+                    })
+                }
             },
             telbox(item) {
+                this.isHide=true
+                this.$emit('listSay',this.isHide);
                 this.listDate.forEach((item) => {
                     this.$set(item, 'telBox', false);
                 })
@@ -124,7 +121,7 @@ export default {
     color: #3B456C;
     letter-spacing: 0;
     line-height: 30px;
-    padding: 42px 22px 20px 0px;
+    padding: 42px 142px 20px 0px;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -138,6 +135,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-right: 2.5rem;
 }
 
 .wrap .list .list-mid .list-time {
@@ -152,6 +150,7 @@ export default {
 }
 
 .wrap .list .list-right {
+	position: relative;
     -webkit-box-flex: 1;
     padding: 29px 29px;
 }
@@ -159,16 +158,24 @@ export default {
 .wrap .list .list-right span {
     font-size: 22px;
     color: #9DA2B5;
+    position: absolute;
+    top: 29px;
+    right: 29px;
 }
 
 .wrap .list-menu {
     clear: both;
     background-color: #4D5679;
-    height: 96px;
+    height: 0;
     line-height: 96px;
     display: flex;
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+    overflow: hidden;
 }
-
+.wrap .list-menu.show {
+    height: 96px;
+}
 .wrap .list-menu a {
     color: #fff;
     text-align: center;
@@ -180,45 +187,16 @@ export default {
     padding-left: 44px
 }
 
-.wrap .list-menu a img {
-    vertical-align: middle;
-    width: 30px;
-    padding-right: 17px
-}
-
 .wrap .list-menu a:nth-child(2) {
     border-right: 2px solid rgba(255, 255, 255, 0.5);
     border-left: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .list-menu .menu-1 {
-    background: url(../assets/icon49.png) no-repeat;
+    /*background: url(../assets/icon49.png) no-repeat;*/
     background-size: 30px;
     background-position: 49px 21px;
-}
-
-.list-menu .menu-2 {
-    background: url(../assets/icon50.png) no-repeat;
-    background-size: 30px;
-    background-position: 49px 21px;
-}
-
-.list-menu .menu-3 {
-    background: url(../assets/icon51.png) no-repeat;
-    background-size: 30px;
-    background-position: 49px 21px;
-}
-
-.list-menu .menu-5 {
-    background: url(../assets/icon52.png) no-repeat;
-    background-size: 30px;
-    background-position: 49px 21px;
-}
-
-.list-menu .menu-4 {
-    background: url(../assets/icon53.png) no-repeat;
-    background-size: 30px;
-    background-position: 49px 21px;
+    background-repeat: no-repeat;
 }
 
 .wrap .list-menu a:nth-child(3) {
@@ -256,7 +234,7 @@ export default {
     float: right;
     margin: 31px 31px;
     position: absolute;
-    right: 31px;
+    right: 0;
 }
 
 .popup-tel img {
