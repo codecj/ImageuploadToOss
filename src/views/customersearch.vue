@@ -5,7 +5,22 @@
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
-                        <input v-focus type="search" :value="keyword" v-model="keyword">
+<<<<<<< HEAD
+                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
+                        <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
+=======
+<<<<<<< HEAD
+                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
+                        <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
+=======
+<<<<<<< HEAD
+                        <input ref="input" autofocus="true" type="search" :value="keyword" v-model="keyword">
+=======
+                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
+                        <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
+>>>>>>> 5e3ea4e7076ea34cbf5c2dfb5d784414880fadc0
+>>>>>>> 230bba6c9d0cfe3e88e1bee5f2daa78e2f2c73ea
+>>>>>>> ac25fa4b9a40e67eab4c72a6cae75ec0a4c30140
                     </div>
                 </div>
             </form>
@@ -16,6 +31,57 @@
     </div>
 </template>
 <script type="text/javascript">
+<<<<<<< HEAD
+    import {
+        Toast,
+        Indicator
+    } from 'mint-ui'
+    import Vue from 'vue';
+    import { Lazyload } from 'mint-ui';
+    import Request from "../util/API";
+    import customerlIst from '../components/customerManagement.vue';
+    Vue.use(Lazyload, {
+        preLoad: 1.3,
+        lazyComponent: true,
+        error: require('../assets/holde.png'),
+        loading: require('../assets/holde.png'),
+        listenEvents: ['scroll']
+    })
+    export default {
+        data() {
+            return {
+                page: {
+                    pageno: "1",
+                    pagesize: "20"
+                },
+                keyword: '',
+                listDate: [],
+                typeD: 0,
+                menuList: [],
+                gps: {
+                    latitude: this.$route.query.latitude,
+                    longitude: this.$route.query.longitude
+                },
+                paragrams: {
+                    userName: this.$route.query.userName,
+                    menuId: this.$route.query.menuId
+                },
+                picno: this.$route.query.picno,
+            }
+        },
+        components: {
+            customerlIst
+        },
+        mounted: function() {
+                        this.autofocus && this.$refs.input.focus();
+        },
+        methods: {
+            submit() {
+                Indicator.open();
+                //               this.listDate=[]
+                console.log(this.gps.latitude)
+                const pargrm = {
+=======
 	import {
 		Toast,
 		Indicator
@@ -57,7 +123,7 @@
 			customerlIst
 		},
 		mounted: function() {
-
+                        this.autofocus && this.$refs.input.focus();
         },
         methods: {
             submit() {
@@ -65,11 +131,29 @@
                 //          	 this.listDate=[]
                 console.log(this.gps.latitude)
                 const pargrm = {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                    pagination: JSON.stringify(this.page),
+                    "oper": "getShopList",
+                    "type": "wqCustomer",
+                    para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
+                }
+=======
+>>>>>>> 230bba6c9d0cfe3e88e1bee5f2daa78e2f2c73ea
+>>>>>>> ac25fa4b9a40e67eab4c72a6cae75ec0a4c30140
                         pagination: JSON.stringify(this.page),
                         "oper": "getShopList",
                         "type": "wqCustomer",
                         para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
                     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 5e3ea4e7076ea34cbf5c2dfb5d784414880fadc0
+>>>>>>> 230bba6c9d0cfe3e88e1bee5f2daa78e2f2c73ea
+>>>>>>> ac25fa4b9a40e67eab4c72a6cae75ec0a4c30140
                     //ajax调用
                 Request.post(pargrm).then((res) => {
                     console.log(res)
@@ -159,7 +243,11 @@
                 this.loading = true;
                 this.page.pageno = parseInt(this.page.pageno) + 1
                 console.log(this.page)
+<<<<<<< HEAD
+                    //                          this.submit()　
+=======
                     //				            this.submit()　
+>>>>>>> 230bba6c9d0cfe3e88e1bee5f2daa78e2f2c73ea
             },
             back() {
                 Request.jsBbridge(bridge => {
