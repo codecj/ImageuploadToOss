@@ -40,7 +40,6 @@ import Vue from 'vue'
 import { Toast, Indicator } from 'mint-ui'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
-
 Vue.use(Lazyload,{
     preLoad: 1.3,
     lazyComponent: true,
@@ -48,7 +47,6 @@ Vue.use(Lazyload,{
     loading: require('../assets/holde.png'),
     listenEvents: ['scroll']
 })
-
 export default {
     name: 'clientServer',
     data() {

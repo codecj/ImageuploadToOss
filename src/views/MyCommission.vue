@@ -59,7 +59,7 @@
           			
           			var str = '123456.11';
           			console.log(JSON.parse(response.data.result).data.PLACE_PRICE.toString());
-          			_this.PLACE_PRICE_BIG = getCalPriceArr(str)[0];
+          			_this.PLACE_PRICE_BIG =  getCalPriceArr(str)[0];
           			_this.PLACE_PRICE_SIGLE = getCalPriceArr(str)[1];
 
           			function getCalPriceArr(str){
