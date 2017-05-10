@@ -221,10 +221,6 @@ export default {
         loadMore() {
           this.loading = true;
           this.page.pageno=parseInt(this.page.pageno)+1
-<<<<<<< HEAD
-          // console.log(this.listDate)
-=======
->>>>>>> 2b5b86c7e2b64c63cddc393faf02f3a17f3cb8c2
           this.ajax()
         }　　
     }

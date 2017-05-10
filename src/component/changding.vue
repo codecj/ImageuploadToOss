@@ -72,7 +72,7 @@
       getbottom,
       shopcart
     },
-    // props:["listStatus"],
+    // props:[""],
     methods:{
         ajax() {
         Indicator.open();

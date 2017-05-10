@@ -28,7 +28,9 @@
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
             console.log(getData)
-            this.shopCart.push(getData.data)
+            console.log(getData.data)
+            console.log(getData.data.TOTALQTY)
+            this.shopCart.push(getData.data.TOTALQTY)
             // console.log(this.shopCart)
             // getData.data.forEach(value=> {
             //   this.shopCart.push(value)
