@@ -16,101 +16,161 @@
 	</div>
 </template>
 <script type="text/javascript">
+	import {
+		Toast,
+		Indicator
+	} from 'mint-ui'
+	import Vue from 'vue';
+	import { Lazyload } from 'mint-ui';
+	import Request from "../util/API";
+	import customerlIst from './customermanagement.vue';
+	Vue.use(Lazyload, {
+		preLoad: 1.3,
+		lazyComponent: true,
+		error: require('../assets/holde.png'),
+		loading: require('../assets/holde.png'),
+		listenEvents: ['scroll']
+	})
+	export default {
+		data() {
+			return {
+				page: {
+					pageno: "1",
+					pagesize: "20"
+				},
+				keyword: '',
+				listDate: [],
+				typeD: 0,
+				menuList: [],
+				gps: {
+					latitude: this.$route.query.latitude,
+					longitude: this.$route.query.longitude
+				},
+				paragrams: {
+					userName: this.$route.query.userName,
+					menuId: this.$route.query.menuId
+				},
+				picno: this.$route.query.picno,
+			}
+		},
+		components: {
+			customerlIst
+		},
+		mounted: function() {
 
-import {
-    Toast,
-    Indicator
-} from 'mint-ui'
-import Vue from 'vue';
-import { Lazyload } from 'mint-ui';
-import Request from "../util/API";
-import customerlIst from './customermanagement.vue';
-Vue.use(Lazyload,{
-    preLoad: 1.3,
-    lazyComponent: true,
-    error: require('../assets/holde.png'),
-    loading: require('../assets/holde.png'),
-    listenEvents: ['scroll']
-})
-export default {
-    data() {
-            return {
-                page: {
-                    pageno: "1",
-                    pagesize: "20"
-                },
-                keyword: '',
-                productList: [],
-                page:{pageno:"0",pagesize:"20"},
-           		typeD:0
-            }
-        },
-        components: {
-            customerlIst
-        },
-        mounted: function() {
+		},
+		methods: {
+			submit() {
+				Indicator.open();
+				//          	 this.listDate=[]
+				console.log(this.gps.latitude)
+				const pargrm = {
+					pagination: JSON.stringify(this.page),
+					"oper": "getShopList",
+					"type": "wqCustomer",
+					para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
+				}
+				//ajax调用
+				Request.post(pargrm).then((res) => {
+					console.log(res)
+					Indicator.close();
+					const getData = JSON.parse(res.data.result)
+					getData.data.shopslist.forEach(value => {
+						this.listDate.push(value)
+					})
+					this.requestMenus();
+					if(this.listDate.length == getData.pagination.totalcount) {
+						Toast({
+							message: '已经是最后一页啦',
+							duration: 2000
+						})
+						Indicator.close();
+						return
+					}
+					if(getData.code !== "200") Toast({
+						message: getData.msg,
+						duration: 2000
+					});
+					Indicator.close();
+					console.log(this.listDate.length)
+				}).catch(function(error) {
+					Indicator.close();
+					if(error.response) {
+						// 请求已发出，但服务器响应的状态码不在 2xx 范围内
+						console.log(error.response.status);
+						Toast({
+							message: error.response.status,
+							duration: 2000
+						});
+					} else {
+						console.log('Error', error.message);
+						Toast({
+							message: error.message,
+							duration: 2000
+						});
+					}
+				})
+			},
+			requestMenus() {
+				const pargrmList = {
+					oper: 'findResources',
+					type: 'user',
+					para: JSON.stringify(this.paragrams)
+				};
+				//ajax调用
+				Request.post(pargrmList).then(res => {
+					const getData = JSON.parse(res.data.result);
+					if(parseInt(getData.code) != 200) {
+						console.log(getData.msg);
+						Toast({
+							message: getData.msg,
+							duration: 2000
+						});
+					} else {
+						this.menuList = getData.data.slice(0, 2);
+						this.menuList.push({
+							imgSrc: require('../assets/icon51.png'),
+							name: '联系',
+							url: 'lianxi',
+							urlType: 'N'
+						});
+						this.menuList.push({
+							imgSrc: require('../assets/icon53.png'),
+							name: '更多',
+							url: 'gengduo',
+							urlType: 'N'
+						});
+						console.log(this.menuList);
+					}
+				}).catch(error => {
 
-        },
-        methods: {
-            submit() {
-            	 Indicator.open();
-                let pargrm = {
-                        pagination: JSON.stringify(this.page),
-                        oper: 'getShopList',
-                        type: 'wqCustomer',
-                        para: '{"latitude": "30.32765","longitude": "120.17237", "keywords": "", "picno": "355328","type": 0}'
-                    }
-                    //ajax调用
-                Request.post(pargrm).then((res) => {
-                    console.log(res)
-                    Indicator.close();
-                    const getData = JSON.parse(res.data.result)
-                    getData.data.product.forEach(value => {
-                        this.productList.push(value)
-                    })
-                    if (this.productList.length == getData.pagination.totalcount) {
-                        Toast({
-                            message: '已经是最后一页啦',
-                            duration: 2000
-                        })
-                        Indicator.close();
-                        return
-                    }
-                    if (getData.code !== "200") Toast({
-                        message: getData.msg,
-                        duration: 2000
-                    });
-                    Indicator.close();
-                    console.log(this.productList.length)
-                }).catch(function(error) {
-                    Indicator.close();
-                    if (error.response) {
-                        // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                        console.log(error.response.status);
-                        Toast({
-                            message: error.response.status,
-                            duration: 2000
-                        });
-                    } else {
-                        console.log('Error', error.message);
-                        Toast({
-                            message: error.message,
-                            duration: 2000
-                        });
-                    }
-                })
-            },
-            loadMore() {
-              // console.log(this.pageLength+this.listDate)
-              this.loading = true;
-              this.page.pageno=parseInt(this.page.pageno)+1
-              console.log(this.page)
-              this.submit()
-            }　　
-        }
-}
+					if(error.response) {
+						// 请求已发出，但服务器响应的状态码不在 2xx 范围内
+						Toast({
+							message: error.response.status,
+							duration: 2000
+						});
+					}
+				})
+			},
+
+			loadMore() {
+				// console.log(this.pageLength+this.listDate)
+				this.loading = true;
+				this.page.pageno = parseInt(this.page.pageno) + 1
+				console.log(this.page)
+//				            this.submit()　
+			},
+			back() {
+				Request.jsBbridge(bridge => {
+					bridge.callHandler(
+						'popSuperiorClick'
+					)
+				})　　
+			}
+		}
+	}
 </script>
-
 <style scoped>
 	.heards {
 		width: 100%;
