@@ -16,107 +16,110 @@
     </div>
 </template>
 <script type="text/javascript">
-	import {
-		Toast,
-		Indicator
-	} from 'mint-ui'
-	import Vue from 'vue';
-	import { Lazyload } from 'mint-ui';
-	import Request from "../util/API";
-	import customerlIst from '../components/customerManagement.vue';
-	Vue.use(Lazyload, {
-		preLoad: 1.3,
-		lazyComponent: true,
-		error: require('../assets/holde.png'),
-		loading: require('../assets/holde.png'),
-		listenEvents: ['scroll']
-	})
+import {
+    Toast,
+    Indicator
+} from 'mint-ui'
+import Vue from 'vue';
+import {
+    Lazyload
+} from 'mint-ui';
+import Request from "../util/API";
+import customerlIst from '../components/customerManagement.vue';
+Vue.use(Lazyload, {
+        preLoad: 1.3,
+        lazyComponent: true,
+        error: require('../assets/holde.png'),
+        loading: require('../assets/holde.png'),
+        listenEvents: ['scroll']
+    })
     // 注册一个全局自定义指令 v-focus
 Vue.directive('focus', {
-  // 当绑定元素插入到 DOM 中。
-  inserted: function (el) {
-    // 聚焦元素
-    el.focus()
-  }
+    // 当绑定元素插入到 DOM 中。
+    inserted: function(el) {
+        // 聚焦元素
+        el.focus()
+    }
 })
-	export default {
-		data() {
-			return {
-				page: {
-					pageno: "1",
-					pagesize: "20"
-				},
-				keyword: '',
-				listDate: [],
-				typeD: 0,
-				menuList: [],
-				gps: {
-					latitude: this.$route.query.latitude,
-					longitude: this.$route.query.longitude
-				},
-				paragrams: {
-					userName: this.$route.query.userName,
-					menuId: this.$route.query.menuId
-				},
-				picno: this.$route.query.picno,
-			}
-		},
-		components: {
-			customerlIst
-		},
-		mounted: function() {
+export default {
+    data() {
+            return {
+                page: {
+                    pageno: "1",
+                    pagesize: "20"
+                },
+                keyword: '',
+                listDate: [],
+                typeD: 0,
+                menuList: [],
+                gps: {
+                    latitude: this.$route.query.latitude,
+                    longitude: this.$route.query.longitude
+                },
+                paragrams: {
+                    userName: this.$route.query.userName,
+                    menuId: this.$route.query.menuId
+                },
+                picno: this.$route.query.picno,
+            }
         },
+        components: {
+            customerlIst
+        },
+        mounted: function() {},
         methods: {
             submit() {
                 Indicator.open();
-                //          	 this.listDate=[]
+                //             this.listDate=[]
                 console.log(this.gps.latitude)
                 const pargrm = {
-                        pagination: JSON.stringify(this.page),
-                        "oper": "getShopList",
-                        "type": "wqCustomer",
-                        para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
-                    }
-                    //ajax调用
-                Request.post(pargrm).then((res) => {
-                    console.log(res)
-                    Indicator.close();
-                    const getData = JSON.parse(res.data.result)
-                    getData.data.shopslist.forEach(value => {
-                        this.listDate.push(value)
-                    })
-                    this.requestMenus();
-                    if (this.listDate.length == getData.pagination.totalcount) {
-                        Toast({
-                            message: '已经是最后一页啦',
-                            duration: 2000
-                        })
+                    pagination: JSON.stringify(this.page),
+                    "oper": "getShopList",
+                    "type": "wqCustomer",
+                    para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
+                        //ajax调用
+                    Request.post(pargrm).then((res) => {
+                        console.log(res)
                         Indicator.close();
-                        return
-                    }
-                    if (getData.code !== "200") Toast({
-                        message: getData.msg,
-                        duration: 2000
-                    });
-                    Indicator.close();
-                    console.log(this.listDate.length)
-                }).catch(function(error) {
-                    Indicator.close();
-                    if (error.response) {
-                        // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                        console.log(error.response.status);
-                        Toast({
-                            message: error.response.status,
+                        const getData = JSON.parse(res.data.result)
+                        getData.data.shopslist.forEach(value => {
+                            this.listDate.push(value)
+                        })
+                        this.requestMenus();
+                        if (this.listDate.length == getData.pagination.totalcount) {
+                            Toast({
+                                message: '已经是最后一页啦',
+                                duration: 2000
+                            })
+                            Indicator.close();
+                            return
+                        }
+                        if (getData.code !== "200") Toast({
+                            message: getData.msg,
                             duration: 2000
                         });
-                    } else {
-                        console.log('Error', error.message);
-                        Toast({
-                            message: error.message,
-                            duration: 2000
-                        });
+                        Indicator.close();
+                        console.log(this.listDate.length)
+                    }).catch(
                     }
-                })
+
+                    function(error) {
+                        Indicator.close();
+                        if (error.response) {
+                            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                            console.log(error.response.status);
+                            Toast({
+                                message: error.response.status,
+                                duration: 2000
+                            });
+                        } else {
+                            console.log('Error', error.message);
+                            Toast({
+                                message: error.message,
+                                duration: 2000
+                            });
+                        }
+                    })
             },
             requestMenus() {
                 const pargrmList = {
@@ -166,7 +169,7 @@ Vue.directive('focus', {
                 this.loading = true;
                 this.page.pageno = parseInt(this.page.pageno) + 1
                 console.log(this.page)
-                    //				            this.submit()　
+                    //                    this.submit()　
             },
             back() {
                 Request.jsBbridge(bridge => {
