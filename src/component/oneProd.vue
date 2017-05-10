@@ -28,7 +28,7 @@
     name:"oneProd",
     data() {
         return{
-          // prodList:[],
+
         }
     },
     components: {
