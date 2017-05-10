@@ -5,7 +5,8 @@
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
-                        <input id="focus" type="search" :value="keyword" v-model="keyword">
+                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
+                        <input ref="input" autofocus="true" type="search"  class="mint-searchbar-core" :value="keyword" v-model="keyword">
                     </div>
                 </div>
             </form>
@@ -59,7 +60,7 @@
 			customerlIst
 		},
 		mounted: function() {
-            document.getElementById("focus").focus()
+                        this.autofocus && this.$refs.input.focus();
         },
         methods: {
             submit() {
