@@ -6,8 +6,8 @@
                 <div class="input-wrap">
                     <div>
                         <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
-                     <!--    <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core" :value="keyword" v-model="keyword"> -->
-                     <mt-search :value="keyword" v-model="keyword"></mt-search>
+                        <!-- <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core"> -->
+                        <mt-search :value="keyword" v-model="keyword"></mt-search>
                     </div>
                 </div>
             </form>
@@ -18,8 +18,6 @@
     </div>
 </template>
 <script type="text/javascript">
-import {Search} from 'mint-ui';
-Vue.component(Search.name,Search)
 	import {
 		Toast,
 		Indicator
@@ -61,6 +59,7 @@ Vue.component(Search.name,Search)
 			customerlIst
 		},
 		mounted: function() {
+                        this.autofocus && this.$refs.input.focus();
         },
         methods: {
             submit() {
