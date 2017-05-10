@@ -5,10 +5,6 @@
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
-<<<<<<< HEAD
-                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
-=======
->>>>>>> 60c1a62cfc2d2055ba49fa450e78c4f4d2d7652f
                         <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
                     </div>
                 </div>
@@ -69,21 +65,12 @@
                 //               this.listDate=[]
                 console.log(this.gps.latitude)
                 const pargrm = {
-<<<<<<< HEAD
-                        pagination: JSON.stringify(this.page),
-                        "oper": "getShopList",
-                        "type": "wqCustomer",
-                        para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
-                    }
-                    //ajax调用
-=======
                     pagination: JSON.stringify(this.page),
                     "oper": "getShopList",
                     "type": "wqCustomer",
                     para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
                 }
                 //ajax调用
->>>>>>> 60c1a62cfc2d2055ba49fa450e78c4f4d2d7652f
                 Request.post(pargrm).then((res) => {
                     console.log(res)
                     Indicator.close();
@@ -172,10 +159,6 @@
                 this.loading = true;
                 this.page.pageno = parseInt(this.page.pageno) + 1
                 console.log(this.page)
-<<<<<<< HEAD
-                    //                          this.submit()　
-=======
->>>>>>> 60c1a62cfc2d2055ba49fa450e78c4f4d2d7652f
             },
             back() {
                 Request.jsBbridge(bridge => {

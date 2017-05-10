@@ -63,7 +63,7 @@
           para: '{"userno":"351335","spusername":"SCLBPYWY","areaid":"2282"}'
         }
         //ajax调用
-        Request.post(pargrmList).then(res=>{
+        Request.post(pargrmList).then(res=>{console.log(res)
             const getData = JSON.parse(res.data.result)
             // console.log(getData)
             getData.data.CommissionStkCs.forEach(value=> {
