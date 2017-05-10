@@ -57,7 +57,6 @@
 			customerlIst
 		},
 		mounted: function() {
-
         },
         methods: {
             submit() {
