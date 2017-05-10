@@ -15,7 +15,6 @@
         </li>
       </ul>
     </div>
-<<<<<<< HEAD
     <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
       <div :class="{'changeItem':!listStatus,'content':listStatus}" style="">
         <oneprod :prodList="prodList"></oneprod> 
@@ -30,17 +29,14 @@
       </div> 
     </div>
 
-=======
-    <!-- <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
-      <proLists :listStatus="listStatus"></proLists>
-    <!-- </div> -->
->>>>>>> 60c1a62cfc2d2055ba49fa450e78c4f4d2d7652f
   </div>
 </template>
 
 <script type="text/javascript">
   import Vue from 'vue'
-  import proLists from "./prodlistcomponent.vue"
+  import oneprod from "../components/oneProd.vue"
+  import shopcart from "../components/shopcart.vue"
+  import getbottom from "../components/getbottom.vue"
   import Request from "../util/API"
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'
@@ -58,6 +54,7 @@
       return{
         status:false,
         listStatus:false,
+        show: false,
         price:true,
         change:[
           {
@@ -73,54 +70,59 @@
             show:false
           }
         ] ,
-        listDate:[],
+        prodList:[],
         page:{
           pageno:"0",
-          pagesize:"20"
+          pagesize:"20",
+          orderby: "",
+          asc: true
         }
       }
     },
     components: {
-      proLists
+      // proLists,
+      shopcart,
+      getbottom,
+      oneprod
     },
     methods:{ 
-      // ajax() {
-      //   Indicator.open();
-      //   const pargrmList = {
-      //     pagination: JSON.stringify(this.page),
-      //     oper: 'findStkNewsAppNew',
-      //     type: 'wqProduct',
-      //     para: '{"userno":"","catid":"","spusername":""}'
-      //   }
-        //ajax调用
-        // Request.post(pargrmList).then(res=>{console.log(res)
-        //     const getData = JSON.parse(res.data.result)
-        //     getData.data.shopslist.forEach(value=> {
-        //       this.listDate.push(value)
-        //     })
-        //     if(this.listDate.length==getData.pagination.totalcount) {
-        //       Toast({ message: '已经是最后一页啦', duration: 2000 }) 
-        //       Indicator.close();
-        //       return
-        //     }
-        //     if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
-        //     Indicator.close();
-        // }).catch(error=>{
-        //     Indicator.close();
-        //     if (error.response) {
+      ajax() {
+        Indicator.open();
+        const pargrmList = {
+          pagination: JSON.stringify(this.page),
+          oper: 'getWqSearchApp',
+          type: 'wqProduct',
+          para: '{"username": "13567118814","spuserno": "361559","spusername": "SDWHSOP1Y2","areaid": "1451","vendorusername": "SDWHSOP1","keyword": "鱼","vendorcode": "361434","userno": "390679"}'
+        }
+        // ajax调用
+        Request.post(pargrmList).then(res=>{
+            const getData = JSON.parse(res.data.result)
+            getData.data.product.forEach(value=> {
+              this.prodList.push(value)
+            })
+            if(this.prodList.length==getData.pagination.totalcount) {
+              this.show = true;
+              Indicator.close();
+              return
+            }
+            if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+            Indicator.close();
+        }).catch(error=>{
+            Indicator.close();
+            if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-        //         Toast({
-        //             message: error.response.status,
-        //             duration: 2000
-        //         });
-        //     }
-        // })
-      // },
-      // loadMore() {
-      //   this.loading = true;
-      //   this.page.pageno=parseInt(this.page.pageno)+1;
-      //   this.ajax();
-      // },　
+                Toast({
+                    message: error.response.status,
+                    duration: 2000
+                });
+            }
+        })
+      },
+      loadMore() {
+        this.loading = true;
+        this.page.pageno=parseInt(this.page.pageno)+1;
+        this.ajax();
+      },　
 
       changeList: function(){
         this.status=!this.status;
@@ -136,13 +138,20 @@
          that.$set(item,"show",true);
         })
       },
+      onScroll:function() {
+        this.scrolled=document.getElementById("prodsList").scrollTop;
+        let scrolltop = document.getElementById('scrolltop');
+          if(this.scrolled>10){
+            scrolltop.style.display = 'block';
+          }else{
+            scrolltop.style.display = 'none';
+          }
+      },
+      scrollTop:function() {
+        var oTop = document.getElementById("prodsList");
+        oTop.scrollTop = 0;      
+      },
       backClick: function(){
-        // console.log("执行");
-				// setupWebViewJavascriptBridge(function(bridge) {
-				// 	bridge.callHandler(
-				// 		'pushSearchWebClick'
-				// 	)
-				// })
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'pushSearchWebClick'
@@ -153,12 +162,13 @@
   })
 </script>
 
-<style>
-
+<style scoped>
 #prods{
   position: absolute;
-    height: 100%;
-    width: 100%;}
+  height: 100%;
+  width: 100%;
+  background:#ebecf0;
+  }
 header{
   height:88px;
   line-height:88px;
@@ -242,7 +252,6 @@ header div:nth-child(1) img{
   font-size: 26px;
   height:37px;
   vertical-align: middle;
-
 }
 .selectList ul li:nth-child(4){
   margin-right:0;
@@ -257,11 +266,7 @@ header div:nth-child(1) img{
   background: url(../assets/icon6.png) no-repeat right;
   background-size:30%;
 }
-/*.selectList ul .show{
-  width:100px;
-  background: url(../assets/icon6.png) no-repeat right;
-  background-size:30%;
-}*/
+
 .selectList ul .show{
   background:none;
 }
@@ -271,5 +276,50 @@ header div:nth-child(1) img{
   background-size:30%;
 }
 
+.prodsList{
+  position: absolute;
+  top:208px;
+  bottom:0;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
+  background:#ebecf0;
+}
+/*content横着布局方式*/
+.content ,.changeItem{
+  overflow: hidden;
+  width:750px;
+  padding:0;
+  position: absolute;
+  top:208px;
+  bottom:0;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
+  background:#ebecf0;
+}
+.over {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
 
+.over p {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    display: inline-block;
+    float: right;
+    margin-right: 100px;
+    text-align: center;
+}
+
+.over img {
+    display: inline-block;
+    width: 112px;
+    height: 112px;
+    float: right;
+    margin: 0px 20px 15px 0;
+}
+#scrolltop {
+    display: none;
+}
 </style>
