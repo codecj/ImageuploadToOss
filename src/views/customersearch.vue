@@ -5,7 +5,7 @@
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
-                        <input v-focus type="search" :value="keyword" v-model="keyword">
+                        <input id="focus" type="search" :value="keyword" v-model="keyword">
                     </div>
                 </div>
             </form>
@@ -34,6 +34,7 @@ Vue.use(Lazyload, {
         listenEvents: ['scroll']
     })
     // 注册一个全局自定义指令 v-focus
+<<<<<<< HEAD
 Vue.directive('focus', {
     // 当绑定元素插入到 DOM 中。
     inserted: function(el) {
@@ -62,6 +63,36 @@ export default {
                 },
                 picno: this.$route.query.picno,
             }
+=======
+
+	export default {
+		data() {
+			return {
+				page: {
+					pageno: "1",
+					pagesize: "20"
+				},
+				keyword: '',
+				listDate: [],
+				typeD: 0,
+				menuList: [],
+				gps: {
+					latitude: this.$route.query.latitude,
+					longitude: this.$route.query.longitude
+				},
+				paragrams: {
+					userName: this.$route.query.userName,
+					menuId: this.$route.query.menuId
+				},
+				picno: this.$route.query.picno,
+			}
+		},
+		components: {
+			customerlIst
+		},
+		mounted: function() {
+            document.getElementById("focus").focus()
+>>>>>>> bc53ed55ebd0d6f7af50a3fb348a8235a33a0a05
         },
         components: {
             customerlIst
