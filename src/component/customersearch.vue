@@ -182,6 +182,7 @@
 
 .heards span img {
     height: 33.6px;
+    width: 33.6px;
     float: left;
     padding: 28px 0 27.4px 37px;
 }
