@@ -108,24 +108,19 @@ export default {
     }
 }
 
-</script> 
-
-<style scoped> 
-
-#settledCommission ul {
-    width: 100%;
+</script> <style scoped> #settledCommission ul {
     background-color: rgb(239, 240, 246);
 }
 
 #settledCommission li {
     background-color: #fff;
-    width: 100%;
+    width: 750px;
     height: 528px;
     border-top: 24px solid rgb(239, 240, 246);
 }
 
 #settledCommission .header {
-    width: 100%;
+    width: 750px;
     height: 114px;
     position: relative;
     border-bottom: 1px solid #F1F2F7;
@@ -139,6 +134,7 @@ export default {
     position: absolute;
     top: 36px;
     left: 32px;
+    width: 100%;
     height: 40px;
     font-weight: 800;
 }

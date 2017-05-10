@@ -16,6 +16,7 @@
     </div>
 </template>
 <script type="text/javascript">
+<<<<<<< HEAD:src/component/customersearch.vue
 import {
     Toast,
     Indicator
@@ -67,6 +68,49 @@ export default {
             customerlIst
         },
         mounted: function() {
+=======
+	import {
+		Toast,
+		Indicator
+	} from 'mint-ui'
+	import Vue from 'vue';
+	import { Lazyload } from 'mint-ui';
+	import Request from "../util/API";
+	import customerlIst from '../components/customerManagement.vue';
+	Vue.use(Lazyload, {
+		preLoad: 1.3,
+		lazyComponent: true,
+		error: require('../assets/holde.png'),
+		loading: require('../assets/holde.png'),
+		listenEvents: ['scroll']
+	})
+	export default {
+		data() {
+			return {
+				page: {
+					pageno: "1",
+					pagesize: "20"
+				},
+				keyword: '',
+				listDate: [],
+				typeD: 0,
+				menuList: [],
+				gps: {
+					latitude: this.$route.query.latitude,
+					longitude: this.$route.query.longitude
+				},
+				paragrams: {
+					userName: this.$route.query.userName,
+					menuId: this.$route.query.menuId
+				},
+				picno: this.$route.query.picno,
+			}
+		},
+		components: {
+			customerlIst
+		},
+		mounted: function() {
+>>>>>>> c77baeef230e59ccdeb0a3544fef9c58703ed6a6:src/views/customersearch.vue
 
         },
         methods: {
@@ -192,6 +236,7 @@ export default {
 
 .heards span img {
     height: 33.6px;
+    width: 33.6px;
     float: left;
     padding: 28px 0 27.4px 37px;
 }

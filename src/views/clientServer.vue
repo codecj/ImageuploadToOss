@@ -29,6 +29,7 @@
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
             <customerlIst @listSay="overHide" :listDate='listDate' :menuList='menuList'></customerlIst>
+            <getbottom v-show="isEnd"></getbottom> 
         </div>
     </div>
 </template>
@@ -37,7 +38,8 @@ import { Lazyload } from 'mint-ui'
 import Request from "../util/API"
 import Vue from 'vue'
 import { Toast, Indicator } from 'mint-ui'
-import customerlIst from './customermanagement.vue'
+import customerlIst from '../components/customerManagement.vue'
+import getbottom from '../components/getbottom.vue'
 
 Vue.use(Lazyload,{
     preLoad: 1.3,
@@ -85,11 +87,13 @@ export default {
             menuList:[],//资源菜单
             page:{pageno:"0",pagesize:"20"},
             typeD:0,
-            areaid:''
+            areaid:'',
+            isEnd:false
         }
     },
     components: {
-        customerlIst
+        customerlIst,
+        getbottom
     },
     mounted: function() {
         this.$nextTick(()=> {
@@ -123,6 +127,7 @@ export default {
               bridge.callHandler(
                   'showAddressPicker', 
                   responseData=> {
+                    alert(JSON.stringify(responseData));
                     this.areaid=responseData.areaid;
                     responseData.areaid=='' ? this.address='全部区域' : this.address=responseData.address;
                   }
@@ -145,7 +150,8 @@ export default {
                 this.listDate.push(value)
               })
               if(this.listDate.length==getData.pagination.totalcount) {
-                Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+                // Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+                this.isEnd=true;
                 Indicator.close();
                 return
               }
@@ -333,7 +339,6 @@ export default {
 }
 
 #clientServer .fliterType {
-    width: 100%;
     padding: 49px 30px 64px 30px;
     background-color: #fff;
 }

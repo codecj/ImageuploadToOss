@@ -65,7 +65,7 @@
 </template>
 
 <script type="text/javascript">
-  import getbottom from "./getbottom.vue"
+  import getbottom from "../components/getbottom.vue"
   export default({
     name:"prodsList",
     data() {
