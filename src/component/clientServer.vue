@@ -3,15 +3,15 @@
         <div class="shadowLine"></div>
         <div class="topHead">
             <div class="activeTap" @click="fliterToggle()" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
-            <div class="mid">
+            <div @click="toSearch()" class="mid">
                 <form>
-                    <input placeholder="请输入要搜索的客户" type="search">
+                    <input disabled placeholder="请输入要搜索的客户" type="search">
                 </form>
             </div>
             <div class="right activeTap"></div>
         </div>
         <div v-show="userFliter" class="fliter">
-            <div class="fliterBar activeTap">
+            <div @click="getGps()" class="fliterBar activeTap">
                 <p class="fl">{{address}}</p>
                 <p class="fr"></p>
             </div>
@@ -52,10 +52,10 @@ export default {
     data() {
         return {
             gps:{
-              latitude:'30.32765',
-              longitude:'120.17237'
+              latitude:this.$route.query.latitude,
+              longitude:this.$route.query.longitude
             },
-            picno:'355328',
+            picno:this.$route.query.picno,
             address: '全部区域',
             select: '',
             index: '0',
@@ -77,7 +77,8 @@ export default {
             }],
             listDate: [],
             page:{pageno:"0",pagesize:"20"},
-            typeD:0
+            typeD:0,
+            areaid:''
         }
     },
     components: {
@@ -92,13 +93,31 @@ export default {
         this.items[0].isShow = true;
     },
     methods: {
+        toSearch(){
+          Request.jsBbridge(bridge=> {
+              bridge.callHandler(
+                  'pushSearchWebClick'
+              )
+          })
+        },
+        getGps() {
+          Request.jsBbridge(bridge=> {
+              bridge.callHandler(
+                  'showAddressPicker', 
+                  responseData=> {
+                    this.areaid=responseData.areaid;
+                    responseData.areaid=='' ? this.address='全部区域' : this.address=responseData.address;
+                  }
+              )
+          })
+        },
         ajax() {
           Indicator.open();
           const pargrmList = {
             pagination: JSON.stringify(this.page),
             oper: 'getShopList',
             type: 'wqCustomer',
-            para: '{"latitude":"'+this.gps.latitude+'","longitude":"'+this.gps.longitude+'","keywords":"","picno":"'+this.picno+'","type":'+this.typeD+'}'
+            para: '{"latitude":"'+this.gps.latitude+'","longitude":"'+this.gps.longitude+'","keywords":"","picno":"'+this.picno+'","type":'+this.typeD+',"areaid":"'+this.areaid+'"}'
           }
           //ajax调用
           Request.post(pargrmList).then(res=>{

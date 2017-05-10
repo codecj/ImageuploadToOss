@@ -5,6 +5,12 @@ import  order from '../component/order.vue'
 import  customer from '../component/customermanagement.vue'
 import searchList from '../component/listcomponent.vue'
 import search from '../component/customersearch.vue'
+import changding from '../component/changding.vue'
+import yongjin from '../component/yongjinshangpin.vue'
+import xinpin from '../component/xinpin.vue'
+
+
+
 export default{
 	routes: [
     {
@@ -31,6 +37,17 @@ export default{
     },{
       path:'/search',
       component:search
+    }
+    ,{
+      path:'/changding',
+      component:changding
+    },{
+      path:'/yongjin',
+      component:yongjin
+    }
+    ,{
+      path:'/xinpin',
+      component:xinpin
     }
   ]
 }

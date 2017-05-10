@@ -39,7 +39,7 @@ export default {
                     pagesize: "20"
                 },
                 keyword: '',
-                listDate: [],
+                productList: [],
                 page:{pageno:"0",pagesize:"20"},
            		typeD:0
             }
@@ -64,10 +64,10 @@ export default {
                     console.log(res)
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
-                    getData.data.shopslist.forEach(value => {
-                        this.listDate.push(value)
+                    getData.data.product.forEach(value => {
+                        this.productList.push(value)
                     })
-                    if (this.listDate.length == getData.pagination.totalcount) {
+                    if (this.productList.length == getData.pagination.totalcount) {
                         Toast({
                             message: '已经是最后一页啦',
                             duration: 2000
@@ -80,7 +80,7 @@ export default {
                         duration: 2000
                     });
                     Indicator.close();
-                    console.log(this.listDate.length)
+                    console.log(this.productList.length)
                 }).catch(function(error) {
                     Indicator.close();
                     if (error.response) {
@@ -100,12 +100,12 @@ export default {
                 })
             },
             loadMore() {
-          // console.log(this.pageLength+this.listDate)
-          this.loading = true;
-          this.page.pageno=parseInt(this.page.pageno)+1
-          console.log(this.page)
-          this.submit()
-        }　　
+              // console.log(this.pageLength+this.listDate)
+              this.loading = true;
+              this.page.pageno=parseInt(this.page.pageno)+1
+              console.log(this.page)
+              this.submit()
+            }　　
         }
 }
 </script>

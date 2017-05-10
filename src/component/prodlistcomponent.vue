@@ -133,7 +133,7 @@
   })
 </script>
 
-<style>
+<style scoped>
 
 #prodsList{
   position: absolute;

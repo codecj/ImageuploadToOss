@@ -24,6 +24,7 @@
 <script type="text/javascript">
   import Vue from 'vue'
   import proLists from "./prodlistcomponent.vue"
+  import Request from "../util/API"
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'
   // 懒加载效果
@@ -65,16 +66,15 @@
     components: {
       proLists
     },
-    mounted: function() {},
     methods:{ 
-      ajax() {
-        Indicator.open();
-        const pargrmList = {
-          pagination: JSON.stringify(this.page),
-          oper: 'findStkNewsAppNew',
-          type: 'wqProduct',
-          para: '{"userno":"","catid":"","spusername":""}'
-        }
+      // ajax() {
+      //   Indicator.open();
+      //   const pargrmList = {
+      //     pagination: JSON.stringify(this.page),
+      //     oper: 'findStkNewsAppNew',
+      //     type: 'wqProduct',
+      //     para: '{"userno":"","catid":"","spusername":""}'
+      //   }
         //ajax调用
         // Request.post(pargrmList).then(res=>{console.log(res)
         //     const getData = JSON.parse(res.data.result)
@@ -91,19 +91,20 @@
         // }).catch(error=>{
         //     Indicator.close();
         //     if (error.response) {
-        //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
         //         Toast({
         //             message: error.response.status,
         //             duration: 2000
         //         });
         //     }
         // })
-      },
+      // },
       // loadMore() {
       //   this.loading = true;
       //   this.page.pageno=parseInt(this.page.pageno)+1;
       //   this.ajax();
       // },　
+
       changeList: function(){
         this.status=!this.status;
         this.listStatus=!this.listStatus
@@ -118,7 +119,9 @@
          that.$set(item,"show",true);
         })       
       },
-    }
+    },
+    mounted: function() {},
+    
   })
 </script>
 
