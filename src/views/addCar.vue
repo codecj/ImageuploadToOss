@@ -11,7 +11,7 @@
                         <p>商品编号:09090909</p>
                         <p>库存:09090</p>
                     </div>
-                    <img class="close" src="../assets/icon18.png" alt="">
+                    <img @click="closeSku()" class="close" src="../assets/icon18.png" alt="">
                 </div>
                 <div class="overscroll">
                     <p @click="goActive()" class="activity activeTap">
@@ -66,6 +66,7 @@
     </div>
 </template>
 <script>
+import Request from "../util/API"
 export default {
     data() {
             return {
@@ -80,6 +81,16 @@ export default {
             },
             goActive() {
                 this.imgShow = false;
+            },
+            closeSku() {
+                Request.jsBbridge(bridge=> {
+                        bridge.callHandler(
+                            'showAddressPicker', 
+                        esponseData=> {
+                           
+                        }
+                    )
+                })
             }
         }
 }
