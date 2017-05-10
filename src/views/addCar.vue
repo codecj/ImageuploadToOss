@@ -74,7 +74,42 @@ export default {
                 isHide: true
             }
         },
-        mounted: function() {},
+        mounted: function() {
+            // const pargrmList = {
+            //         pagination: JSON.stringify(this.page),
+            //         oper: 'getShopList',
+            //         type: 'wqCustomer',
+            //         para: '{"latitude":"' + this.gps.latitude + '","longitude":"' + this.gps.longitude + '","keywords":"","picno":"' + this.picno + '","type":' + this.typeD + ',"areaid":"' + this.areaid + '"}'
+            //     }
+            // //ajax调用
+            // Request.post(pargrmList).then(res => {
+            //     const getData = JSON.parse(res.data.result)
+            //     console.log(getData)
+            //     getData.data.shopslist.forEach(value => {
+            //         this.listDate.push(value)
+            //     })
+            //     if (this.listDate.length == getData.pagination.totalcount) {
+            //         // Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+            //         this.isEnd = true;
+            //         Indicator.close();
+            //         return
+            //     }
+            //     if (getData.code !== "200") Toast({
+            //         message: getData.msg,
+            //         duration: 2000
+            //     });
+            //     Indicator.close();
+            // }).catch(error => {
+            //     Indicator.close();
+            //     if (error.response) {
+            //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            //         Toast({
+            //             message: error.response.status,
+            //             duration: 2000
+            //         });
+            //     }
+            // })
+        },
         methods: {
             goBack() {
                 this.imgShow = true;
@@ -83,13 +118,8 @@ export default {
                 this.imgShow = false;
             },
             closeSku() {
-                Request.jsBbridge(bridge=> {
-                        bridge.callHandler(
-                            'showAddressPicker', 
-                        esponseData=> {
-                           
-                        }
-                    )
+                Request.jsBbridge(bridge => {
+                    bridge.callHandler('closeAddCarClick')
                 })
             }
         }
@@ -220,7 +250,7 @@ html {
     font-size: 26px;
     color: #9DA2B5;
     padding-right: 50px;
-    background:url(../assets/icon17.png) right no-repeat;
+    background: url(../assets/icon17.png) right no-repeat;
     background-size: 40px;
 }
 
