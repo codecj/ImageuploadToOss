@@ -16,59 +16,6 @@
     </div>
 </template>
 <script type="text/javascript">
-<<<<<<< HEAD:src/component/customersearch.vue
-import {
-    Toast,
-    Indicator
-} from 'mint-ui'
-import Vue from 'vue';
-import {
-    Lazyload
-} from 'mint-ui';
-import Request from "../util/API";
-import customerlIst from './customermanagement.vue';
-Vue.use(Lazyload, {
-        preLoad: 1.3,
-        lazyComponent: true,
-        error: require('../assets/holde.png'),
-        loading: require('../assets/holde.png'),
-        listenEvents: ['scroll']
-    })
-    // 注册一个全局自定义指令 v-focus
-Vue.directive('focus', {
-    // 当绑定元素插入到 DOM 中。
-    inserted: function(el) {
-        // 聚焦元素
-        el.focus()
-    }
-})
-export default {
-    data() {
-            return {
-                page: {
-                    pageno: "1",
-                    pagesize: "20"
-                },
-                keyword: '',
-                listDate: [],
-                typeD: 0,
-                menuList: [],
-                gps: {
-                    latitude: this.$route.query.latitude,
-                    longitude: this.$route.query.longitude
-                },
-                paragrams: {
-                    userName: this.$route.query.userName,
-                    menuId: this.$route.query.menuId
-                },
-                picno: this.$route.query.picno,
-            }
-        },
-        components: {
-            customerlIst
-        },
-        mounted: function() {
-=======
 	import {
 		Toast,
 		Indicator
@@ -110,8 +57,6 @@ export default {
 			customerlIst
 		},
 		mounted: function() {
->>>>>>> c77baeef230e59ccdeb0a3544fef9c58703ed6a6:src/views/customersearch.vue
-
         },
         methods: {
             submit() {
