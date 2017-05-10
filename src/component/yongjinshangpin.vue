@@ -3,27 +3,8 @@
      <!-- content横着布局和changeItem竖着布局-->
      <div class="proList">
         <div class="changeItem">
-      <!-- 每个产品 -->  
-        <div class="searchItem" v-for="item in prodList" :data-id="item.STK_NAME_EXT">
-          <div class="onephoto">
-            <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
-          </div>
-          
-          <p>{{item.NAME}}</p>
-          <p>规格：{{item.MODLE}}</p>
-          <p>
-              <span>优惠套餐</span>
-              <span>混搭满赠</span>
-              <span>打折</span>
-            </p>
-          <p>
-            <span>￥{{item.LIST_PRICE}}</span>
-            <span>{{item.commissionPrice ? "奖" : ''}}</span>
-            <span>{{item.commissionPrice ? '￥'+item.commissionPrice : ''}}</span>
-            <img src="../assets/icon43.png" alt="" class="gocart">
-          </p>
-      </div>
-      <getbottom></getbottom>
+        <oneprod :prodList="prodList"></oneprod>
+        <getbottom v-show="show"></getbottom>
         <!-- //////////////////////////////////////////// -->
    </div>
 
@@ -43,6 +24,7 @@
   import Vue from 'vue'
   import getbottom from "./getbottom.vue"
   import shopcart from "./shopcart.vue"
+  import oneprod from "./oneProd.vue"
   import Request from "../util/API"
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'
@@ -61,6 +43,7 @@
           status:false,
           listStatus:false,
           price:true,
+          show:false,
           prodList:[],
           page:{
             pageno:"0",
@@ -69,7 +52,7 @@
         }
     },
     components: {
-      getbottom,shopcart
+      getbottom,shopcart,oneprod
     },
     // props:["listStatus"],
     methods:{
@@ -89,7 +72,7 @@
               this.prodList.push(value)
             })
             if(this.prodList.length==getData.pagination.totalcount) {
-              Toast({ message: '已经是最后一页啦', duration: 2000 }) 
+              this.show=true;
               Indicator.close();
               return
             }

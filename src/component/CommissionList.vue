@@ -108,7 +108,8 @@ export default {
     }
 }
 
-</script> <style scoped> #settledCommission ul {
+</script> 
+<style scoped> #settledCommission ul {
     background-color: rgb(239, 240, 246);
 }
 

@@ -27,9 +27,6 @@
         //ajax调用
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            console.log(getData)
-            console.log(getData.data)
-            console.log(getData.data.TOTALQTY)
             this.shopCart=getData.data.TOTALQTY;
         }).catch(error=>{
             if (error.response) {
