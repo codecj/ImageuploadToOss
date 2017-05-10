@@ -5,7 +5,8 @@
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
-                        <input v-focus type="search" :value="keyword" v-model="keyword">
+                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
+                        <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
                     </div>
                 </div>
             </form>
@@ -16,53 +17,53 @@
     </div>
 </template>
 <script type="text/javascript">
-	import {
-		Toast,
-		Indicator
-	} from 'mint-ui'
-	import Vue from 'vue';
-	import { Lazyload } from 'mint-ui';
-	import Request from "../util/API";
-	import customerlIst from '../views/customerManagement.vue';
-	Vue.use(Lazyload, {
-		preLoad: 1.3,
-		lazyComponent: true,
-		error: require('../assets/holde.png'),
-		loading: require('../assets/holde.png'),
-		listenEvents: ['scroll']
-	})
-	export default {
-		data() {
-			return {
-				page: {
-					pageno: "1",
-					pagesize: "20"
-				},
-				keyword: '',
-				listDate: [],
-				typeD: 0,
-				menuList: [],
-				gps: {
-					latitude: this.$route.query.latitude,
-					longitude: this.$route.query.longitude
-				},
-				paragrams: {
-					userName: this.$route.query.userName,
-					menuId: this.$route.query.menuId
-				},
-				picno: this.$route.query.picno,
-			}
-		},
-		components: {
-			customerlIst
-		},
-		mounted: function() {
-
+    import {
+        Toast,
+        Indicator
+    } from 'mint-ui'
+    import Vue from 'vue';
+    import { Lazyload } from 'mint-ui';
+    import Request from "../util/API";
+    import customerlIst from '../components/customerManagement.vue';
+    Vue.use(Lazyload, {
+        preLoad: 1.3,
+        lazyComponent: true,
+        error: require('../assets/holde.png'),
+        loading: require('../assets/holde.png'),
+        listenEvents: ['scroll']
+    })
+    export default {
+        data() {
+            return {
+                page: {
+                    pageno: "1",
+                    pagesize: "20"
+                },
+                keyword: '',
+                listDate: [],
+                typeD: 0,
+                menuList: [],
+                gps: {
+                    latitude: this.$route.query.latitude,
+                    longitude: this.$route.query.longitude
+                },
+                paragrams: {
+                    userName: this.$route.query.userName,
+                    menuId: this.$route.query.menuId
+                },
+                picno: this.$route.query.picno,
+            }
+        },
+        components: {
+            customerlIst
+        },
+        mounted: function() {
+                        this.autofocus && this.$refs.input.focus();
         },
         methods: {
             submit() {
                 Indicator.open();
-                //          	 this.listDate=[]
+                //               this.listDate=[]
                 console.log(this.gps.latitude)
                 const pargrm = {
                         pagination: JSON.stringify(this.page),
@@ -159,7 +160,7 @@
                 this.loading = true;
                 this.page.pageno = parseInt(this.page.pageno) + 1
                 console.log(this.page)
-                    //				            this.submit()　
+                    //                          this.submit()　
             },
             back() {
                 Request.jsBbridge(bridge => {

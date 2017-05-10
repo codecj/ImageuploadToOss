@@ -33,9 +33,9 @@
 
 <script type="text/javascript">
   import Vue from 'vue'
-  import oneprod from "./oneProd.vue"
-  import shopcart from "./shopcart.vue"
-  import getbottom from "./getbottom.vue"
+  import oneprod from "../components/oneProd.vue"
+  import shopcart from "../components/shopcart.vue"
+  import getbottom from "../components/getbottom.vue"
   import Request from "../util/API"
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'

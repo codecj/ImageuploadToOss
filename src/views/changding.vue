@@ -18,9 +18,9 @@
 </template>
 <script type="text/javascript">
 import Vue from 'vue'
-import getbottom from "./getbottom.vue"
-import shopcart from "./shopcart.vue"
-import oneprod from "./oneProd.vue"
+import getbottom from "../components/getbottom.vue"
+import shopcart from "../components/shopcart.vue"
+import oneprod from "../components/oneProd.vue"
 import Request from "../util/API"
 import {
     Lazyload
