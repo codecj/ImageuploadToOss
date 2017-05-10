@@ -5,7 +5,12 @@
             <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
+<<<<<<< HEAD
                         <input ref="input" autofocus="true" type="search" :value="keyword" v-model="keyword">
+=======
+                        <!-- <input id="focus" type="search" :value="keyword" v-model="keyword"> -->
+                        <input ref="input" autofocus=" true" type="search"  class="mint-searchbar-core">
+>>>>>>> 5e3ea4e7076ea34cbf5c2dfb5d784414880fadc0
                     </div>
                 </div>
             </form>
@@ -57,10 +62,14 @@
 			customerlIst
 		},
 		mounted: function() {
+<<<<<<< HEAD
       this.$nextTick(()=> {
           this.autofocus && this.$refs.input.focus()
         })
       
+=======
+                        this.autofocus && this.$refs.input.focus();
+>>>>>>> 5e3ea4e7076ea34cbf5c2dfb5d784414880fadc0
         },
         methods: {
             submit() {
@@ -68,11 +77,19 @@
                 //          	 this.listDate=[]
                 console.log(this.gps.latitude)
                 const pargrm = {
+<<<<<<< HEAD
                     pagination: JSON.stringify(this.page),
                     "oper": "getShopList",
                     "type": "wqCustomer",
                     para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
                 }
+=======
+                        pagination: JSON.stringify(this.page),
+                        "oper": "getShopList",
+                        "type": "wqCustomer",
+                        para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
+                    }
+>>>>>>> 5e3ea4e7076ea34cbf5c2dfb5d784414880fadc0
                     //ajax调用
                 Request.post(pargrm).then((res) => {
                     console.log(res)
