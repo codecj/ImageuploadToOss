@@ -2,7 +2,7 @@
      <div id="over" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"infinite-scroll-distance="10">
         <p>
            <img src="../assets/icon43.png" alt=""> 
-           <span>{{shopCart.TOTALQTY}}</span>
+           <span>{{shopCart}}</span>
         </p>
     </div> 
 </template>
@@ -30,11 +30,7 @@
             console.log(getData)
             console.log(getData.data)
             console.log(getData.data.TOTALQTY)
-            this.shopCart.push(getData.data.TOTALQTY)
-            // console.log(this.shopCart)
-            // getData.data.forEach(value=> {
-            //   this.shopCart.push(value)
-            // })
+            this.shopCart=getData.data.TOTALQTY;
         }).catch(error=>{
             if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -69,9 +65,8 @@
 #over p span{
 font-size: 18px;
 color: #FF783C;
+padding:2px 10px;
 letter-spacing: 0;
-width:32px;
-height:32px;
 border-radius:50%;
 line-height:32px;
 text-align: center;
@@ -79,7 +74,7 @@ display:inline-block;
 background: #FFFFFF;
 position: absolute;
 top:0px;
-right:25px;
+right:40px;
 }
 #over img {
   display:inline-block;
