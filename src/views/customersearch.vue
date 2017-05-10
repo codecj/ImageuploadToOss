@@ -23,7 +23,7 @@
 	import Vue from 'vue';
 	import { Lazyload } from 'mint-ui';
 	import Request from "../util/API";
-	import customerlIst from '../views/customerManagement.vue';
+	import customerlIst from '../components/customerManagement.vue';
 	Vue.use(Lazyload, {
 		preLoad: 1.3,
 		lazyComponent: true,

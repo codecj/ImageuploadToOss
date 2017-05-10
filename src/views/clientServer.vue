@@ -38,8 +38,8 @@ import { Lazyload } from 'mint-ui'
 import Request from "../util/API"
 import Vue from 'vue'
 import { Toast, Indicator } from 'mint-ui'
-import customerlIst from '../views/customerManagement.vue'
-import getbottom from './getbottom.vue'
+import customerlIst from '../components/customerManagement.vue'
+import getbottom from '../components/getbottom.vue'
 
 Vue.use(Lazyload,{
     preLoad: 1.3,
@@ -127,6 +127,7 @@ export default {
               bridge.callHandler(
                   'showAddressPicker', 
                   responseData=> {
+                    alert(JSON.stringify(responseData));
                     this.areaid=responseData.areaid;
                     responseData.areaid=='' ? this.address='全部区域' : this.address=responseData.address;
                   }
