@@ -140,6 +140,7 @@ export default {
           //ajax调用
           Request.post(pargrmList).then(res=>{
               const getData = JSON.parse(res.data.result)
+              console.log(getData)
               getData.data.shopslist.forEach(value=> {
                 this.listDate.push(value)
               })
@@ -240,7 +241,7 @@ export default {
     width: 100%;
     height: 94px;
     background-color: #fff;
-    position: absolute;
+    position: relative;
     border-bottom: 2px solid #F1F2F7;
 }
 

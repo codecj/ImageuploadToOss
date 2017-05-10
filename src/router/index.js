@@ -8,6 +8,9 @@ import addCar from '../component/addCar.vue'
 import customer from '../component/customermanagement.vue'
 import searchList from '../component/listcomponent.vue'
 import search from '../component/customersearch.vue'
+import changding from '../component/changding.vue'
+import yongjin from '../component/yongjinshangpin.vue'
+import xinpin from '../component/xinpin.vue'
 
 export default {
     routes: [{
@@ -38,8 +41,19 @@ export default {
     }, {
         path: '/presettleCommission', // 佣金结算明细 -> 待结算
         component: PresettleCommission
+    }
+    ,{
+      path:'/changding',
+      component:changding
+    },{
+      path:'/yongjin',
+      component:yongjin
+    }
+    ,{
+      path:'/xinpin',
+      component:xinpin
     },{
       path:'/addCar',
       component: addCar
-    },]
+    }]
 }

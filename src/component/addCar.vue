@@ -42,15 +42,24 @@
                     <li class="tittle">
                         <p @click="goBack()"></p>
                         <p>促销活动</p>
-                        <p></p>
+                        <!-- <p></p> -->
+                    </li>
+                    <li class="activeTap">
+                        <span>混搭买赠</span>
+                        <span>买两件送赠品(不限参与次数)</span>
                     </li>
                     <li class="activeTap">
                         <span>单品买赠</span>
                         <span>买两件送赠品(不限参与次数)</span>
                     </li>
-                    <li class="activeTap"></li>
-                    <li class="activeTap"></li>
-                    <li class="activeTap"></li>
+                    <li class="activeTap">
+                        <span>促销打折</span>
+                        <span>买两件送赠品(不限参与次数)</span>
+                    </li>
+                    <li class="activeTap">
+                        <span>优惠套餐</span>
+                        <span>买两件送赠品(不限参与次数)</span>
+                    </li>
                 </ul>
             </div>
         </transition>
@@ -61,8 +70,7 @@ export default {
     data() {
             return {
                 imgShow: true,
-                isHide: true,
-                transitionName: ''
+                isHide: true
             }
         },
         mounted: function() {},
@@ -81,21 +89,6 @@ export default {
 html {
     background: transparent !important;
 }
-
-
-/*.slide-left-enter,
-.slide-right-leave-active {
-    opacity: 0;
-    -webkit-transform: translate(375px, 0);
-    transform: translate(375px, 0);
-}
-
-.slide-left-leave-active,
-.slide-right-enter {
-    opacity: 0;
-    -webkit-transform: translate(-375px, 0);
-    transform: translate(-375px, 0);
-}*/
 
 .begore-leave-active {
     animation-name: begore-out;
@@ -168,21 +161,58 @@ html {
     height: 1000px;
     z-index: 10;
 }
-.activeList li{
-    line-height: 111px; 
+
+.activeList li {
+    line-height: 111px;
     height: 111px;
-    padding:0 35px;
+    padding: 0 25px 0 35px;
     border-bottom: 2px solid #F1F2F7;
 }
-.activeList li.tittle p{ position: absolute; top: 0;height: 111px; }
-.activeList li.tittle p:nth-of-type(1){ background:url(../assets/icon10.png) left no-repeat; background-size: 50px; left: 25px;  width: 111px; }
-.activeList li.tittle p:nth-of-type(2){ left: 111px; right: 111px; line-height: 111px; text-align: center; font-size: 40px;
-color: #FF783C;}
-.activeList li.tittle p:nth-of-type(3){ background:url(../assets/icon18.png) right no-repeat; background-size: 50px; right:25px; width: 111px; }
-.activeList li span:nth-of-type(1){ float: left; font-size: 30px;
-color: #3B456C;}
-.activeList li span:nth-of-type(2){ float: right;font-size: 26px;
-color: #9DA2B5; }
+
+.activeList li.tittle p {
+    position: absolute;
+    top: 0;
+    height: 111px;
+}
+
+.activeList li.tittle p:nth-of-type(1) {
+    background: url(../assets/icon10.png) left no-repeat;
+    background-size: 50px;
+    left: 25px;
+    width: 111px;
+}
+
+.activeList li.tittle p:nth-of-type(2) {
+    left: 111px;
+    right: 111px;
+    line-height: 111px;
+    text-align: center;
+    font-size: 40px;
+    color: #FF783C;
+}
+
+.activeList li.tittle p:nth-of-type(3) {
+    background: url(../assets/icon18.png) right no-repeat;
+    background-size: 50px;
+    right: 25px;
+    width: 111px;
+}
+
+.activeList li span:nth-of-type(1) {
+    float: left;
+    font-size: 30px;
+    color: #3B456C;
+}
+
+.activeList li span:nth-of-type(2) {
+    float: right;
+    font-size: 26px;
+    color: #9DA2B5;
+    padding-right: 50px;
+    background:url(../assets/icon17.png) right no-repeat;
+    background-size: 40px;
+}
+
 .product_show {
     position: absolute;
     padding-bottom: 0;
