@@ -68,9 +68,10 @@ export default {
             let pargrmList= {
                 oper: oper,
                 type: 'wqOrder',
-                para: '{"userid":"354858"}'
+                para: '{"userid":"'+JSON.parse(this.commissionData).userId+'"}'
             };
             Request.post(pargrmList).then((response) =>{
+                console.log(response);
                 Indicator.close();
                 this.dataArray=testJson.data;
                 for (var i = 0; i < testJson.data.length; i++) {
