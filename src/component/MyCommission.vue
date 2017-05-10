@@ -36,7 +36,6 @@
 				PLACE_PRICE:'', // 预结算
 				PLACE_PRICE_BIG:'',
 				PLACE_PRICE_SIGLE:''
-
 			}
 		},
 		mounted(){
@@ -45,12 +44,11 @@
 		methods: {
 			ajax:function(){
 				var _this = this;
-				console.log(_this.$route.query.aaa);
 				Indicator.open();
 				let pargrmList = {
 		            oper: 'findCommissionTotalPrice',
 		            type: 'wqOrder',
-		            para: '{"userid":"354858"}'
+		            para: '{"userid":"'+_this.$route.query.userId+'"}'
           		};
           		Request.post(pargrmList).then(function(response){
           			Indicator.close();
