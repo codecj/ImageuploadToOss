@@ -39,6 +39,8 @@ import Vue from 'vue'
 import { Toast, Indicator ,Lazyload} from 'mint-ui'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
+import utils from '../util/utils'
+console.log(utils.md5('1234'));
 Vue.use(Lazyload,{
     preLoad: 1.3,
     lazyComponent: true,
@@ -192,6 +194,18 @@ export default {
                     this.menuList = getData.data.slice(0,2);
                     this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
                     this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
+                    var temp = this.menuList[0];
+                    if (temp.url == 'kehuliebiao') {
+                        temp.imgSrc = require('../assets/icon49.png');
+                    }else if(temp.url == 'chexiao'){
+                        temp.imgSrc = require('../assets/icon50.png');
+                    }
+                    var temp1 = this.menuList[1];
+                    if (temp1.url == 'kehuliebiao') {
+                        temp1.imgSrc = require('../assets/icon49.png');
+                    }else if(temp1.url == 'chexiao'){
+                        temp1.imgSrc = require('../assets/icon50.png');
+                    }
                     console.log(this.menuList);
                   }   
             }).catch(error=>{

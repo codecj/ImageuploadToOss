@@ -148,121 +148,6 @@ export default ({
     width: 100%;
     overflow: hidden;
 }
-
-.changeItem {
-    overflow: hidden;
-    width: 750px;
-    padding: 0;
-}
-
-
-/*changeItem竖着布局方式*/
-
-.changeItem .searchItem {
-    height: 198px;
-    width: 100%;
-    border-top: 2px solid #F1F2F7;
-    background: #fff;
-    padding: 50px 40px 50px 32px;
-}
-
-.changeItem .searchItem .onephoto {}
-
-.changeItem .searchItem .onephoto .photo {
-    width: 200px;
-    height: 200px;
-    float: left;
-}
-
-
-/**/
-
-.changeItem .searchItem>p:nth-child(2) {
-    width: 450px;
-    height: 80px;
-    float: left;
-    font-size: 30px;
-    color: #3B456C;
-    letter-spacing: 0;
-    line-height: 40px;
-    margin-left: 28px;
-    overflow: hidden;
-    /*white-space: nowrap;*/
-    text-overflow: ellipsis;
-    word-break: normal;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-}
-
-.changeItem .searchItem>p:nth-child(3) {
-    font-size: 22px;
-    color: #9DA2B5;
-    letter-spacing: 0;
-    float: left;
-    width: 450px;
-    margin-left: 28px;
-}
-
-.changeItem .searchItem>p:nth-child(4) {
-    width: 450px;
-    height: 40px;
-    float: left;
-    margin-top: 8px;
-    margin-left: 28px;
-}
-
-.changeItem .searchItem>p:nth-child(4) span {
-    float: left;
-    font-size: 18px;
-    color: #FF783C;
-    letter-spacing: 0;
-    border: 1px solid #FF783C;
-    border-radius: 2px;
-    display: inline-block;
-    padding: 1px 10px 1px 10px;
-    margin-right: 10px;
-}
-
-.changeItem .searchItem>p:nth-child(5) {
-    margin-top: 4px;
-    height: 44px;
-    line-height: 44px;
-    width: 450px;
-    float: left;
-    margin-left: 28px;
-}
-
-.changeItem .searchItem>p:nth-child(5) span:nth-child(1) {
-    font-size: 30px;
-    color: #FF783C;
-    letter-spacing: 0;
-}
-
-.changeItem .searchItem>p:nth-child(5) span:nth-child(2) {
-    font-size: 18px;
-    color: #FFFFFF;
-    letter-spacing: 0;
-    background: #FF7A3F;
-    border-radius: 4px;
-    margin: 0 10px 0 40px;
-    line-height: 30px;
-    text-align: center;
-    display: inline-block;
-}
-
-.changeItem .searchItem>p:nth-child(5) span:nth-child(3) {
-    font-size: 22px;
-    color: #FF783C;
-    letter-spacing: 0;
-}
-
-.changeItem .searchItem .gocart {
-    width: 48px;
-    height: 48px;
-    float: right;
-}
-
 .over {
     position: fixed;
     bottom: 0;
@@ -286,7 +171,6 @@ export default ({
     float: right;
     margin: 0px 20px 15px 0;
 }
-
 #scrolltop {
     display: none;
 }
