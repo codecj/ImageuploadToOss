@@ -34,10 +34,9 @@
     </div>
 </template>
 <script type="text/javascript">
-import { Lazyload } from 'mint-ui'
 import Request from "../util/API"
 import Vue from 'vue'
-import { Toast, Indicator } from 'mint-ui'
+import { Toast, Indicator ,Lazyload} from 'mint-ui'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
 Vue.use(Lazyload,{
@@ -101,6 +100,12 @@ export default {
         })
         this.items[0].isShow = true;
         this.requestMenus();
+        Request.jsBbridge(bridge=> {
+           bridge.init(function(message, responseCallback) {
+                var data = {};
+                responseCallback(data);
+            });
+        })
     },
     methods: {
         overHide(isHide){
@@ -122,14 +127,19 @@ export default {
         },
         getGps() {
           Request.jsBbridge(bridge=> {
-              bridge.callHandler(
-                  'showAddressPicker', 
-                  responseData=> {
-                    alert(JSON.stringify(responseData));
-                    this.areaid=responseData.areaid;
-                    responseData.areaid=='' ? this.address='全部区域' : this.address=responseData.address;
-                  }
-              )
+            window.WebViewJavascriptBridge.callHandler(
+                'showAddressPicker'
+                , {'Data': 'json数据传给Android端'}  //该类型是任意类型
+                , (responseData) =>{
+                    var res = responseData
+                    // JSON.parse(JSON.stringify(responseData))
+                    if((typeof res)=='string'){
+                      res = JSON.parse(responseData);
+                    }
+                    this.areaid=res.areaid;
+                    res.areaid=='' ? this.address='全部区域' : this.address=res.address;
+                }
+            );
           })
         },
         ajax() {
@@ -211,6 +221,7 @@ export default {
           });　　　　
         },
         fliterSure() {
+            this.isEnd=false;
             this.page.pageno='1';
             this.userType = false;
             this.userFliter = false;
@@ -236,7 +247,11 @@ export default {
 }
 .overhide{ overflow-y: hidden !important; }
 #clientServer .shadowLine {
-    background: #FFFFFF;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    background: #f1f2f7;
     box-shadow: 0 6px 12px 0 rgba(193, 193, 193, 0.50);
 }
 
@@ -306,6 +321,8 @@ export default {
 
 #clientServer .fliter {
     z-index: 999;
+    width: 100%;
+    position: absolute;
 }
 
 #clientServer .fliterBar {

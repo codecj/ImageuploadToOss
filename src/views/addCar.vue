@@ -67,48 +67,53 @@
 </template>
 <script>
 import Request from "../util/API"
+import { Lazyload } from 'mint-ui'
+import Vue from 'vue'
+import { Toast, Indicator } from 'mint-ui'
+Vue.use(Lazyload,{
+    preLoad: 1.3,
+    lazyComponent: true,
+    error: require('../assets/holde.png'),
+    loading: require('../assets/holde.png'),
+    listenEvents: ['scroll']
+})
 export default {
     data() {
             return {
                 imgShow: true,
-                isHide: true
+                isHide: true,
+                areaId:this.$route.query.areaId,
+                stkc:this.$route.query.stkc,
+                userName:this.$route.query.userName,
+                skuDate:[]
             }
         },
         mounted: function() {
-            // const pargrmList = {
-            //         pagination: JSON.stringify(this.page),
-            //         oper: 'getShopList',
-            //         type: 'wqCustomer',
-            //         para: '{"latitude":"' + this.gps.latitude + '","longitude":"' + this.gps.longitude + '","keywords":"","picno":"' + this.picno + '","type":' + this.typeD + ',"areaid":"' + this.areaid + '"}'
-            //     }
-            // //ajax调用
-            // Request.post(pargrmList).then(res => {
-            //     const getData = JSON.parse(res.data.result)
-            //     console.log(getData)
-            //     getData.data.shopslist.forEach(value => {
-            //         this.listDate.push(value)
-            //     })
-            //     if (this.listDate.length == getData.pagination.totalcount) {
-            //         // Toast({ message: '已经是最后一页啦', duration: 2000 }) 
-            //         this.isEnd = true;
-            //         Indicator.close();
-            //         return
-            //     }
-            //     if (getData.code !== "200") Toast({
-            //         message: getData.msg,
-            //         duration: 2000
-            //     });
-            //     Indicator.close();
-            // }).catch(error => {
-            //     Indicator.close();
-            //     if (error.response) {
-            //         // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-            //         Toast({
-            //             message: error.response.status,
-            //             duration: 2000
-            //         });
-            //     }
-            // })
+            const pargrmList = {
+                oper: 'findWqSpec',
+                type: 'wqProduct',
+                para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
+            }
+            //ajax调用
+            Request.post(pargrmList).then(res => {
+                const getData = JSON.parse(res.data.result)
+                if (getData.code !== "200") Toast({
+                    message: getData.msg,
+                    duration: 2000
+                });
+                this.skuDate=getData
+                Indicator.close();
+                console.log(getData)
+            }).catch(error => {
+                Indicator.close();
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                }
+            })
         },
         methods: {
             goBack() {
