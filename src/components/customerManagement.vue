@@ -23,8 +23,8 @@
                 <div class="content-popup">
                     <ul>
                         <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="telClose(item)" src="../assets/icon18.png"></span></li>
-                        <li v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
-                        <li v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
+                        <li @click="mobile(item.MOBILE)" v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
+                        <li @click="tel(item.TEL)" v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
                     </ul>
                 </div>
             </div>
@@ -77,7 +77,26 @@ export default {
                     this.$set(item, 'telBox', false);
                 })
                 this.$set(item, 'telBox', true);
+            },
+               mobile(item){
+                console.log(item,1);
+                Request.jsBbridge(bridge=> {
+                    bridge.callHandler(
+                        'callPhoneClick',
+                        {item:item}
+                    )
+                })
+            },
+            tel(item){
+                console.log(item,2);
+                Request.jsBbridge(bridge=> {
+                    bridge.callHandler(
+                        'callPhoneClick',
+                        {item:item}
+                    )
+                })
             }
+
         }
 }
 </script>
