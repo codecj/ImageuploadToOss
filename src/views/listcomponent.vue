@@ -19,6 +19,7 @@
       <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
         <oneprod :prodList="prodList"></oneprod> 
         <getbottom v-show="show"></getbottom>
+<<<<<<< HEAD
         <div class="over">
             <shopcart></shopcart>
             <p>
@@ -27,8 +28,16 @@
          </div>
       </div>        
       </div> 
+=======
+      </div>
+>>>>>>> ca247018b7473e9ae298c204fb145efa77845160
     </div>
-
+    <div class="over">
+      <shopcart></shopcart>
+      <p>
+        <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
+      </p>      
+    </div> 
   </div>
 </template>
 

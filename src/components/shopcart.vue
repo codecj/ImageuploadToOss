@@ -1,5 +1,5 @@
 <template>
-     <div id="over" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"infinite-scroll-distance="10">
+     <div id="over">
         <p>
            <img src="../assets/icon43.png" alt=""> 
            <span v-if="show">{{shopCart}}</span>
@@ -50,7 +50,7 @@
   })
 </script>
 
-<style scoped>
+<style>
 #over{
   position: fixed;
   bottom:0;
