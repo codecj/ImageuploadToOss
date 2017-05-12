@@ -2,7 +2,7 @@ import axios from 'axios'
 import Qs from 'qs'
 export default {
     //请求的地址
-    url:'http://192.168.200.17:8080/qpwa-wireless/handle/execute.jhtml',
+    url:'http://testios.11wlw.cn/qpwa-wireless/handle/execute.jhtml',
     isMobile: function() {
         var pType = navigator.userAgent.match(/(iphone|ipad|ipod|ios|android|mobile|blackberry|iemobile|mqqbrowser|juc|fennec|wosbrowser|browserng|Webos|symbian|windows phone)/i)[0];
         if (pType == 'iPhone' || pType == 'iPad' || pType == 'iPod') {
