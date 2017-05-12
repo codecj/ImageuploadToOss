@@ -7,7 +7,7 @@
     </header>
     <div class="selectList">
       <ul>
-        <li @click="zongHe" style="margin-right:50px;">
+        <li @click="zongHe">
             综合
         </li>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
@@ -61,7 +61,6 @@
         show: false,
         price:true,
         pagram:{
-          // orderby:'ZH',
           username:this.$route.query.username,
           spuserno:this.$route.query.spuserno,
           spusername:this.$route.query.spusername,
@@ -108,7 +107,7 @@
         // ajax调用
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            // console.log(getData)
+            console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
@@ -259,30 +258,22 @@ header div:nth-child(1) img{
 .selectList {
   position: fixed;
   top:110px;
+  width:100%;
 }
 .selectList ul{
-  width:630px;
-  height:37px;
+  height:96px;
+  line-height:100px;
   background:#fff;
-  padding:30px 48px 29px 72px;
-  text-align: left;
-/*
-  width:630px;
-  height:50px;
-  background:#fff;
-  padding:30px 48px 29px 72px;
-  text-align: left;*/
+  display:flex;
 }
 .selectList ul li{
+font-size: 26px;
   float:left;
-  font-size: 26px;
-  color: #343657;
-  letter-spacing: 0;
-  margin-right:70px;
+  flex:1;
+  text-align: center;
 }
 .selectList ul li:nth-last-child(){
   margin-right:0;
-
 }
 .selectList ul li span{
   display:inline-block;
@@ -295,13 +286,13 @@ header div:nth-child(1) img{
 }
 .selectList ul .topprice{
   width:100px;
-  background: url(../assets/icon0.png) no-repeat right;
-  background-size:30%;
+  background: url(../assets/icon0.png) no-repeat 130px 36px;
+  background-size:17%;
 }
 .selectList ul .lowprice{
   width:100px;
-  background: url(../assets/icon6.png) no-repeat right;
-  background-size:30%;
+  background: url(../assets/icon6.png) no-repeat 130px 36px;
+  background-size:17%;
 }
 
 .selectList ul .show{
@@ -309,8 +300,9 @@ header div:nth-child(1) img{
 }
 .selectList ul li:nth-child(4){
   width:100px;
-  background: url(../assets/icon19.png) no-repeat right;
-  background-size:30%;
+  background: url(../assets/icon19.png) no-repeat 130px 36px;
+
+  background-size:17%;
 }
 
 .prodsList{
