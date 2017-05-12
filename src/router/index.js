@@ -8,6 +8,7 @@ import search from '../views/customersearch.vue'
 import changding from '../views/changding.vue'
 import yongjin from '../views/yongjinshangpin.vue'
 import xinpin from '../views/xinpin.vue'
+import nosearch from '../views/nosearch.vue'
 
 export default {
     routes: [{
@@ -41,6 +42,10 @@ export default {
             path: '/addCar',//加入购物车弹窗
             component: addCar
         },
-        { path: '*', redirect: '/clientServer' }
+        { path: '*', redirect: '/clientServer' },
+        {
+        	path:'/nosearch',
+        	component:nosearch
+        }
     ]
 }
