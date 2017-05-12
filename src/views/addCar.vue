@@ -85,7 +85,8 @@ export default {
                 areaId:this.$route.query.areaId,
                 stkc:this.$route.query.stkc,
                 userName:this.$route.query.userName,
-                skuDate:[]
+                skuDate:[],
+                dataTo:''
             }
         },
         mounted: function() {
@@ -107,8 +108,7 @@ export default {
             }).catch(error => {
                 Indicator.close();
                 if (error.response) {
-                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                    Toast({
+                    Toast({  
                         message: error.response.status,
                         duration: 2000
                     });
