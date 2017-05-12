@@ -1,19 +1,22 @@
 <template>
-    <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-        <!-- content横着布局和changeItem竖着布局-->
-        <div class="proList">
-            <div class="changeItem">
-                <oneprod :prodList="prodList"></oneprod>
-                <getbottom v-show="show"></getbottom>
-                 <div class="over">
-                    <shopcart></shopcart>
-                    <p>
-                       <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
-                    </p>
-                 </div>
-            </div>
-           
-        </div>
+    <div>
+      <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+          <!-- content横着布局和changeItem竖着布局-->
+          <div class="proList">
+              <div class="changeItem">
+                  <oneprod :prodList="prodList"></oneprod>
+                  <getbottom v-show="show"></getbottom>
+                  <!-- //////////////////////////////////////////// -->
+              </div>
+              
+          </div>
+      </div>
+      <div class="over">
+          <shopcart></shopcart>
+          <p>
+              <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
+          </p>
+      </div>
     </div>
 </template>
 <script type="text/javascript">
@@ -45,10 +48,15 @@ export default ({
             listStatus: false,
             show: false,
             price: true,
-            prodList: [],
+            prodList:[],
             page: {
                 pageno: "0",
                 pagesize: "20"
+            },
+            param:{
+                userno:this.$route.query.userno,
+                spusername:this.$route.query.spusername,
+                areaid:this.$route.query.areaid,
             }
         }
     },
@@ -57,7 +65,6 @@ export default ({
         shopcart,
         oneprod
     },
-    // props:[""],
     methods: {
         ajax() {
             Indicator.open();
@@ -65,7 +72,7 @@ export default ({
                     pagination: JSON.stringify(this.page),
                     oper: 'getStkUsualAppNew',
                     type: 'wqProduct',
-                    para: '{"userno":"351335","spusername":"SCLBPYWY","areaid":"2282"}'
+                    para: JSON.stringify(this.param)
                 }
                 //ajax调用
             Request.post(pargrmList).then(res => {
@@ -74,6 +81,7 @@ export default ({
                 getData.data.product.forEach(value => {
                     this.prodList.push(value)
                 })
+                console.log(this.prodList)
                 if (this.prodList.length == getData.pagination.totalcount) {
                     this.show = true;
                     Indicator.close();

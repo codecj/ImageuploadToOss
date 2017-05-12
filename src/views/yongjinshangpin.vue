@@ -42,10 +42,16 @@
           listStatus:false,
           price:true,
           show:false,
+          
           prodList:[],
           page:{
             pageno:"0",
             pagesize:"20"
+          },
+          param:{
+            userno:this.$route.query.userno,
+            spusername:this.$route.query.spusername,
+            areaid:this.$route.query.areaid,
           }
         }
     },
@@ -60,13 +66,13 @@
           pagination: JSON.stringify(this.page),
           oper: 'findCommissionStkCNew',
           type: 'wqProduct',
-          para: '{"userno":"351335","spusername":"SCLBPYWY","areaid":"2282"}'
+          para: JSON.stringify(this.param),
         }
         //ajax调用
-        Request.post(pargrmList).then(res=>{console.log(res)
+        Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
             // console.log(getData)
-            getData.data.CommissionStkCs.forEach(value=> {
+            getData.data.forEach(value=> {
               this.prodList.push(value)
             })
             if(this.prodList.length==getData.pagination.totalcount) {

@@ -1,8 +1,8 @@
 <template>
-     <div id="over" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"infinite-scroll-distance="10">
+     <div id="over">
         <p>
            <img src="../assets/icon43.png" alt=""> 
-           <span>{{shopCart}}</span>
+           <span v-if="show">{{shopCart}}</span>
         </p>
     </div> 
 </template>
@@ -14,7 +14,8 @@
     name:"over",
     data() {
         return{
-         shopCart:''
+         shopCart:'',
+         show:false
         }
     },
     methods:{
@@ -27,7 +28,11 @@
         //ajax调用
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
+            // console.log(getData)
             this.shopCart=getData.data.TOTALQTY;
+            if(this.shopCart>0){
+              this.show=true;
+            }
         }).catch(error=>{
             if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -45,7 +50,7 @@
   })
 </script>
 
-<style scoped>
+<style>
 #over{
   position: fixed;
   bottom:0;

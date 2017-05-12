@@ -9,10 +9,8 @@
         <p>{{item.NAME}}</p>
         <p>规格：{{item.MODLE}}</p>
         <p>
-            <span>优惠套餐</span>
-            <span>混搭满赠</span>
-            <span>打折</span>
-          </p>
+            <span v-for="act in item.PROM_MAS_CODES">{{act}}</span>
+        </p>
         <p>
           <span>￥{{item.LIST_PRICE}}</span>
           <span>{{item.commissionPrice ? "奖" : ''}}</span>
@@ -37,6 +35,7 @@
     },
     methods:{
        gocart: function(value){
+        alert(value)
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'popShoppingCartClick',{
@@ -96,6 +95,7 @@
   float:left;
   margin-top:8px;
   margin-left:28px;
+  overflow: hidden;
 }
 .changeItem .searchItem>p:nth-child(4) span{
   float:left;
@@ -201,9 +201,9 @@
     background: #FF7A3F;
     border-radius: 4px;
     margin: 0 0 0 14px;
-    width:30px;
+ /*   width:30px;
     height: 30px;
-    line-height: 30px;
+    line-height: 30px;*/
     text-align: center;
     display:inline-block;
     margin-right:0;
