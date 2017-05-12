@@ -18,21 +18,17 @@
                         该商品正在参与活动,查看活动信息
                         <img src="../assets/icon17.png" alt="">
                     </p>
-                    <ul class="goodsSku">
-                        <div v-for="item in defalutRule" :key="item.specId">
-                            <p>{{item.specName}}</p>
-                            <li :data-id="item.SPEC_ID" v-for="item in item.specValueList">{{item.SPECVALUE}}</li>
-                            <!-- <li class="active">包(1*1)袋</li>
-                            <li>包(1*1)袋</li>
-                            <li>包(1*1)袋</li> -->
-                        </div>
+                    <ul v-for="item in defalutRule" :key="item.specId" class="goodsSku">
+                        <p>{{item.specName}}</p>
+                        <li :data-id="item.SPEC_ID" v-for="item in item.specValueList">{{item.SPECVALUE}}</li>
                     </ul>
                     <div class="goodsNum">
                         <p>购买数量</p>
                         <ul>
-                            <li><img src="../assets/icon3.png" alt=""></li>
-                            <li>1</li>
-                            <li><img src="../assets/icon5.png" alt=""></li>
+                            <li v-if="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
+                            <li v-if="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
+                            <li>{{count}}</li>
+                            <li @click="addCartNum()"><img src="../assets/icon9.png" alt=""></li>
                         </ul>
                     </div>
                 </div>
@@ -90,7 +86,8 @@ export default {
                 userName:this.$route.query.userName,
                 skuDate:[],
                 chose:{},
-                defalutRule:[]
+                defalutRule:[],
+                count:1
             }
         },
         mounted: function() {
@@ -162,6 +159,16 @@ export default {
                         this.chose=item
                     }　　　　　　　　
                 });
+            },
+            reduceCartNum(){
+                if (this.count==1) {
+                  this.count=1
+                } else {
+                  this.count--;
+                }
+            },
+            addCartNum(){
+                this.count++
             }
         }
 }
@@ -443,6 +450,7 @@ html {
 
 #addCar .goodsNum li img {
     width: 48px;
+    height: 48px;
     display: block
 }
 

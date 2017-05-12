@@ -8,7 +8,6 @@
                   <getbottom v-show="show"></getbottom>
                   <!-- //////////////////////////////////////////// -->
               </div>
-              
           </div>
       </div>
       <div class="over">
