@@ -68,7 +68,7 @@ export default {
     methods: {
         submit() {
             Indicator.open();
-            //               this.listDate=[]
+            this.listDate=[]
             console.log(this.gps.latitude)
             const pargrm = {
                     pagination: JSON.stringify(this.page),
