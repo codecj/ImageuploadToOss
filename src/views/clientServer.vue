@@ -148,7 +148,6 @@ export default {
                 this.listDate.push(value)
               })
               if(this.listDate.length==getData.pagination.totalcount) {
-                // Toast({ message: '已经是最后一页啦', duration: 2000 }) 
                 this.isEnd=true;
                 Indicator.close();
                 return

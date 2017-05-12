@@ -41,6 +41,9 @@
           listStatus:false,
           price:true,
           show:false,
+          userno:this.$route.query.userno,
+          spusername:this.$route.query.spusername,
+          areaid:this.$route.query.areaid,
           prodList:[],
           page:{
             pageno:"0",
@@ -51,7 +54,6 @@
     components: {
       getbottom,shopcart,oneprod
     },
-    // props:["listStatus"],
     methods:{
         ajax() {
         Indicator.open();
@@ -59,7 +61,7 @@
           pagination: JSON.stringify(this.page),
           oper: 'findStkNewsAppNew',
           type: 'wqProduct',
-          para: '{"userno":"351335","spusername":"SCLBPYWY","areaid":"2282"}'
+          para: '{"userno":"'+this.userno+'","spusername":"'+this.spusername+'","areaid":"'+this.areaid+'"}'
         }
         //ajax调用
         Request.post(pargrmList).then(res=>{

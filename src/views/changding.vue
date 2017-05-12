@@ -45,7 +45,10 @@ export default ({
             listStatus: false,
             show: false,
             price: true,
-            prodList: [],
+            userno:this.$route.query.userno,
+            spusername:this.$route.query.spusername,
+            areaid:this.$route.query.areaid,
+            prodList:[],
             page: {
                 pageno: "0",
                 pagesize: "20"
@@ -65,7 +68,7 @@ export default ({
                     pagination: JSON.stringify(this.page),
                     oper: 'getStkUsualAppNew',
                     type: 'wqProduct',
-                    para: '{"userno":"351335","spusername":"SCLBPYWY","areaid":"2282"}'
+                    para: '{"userno":"'+this.userno+'","spusername":"'+this.spusername+'","areaid":"'+this.areaid+'"}'
                 }
                 //ajax调用
             Request.post(pargrmList).then(res => {
@@ -74,6 +77,7 @@ export default ({
                 getData.data.product.forEach(value => {
                     this.prodList.push(value)
                 })
+                console.log(this.prodList)
                 if (this.prodList.length == getData.pagination.totalcount) {
                     this.show = true;
                     Indicator.close();
