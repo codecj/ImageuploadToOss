@@ -4,15 +4,12 @@
 			<div class="no-png"><img src="../assets/icon55.png" /></div>
 			<div class="text-1">没有搜索到结果</div>
 			<div class="text-2">请用手机号码或者店铺名称搜索</div>
-			<div class="no-btn" @conclick="jsbird">创建新客户</div>
+			<div class="no-btn">创建新客户</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	exports default{
-		deta
-	}
 </script>
 
 <style scoped>
