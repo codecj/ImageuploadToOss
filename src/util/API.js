@@ -2,10 +2,6 @@ import axios from 'axios'
 import Qs from 'qs'
 export default {
     //请求的地址
-<<<<<<< HEAD
-    // url:'https://devios.11wlw.cn/handle/execute.jhtml',
-=======
->>>>>>> ca247018b7473e9ae298c204fb145efa77845160
     url:'https://testios.11wlw.cn/handle/execute.jhtml',
     isMobile: function() {
         var pType = navigator.userAgent.match(/(iphone|ipad|ipod|ios|android|mobile|blackberry|iemobile|mqqbrowser|juc|fennec|wosbrowser|browserng|Webos|symbian|windows phone)/i)[0];

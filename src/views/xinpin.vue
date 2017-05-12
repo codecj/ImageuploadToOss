@@ -41,13 +41,15 @@
           listStatus:false,
           price:true,
           show:false,
-          userno:this.$route.query.userno,
-          spusername:this.$route.query.spusername,
-          areaid:this.$route.query.areaid,
           prodList:[],
           page:{
             pageno:"0",
             pagesize:"20"
+          },
+          param:{
+            userno:this.$route.query.userno,
+            spusername:this.$route.query.spusername,
+            areaid:this.$route.query.areaid,
           }
         }
     },
@@ -61,7 +63,7 @@
           pagination: JSON.stringify(this.page),
           oper: 'findStkNewsAppNew',
           type: 'wqProduct',
-          para: '{"userno":"'+this.userno+'","spusername":"'+this.spusername+'","areaid":"'+this.areaid+'"}'
+          para:  JSON.stringify(this.param),
         }
         //ajax调用
         Request.post(pargrmList).then(res=>{

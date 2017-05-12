@@ -7,6 +7,9 @@
     </header>
     <div class="selectList">
       <ul>
+        <li @click="zongHe">
+            综合
+        </li>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
           {{item.title}}
         </li>
@@ -19,7 +22,6 @@
       <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
         <oneprod :prodList="prodList"></oneprod> 
         <getbottom v-show="show"></getbottom>
-<<<<<<< HEAD
         <div class="over">
             <shopcart></shopcart>
             <p>
@@ -28,16 +30,9 @@
          </div>
       </div>        
       </div> 
-=======
       </div>
->>>>>>> ca247018b7473e9ae298c204fb145efa77845160
     </div>
-    <div class="over">
-      <shopcart></shopcart>
-      <p>
-        <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
-      </p>      
-    </div> 
+   
   </div>
 </template>
 
@@ -65,20 +60,27 @@
         listStatus:false,
         show: false,
         price:true,
-        username:this.$route.query.username,
-        spuserno:this.$route.query.spuserno,
-        spusername:this.$route.query.spusername,
-        areaid:this.$route.query.areaid,
-        vendorusername:this.$route.query.vendorusername,
-        keyword:this.$route.query.keyword,
-        vendorcode:this.$route.query.vendorcode,
-        userno:this.$route.query.userno,
-
+        // username:this.$route.query.username,
+        // spuserno:this.$route.query.spuserno,
+        // spusername:this.$route.query.spusername,
+        // areaid:this.$route.query.areaid,
+        // vendorusername:this.$route.query.vendorusername,
+        // keyword:this.$route.query.keyword,
+        // vendorcode:this.$route.query.vendorcode,
+        // userno:this.$route.query.userno,
+        // orderby:this.$route.query.orderby,
+        pagram:{
+          // orderby:'ZH',
+          username:this.$route.query.username,
+          spuserno:this.$route.query.spuserno,
+          spusername:this.$route.query.spusername,
+          areaid:this.$route.query.areaid,
+          vendorusername:this.$route.query.vendorusername,
+          keyword:this.$route.query.keyword,
+          vendorcode:this.$route.query.vendorcode,
+          userno:this.$route.query.userno,
+        },
         change:[
-          {
-            title:"综合",
-            show:true
-          },
           {
             title:"销量",
             show:false
@@ -92,7 +94,7 @@
         page:{
           pageno:"0",
           pagesize:"20",
-          orderby: "",
+          orderby: "ZH",
           asc: true
         }
       }
@@ -110,13 +112,12 @@
           pagination: JSON.stringify(this.page),
           oper: 'getWqSearchApp',
           type: 'wqProduct',
-          para: '{"username": "'+this.username+'","spuserno": "'+this.spuserno+'","spusername": "'+this.spusername+'","areaid": "'+this.areaid+'","vendorusername": "'+this.vendorusername+'","keyword": "'+this.keyword+'","vendorcode": "'+this.vendorcode+'","userno": "'+this.userno+'"}'
+          para: JSON.stringify(this.pagram) 
         }
-        // console.log(pargrmList.para)
         // ajax调用
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            // console.log(getData)
+            console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
@@ -153,13 +154,30 @@
           let that=this;
           this.change.forEach(function(item){
             that.$set(item,"show",false);
-            // pargrmList.para='{"username": "'+this.username+'","spuserno": "'+this.spuserno+'","spusername": "'+this.spusername+'","areaid": "'+this.areaid+'","vendorusername": "'+this.vendorusername+'","keyword": "'+this.keyword+'","vendorcode": "'+this.vendorcode+'","userno": "'+this.userno+'","sort": ""}'
           })
           that.$set(item,"show",true);
         })
         this.prodList=[];
+        if (item.index == 0) {
+          if (item.show == true) {
+            this.page.orderby = "AS";
+          }else{
+            this.page.orderby = "AA";
+          }
+        }else{
+          if (item.show == true) {
+            this.page.orderby = "BS";
+          }else{
+            this.page.orderby = "BA";
+          }
+        }
         this.ajax()
        
+      },
+      zongHe:function() {
+        this.prodList=[];
+        this.page.orderby = "ZH";
+        this.ajax()
       },
       onScroll:function() {
         this.scrolled=document.getElementById("prodsList").scrollTop;
