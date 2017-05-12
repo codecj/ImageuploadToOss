@@ -7,7 +7,7 @@
     </header>
     <div class="selectList">
       <ul>
-        <li @click="zongHe">
+        <li @click="zongHe" style="margin-right:50px;">
             综合
         </li>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
@@ -60,15 +60,6 @@
         listStatus:false,
         show: false,
         price:true,
-        // username:this.$route.query.username,
-        // spuserno:this.$route.query.spuserno,
-        // spusername:this.$route.query.spusername,
-        // areaid:this.$route.query.areaid,
-        // vendorusername:this.$route.query.vendorusername,
-        // keyword:this.$route.query.keyword,
-        // vendorcode:this.$route.query.vendorcode,
-        // userno:this.$route.query.userno,
-        // orderby:this.$route.query.orderby,
         pagram:{
           // orderby:'ZH',
           username:this.$route.query.username,
@@ -117,7 +108,7 @@
         // ajax调用
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            console.log(getData)
+            // console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
@@ -275,7 +266,12 @@ header div:nth-child(1) img{
   background:#fff;
   padding:30px 48px 29px 72px;
   text-align: left;
-
+/*
+  width:630px;
+  height:50px;
+  background:#fff;
+  padding:30px 48px 29px 72px;
+  text-align: left;*/
 }
 .selectList ul li{
   float:left;
