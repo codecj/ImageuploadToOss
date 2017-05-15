@@ -2,7 +2,9 @@
   <div id="prods">
     <header>
       <div id="backClick" @click="backClick"><img src="../assets/icon10.png" alt=""/></div>
-      <form action=""><input type="text" placeholder="请输入关键字搜索商品"></form>
+      <form action="" @submit.prevent="ajax">
+         <input type="search" placeholder="请输入关键字搜索商品" :value="pagram.keyword" v-model="pagram.keyword">
+      </form>
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
     </header>
     <div class="selectList">
@@ -18,18 +20,20 @@
         </li>
       </ul>
     </div>
-    <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+   <!--  <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
       <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
+         <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <oneprod :prodList="prodList"></oneprod> 
+        </div>
         <getbottom v-show="show"></getbottom>
         <div class="over">
             <shopcart></shopcart>
             <p>
               <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
             </p>
-         </div>
+        </div>
       </div>        
-      </div> 
+      <!-- </div>  -->
       </div>
     </div>
    
@@ -66,9 +70,9 @@
           spusername:this.$route.query.spusername,
           areaid:this.$route.query.areaid,
           vendorusername:this.$route.query.vendorusername,
-          keyword:this.$route.query.keyword,
           vendorcode:this.$route.query.vendorcode,
           userno:this.$route.query.userno,
+          keyword:""
         },
         change:[
           {
@@ -105,6 +109,7 @@
           para: JSON.stringify(this.pagram) 
         }
         // ajax调用
+            // console.log(this.pagram.keyword)
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
             console.log(getData)
@@ -228,7 +233,7 @@ header .statusleft{
   background-size:70%;
 }
 header input{
-  width:448px;
+  width:508px;
   height:62px;
   border-radius: 2px;
   border:none;
