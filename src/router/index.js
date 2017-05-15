@@ -11,6 +11,7 @@ import xinpin from '../views/xinpin.vue'
 import nosearch from '../views/nosearch.vue'
 
 export default {
+    // mode:'history',
     routes: [{
             path: '/clientServer',
             component: clientServer //客户服务首页

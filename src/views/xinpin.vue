@@ -97,7 +97,7 @@
         this.page.pageno=parseInt(this.page.pageno)+1;
         this.ajax();
       },　
-      onScroll:function() {
+      onScroll() {
         this.scrolled=document.getElementById("prodsList").scrollTop;
         let scrolltop = document.getElementById('scrolltop');
           if(this.scrolled>10){
@@ -106,12 +106,12 @@
             scrolltop.style.display = 'none';
           }
       },
-      scrollTop:function() {
+      scrollTop() {
         var oTop = document.getElementById("prodsList");
         oTop.scrollTop = 0;      
       }
     }, 
-    mounted () {
+    mounted() {
         var scroll=document.getElementById("prodsList");
         scroll.addEventListener('scroll', this.onScroll);
     }

@@ -49,7 +49,7 @@
       prodList:Array
     },
     methods:{
-       gocart: function(value){
+       gocart(value){
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'popShoppingCartClick',{
