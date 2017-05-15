@@ -50,7 +50,6 @@
     },
     methods:{
        gocart(value){
-        // alert(value)
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'popShoppingCartClick',{
