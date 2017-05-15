@@ -194,16 +194,20 @@ export default {
                     this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
                     this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
                     var temp = this.menuList[0];
-                    if (temp.url == 'kehuliebiao') {
+                    if (temp.url == 'xiadan') {
                         temp.imgSrc = require('../assets/icon49.png');
                     }else if(temp.url == 'chexiao'){
                         temp.imgSrc = require('../assets/icon50.png');
+                    }else if(temp.url == 'baifang'){
+                        temp.imgSrc = require('../assets/icon50.png');
                     }
                     var temp1 = this.menuList[1];
-                    if (temp1.url == 'kehuliebiao') {
+                    if (temp1.url == 'xiadan') {
                         temp1.imgSrc = require('../assets/icon49.png');
                     }else if(temp1.url == 'chexiao'){
                         temp1.imgSrc = require('../assets/icon50.png');
+                    }else if(temp.url == 'baifang'){
+                        temp.imgSrc = require('../assets/icon50.png');
                     }
                     console.log(this.menuList);
                   }   

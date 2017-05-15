@@ -9,7 +9,21 @@
         <p>{{item.NAME}}</p>
         <p>规格：{{item.MODLE}}</p>
         <p>
-            <span v-for="act in item.PROM_MAS_CODES">{{act}}</span>
+            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'">
+            单款打折
+            </span>
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'">
+            单品买赠
+            </span>
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'">
+            套装
+            </span>
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'">
+            抢购商品
+            </span>
+            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'">
+            混搭买赠
+            </span>
         </p>
         <p>
           <span>￥{{item.LIST_PRICE}}</span>
@@ -26,6 +40,7 @@
     name:"oneProd",
     data() {
         return{
+      
         }
     },
     components: {
@@ -35,7 +50,6 @@
     },
     methods:{
        gocart: function(value){
-        alert(value)
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'popShoppingCartClick',{
@@ -90,11 +104,11 @@
   margin-left:28px;
 }
 .changeItem .searchItem>p:nth-child(4){
-  width:450px;
+  width:430px;
   height:40px;
   float:left;
   margin-top:8px;
-  margin-left:28px;
+  margin-left:32px;
   overflow: hidden;
 }
 .changeItem .searchItem>p:nth-child(4) span{

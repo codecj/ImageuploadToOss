@@ -1,5 +1,5 @@
 <template>
-     <div id="over">
+     <div id="over" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"infinite-scroll-distance="10">
         <p>
            <img src="../assets/icon43.png" alt=""> 
            <span v-if="show">{{shopCart}}</span>
@@ -30,9 +30,9 @@
             const getData = JSON.parse(res.data.result)
             // console.log(getData)
             this.shopCart=getData.data.TOTALQTY;
-            if(this.shopCart>0){
-              this.show=true;
-            }
+          if(this.shopCart>0){
+            this.show=true;
+          }
         }).catch(error=>{
             if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -50,7 +50,7 @@
   })
 </script>
 
-<style>
+<style scoped>
 #over{
   position: fixed;
   bottom:0;

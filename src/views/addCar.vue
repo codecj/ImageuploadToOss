@@ -4,32 +4,31 @@
             <div v-show="imgShow" class="inner_hide product_show">
                 <div class="goodInfo">
                     <div class="goodsImg">
-                        <img src='../assets/holde.png' height="300" width="300" alt="">
+                        <img :src='chose.imgUrl' height="300" width="300" alt="">
                     </div>
                     <div class="goodsMsg">
-                        <p>¥12<span>.00</span></p>
-                        <p>商品编号:09090909</p>
-                        <p>库存:09090</p>
+                        <p>¥{{chose.listprice}}<span>.00</span></p>
+                        <p>商品编号: {{chose.pluc}}</p>
+                        <p>库存: {{chose.stdQty}}</p>
                     </div>
                     <img @click="closeSku()" class="close" src="../assets/icon18.png" alt="">
                 </div>
                 <div class="overscroll">
-                    <p @click="goActive()" class="activity activeTap">
+                    <p v-show="isHide" @click="goActive()" class="activity activeTap">
                         该商品正在参与活动,查看活动信息
                         <img src="../assets/icon17.png" alt="">
                     </p>
-                    <ul class="goodsSku">
-                        <p>规格</p>
-                        <li class="active">包(1*1)袋</li>
-                        <li>包(1*1)袋</li>
-                        <li>包(1*1)袋</li>
+                    <ul v-for="item in defalutRule" :key="item.specId" class="goodsSku">
+                        <p>{{item.specName}}</p>
+                        <li :data-id="item.SPEC_ID" v-for="item in item.specValueList">{{item.SPECVALUE}}</li>
                     </ul>
                     <div class="goodsNum">
                         <p>购买数量</p>
                         <ul>
-                            <li><img src="../assets/icon3.png" alt=""></li>
-                            <li>1</li>
-                            <li><img src="../assets/icon5.png" alt=""></li>
+                            <li v-if="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
+                            <li v-if="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
+                            <li>{{count}}</li>
+                            <li @click="addCartNum()"><img src="../assets/icon9.png" alt=""></li>
                         </ul>
                     </div>
                 </div>
@@ -81,30 +80,38 @@ export default {
     data() {
             return {
                 imgShow: true,
-                isHide: true,
+                isHide: false,
                 areaId:this.$route.query.areaId,
                 stkc:this.$route.query.stkc,
                 userName:this.$route.query.userName,
                 skuDate:[],
-                dataTo:''
+                chose:{},
+                defalutRule:[],
+                count:1
             }
         },
         mounted: function() {
+            Indicator.open();
             const pargrmList = {
                 oper: 'findWqSpec',
                 type: 'wqProduct',
                 para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
             }
+            const pargrmListActive = {
+                oper: 'findAllProm',
+                type: 'wqProduct',
+                para: '{ "stkc": "'+this.stkc+'", "areaid": "'+this.areaId+'", "username": "'+this.userName+'" }'
+            }
             //ajax调用
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result)
-                if (getData.code !== "200") Toast({
-                    message: getData.msg,
-                    duration: 2000
-                });
-                this.skuDate=getData
+                if (getData.code !== "200") Toast({ message: getData.msg, duration: 2000 });
+                
+                this.skuDate=getData.data
+                this.defalutRule=getData.data.specList
                 Indicator.close();
-                console.log(getData)
+                this.choseData()
+                console.log(this.skuDate)
             }).catch(error => {
                 Indicator.close();
                 if (error.response) {
@@ -114,6 +121,25 @@ export default {
                     });
                 }
             })
+            Request.post(pargrmListActive).then(res => {
+                const activeData = JSON.parse(res.data.result)
+                // if (activeData.code !== "200") Toast({ message: activeData.msg, duration: 2000 });
+                if(activeData.msg!=="该商品未参与促销活动"){
+                    this.isHide=true
+                }
+                console.log(activeData)
+            }).catch(error => {
+                Indicator.close();
+                if (error.response) {
+                    Toast({  
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                }
+            })
+        },
+        updated:function(){
+            
         },
         methods: {
             goBack() {
@@ -126,6 +152,23 @@ export default {
                 Request.jsBbridge(bridge => {
                     bridge.callHandler('closeAddCarClick')
                 })
+            },
+            choseData(){
+                this.skuDate.stkSpecGroupList.forEach(item=>{
+                    if(this.stkc=item.stkC){
+                        this.chose=item
+                    }　　　　　　　　
+                });
+            },
+            reduceCartNum(){
+                if (this.count==1) {
+                  this.count=1
+                } else {
+                  this.count--;
+                }
+            },
+            addCartNum(){
+                this.count++
             }
         }
 }
@@ -301,6 +344,7 @@ html {
     position: absolute;
     bottom: 48px;
     left: 32px;
+    background-color: #f2f2f2
 }
 
 #addCar .goodsImg img {
@@ -406,6 +450,7 @@ html {
 
 #addCar .goodsNum li img {
     width: 48px;
+    height: 48px;
     display: block
 }
 

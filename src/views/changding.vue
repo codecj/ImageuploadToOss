@@ -8,7 +8,6 @@
                   <getbottom v-show="show"></getbottom>
                   <!-- //////////////////////////////////////////// -->
               </div>
-              
           </div>
       </div>
       <div class="over">
@@ -81,7 +80,6 @@ export default ({
                 getData.data.product.forEach(value => {
                     this.prodList.push(value)
                 })
-                console.log(this.prodList)
                 if (this.prodList.length == getData.pagination.totalcount) {
                     this.show = true;
                     Indicator.close();
