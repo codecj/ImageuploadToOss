@@ -6,7 +6,7 @@
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-                          <input type="text" class="" v-focus="abc" ></input>
+                          <input type="search" :value="keyword" v-model="keyword" class="" v-focus="abc" ></input>
                     </div>
                 </div>
             </form>
@@ -42,7 +42,7 @@ export default {
                 pageno: "1",
                 pagesize: "20"
             },
-            abc:false,
+            abc:true,
             keyword: '',
             listDate: [],
             typeD: 0,
@@ -78,7 +78,8 @@ export default {
                 }
                 //ajax调用
             Request.post(pargrm).then((res) => {
-                console.log(res)
+                console.log("残苏"+res)
+                console.log("keyword------"+this.keyword)
                 Indicator.close();
                 const getData = JSON.parse(res.data.result)
                 getData.data.shopslist.forEach(value => {
@@ -164,7 +165,7 @@ export default {
             // console.log(this.pageLength+this.listDate)
             this.loading = true;
             this.page.pageno = parseInt(this.page.pageno) + 1
-            console.log(this.page)
+            console.log("page-----"+this.page)
         },
         back() {
             Request.jsBbridge(bridge => {
