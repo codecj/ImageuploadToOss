@@ -6,13 +6,16 @@
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-                          <input type="text" class="" v-focus="abc" ></input>
+                          <input type="search" :value="keyword" v-model="keyword" class="" v-focus="abc" ></input>
                     </div>
                 </div>
             </form>
         </div>
         <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <customerlIst :listDate='listDate' :menuList='menuList'></customerlIst>
+            <customerlIst :listDate='listDate' :menuList='menuList' ></customerlIst>
+        </div>
+         <div class="content-2" v-show="codpng">
+        	<nosearch></nosearch>
         </div>
     </div>
 </template>
@@ -27,6 +30,7 @@ import {
 } from 'mint-ui';
 import Request from "../util/API";
 import customerlIst from '../components/customerManagement.vue';
+import nosearch from '../components/nosearch.vue'
 Vue.use(Lazyload, {
     preLoad: 1.3,
     lazyComponent: true,
@@ -42,8 +46,10 @@ export default {
                 pageno: "1",
                 pagesize: "20"
             },
-            abc:false,
+            abc:true,
             keyword: '',
+            codpng:false,
+            codpng2:true,
             listDate: [],
             typeD: 0,
             menuList: [],
@@ -59,7 +65,8 @@ export default {
         }
     },
     components: {
-        customerlIst
+        customerlIst,
+        nosearch
     },
     directives: { focus: focus },
     mounted: function() {
@@ -68,8 +75,9 @@ export default {
     methods: {
         submit() {
             Indicator.open();
-            this.listDate=[]
-            console.log(this.gps.latitude)
+//          this.listDate=[]
+
+//          console.log(this.gps.latitude)
             const pargrm = {
                     pagination: JSON.stringify(this.page),
                     "oper": "getShopList",
@@ -78,7 +86,8 @@ export default {
                 }
                 //ajax调用
             Request.post(pargrm).then((res) => {
-                console.log(res)
+//              console.log("残苏"+res)
+//              console.log("keyword------"+this.keyword)
                 Indicator.close();
                 const getData = JSON.parse(res.data.result)
                 getData.data.shopslist.forEach(value => {
@@ -93,23 +102,28 @@ export default {
                     Indicator.close();
                     return
                 }
+                 if(this.listDate.length ==0){
+                	this.codpng =true;
+                    Indicator.close("长度"+this.listDate.length);
+                	return
+                }
                 if (getData.code !== "200") Toast({
                     message: getData.msg,
                     duration: 2000
                 });
                 Indicator.close();
-                console.log(this.listDate.length)
+//              console.log(this.listDate.length)
             }).catch(function(error) {
                 Indicator.close();
                 if (error.response) {
                     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                    console.log(error.response.status);
+//                  console.log(error.response.status);
                     Toast({
                         message: error.response.status,
                         duration: 2000
                     });
                 } else {
-                    console.log('Error', error.message);
+//                  console.log('Error', error.message);
                     Toast({
                         message: error.message,
                         duration: 2000
@@ -127,7 +141,7 @@ export default {
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result);
                 if (parseInt(getData.code) != 200) {
-                    console.log(getData.msg);
+//                  console.log(getData.msg);
                     Toast({
                         message: getData.msg,
                         duration: 2000
@@ -146,7 +160,7 @@ export default {
                         url: 'gengduo',
                         urlType: 'N'
                     });
-                    console.log(this.menuList);
+//                  console.log(this.menuList);
                 }
             }).catch(error => {
 
@@ -164,7 +178,8 @@ export default {
             // console.log(this.pageLength+this.listDate)
             this.loading = true;
             this.page.pageno = parseInt(this.page.pageno) + 1
-            console.log(this.page)
+//          console.log("page-----"+this.page)
+            this.submit();
         },
         back() {
             Request.jsBbridge(bridge => {
