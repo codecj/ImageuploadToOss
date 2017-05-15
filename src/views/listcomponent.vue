@@ -134,11 +134,11 @@
         this.page.pageno=parseInt(this.page.pageno)+1;
         this.ajax();
       },　
-      changeList: function(){
+      changeList (){
         this.status=!this.status;
         this.listStatus=!this.listStatus
       },
-      changeSort: function(item,index){
+      changeSort(item,index) {
         this.price=!this.price;
         this.$nextTick(function () {
           let that=this;
@@ -164,12 +164,12 @@
         this.ajax()
        
       },
-      zongHe:function() {
+      zongHe() {
         this.prodList=[];
         this.page.orderby = "ZH";
         this.ajax()
       },
-      onScroll:function() {
+      onScroll() {
         this.scrolled=document.getElementById("prodsList").scrollTop;
         let scrolltop = document.getElementById('scrolltop');
           if(this.scrolled>10){
@@ -178,11 +178,11 @@
             scrolltop.style.display = 'none';
           }
       },
-      scrollTop:function() {
+      scrollTop() {
         var oTop = document.getElementById("prodsList");
         oTop.scrollTop = 0;      
       },
-      backClick: function(){
+      backClick(){
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'pushSearchWebClick'

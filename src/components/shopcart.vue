@@ -67,7 +67,7 @@
 #over p span{
 font-size: 18px;
 color: #FF783C;
-padding:2px 10px;
+padding:1px 10px;
 letter-spacing: 0;
 border-radius:50%;
 line-height:32px;

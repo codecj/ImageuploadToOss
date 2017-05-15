@@ -49,8 +49,8 @@
       prodList:Array
     },
     methods:{
-       gocart: function(value){
-        alert(value)
+       gocart(value){
+        // alert(value)
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'popShoppingCartClick',{

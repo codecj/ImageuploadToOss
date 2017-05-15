@@ -108,7 +108,7 @@ export default ({
             this.ajax();
         },
         　
-        onScroll: function() {
+        onScroll() {
             this.scrolled = document.getElementById("prodsList").scrollTop;
             let scrolltop = document.getElementById('scrolltop');
             if (this.scrolled > 10) {
@@ -117,11 +117,11 @@ export default ({
                 scrolltop.style.display = 'none';
             }
         },
-        scrollTop: function() {
+        scrollTop() {
             var oTop = document.getElementById("prodsList");
             oTop.scrollTop = 0;
         },
-        gocart: function(value) {
+        gocart(value) {
             Request.jsBbridge(function(bridge) {
                 bridge.callHandler(
                     'popShoppingCartClick', {
