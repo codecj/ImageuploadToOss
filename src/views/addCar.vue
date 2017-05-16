@@ -240,6 +240,8 @@ html {
     width: 100%;
     top: 216px;
     bottom: 98px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 .activeList {
