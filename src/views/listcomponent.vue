@@ -10,7 +10,7 @@
     <div class="selectList">
       <ul>
         <li @click="zongHe">
-            综合
+            综合s
         </li>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
           {{item.title}}
@@ -21,22 +21,18 @@
       </ul>
     </div>
    <!--  <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
-      <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
-         <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <oneprod :prodList="prodList"></oneprod> 
-        </div>
-        <getbottom v-show="show"></getbottom>
-        <div class="over">
-            <shopcart></shopcart>
-            <p>
-              <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
-            </p>
-        </div>
-      </div>        
-      <!-- </div>  -->
       </div>
-    </div>
-   
+      <getbottom v-show="show"></getbottom>
+      <div class="over">
+        <shopcart></shopcart>
+        <p>
+          <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
+        </p>
+      </div>
+    </div>        
   </div>
 </template>
 
@@ -112,7 +108,7 @@
             // console.log(this.pagram.keyword)
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            console.log(getData)
+            // console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
@@ -174,26 +170,30 @@
         this.page.orderby = "ZH";
         this.ajax()
       },
-      onScroll() {
-        this.scrolled=document.getElementById("prodsList").scrollTop;
-        let scrolltop = document.getElementById('scrolltop');
-          if(this.scrolled>10){
-            scrolltop.style.display = 'block';
-          }else{
-            scrolltop.style.display = 'none';
-          }
-      },
-      scrollTop() {
-        var oTop = document.getElementById("prodsList");
-        oTop.scrollTop = 0;      
-      },
       backClick(){
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'pushSearchWebClick'
           )
         })
-      } 
+      } ,
+      onScroll() {
+      this.scrolled=document.getElementById("oneprods").scrollTop;
+      let scrolltop = document.getElementById('scrolltop');
+        if(this.scrolled>10){
+          scrolltop.style.display = 'block';
+        }else{
+          scrolltop.style.display = 'none';
+        }
+      },
+      scrollTop() {
+        var oTop = document.getElementById("oneprods");
+        oTop.scrollTop = 0;      
+      }
+    },
+    mounted() {
+      var scroll = document.getElementById("oneprods");
+      scroll.addEventListener('scroll', this.onScroll);
     }
   })
 </script>
@@ -205,6 +205,14 @@
   width: 100%;
   background:#ebecf0;
   }
+/*  #oneprods{
+  position: absolute;
+  top:0;
+  bottom:0;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
+  background:#ebecf0;
+  }*/
 header{
   height:88px;
   line-height:88px;

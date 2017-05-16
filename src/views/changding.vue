@@ -1,15 +1,16 @@
 <template>
-    <div>
-      <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <div id="prodsList">
+   <!--    <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
           <!-- content横着布局和changeItem竖着布局-->
           <div class="proList">
               <div class="changeItem">
+                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
                   <oneprod :prodList="prodList"></oneprod>
+                </div>
                   <getbottom v-show="show"></getbottom>
-                  <!-- //////////////////////////////////////////// -->
               </div>
           </div>
-      </div>
+      <!-- </div> -->
       <div class="over">
           <shopcart></shopcart>
           <p>

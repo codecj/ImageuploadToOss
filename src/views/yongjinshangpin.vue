@@ -128,7 +128,6 @@
   bottom:0;
   overflow-y:scroll;
   -webkit-overflow-scrolling: touch;
-  /*padding-bottom:200px;*/
   background:#ebecf0;
 }
 .proList{
