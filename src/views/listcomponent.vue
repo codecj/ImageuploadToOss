@@ -10,14 +10,14 @@
     <div class="selectList">
       <ul>
         <li @click="zongHe">
-            综合s
+            综合
         </li>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
           {{item.title}}
         </li>
-        <li>
+    <!--     <li>
             筛选
-        </li>
+        </li> -->
       </ul>
     </div>
    <!--  <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
@@ -303,13 +303,13 @@ font-size: 26px;
 }
 .selectList ul .topprice{
   width:100px;
-  background: url(../assets/icon0.png) no-repeat 130px 36px;
-  background-size:17%;
+  background: url(../assets/icon0.png) no-repeat 160px 36px;
+  background-size:13%;
 }
 .selectList ul .lowprice{
   width:100px;
-  background: url(../assets/icon6.png) no-repeat 130px 36px;
-  background-size:17%;
+  background: url(../assets/icon6.png) no-repeat 160px 36px;
+  background-size:13%;
 }
 
 .selectList ul .show{
