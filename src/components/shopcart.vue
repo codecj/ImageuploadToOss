@@ -2,7 +2,7 @@
      <!-- <div id="over" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"infinite-scroll-distance="10"> -->
       <div id="over" >
         <p>
-           <img src="../assets/icon43.png" alt=""> 
+           <img src="../assets/icon43.png" alt="" @click='jumpToNativeCart'> 
            <span v-if="show">{{shopCart}}</span>
         </p>
     </div> 
@@ -44,7 +44,13 @@
             }
         })
       },
-
+      jumpToNativeCart(){ // 跳转到购物车
+        Request.jsBbridge(bridge=>{
+          bridge.callHandler(
+            'goToCart'
+          )
+        })
+      },
     },
     mounted(){
         this.ajax();
