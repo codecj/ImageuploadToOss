@@ -60,6 +60,7 @@
         listStatus:false,
         show: false,
         price:true,
+        load :false,
         pagram:{
           username:this.$route.query.username,
           spuserno:this.$route.query.spuserno,
@@ -113,6 +114,7 @@
               this.prodList.push(value)
             })
             if(this.prodList.length==getData.pagination.totalcount) {
+              this.load=true;
               this.show = true;
               Indicator.close();
               return
@@ -131,9 +133,11 @@
         })
       },
       loadMore() {
-        this.loading = true;
-        this.page.pageno=parseInt(this.page.pageno)+1;
-        this.ajax();
+        if(!this.load){
+           this.loading = true;
+           this.page.pageno=parseInt(this.page.pageno)+1;
+           this.ajax();
+        }
       },　
       changeList (){
         this.status=!this.status;
