@@ -26,13 +26,14 @@
         <oneprod :prodList="prodList"></oneprod> 
       </div>
       <getbottom v-show="show"></getbottom>
-      <div class="over">
+      
+    </div> 
+    <div class="over">
         <shopcart></shopcart>
         <p>
           <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
         </p>
-      </div>
-    </div>        
+      </div>       
   </div>
 </template>
 
