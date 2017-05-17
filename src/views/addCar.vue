@@ -11,7 +11,9 @@
                         <p>商品编号: {{chose.pluc}}</p>
                         <p>库存: {{chose.stdQty}}</p>
                     </div>
-                    <img @click="closeSku()" class="close" src="../assets/icon18.png" alt="">
+                    <div @click="closeSku()" class="close">
+                        
+                    </div>
                 </div>
                 <div class="overscroll">
                     <p v-show="isHide" @click="goActive()" class="activity activeTap">
@@ -44,15 +46,15 @@
                         <!-- <p></p> -->
                     </li>
                     <li v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
-                        <span  class="left" v-show='key=="ALIST"'>打折促销</span>
-                        <span class="left" v-show='key=="BLIST"'>单品买赠</span>
-                        <span class="left" v-show='key=="CLIST"'>优惠套餐</span>
-                        <span class="left" v-show='key=="ELIST"'>混搭买赠</span>
+                        <span  class="left" v-if='key=="ALIST"'>打折促销</span>
+                        <span class="left" v-if='key=="BLIST"'>单品买赠</span>
+                        <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
+                        <span class="left" v-if='key=="ELIST"'>混搭买赠</span>
                         <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
-                        <span v-for="item in value" class="right" v-show='key=="ALIST"'>{{item.REF_NO}}</span>
-                        <span v-for="item in value" class="right" v-show='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
-                        <span v-for="item in value" class="right" v-show='key=="CLIST"'><!-- {{item.FREE_LIST}} --></span>
-                        <span v-for="item in value" class="right" v-show='key=="ELIST"'></span>
+                        <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
+                        <span v-for="item in value" class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                        <span v-for="item in value" class="right" v-if='key=="CLIST"'>{{arrLength(item.FREE_LIST)}}</span>
+                        <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                     </li>
                     <!-- <li class="activeTap">
                         <span>混搭买赠</span>
@@ -113,6 +115,11 @@ export default {
             
         },
         methods: {
+            arrLength(value){
+                console.log(value)
+                // console.log(item)
+                // return item.length
+            },
             goBack() {
                 this.imgShow = true;
             },
@@ -324,7 +331,7 @@ export default {
                 return delArr;
             },
             //获取 经过已选节点 所有线路上的全部节点
-            // 根据已经选择得属性值，得到余下还能选择的属性值
+            //根据已经选择得属性值，得到余下还能选择的属性值
             filterAttrs(ids) {
                 var products = this.filterProduct(ids);
                 var result = [];
@@ -508,6 +515,7 @@ html {
     position: absolute;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
+    background-color: #fff;
 }
 
 #addCar .goodInfo {
@@ -573,10 +581,14 @@ html {
 }
 
 #addCar .close {
-    width: 40px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 20px;
+    right: 20px;
+    background: url('../assets/icon18.png') center no-repeat;
+    -webkit-background-size: 40px;
+    background-size: 40px;
 }
 
 #addCar .goodsSku {
@@ -614,7 +626,7 @@ html {
 #addCar .goodsNum p {
     font-size: 30px;
     float: left;
-    line-height: 48px;
+    line-height: 60px;
     color: #343657;
 }
 
@@ -628,15 +640,15 @@ html {
 
 #addCar .goodsNum li.changeNum {
     color: #343657;
-    font-size: 26px;
+    font-size: 28px;
     width: 100px;
     text-align: center;
-    line-height: 48px;
+    line-height: 60px;
 }
 
 #addCar .goodsNum li img {
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
     display: block
 }
 
