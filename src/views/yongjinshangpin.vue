@@ -8,10 +8,10 @@
        
    </div>
     <div class="over">
-          <shopcart></shopcart>
-            <p>
+        <shopcart></shopcart>
+          <p>
               <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
-            </p>     
+          </p>     
      </div> 
   
     </div>
@@ -29,6 +29,7 @@
   // 懒加载效果
   Vue.use(Lazyload, {
     preLoad: 1.3,
+    
     lazyComponent: true,
     error: require('../assets/holde.png'),
     loading: require('../assets/holde.png'),
