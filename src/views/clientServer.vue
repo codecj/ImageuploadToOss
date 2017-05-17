@@ -1,6 +1,9 @@
 <template>
-    <div id="clientServer">
+    <div :class="{'adv':adv,'':!adv}" id="clientServer">
         <div class="shadowLine"></div>
+        <div v-show="adv" class="advPlace">
+            
+        </div>
         <div class="topHead">
             <div class="activeTap" @click="fliterToggle()" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
             <div @click="toSearch()" class="mid">
@@ -87,7 +90,8 @@ export default {
             page:{pageno:"0",pagesize:"20"},
             typeD:0,
             areaid:'',
-            isEnd:false
+            isEnd:false,
+            adv:false
         }
     },
     components: {
@@ -264,7 +268,9 @@ export default {
 [v-cloak] {
     display: none;
 }
+.advPlace{ width: 100%; height: 125px }
 .overhide{ overflow-y: hidden !important; }
+#clientServer{padding-top: 25px;}
 #clientServer .shadowLine {
     position: absolute;
     width: 100%;
@@ -275,7 +281,6 @@ export default {
 }
 
 #clientServer .topHead {
-    margin-top: 25px;
     width: 100%;
     height: 94px;
     background-color: #fff;
@@ -421,4 +426,5 @@ export default {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
+#clientServer.adv .listBox{ top: 244px }
 </style>

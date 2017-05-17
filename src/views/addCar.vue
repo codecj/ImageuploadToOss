@@ -49,10 +49,10 @@
                         <span class="left" v-show='key=="CLIST"'>优惠套餐</span>
                         <span class="left" v-show='key=="ELIST"'>混搭买赠</span>
                         <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
-                        <span  class="right" v-show='key=="ALIST"'>{{key}}</span>
-                        <span class="right" v-show='key=="BLIST"'>{{key}}</span>
-                        <span class="right" v-show='key=="CLIST"'>{{key}}</span>
-                        <span class="right" v-show='key=="ELIST"'>{{key}}</span>
+                        <span v-for="item in value" class="right" v-show='key=="ALIST"'>{{item.REF_NO}}</span>
+                        <span v-for="item in value" class="right" v-show='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                        <span v-for="item in value" class="right" v-show='key=="CLIST"'><!-- {{item.FREE_LIST}} --></span>
+                        <span v-for="item in value" class="right" v-show='key=="ELIST"'></span>
                     </li>
                     <!-- <li class="activeTap">
                         <span>混搭买赠</span>
