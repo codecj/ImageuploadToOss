@@ -1,15 +1,16 @@
 <template>
-    <div>
-      <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <div id="prodsList">
+   <!--    <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
           <!-- content横着布局和changeItem竖着布局-->
           <div class="proList">
               <div class="changeItem">
+                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
                   <oneprod :prodList="prodList"></oneprod>
+                </div>
                   <getbottom v-show="show"></getbottom>
-                  <!-- //////////////////////////////////////////// -->
               </div>
           </div>
-      </div>
+      <!-- </div> -->
       <div class="over">
           <shopcart></shopcart>
           <p>
@@ -47,6 +48,7 @@ export default ({
             listStatus: false,
             show: false,
             price: true,
+            load:false,
             prodList:[],
             page: {
                 pageno: "0",
@@ -81,6 +83,7 @@ export default ({
                     this.prodList.push(value)
                 })
                 if (this.prodList.length == getData.pagination.totalcount) {
+                    this.load=true;
                     this.show = true;
                     Indicator.close();
                     return
@@ -102,11 +105,12 @@ export default ({
             })
         },
         loadMore() {
-            this.loading = true;
-            this.page.pageno = parseInt(this.page.pageno) + 1;
-            this.ajax();
+            if(!this.load){
+               this.loading = true;
+               this.page.pageno = parseInt(this.page.pageno) + 1;
+               this.ajax();
+            }            
         },
-        　
         onScroll() {
             this.scrolled = document.getElementById("prodsList").scrollTop;
             let scrolltop = document.getElementById('scrolltop');
