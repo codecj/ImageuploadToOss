@@ -4,12 +4,28 @@
 			<div class="no-png"><img src="../assets/icon55.png" /></div>
 			<div class="text-1">没有搜索到结果</div>
 			<div class="text-2">请用手机号码或者店铺名称搜索</div>
-			<div class="no-btn activeTap">创建新客户</div>
+			<div class="no-btn activeTap" @click="crty()">创建新客户</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	export default {
+		data() {
+			return {}
+
+		},
+		methods: {
+			crty() {
+				Request.jsBbridge(bridge => {
+					bridge.callHandler(
+						'pushCreateCustomerClick'
+					)
+				})　　
+			},
+		}
+
+	}
 </script>
 
 <style scoped>
@@ -49,6 +65,5 @@
 		margin-top: 48px;
 		font-size: 30px;
 		color: #3B456C;
-		
 	}
 </style>

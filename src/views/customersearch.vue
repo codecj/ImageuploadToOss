@@ -11,7 +11,7 @@
                 </div>
             </form>
         </div>
-        <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+        <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" v-show="codpng2">
             <customerlIst :listDate='listDate' :menuList='menuList' ></customerlIst>
         </div>
          <div class="content-2" v-show="codpng">
@@ -25,9 +25,7 @@ import {
     Indicator
 } from 'mint-ui'
 import Vue from 'vue';
-import {
-    Lazyload
-} from 'mint-ui';
+import {Lazyload} from 'mint-ui';
 import Request from "../util/API";
 import customerlIst from '../components/customerManagement.vue';
 import nosearch from '../components/nosearch.vue'
@@ -62,6 +60,7 @@ export default {
                 menuId: this.$route.query.menuId
             },
             picno: this.$route.query.picno,
+            isLoad:false
         }
     },
     components: {
@@ -74,11 +73,13 @@ export default {
     },
     methods: {
         submit() {
+            this.listDate=[]
             Indicator.open();
-//          this.listDate=[]
-
-//          console.log(this.gps.latitude)
-            const pargrm = {
+            this.ajax();
+            
+        },
+        ajax(){
+        	const pargrm = {
                     pagination: JSON.stringify(this.page),
                     "oper": "getShopList",
                     "type": "wqCustomer",
@@ -86,10 +87,17 @@ export default {
                 }
                 //ajax调用
             Request.post(pargrm).then((res) => {
-//              console.log("残苏"+res)
-//              console.log("keyword------"+this.keyword)
                 Indicator.close();
                 const getData = JSON.parse(res.data.result)
+                if (getData.code !== "200"){
+                this.codpng=true
+           		this.codpng2=false
+                }else{
+                	 this.codpng=false
+           		this.codpng2=true
+                }
+                this.isLoad=true
+                console.log(getData.data.shopslist)
                 getData.data.shopslist.forEach(value => {
                     this.listDate.push(value)
                 })
@@ -102,28 +110,17 @@ export default {
                     Indicator.close();
                     return
                 }
-                 if(this.listDate.length ==0){
-                	this.codpng =true;
-                    Indicator.close("长度"+this.listDate.length);
-                	return
-                }
-                if (getData.code !== "200") Toast({
-                    message: getData.msg,
-                    duration: 2000
-                });
+                 
                 Indicator.close();
-//              console.log(this.listDate.length)
             }).catch(function(error) {
                 Indicator.close();
                 if (error.response) {
                     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-//                  console.log(error.response.status);
                     Toast({
                         message: error.response.status,
                         duration: 2000
                     });
                 } else {
-//                  console.log('Error', error.message);
                     Toast({
                         message: error.message,
                         duration: 2000
@@ -141,7 +138,6 @@ export default {
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result);
                 if (parseInt(getData.code) != 200) {
-//                  console.log(getData.msg);
                     Toast({
                         message: getData.msg,
                         duration: 2000
@@ -160,7 +156,6 @@ export default {
                         url: 'gengduo',
                         urlType: 'N'
                     });
-//                  console.log(this.menuList);
                 }
             }).catch(error => {
 
@@ -175,11 +170,9 @@ export default {
         },
 
         loadMore() {
-            // console.log(this.pageLength+this.listDate)
             this.loading = true;
             this.page.pageno = parseInt(this.page.pageno) + 1
-//          console.log("page-----"+this.page)
-            this.submit();
+            if(this.isLoad) this.ajax()
         },
         back() {
             Request.jsBbridge(bridge => {
@@ -246,5 +239,6 @@ export default {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     bottom: 0;
+    /*display: none;*/
 }
 </style>
