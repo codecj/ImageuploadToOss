@@ -27,7 +27,7 @@
         </div>
         <div v-show="!userFliter" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
-  infinite-scroll-distance="10">
+  infinite-scroll-distance="40">
             <customerlIst @listSay="overHide" :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom> 
         </div>
@@ -251,9 +251,11 @@ export default {
             this.ajax()
         },
         loadMore() {
-          this.loading = true;
-          this.page.pageno=parseInt(this.page.pageno)+1
-          this.ajax()
+            if(!this.isEnd){
+                this.loading = true;
+                this.page.pageno=parseInt(this.page.pageno)+1
+                this.ajax()  
+            }
         }　　
     }
 }

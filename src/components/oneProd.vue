@@ -1,5 +1,5 @@
 <template>
-  <div id="oneProd" >
+  <div id="oneProd" @click='goodsClick(item.STK_C)'>
    <!-- 每个产品 -->  
       <div class="searchItem" v-for="item in prodList" :data-id="item.STK_NAME_EXT">
         <div class="onephoto">
@@ -53,6 +53,14 @@
         Request.jsBbridge(function(bridge) {
           bridge.callHandler(
             'popShoppingCartClick',{
+              'stkc':value
+            })
+        })
+      },
+      goodsClick(value){
+        Request.jsBbridge(function(bridge){
+          bridge.callHandler(
+            'goToGoodsDetail',{
               'stkc':value
             })
         })
