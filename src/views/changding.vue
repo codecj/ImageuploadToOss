@@ -1,24 +1,25 @@
 <template>
-    <div id="prodsList">
-   <!--    <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
-          <!-- content横着布局和changeItem竖着布局-->
-          <div class="proList">
-              <div class="changeItem">
-                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
-                  <oneprod :prodList="prodList"></oneprod>
+    <div>
+        <!--    <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
+        <!-- content横着布局和changeItem竖着布局-->
+        <div class="proList">
+            <div class="changeItem">
+                <div id="prodsList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
+                    <oneprod :prodList="prodList"></oneprod>
                 </div>
-                  <getbottom v-show="show"></getbottom>
-              </div>
-          </div>
-      <!-- </div> -->
-      <div class="over">
-          <shopcart></shopcart>
-          <p>
-              <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
-          </p>
-      </div>
+                <getbottom v-show="show"></getbottom>
+            </div>
+        </div>
+        <!-- </div> -->
+        <div class="over">
+            <shopcart></shopcart>
+            <p>
+                <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
+            </p>
+        </div>
     </div>
 </template>
+
 <script type="text/javascript">
 import Vue from 'vue'
 import getbottom from "../components/getbottom.vue"

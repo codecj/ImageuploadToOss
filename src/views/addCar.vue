@@ -1,5 +1,5 @@
 <template>
-    <div id="addCar">
+    <div @click.stop="closeSku()" id="addCar">
         <transition name="begore">
             <div v-show="imgShow" class="inner_hide product_show">
                 <div class="goodInfo">
@@ -32,7 +32,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="addBtn">加入购物车</div>
+                <div @click="addToCar()" class="addBtn">加入购物车</div>
             </div>
         </transition>
         <transition name="fold">
@@ -43,7 +43,14 @@
                         <p>促销活动</p>
                         <!-- <p></p> -->
                     </li>
-                    <li class="activeTap">
+                    <li v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
+                        <span  class="left" v-show='key=="ALIST"'>打折促销</span>
+                        <span class="left" v-show='key=="BLIST"'>单品买赠</span>
+                        <span class="left" v-show='key=="CLIST"'>优惠套餐</span>
+                        <span class="left" v-show='key=="ELIST"'>混搭买赠</span>
+                        <span v-if='key=="ALIST"' class="right">{{key}}</span>
+                    </li>
+                    <!-- <li class="activeTap">
                         <span>混搭买赠</span>
                         <span>买两件送赠品(不限参与次数)</span>
                     </li>
@@ -58,7 +65,7 @@
                     <li class="activeTap">
                         <span>优惠套餐</span>
                         <span>买两件送赠品(不限参与次数)</span>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </transition>
@@ -88,7 +95,8 @@ export default {
                 chose:{},
                 defalutRule:[],
                 count:1,
-                sku_list:[]
+                sku_list:[],
+                activeData:[]
             }
         },
         mounted: function() {
@@ -107,6 +115,7 @@ export default {
                 this.imgShow = false;
             },
             closeSku() {
+                console.log(1)
                 Request.jsBbridge(bridge => {
                     bridge.callHandler('closeAddCarClick')
                 })
@@ -128,11 +137,35 @@ export default {
             addCartNum(){
                 this.count++
             },
+            addToCar() {
+                let pargrmList = {
+                    oper: 'save',
+                    type: 'cart',
+                    para: '{ "buynum": "'+this.count+'","stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
+                }
+                Request.post(pargrmList).then(res => {
+                    let getData = JSON.parse(res.data.result)
+                    if (getData.code !== "200") Toast({ message: getData.msg, duration: 2000 });
+                    Toast({  
+                        message: getData.msg,
+                        duration: 2000
+                    });
+                    this.closeSku()
+                }).catch(error => {
+                    Indicator.close();
+                    if (error.response) {
+                        Toast({  
+                            message: error.response.status,
+                            duration: 2000
+                        });
+                    }
+                })
+            },
             detailMsg(){
                 let pargrmList = {
                     oper: 'findWqSpec',
                     type: 'wqProduct',
-                    para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
+                    para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaid+'", "userName": "'+this.userName+'" }'
                 }
                 Request.post(pargrmList).then(res => {
                     let getData = JSON.parse(res.data.result)
@@ -175,7 +208,8 @@ export default {
                     }else{
                         this.$set(this, 'isHide', false)
                     }
-                    console.log(activeData)
+                    this.activeData=activeData.data
+                    console.log(activeData.data)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -320,6 +354,7 @@ export default {
 }
 </script>
 <style scoped>
+#addCar{ position: absolute; top: 0; bottom: 0; width: 100%; }
 html {
     background: transparent !important;
 }
@@ -434,13 +469,13 @@ html {
     width: 111px;
 }
 
-.activeList li span:nth-of-type(1) {
+.activeList li span.left {
     float: left;
     font-size: 30px;
     color: #3B456C;
 }
 
-.activeList li span:nth-of-type(2) {
+.activeList li span.right {
     float: right;
     font-size: 26px;
     color: #9DA2B5;
