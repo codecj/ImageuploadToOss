@@ -3,7 +3,7 @@
       <div id="over" >
         <p>
            <img src="../assets/icon43.png" alt="" @click='jumpToNativeCart'> 
-           <span v-if="show">{{shopCart}}</span>
+           <!--<span v-if="show">{{shopCart}}</span>-->
         </p>
     </div> 
 </template>

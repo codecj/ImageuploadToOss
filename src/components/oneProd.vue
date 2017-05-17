@@ -26,7 +26,7 @@
             </span>
         </p>
         <p>
-          <span>￥{{item.LIST_PRICE}}</span>
+          <span>￥{{item.NET_PRICE}}</span>
           <span>{{item.commissionPrice ? "奖" : ''}}</span>
           <span>{{item.commissionPrice ? '￥'+item.commissionPrice : ''}}</span>
           <img src="../assets/icon43.png" alt="" class="gocart" @click="gocart(item.STK_C)">

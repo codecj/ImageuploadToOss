@@ -143,43 +143,41 @@ export default ({
 })
 </script>
 <style scoped>
-#prodsList {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    background: #ebecf0;
+#prodsList{
+  position: absolute;
+  top:0;
+  bottom:0;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
+  background:#ebecf0;
+}
+.proList{
+  width: 100%;
+  overflow: hidden; 
 }
 
-.proList {
-    width: 100%;
-    overflow: hidden;
+.over{
+  position: fixed;
+  bottom:0;
+  right:0;
 }
-.over {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-}
-
 .over p {
-    position: relative;
-    width: 112px;
-    height: 112px;
-    display: inline-block;
-    float: right;
-    margin-right: 100px;
-    text-align: center;
+  position: relative;
+  width:112px;
+  height:112px;
+  display: inline-block;
+  float:right;
+  margin-right:100px;
+  text-align: center;
 }
-
 .over img {
-    display: inline-block;
-    width: 112px;
-    height: 112px;
-    float: right;
-    margin: 0px 20px 15px 0;
+  display:inline-block;
+  width:112px;
+  height:112px;
+  float:right;
+  margin:0px 20px 15px 0;
 }
-#scrolltop {
-    display: none;
+#scrolltop{
+  display:none;
 }
 </style>
