@@ -140,7 +140,7 @@ export default {
     color: #3B456C;
     letter-spacing: 0;
     line-height: 30px;
-    padding: 42px 142px 20px 0px;
+    padding: 42px 182px 20px 0px;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -154,7 +154,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-right: 2.5rem;
+    padding-right: 2.8rem;
 }
 
 .wrap .list .list-mid .list-time {

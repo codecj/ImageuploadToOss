@@ -104,7 +104,7 @@
 
 }
 .changeItem .searchItem>p:nth-child(3){
-  font-size: 22px;
+  font-size: 26px;
   color: #9DA2B5;
   letter-spacing: 0;
   float:left;
@@ -162,8 +162,8 @@
 
 }
 .changeItem .searchItem .gocart{
-  width:48px;
-  height:48px;
+  width:80px;
+  height:80px;
   float:right;
 }
 
@@ -263,8 +263,8 @@
   margin:8px 0 0 10px;
 }
 .content .searchItem .gocart{
-  width:48px;
-  height:48px;
+  width:80px;
+  height:80px;
   float:right;
   margin-right:24px;
 }
