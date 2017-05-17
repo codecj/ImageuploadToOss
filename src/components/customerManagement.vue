@@ -140,7 +140,7 @@ export default {
     color: #3B456C;
     letter-spacing: 0;
     line-height: 30px;
-    padding: 42px 142px 20px 0px;
+    padding: 42px 182px 20px 0px;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
