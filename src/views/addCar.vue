@@ -7,7 +7,7 @@
                         <img :src='chose.imgUrl' height="300" width="300" alt="">
                     </div>
                     <div class="goodsMsg">
-                        <p>¥{{chose.listprice}}<span>.00</span></p>
+                        <p>¥{{chose.netprice}}<span><!-- .00 --></span></p>
                         <p>商品编号: {{chose.pluc}}</p>
                         <p>库存: {{chose.stdQty}}</p>
                     </div>
@@ -20,14 +20,14 @@
                     </p>
                     <ul v-for="item in defalutRule" :key="item.specId" class="goodsSku">
                         <p>{{item.specName}}</p>
-                        <li :data-id="item.SPEC_ID" v-for="item in item.specValueList">{{item.SPECVALUE}}</li>
+                        <li @click="changGet(item)" :class="[{'notAllow':item.not_allow,'normal':!item.not_allow},{'active':item.isAct,'normal':!item.isAct}]" :data-id="item.SPEC_VALUE_ID" v-for="item in item.specValueList">{{item.SPECVALUE}}</li>
                     </ul>
                     <div class="goodsNum">
                         <p>购买数量</p>
                         <ul>
-                            <li v-if="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
-                            <li v-if="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
-                            <li>{{count}}</li>
+                            <li v-show="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
+                            <li v-show="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
+                            <li class="changeNum">{{count}}</li>
                             <li @click="addCartNum()"><img src="../assets/icon9.png" alt=""></li>
                         </ul>
                     </div>
@@ -87,56 +87,14 @@ export default {
                 skuDate:[],
                 chose:{},
                 defalutRule:[],
-                count:1
+                count:1,
+                sku_list:[]
             }
         },
         mounted: function() {
-            Indicator.open();
-            const pargrmList = {
-                oper: 'findWqSpec',
-                type: 'wqProduct',
-                para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
-            }
-            const pargrmListActive = {
-                oper: 'findAllProm',
-                type: 'wqProduct',
-                para: '{ "stkc": "'+this.stkc+'", "areaid": "'+this.areaId+'", "username": "'+this.userName+'" }'
-            }
-            //ajax调用
-            Request.post(pargrmList).then(res => {
-                const getData = JSON.parse(res.data.result)
-                if (getData.code !== "200") Toast({ message: getData.msg, duration: 2000 });
-                
-                this.skuDate=getData.data
-                this.defalutRule=getData.data.specList
-                Indicator.close();
-                this.choseData()
-                console.log(this.skuDate)
-            }).catch(error => {
-                Indicator.close();
-                if (error.response) {
-                    Toast({  
-                        message: error.response.status,
-                        duration: 2000
-                    });
-                }
-            })
-            Request.post(pargrmListActive).then(res => {
-                const activeData = JSON.parse(res.data.result)
-                // if (activeData.code !== "200") Toast({ message: activeData.msg, duration: 2000 });
-                if(activeData.msg!=="该商品未参与促销活动"){
-                    this.isHide=true
-                }
-                console.log(activeData)
-            }).catch(error => {
-                Indicator.close();
-                if (error.response) {
-                    Toast({  
-                        message: error.response.status,
-                        duration: 2000
-                    });
-                }
-            })
+            this.detailMsg()
+            this.activeMsg()
+            Indicator.open()
         },
         updated:function(){
             
@@ -169,11 +127,198 @@ export default {
             },
             addCartNum(){
                 this.count++
+            },
+            detailMsg(){
+                let pargrmList = {
+                    oper: 'findWqSpec',
+                    type: 'wqProduct',
+                    para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
+                }
+                Request.post(pargrmList).then(res => {
+                    let getData = JSON.parse(res.data.result)
+                    
+                    if (getData.code !== "200") Toast({ message: getData.msg, duration: 2000 });
+
+                    this.skuDate=getData.data
+                    this.defalutRule=this.skuDate.specList
+                    Indicator.close();
+                    this.choseData()
+                    for (let i = 0; i < this.skuDate.stkSpecGroupList.length; i++) {
+                        this.sku_list.push({
+                            'goodsId': this.skuDate.stkSpecGroupList[i].specValueIdList.join('|')
+                        });
+                    }
+                    this._getDefalut()
+                    console.log(this.sku_list)
+                    console.log(this.skuDate)
+                }).catch(error => {
+                    Indicator.close();
+                    if (error.response) {
+                        Toast({  
+                            message: error.response.status,
+                            duration: 2000
+                        });
+                    }
+                })
+            },
+            activeMsg(){
+                let pargrmListActive = {
+                    oper: 'findAllProm',
+                    type: 'wqProduct',
+                    para: '{ "stkc": "'+this.stkc+'", "areaid": "'+this.areaId+'", "username": "'+this.userName+'" }'
+                }
+                Request.post(pargrmListActive).then(res => {
+                    let activeData = JSON.parse(res.data.result)
+                    // if (activeData.code !== "200") Toast({ message: activeData.msg, duration: 2000 });
+                    if(activeData.msg!=="该商品未参与促销活动"){
+                        this.$set(this, 'isHide', true)
+                    }else{
+                        this.$set(this, 'isHide', false)
+                    }
+                    console.log(activeData)
+                }).catch(error => {
+                    Indicator.close();
+                    if (error.response) {
+                        Toast({  
+                            message: error.response.status,
+                            duration: 2000
+                        });
+                    }
+                })
+            },
+            _getDefalut() {
+                let defalutChose=[]
+                this.skuDate.stkSpecGroupList.forEach((items) => {
+                    // console.log(items.specValueIdList.join('-'))
+                    if(this.stkc==items.stkC){
+                        defalutChose=items.specValueIdList
+                    }
+                });
+                
+                this.defalutRule.forEach( (items) => {
+                    items.specValueList.forEach( (index) => {
+                        if(this.in_array(index.SPEC_VALUE_ID, defalutChose)){
+                            index.isAct=true
+                        }else{
+                            index.isChose=false
+                        }
+                    })
+                    if(items.isChose){
+                        this.update_2(items)
+                    }
+                    this.set_block(items, defalutChose);
+                });
+                // this.defalutRule.forEach((items) => {
+                    
+                // });
+                console.log(this.defalutRule)
+            },
+            // 规格点击的一系列操作
+            changGet(item){
+                item.isAct||item.not_allow ? this.$set(item, 'isAct', false):this.$set(item, 'isAct', true);
+                this.$forceUpdate()
+                let select_ids = this._getSelAttrId();
+                if(this.defalutRule.length==select_ids.length){
+                    this.skuDate.stkSpecGroupList.forEach((items) => {
+                        if(select_ids.sort().join('-')==items.specValueIdList.sort().join('-')){
+                            this.stkc=items.stkC
+                            this.chose=items
+                        }
+                    });
+                    this.activeMsg()
+                }
+                let all_ids = this.filterAttrs(select_ids);
+                this.defalutRule.forEach((items) => {
+                    if(items.isChose){
+                        this.update_2(items)
+                    }
+                    this.set_block(items, all_ids);
+                });
+            },
+            //已选择的节点数组
+            _getSelAttrId() {
+                let list = [];
+                this.defalutRule.forEach( (items) => {
+                    items.specValueList.forEach( (index) => {
+                        if(index.isAct){
+                            list.push(index.SPEC_VALUE_ID)
+                            items.isChose=true
+                        }else{
+                            items.isChose=false
+                        }
+                    })
+                });
+                return list
+            },
+            //获取所有包含指定节点的路线
+            filterProduct(ids) {
+                let result = [],_attr,_all_ids_in;
+                this.sku_list.map((v, k) => {
+                    _attr = '|' + v['goodsId'] + '|';
+                    _all_ids_in = true;
+                    for (k in ids) {
+                        if (_attr.indexOf('|' + ids[k] + '|') == -1) {
+                            _all_ids_in = false;
+                            break;
+                        }
+                    }
+                    if (_all_ids_in) {
+                        result.push(v);
+                    }
+                });
+                return result;
+            },
+            // 若该属性值 $li 是未选中状态的话，设置同级的其他属性是否可选
+            update_2($goods_attr) {
+                let select_ids = this._getSelAttrId();
+                let select_ids2 = this.del_array_val(select_ids, $goods_attr.SPEC_VALUE_ID);
+                let all_ids = this.filterAttrs(select_ids2);
+                this.set_block($goods_attr, all_ids);
+            },
+            //去除 数组 arr中的 val ，返回一个新数组
+            del_array_val(arr, val) {
+                let delArr = [];
+                for(let i ;i<arr.length;i++){
+                    if (arr[i] != val) {
+                        delArr.push(arr[i]);
+                    }
+                }
+                return delArr;
+            },
+            //获取 经过已选节点 所有线路上的全部节点
+            // 根据已经选择得属性值，得到余下还能选择的属性值
+            filterAttrs(ids) {
+                var products = this.filterProduct(ids);
+                var result = [];
+                products.map(function(v, k) {
+                    result = result.concat(v['goodsId'].split('|'));
+                });
+                return result;
+            },
+            //数组内元素查找元素
+            in_array(search,array){
+                for(var i in array){
+                    if(array[i]==search){
+                        return true;
+                    }
+                }
+                return false;
+            },
+            //根据 $goods_attr下的所有节点是否在可选节点中（all_ids） 来设置可选状态
+            set_block($goods_attr, all_ids) {
+                this.defalutRule.forEach((items) => {
+                    items.specValueList.forEach((index) => {
+                        if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
+                            index.not_allow=true
+                        } else {
+                            index.not_allow=false
+                        }
+                    })
+                });
             }
         }
 }
 </script>
-.overscroll{}
 <style scoped>
 html {
     background: transparent !important;
@@ -415,7 +560,7 @@ html {
     float: left;
     margin: 0 24px 24px 0;
 }
-
+#addCar .goodsSku li.notAllow{ color:#ddd; }
 #addCar .goodsSku li.active {
     color: #fff;
     background: #FF783C;
@@ -442,7 +587,7 @@ html {
     float: left;
 }
 
-#addCar .goodsNum li:nth-of-type(2) {
+#addCar .goodsNum li.changeNum {
     color: #343657;
     font-size: 26px;
     width: 100px;

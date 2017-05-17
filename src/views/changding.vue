@@ -4,7 +4,7 @@
           <!-- content横着布局和changeItem竖着布局-->
           <div class="proList">
               <div class="changeItem">
-                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
                   <oneprod :prodList="prodList"></oneprod>
                 </div>
                   <getbottom v-show="show"></getbottom>
@@ -106,8 +106,7 @@ export default ({
             this.loading = true;
             this.page.pageno = parseInt(this.page.pageno) + 1;
             this.ajax();
-        },
-        　
+        },        　
         onScroll() {
             this.scrolled = document.getElementById("prodsList").scrollTop;
             let scrolltop = document.getElementById('scrolltop');
