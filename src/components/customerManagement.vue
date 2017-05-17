@@ -154,7 +154,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-right: 2.5rem;
+    padding-right: 2.8rem;
 }
 
 .wrap .list .list-mid .list-time {
