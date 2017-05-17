@@ -1,5 +1,5 @@
 <template>
-    <div @click.stop="closeSku()" id="addCar">
+    <div id="addCar">
         <transition name="begore">
             <div v-show="imgShow" class="inner_hide product_show">
                 <div class="goodInfo">
@@ -48,7 +48,11 @@
                         <span class="left" v-show='key=="BLIST"'>单品买赠</span>
                         <span class="left" v-show='key=="CLIST"'>优惠套餐</span>
                         <span class="left" v-show='key=="ELIST"'>混搭买赠</span>
-                        <span v-if='key=="ALIST"' class="right">{{key}}</span>
+                        <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
+                        <span  class="right" v-show='key=="ALIST"'>{{key}}</span>
+                        <span class="right" v-show='key=="BLIST"'>{{key}}</span>
+                        <span class="right" v-show='key=="CLIST"'>{{key}}</span>
+                        <span class="right" v-show='key=="ELIST"'>{{key}}</span>
                     </li>
                     <!-- <li class="activeTap">
                         <span>混搭买赠</span>
@@ -91,6 +95,7 @@ export default {
                 areaId:this.$route.query.areaId,
                 stkc:this.$route.query.stkc,
                 userName:this.$route.query.userName,
+                userid:this.$route.query.userid,
                 skuDate:[],
                 chose:{},
                 defalutRule:[],
@@ -141,7 +146,7 @@ export default {
                 let pargrmList = {
                     oper: 'save',
                     type: 'cart',
-                    para: '{ "buynum": "'+this.count+'","stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
+                    para: '{ "buynum": "'+this.count+'","stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'","userid":"'+this.userid+'"}'
                 }
                 Request.post(pargrmList).then(res => {
                     let getData = JSON.parse(res.data.result)
@@ -150,7 +155,6 @@ export default {
                         message: getData.msg,
                         duration: 2000
                     });
-                    this.closeSku()
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -165,7 +169,7 @@ export default {
                 let pargrmList = {
                     oper: 'findWqSpec',
                     type: 'wqProduct',
-                    para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaid+'", "userName": "'+this.userName+'" }'
+                    para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
                 }
                 Request.post(pargrmList).then(res => {
                     let getData = JSON.parse(res.data.result)
