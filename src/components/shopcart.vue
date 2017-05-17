@@ -1,7 +1,8 @@
 <template>
+     <!-- <div id="over" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"infinite-scroll-distance="10"> -->
       <div id="over" >
         <p>
-           <img src="../assets/icon43.png" alt=""> 
+           <img src="../assets/icon43.png" alt="" @click='jumpToNativeCart'> 
            <span v-if="show">{{shopCart}}</span>
         </p>
     </div> 
@@ -16,7 +17,6 @@
         return{
          shopCart:'',
          show:false,
-         userNo:this.$route.query.userNo
         }
     },
     methods:{
@@ -24,7 +24,7 @@
         const pargrmList = {
           oper: 'findTotalQtyByUserNo',
           type: 'wqProduct',
-          para: '{"userNo":"'+this.userNo+'"}'
+          para: '{"userNo":"351335"}'
         }
         //ajax调用
         Request.post(pargrmList).then(res=>{
@@ -44,7 +44,13 @@
             }
         })
       },
-
+      jumpToNativeCart(){ // 跳转到购物车
+        Request.jsBbridge(bridge=>{
+          bridge.callHandler(
+            'goToCart'
+          )
+        })
+      },
     },
     mounted(){
         this.ajax();

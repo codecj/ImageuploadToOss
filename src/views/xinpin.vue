@@ -43,6 +43,7 @@
           listStatus:false,
           price:true,
           show:false,
+          load:false,
           prodList:[],
           page:{
             pageno:"0",
@@ -75,6 +76,7 @@
               this.prodList.push(value)
             })
             if(this.prodList.length==getData.pagination.totalcount) {
+              this.load=true;
               this.show=true;
               Indicator.close();
               return
@@ -93,9 +95,11 @@
         })
       },
       loadMore() {
-        this.loading = true;
-        this.page.pageno=parseInt(this.page.pageno)+1;
-        this.ajax();
+        if(!this.load){
+          this.loading = true;
+          this.page.pageno=parseInt(this.page.pageno)+1;
+          this.ajax();
+        }     
       },　
       onScroll() {
         this.scrolled=document.getElementById("prodsList").scrollTop;

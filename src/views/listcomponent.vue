@@ -10,14 +10,14 @@
     <div class="selectList">
       <ul>
         <li @click="zongHe">
-            综合s
+            综合
         </li>
         <li @click="changeSort(item,index)" v-for="(item,index) in change" :class="{'lowprice':price,'topprice':!price,'show':!item.show}">
           {{item.title}}
         </li>
-        <li>
+    <!--     <li>
             筛选
-        </li>
+        </li> -->
       </ul>
     </div>
    <!--  <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
@@ -60,6 +60,7 @@
         listStatus:false,
         show: false,
         price:true,
+        load :false,
         pagram:{
           username:this.$route.query.username,
           spuserno:this.$route.query.spuserno,
@@ -113,6 +114,7 @@
               this.prodList.push(value)
             })
             if(this.prodList.length==getData.pagination.totalcount) {
+              this.load=true;
               this.show = true;
               Indicator.close();
               return
@@ -131,9 +133,11 @@
         })
       },
       loadMore() {
-        this.loading = true;
-        this.page.pageno=parseInt(this.page.pageno)+1;
-        this.ajax();
+        if(!this.load){
+           this.loading = true;
+           this.page.pageno=parseInt(this.page.pageno)+1;
+           this.ajax();
+        }
       },　
       changeList (){
         this.status=!this.status;
@@ -299,13 +303,13 @@ font-size: 26px;
 }
 .selectList ul .topprice{
   width:100px;
-  background: url(../assets/icon0.png) no-repeat 130px 36px;
-  background-size:17%;
+  background: url(../assets/icon0.png) no-repeat 160px 36px;
+  background-size:13%;
 }
 .selectList ul .lowprice{
   width:100px;
-  background: url(../assets/icon6.png) no-repeat 130px 36px;
-  background-size:17%;
+  background: url(../assets/icon6.png) no-repeat 160px 36px;
+  background-size:13%;
 }
 
 .selectList ul .show{
