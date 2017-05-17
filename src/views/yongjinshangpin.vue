@@ -29,7 +29,7 @@
   // 懒加载效果
   Vue.use(Lazyload, {
     preLoad: 1.3,
-    
+    aa:"",
     lazyComponent: true,
     error: require('../assets/holde.png'),
     loading: require('../assets/holde.png'),
