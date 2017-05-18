@@ -41,7 +41,7 @@ export default {
     data() {
         return {
             page: {
-                pageno: "1",
+                pageno: "0",
                 pagesize: "20"
             },
             abc:true,
@@ -117,15 +117,19 @@ export default {
                 if (error.response) {
                     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
                     Toast({
-                        message: error.response.status,
+//                      message: error.response.status,
+                        message: "没有消息",
+                        
                         duration: 2000
                     });
-                } else {
-                    Toast({
-                        message: error.message,
-                        duration: 2000
-                    });
-                }
+                } 
+//              else {
+//                  Toast({
+////                      message: error.message,
+//                      message: "没有消息",
+//                      duration: 2000
+//                  });
+//              }
             })
         },
         requestMenus() {
