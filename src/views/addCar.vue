@@ -44,7 +44,7 @@
                         <p>促销活动</p>
                         <!-- <p></p> -->
                     </li>
-                    <li @click="gotTo(value)" v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
+                    <li @click="gotTo(value,key)" v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
                         <span class="left" v-if='key=="ALIST"'>单品打折</span>
                         <span class="left" v-if='key=="BLIST"'>单品满赠</span>
                         <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
@@ -100,8 +100,8 @@ export default {
             Indicator.open()
         },
         methods: {
-            gotTo(item) {
-                if (item.FREE_LIST) {
+            gotTo(item,type) {
+                if (type!=='CLIST') {
                     Request.jsBbridge(bridge => {
                         bridge.callHandler(
                             'commonActivities', {
@@ -115,7 +115,7 @@ export default {
                     Request.jsBbridge(bridge => {
                         bridge.callHandler(
                             'packageActivities', {
-                                'CLIST': item.FREE_LIST
+                                'CLIST': item
                             }
                         )
                     })
@@ -153,6 +153,7 @@ export default {
                 this.count++
             },
             addToCar() {
+                Indicator.open();
                 let select_ids = this._getSelAttrId();
                 if (this.defalutRule.length !== select_ids.length) return
                 let pargrmList = {
@@ -170,6 +171,7 @@ export default {
                         message: getData.msg,
                         duration: 2000
                     });
+                    Indicator.close();
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -181,6 +183,7 @@ export default {
                 })
             },
             detailMsg() {
+                Indicator.open();
                 let pargrmList = {
                     oper: 'findWqSpec',
                     type: 'wqProduct',
@@ -204,6 +207,7 @@ export default {
                         });
                     }
                     this._getDefalut()
+                    Indicator.close();
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -251,18 +255,19 @@ export default {
                     items.specValueList.forEach((index) => {
                         if (this.in_array(index.SPEC_VALUE_ID, defalutChose)) {
                             index.isAct = true
-                        } else {
-                            index.isChose = false
+                            items.isChose = true
                         }
                     })
                     if (items.isChose) {
                         this.update_2(items)
                     }
                     this.set_block(items, defalutChose);
+                    console.log(items)
                 });
             },
             // 规格点击的一系列操作
             changGet(item) {
+
                 item.isAct || item.not_allow ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
                 this.$forceUpdate()
                 let select_ids = this._getSelAttrId();
@@ -277,6 +282,7 @@ export default {
                 }
                 let all_ids = this.filterAttrs(select_ids);
                 this.defalutRule.forEach((items) => {
+                    console.log(items)
                     if (items.isChose) {
                         this.update_2(items)
                     }
@@ -287,12 +293,11 @@ export default {
             _getSelAttrId() {
                 let list = [];
                 this.defalutRule.forEach((items) => {
+                    items.isChose = false
                     items.specValueList.forEach((index) => {
                         if (index.isAct) {
                             list.push(index.SPEC_VALUE_ID)
                             items.isChose = true
-                        } else {
-                            items.isChose = false
                         }
                     })
                 });

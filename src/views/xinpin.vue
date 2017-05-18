@@ -71,7 +71,7 @@
         //ajax调用
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            // console.log(getData)
+            console.log(getData)
             getData.data.npv.forEach(value=> {
               this.prodList.push(value)
             })

@@ -10,10 +10,10 @@
         <p>规格：{{item.MODLE}}</p>
         <p>
             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'">
-            单款打折
+            单品打折
             </span>
              <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'">
-            单品买赠
+            单品满赠
             </span>
              <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'">
             套装
@@ -22,14 +22,15 @@
             抢购商品
             </span>
             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'">
-            混搭买赠
+            混搭满赠
             </span>
         </p>
         <p>
           <span>￥{{item.NET_PRICE}}</span>
           <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
           <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
-          <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)">
+          <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-if="item.ATP_QTY==0" :class="{'cartShow':cartShow}">
+           <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0" :class="{'cartShow':!cartShow}">
         </p>
     </div>
   </div>    
@@ -40,7 +41,7 @@
     name:"oneProd",
     data() {
         return{
-      
+            cartShow:true
         }
     },
     components: {
@@ -275,7 +276,14 @@
   right:0;
   bottom:-8px;
 }
-
+.cartShow{
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);   
+    filter: grayscale(100%);
+    filter: gray;
+}
 
 
 </style>
