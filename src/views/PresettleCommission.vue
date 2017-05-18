@@ -10,7 +10,7 @@
 	export default {
 		data(){
 			return {
-				dataType:'{"type":"already","userId":"'+this.$route.query.userId+'"}'
+				dataType:'{"type":"wait","userId":"'+this.$route.query.userId+'"}'
 			}
 		},
 		components:{
