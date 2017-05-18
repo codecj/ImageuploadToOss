@@ -4,7 +4,7 @@
          <!-- content横着布局和changeItem竖着布局-->
         <div class="proList">
           <div class="changeItem">
-            <oneprod v-for="item in this.prodList" :item="item"></oneprod>
+            <oneprod v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod>
             <getbottom v-show="show"></getbottom>
           </div> 
         </div>
