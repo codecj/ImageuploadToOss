@@ -22,7 +22,7 @@
     </div>
     <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
       <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-        <oneprod v-for="item in this.prodList" :item="item"></oneprod> 
+        <oneprod v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod> 
       </div>
       <getbottom v-show="show"></getbottom>     
     </div> 
