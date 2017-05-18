@@ -45,7 +45,7 @@
                         <p>促销活动</p>
                         <!-- <p></p> -->
                     </li>
-                    <li v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
+                    <li @click="gotTo(value)" v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
                         <span  class="left" v-if='key=="ALIST"'>打折促销</span>
                         <span class="left" v-if='key=="BLIST"'>单品买赠</span>
                         <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
@@ -53,7 +53,7 @@
                         <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
                         <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
                         <span v-for="item in value" class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
-                        <span v-for="item in value" class="right" v-if='key=="CLIST"'>{{arrLength(item.FREE_LIST)}}</span>
+                        <span v-for="item in value" class="right" v-if='key=="CLIST"'>共有{{arrLength(item.FREE_LIST)}}种套餐</span>
                         <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                     </li>
                     <!-- <li class="activeTap">
@@ -111,14 +111,30 @@ export default {
             this.activeMsg()
             Indicator.open()
         },
-        updated:function(){
-            
-        },
         methods: {
+            gotTo(item){
+                if(item.FREE_LIST){
+                    Request.jsBbridge(bridge => {
+                        bridge.callHandler(
+                            'commonActivities', {
+                                'stkc': this.stkc,
+                                'itempkno': item[0].ITEM_PK_NO,
+                                'maspkno': item[0].MAS_PK_NO
+                            }
+                        )
+                    })
+                }else{
+                    Request.jsBbridge(bridge => {
+                        bridge.callHandler(
+                            'packageActivities', {
+                                'CLIST': item.FREE_LIST
+                            }
+                        )
+                    }) 
+                }
+            },
             arrLength(value){
-                console.log(value)
-                // console.log(item)
-                // return item.length
+                return value.length
             },
             goBack() {
                 this.imgShow = true;
@@ -127,7 +143,7 @@ export default {
                 this.imgShow = false;
             },
             closeSku() {
-                console.log(1)
+                // console.log(1)
                 Request.jsBbridge(bridge => {
                     bridge.callHandler('closeAddCarClick')
                 })
@@ -193,8 +209,8 @@ export default {
                         });
                     }
                     this._getDefalut()
-                    console.log(this.sku_list)
-                    console.log(this.skuDate)
+                    // console.log(this.sku_list)
+                    // console.log(this.skuDate)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -253,10 +269,7 @@ export default {
                     }
                     this.set_block(items, defalutChose);
                 });
-                // this.defalutRule.forEach((items) => {
-                    
-                // });
-                console.log(this.defalutRule)
+                // console.log(this.defalutRule)
             },
             // 规格点击的一系列操作
             changGet(item){
