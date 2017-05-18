@@ -55,7 +55,8 @@
 
           			// var str1 = '123456';
           			// console.log(JSON.parse(response.data.result).data.ALREADY_PRICE);
-          			var ALREADY_PRICE = JSON.parse(response.data.result).data.ALREADY_PRICE;
+          			var ALREADY_PRICE = JSON.parse(response.data.result).data.ALREADY_PRICE + '';
+          			// alert(ALREADY_PRICE);
           			_this.ALREADY_PRICE = getCalPriceArr(ALREADY_PRICE)[0] + getCalPriceArr(ALREADY_PRICE)[1];
           			
           			// var str = '123456.11';
