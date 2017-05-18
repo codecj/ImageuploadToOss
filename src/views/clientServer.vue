@@ -113,11 +113,11 @@
         this.requestMenus();
         this.reqestAds();
         Request.jsBbridge(bridge=> {
-           bridge.init(function(message, responseCallback) {
+         bridge.init(function(message, responseCallback) {
             var data = {};
             responseCallback(data);
         });
-       })
+     })
     },
     methods: {
         overHide(isHide){
@@ -188,13 +188,13 @@
           })
     },
     reqestAds(){
-        const paramList3 = {
+         let pargrmList = {
             oper: 'getBanner',
             type: 'specialevents',
             para: JSON.stringify(this.ad_paragrams)
         };
          //ajax调用
-         Request.post(paramList3).then(res=>{
+         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result);
             console.log(getData)
             if (parseInt(getData.code) !=200){
@@ -208,7 +208,7 @@
                     this.adImg = getData.data.EVENT_PIC_1;
                 }
             }
- 
+
         }).catch(error=>{
           if (error.response) {
               // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -219,12 +219,28 @@
           }
       })
     },
-    requestMenus(){
-        const pargrmList = {
-            oper: 'findResources',
-            type: 'user',
-            para: JSON.stringify(this.paragrams)
-        };
+    sortMenus:function(arr){
+       let len=arr.length,j;
+       let temp;
+       while(len>0){
+        for(j=0;j<len-1;j++){
+            if(parseInt(arr[j].orderBy)>parseInt(arr[j+1].orderBy)){
+                temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+            }
+        }
+        len--;
+    }
+    console.log(arr);
+    return arr;
+},
+requestMenus(){
+    const pargrmList = {
+        oper: 'findResources',
+        type: 'user',
+        para: JSON.stringify(this.paragrams)
+    };
             //ajax调用
             Request.post(pargrmList).then(res=>{
               const getData = JSON.parse(res.data.result);
@@ -232,7 +248,8 @@
                 console.log(getData.msg);
                 Toast({message: getData.msg,duration: 2000});
             }else{
-                this.menuList = getData.data.slice(0,2);
+                var list = this.sortMenus(getData.data);
+                this.menuList = list.slice(0,2);
                 this.menuList.push({imgSrc:require('../assets/icon51.png'),name:'联系',url:'lianxi',urlType:'N'});
                 this.menuList.push({imgSrc:require('../assets/icon53.png'),name:'更多',url:'gengduo',urlType:'N'});
                 var temp = this.menuList[0];
@@ -248,8 +265,8 @@
                     temp1.imgSrc = require('../assets/icon49.png');
                 }else if(temp1.url == 'chexiao'){
                     temp1.imgSrc = require('../assets/icon50.png');
-                }else if(temp.url == 'baifang'){
-                    temp.imgSrc = require('../assets/icon50.png');
+                }else if(temp1.url == 'baifang'){
+                    temp1.imgSrc = require('../assets/icon50.png');
                 }
                 console.log(this.menuList);
             }   
