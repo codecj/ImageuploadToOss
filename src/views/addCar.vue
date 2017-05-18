@@ -12,7 +12,6 @@
                         <p>库存: {{chose.stdQty}}</p>
                     </div>
                     <div @click="closeSku()" class="close">
-                        
                     </div>
                 </div>
                 <div class="overscroll">
@@ -46,32 +45,16 @@
                         <!-- <p></p> -->
                     </li>
                     <li @click="gotTo(value)" v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
-                        <span  class="left" v-if='key=="ALIST"'>打折促销</span>
-                        <span class="left" v-if='key=="BLIST"'>单品买赠</span>
+                        <span class="left" v-if='key=="ALIST"'>单品打折</span>
+                        <span class="left" v-if='key=="BLIST"'>单品满赠</span>
                         <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
-                        <span class="left" v-if='key=="ELIST"'>混搭买赠</span>
+                        <span class="left" v-if='key=="ELIST"'>混搭满赠</span>
                         <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
                         <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
                         <span v-for="item in value" class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                         <span v-for="item in value" class="right" v-if='key=="CLIST"'>共有{{arrLength(item.FREE_LIST)}}种套餐</span>
                         <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                     </li>
-                    <!-- <li class="activeTap">
-                        <span>混搭买赠</span>
-                        <span>买两件送赠品(不限参与次数)</span>
-                    </li>
-                    <li class="activeTap">
-                        <span>单品买赠</span>
-                        <span>买两件送赠品(不限参与次数)</span>
-                    </li>
-                    <li class="activeTap">
-                        <span>促销打折</span>
-                        <span>买两件送赠品(不限参与次数)</span>
-                    </li>
-                    <li class="activeTap">
-                        <span>优惠套餐</span>
-                        <span>买两件送赠品(不限参与次数)</span>
-                    </li> -->
                 </ul>
             </div>
         </transition>
@@ -79,10 +62,15 @@
 </template>
 <script>
 import Request from "../util/API"
-import { Lazyload } from 'mint-ui'
+import {
+    Lazyload
+} from 'mint-ui'
 import Vue from 'vue'
-import { Toast, Indicator } from 'mint-ui'
-Vue.use(Lazyload,{
+import {
+    Toast,
+    Indicator
+} from 'mint-ui'
+Vue.use(Lazyload, {
     preLoad: 1.3,
     lazyComponent: true,
     error: require('../assets/holde.png'),
@@ -94,16 +82,16 @@ export default {
             return {
                 imgShow: true,
                 isHide: false,
-                areaId:this.$route.query.areaId,
-                stkc:this.$route.query.stkc,
-                userName:this.$route.query.userName,
-                userid:this.$route.query.userid,
-                skuDate:[],
-                chose:{},
-                defalutRule:[],
-                count:1,
-                sku_list:[],
-                activeData:[]
+                areaId: this.$route.query.areaId,
+                stkc: this.$route.query.stkc,
+                userName: this.$route.query.userName,
+                userid: this.$route.query.userid,
+                skuDate: [],
+                chose: {},
+                defalutRule: [],
+                count: 1,
+                sku_list: [],
+                activeData: []
             }
         },
         mounted: function() {
@@ -112,8 +100,8 @@ export default {
             Indicator.open()
         },
         methods: {
-            gotTo(item){
-                if(item.FREE_LIST){
+            gotTo(item) {
+                if (item.FREE_LIST) {
                     Request.jsBbridge(bridge => {
                         bridge.callHandler(
                             'commonActivities', {
@@ -123,17 +111,17 @@ export default {
                             }
                         )
                     })
-                }else{
+                } else {
                     Request.jsBbridge(bridge => {
                         bridge.callHandler(
                             'packageActivities', {
                                 'CLIST': item.FREE_LIST
                             }
                         )
-                    }) 
+                    })
                 }
             },
-            arrLength(value){
+            arrLength(value) {
                 return value.length
             },
             goBack() {
@@ -143,64 +131,71 @@ export default {
                 this.imgShow = false;
             },
             closeSku() {
-                // console.log(1)
                 Request.jsBbridge(bridge => {
                     bridge.callHandler('closeAddCarClick')
                 })
             },
-            choseData(){
-                this.skuDate.stkSpecGroupList.forEach(item=>{
-                    if(this.stkc=item.stkC){
-                        this.chose=item
+            choseData() {
+                this.skuDate.stkSpecGroupList.forEach(item => {
+                    if (this.stkc = item.stkC) {
+                        this.chose = item
                     }　　　　　　　　
                 });
             },
-            reduceCartNum(){
-                if (this.count==1) {
-                  this.count=1
+            reduceCartNum() {
+                if (this.count == 1) {
+                    this.count = 1
                 } else {
-                  this.count--;
+                    this.count--;
                 }
             },
-            addCartNum(){
+            addCartNum() {
                 this.count++
             },
             addToCar() {
+                let select_ids = this._getSelAttrId();
+                if (this.defalutRule.length !== select_ids.length) return
                 let pargrmList = {
                     oper: 'save',
                     type: 'cart',
-                    para: '{ "buynum": "'+this.count+'","stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'","userid":"'+this.userid+'"}'
+                    para: '{ "buynum": "' + this.count + '","stkc": "' + this.stkc + '", "areaId": "' + this.areaId + '", "userName": "' + this.userName + '","userid":"' + this.userid + '"}'
                 }
                 Request.post(pargrmList).then(res => {
                     let getData = JSON.parse(res.data.result)
-                    if (getData.code !== "200") Toast({ message: getData.msg, duration: 2000 });
-                    Toast({  
+                    if (getData.code !== "200") Toast({
+                        message: getData.msg,
+                        duration: 2000
+                    });
+                    Toast({
                         message: getData.msg,
                         duration: 2000
                     });
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
-                        Toast({  
+                        Toast({
                             message: error.response.status,
                             duration: 2000
                         });
                     }
                 })
             },
-            detailMsg(){
+            detailMsg() {
                 let pargrmList = {
                     oper: 'findWqSpec',
                     type: 'wqProduct',
-                    para: '{ "stkc": "'+this.stkc+'", "areaId": "'+this.areaId+'", "userName": "'+this.userName+'" }'
+                    para: '{ "stkc": "' + this.stkc + '", "areaId": "' + this.areaId + '", "userName": "' + this.userName + '" }'
                 }
                 Request.post(pargrmList).then(res => {
                     let getData = JSON.parse(res.data.result)
-                    
-                    if (getData.code !== "200") Toast({ message: getData.msg, duration: 2000 });
 
-                    this.skuDate=getData.data
-                    this.defalutRule=this.skuDate.specList
+                    if (getData.code !== "200") Toast({
+                        message: getData.msg,
+                        duration: 2000
+                    });
+
+                    this.skuDate = getData.data
+                    this.defalutRule = this.skuDate.specList
                     Indicator.close();
                     this.choseData()
                     for (let i = 0; i < this.skuDate.stkSpecGroupList.length; i++) {
@@ -209,38 +204,35 @@ export default {
                         });
                     }
                     this._getDefalut()
-                    // console.log(this.sku_list)
-                    // console.log(this.skuDate)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
-                        Toast({  
+                        Toast({
                             message: error.response.status,
                             duration: 2000
                         });
                     }
                 })
             },
-            activeMsg(){
+            activeMsg() {
                 let pargrmListActive = {
                     oper: 'findAllProm',
                     type: 'wqProduct',
-                    para: '{ "stkc": "'+this.stkc+'", "areaid": "'+this.areaId+'", "username": "'+this.userName+'" }'
+                    para: '{ "stkc": "' + this.stkc + '", "areaid": "' + this.areaId + '", "username": "' + this.userName + '" }'
                 }
                 Request.post(pargrmListActive).then(res => {
                     let activeData = JSON.parse(res.data.result)
-                    // if (activeData.code !== "200") Toast({ message: activeData.msg, duration: 2000 });
-                    if(activeData.msg!=="该商品未参与促销活动"){
+                    if (activeData.msg !== "该商品未参与促销活动") {
                         this.$set(this, 'isHide', true)
-                    }else{
+                    } else {
                         this.$set(this, 'isHide', false)
                     }
-                    this.activeData=activeData.data
+                    this.activeData = activeData.data
                     console.log(activeData.data)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
-                        Toast({  
+                        Toast({
                             message: error.response.status,
                             duration: 2000
                         });
@@ -248,46 +240,44 @@ export default {
                 })
             },
             _getDefalut() {
-                let defalutChose=[]
+                let defalutChose = []
                 this.skuDate.stkSpecGroupList.forEach((items) => {
-                    // console.log(items.specValueIdList.join('-'))
-                    if(this.stkc==items.stkC){
-                        defalutChose=items.specValueIdList
+                    if (this.stkc == items.stkC) {
+                        defalutChose = items.specValueIdList
                     }
                 });
-                
-                this.defalutRule.forEach( (items) => {
-                    items.specValueList.forEach( (index) => {
-                        if(this.in_array(index.SPEC_VALUE_ID, defalutChose)){
-                            index.isAct=true
-                        }else{
-                            index.isChose=false
+
+                this.defalutRule.forEach((items) => {
+                    items.specValueList.forEach((index) => {
+                        if (this.in_array(index.SPEC_VALUE_ID, defalutChose)) {
+                            index.isAct = true
+                        } else {
+                            index.isChose = false
                         }
                     })
-                    if(items.isChose){
+                    if (items.isChose) {
                         this.update_2(items)
                     }
                     this.set_block(items, defalutChose);
                 });
-                // console.log(this.defalutRule)
             },
             // 规格点击的一系列操作
-            changGet(item){
-                item.isAct||item.not_allow ? this.$set(item, 'isAct', false):this.$set(item, 'isAct', true);
+            changGet(item) {
+                item.isAct || item.not_allow ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
                 this.$forceUpdate()
                 let select_ids = this._getSelAttrId();
-                if(this.defalutRule.length==select_ids.length){
+                if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
-                        if(select_ids.sort().join('-')==items.specValueIdList.sort().join('-')){
-                            this.stkc=items.stkC
-                            this.chose=items
+                        if (select_ids.sort().join('-') == items.specValueIdList.sort().join('-')) {
+                            this.stkc = items.stkC
+                            this.chose = items
                         }
                     });
                     this.activeMsg()
                 }
                 let all_ids = this.filterAttrs(select_ids);
                 this.defalutRule.forEach((items) => {
-                    if(items.isChose){
+                    if (items.isChose) {
                         this.update_2(items)
                     }
                     this.set_block(items, all_ids);
@@ -296,13 +286,13 @@ export default {
             //已选择的节点数组
             _getSelAttrId() {
                 let list = [];
-                this.defalutRule.forEach( (items) => {
-                    items.specValueList.forEach( (index) => {
-                        if(index.isAct){
+                this.defalutRule.forEach((items) => {
+                    items.specValueList.forEach((index) => {
+                        if (index.isAct) {
                             list.push(index.SPEC_VALUE_ID)
-                            items.isChose=true
-                        }else{
-                            items.isChose=false
+                            items.isChose = true
+                        } else {
+                            items.isChose = false
                         }
                     })
                 });
@@ -310,7 +300,8 @@ export default {
             },
             //获取所有包含指定节点的路线
             filterProduct(ids) {
-                let result = [],_attr,_all_ids_in;
+                let result = [],
+                    _attr, _all_ids_in;
                 this.sku_list.map((v, k) => {
                     _attr = '|' + v['goodsId'] + '|';
                     _all_ids_in = true;
@@ -336,7 +327,7 @@ export default {
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
                 let delArr = [];
-                for(let i ;i<arr.length;i++){
+                for (let i; i < arr.length; i++) {
                     if (arr[i] != val) {
                         delArr.push(arr[i]);
                     }
@@ -354,9 +345,9 @@ export default {
                 return result;
             },
             //数组内元素查找元素
-            in_array(search,array){
-                for(var i in array){
-                    if(array[i]==search){
+            in_array(search, array) {
+                for (var i in array) {
+                    if (array[i] == search) {
                         return true;
                     }
                 }
@@ -367,9 +358,9 @@ export default {
                 this.defalutRule.forEach((items) => {
                     items.specValueList.forEach((index) => {
                         if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
-                            index.not_allow=true
+                            index.not_allow = true
                         } else {
-                            index.not_allow=false
+                            index.not_allow = false
                         }
                     })
                 });
@@ -378,7 +369,13 @@ export default {
 }
 </script>
 <style scoped>
-#addCar{ position: absolute; top: 0; bottom: 0; width: 100%; }
+#addCar {
+/*    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;*/
+}
+
 html {
     background: transparent !important;
 }
@@ -551,7 +548,8 @@ html {
     position: absolute;
     bottom: 48px;
     left: 32px;
-    background-color: #f2f2f2
+    background-color: #f2f2f2;
+    overflow: hidden;
 }
 
 #addCar .goodsImg img {
@@ -580,7 +578,7 @@ html {
 
 #addCar .goodsMsg p:nth-of-type(2),
 .goodsMsg p:nth-of-type(3) {
-    font-size: 22px;
+    font-size: 26px;
     color: #9DA2B5;
     margin-top: 12px;
 }
@@ -618,13 +616,17 @@ html {
 
 #addCar .goodsSku li {
     padding: 5px 28px;
-    font-size: 22px;
+    font-size: 26px;
     background: #F1F2F7;
     color: #343657;
     float: left;
     margin: 0 24px 24px 0;
 }
-#addCar .goodsSku li.notAllow{ color:#ddd; }
+
+#addCar .goodsSku li.notAllow {
+    color: #ddd;
+}
+
 #addCar .goodsSku li.active {
     color: #fff;
     background: #FF783C;

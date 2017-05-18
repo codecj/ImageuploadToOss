@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import Request from "../util/API"
+	
 	export default {
 		data() {
 			return {}
