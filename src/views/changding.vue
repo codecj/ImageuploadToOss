@@ -4,7 +4,7 @@
          <!-- content横着布局和changeItem竖着布局-->
         <div class="proList">
           <div class="changeItem">
-            <oneprod  v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod>
+            <oneprod  v-for="item in this.prodList" :item="item" :cartShow="cartShow" :key="item.STK_NAME_EXT"></oneprod>
             <getbottom v-show="show"></getbottom>
           </div> 
         </div>
@@ -48,6 +48,7 @@ export default ({
             show: false,
             price: true,
             load:false,
+            cartShow:true,
             prodList:[],
             page: {
                 pageno: "0",
@@ -79,8 +80,12 @@ export default ({
                 const getData = JSON.parse(res.data.result)
                     console.log(getData)
                 getData.data.product.forEach(value => {
-                    this.prodList.push(value)
+                    this.prodList.push(value);
+                    // if(value.ATP_QTY){
+
+                    // }
                 })
+
                 if (this.prodList.length == getData.pagination.totalcount) {
                     this.load=true;
                     this.show = true;
