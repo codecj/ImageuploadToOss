@@ -1,7 +1,7 @@
 <template>
   <div id="oneProd">
    <!-- 每个产品 --> 
-      <div class="searchItem" v-for="item in prodList" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
+      <div class="searchItem" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
         <div class="onephoto">
           <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
         </div>
@@ -27,8 +27,8 @@
         </p>
         <p>
           <span>￥{{item.NET_PRICE}}</span>
-          <span>{{item.commissionPrice ? "奖" : ''}}</span>
-          <span>{{item.commissionPrice ? '￥'+item.commissionPrice : ''}}</span>
+          <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
+          <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
           <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)">
         </p>
     </div>
@@ -46,7 +46,7 @@
     components: {
     },
     props:{
-      prodList:Array
+      item:Object,
     },
     methods:{
        gocart(value){

@@ -74,11 +74,10 @@ export default {
     methods: {
         submit() {
             this.listDate=[]
-            Indicator.open();
             this.ajax();
-            
         },
         ajax(){
+            Indicator.open();
         	const pargrm = {
                     pagination: JSON.stringify(this.page),
                     "oper": "getShopList",
