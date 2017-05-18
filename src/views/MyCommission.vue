@@ -2,7 +2,7 @@
 <template>
 	<div id="MyCommission">
 		<div class="header">
-			<h4>4月待结算佣金</h4>
+			<h4>待结算佣金</h4>
 			<div class="price">
 				<span>￥</span>
 				<span>{{PLACE_PRICE_BIG}}</span>
