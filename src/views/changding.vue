@@ -4,12 +4,12 @@
          <!-- content横着布局和changeItem竖着布局-->
         <div class="proList">
           <div class="changeItem">
-            <oneprod :prodList="prodList"></oneprod>
+            <oneprod  v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod>
             <getbottom v-show="show"></getbottom>
           </div> 
         </div>
       </div>
-      <div class="over">
+       <div class="over">
         <shopcart></shopcart>
         <p>
           <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
@@ -77,7 +77,7 @@ export default ({
                 //ajax调用
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result)
-                    // console.log(getData)
+                    console.log(getData)
                 getData.data.product.forEach(value => {
                     this.prodList.push(value)
                 })

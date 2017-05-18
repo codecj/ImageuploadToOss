@@ -1,7 +1,7 @@
 <template>
   <div id="oneProd">
    <!-- 每个产品 --> 
-      <div class="searchItem" v-for="item in prodList" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
+      <div class="searchItem" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
         <div class="onephoto">
           <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
         </div>
@@ -46,7 +46,7 @@
     components: {
     },
     props:{
-      prodList:Array
+      item:Object,
     },
     methods:{
        gocart(value){
@@ -137,6 +137,7 @@
   width:450px;
   float:left;
   margin-left:28px;
+  position: relative;
 }
 .changeItem .searchItem>p:nth-child(5) span:nth-child(1){
   font-size: 30px;
@@ -164,7 +165,9 @@
 .changeItem .searchItem .gocart{
   width:80px;
   height:80px;
-  float:right;
+  position: absolute;
+  right:0;
+  bottom:-8px;
 }
 
 /*content横着布局方式*/
@@ -255,6 +258,7 @@
 }
 .content .searchItem>p:nth-child(5){
   margin-top:20px;
+  position: relative;
 }
 .content .searchItem>p:nth-child(5) span{
   font-size: 30px;
@@ -267,6 +271,9 @@
   height:80px;
   float:right;
   margin-right:24px;
+   position: absolute;
+  right:0;
+  bottom:-8px;
 }
 
 

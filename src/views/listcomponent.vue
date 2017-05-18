@@ -20,13 +20,11 @@
         </li> -->
       </ul>
     </div>
-   <!--  <div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10"> -->
     <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
       <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-        <oneprod :prodList="prodList"></oneprod> 
+        <oneprod v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod> 
       </div>
-      <getbottom v-show="show"></getbottom>
-      
+      <getbottom v-show="show"></getbottom>     
     </div> 
     <div class="over">
         <shopcart></shopcart>
@@ -110,7 +108,7 @@
             // console.log(this.pagram.keyword)
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            // console.log(getData)
+            console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
