@@ -2,7 +2,7 @@
 <template>
 	<div id="MyCommission">
 		<div class="header">
-			<h4>4月待结算佣金</h4>
+			<h4>待结算佣金</h4>
 			<div class="price">
 				<span>￥</span>
 				<span>{{PLACE_PRICE_BIG}}</span>
@@ -53,14 +53,17 @@
           		Request.post(pargrmList).then(function(response){
           			Indicator.close();
 
-          			var str1 = '123456';
-          			console.log(JSON.parse(response.data.result).data.ALREADY_PRICE);
-          			_this.ALREADY_PRICE = getCalPriceArr(str1)[0] + getCalPriceArr(str1)[1];
+          			// var str1 = '123456';
+          			// console.log(JSON.parse(response.data.result).data.ALREADY_PRICE);
+          			var ALREADY_PRICE = JSON.parse(response.data.result).data.ALREADY_PRICE + '';
+          			// alert(ALREADY_PRICE);
+          			_this.ALREADY_PRICE = getCalPriceArr(ALREADY_PRICE)[0] + getCalPriceArr(ALREADY_PRICE)[1];
           			
-          			var str = '123456.11';
-          			console.log(JSON.parse(response.data.result).data.PLACE_PRICE.toString());
-          			_this.PLACE_PRICE_BIG =  getCalPriceArr(str)[0];
-          			_this.PLACE_PRICE_SIGLE = getCalPriceArr(str)[1];
+          			// var str = '123456.11';
+          			var placePrice = JSON.parse(response.data.result).data.PLACE_PRICE.toString();
+          			// console.log(JSON.parse(response.data.result).data.PLACE_PRICE.toString());
+          			_this.PLACE_PRICE_BIG =  getCalPriceArr(placePrice)[0];
+          			_this.PLACE_PRICE_SIGLE = getCalPriceArr(placePrice)[1];
 
           			function getCalPriceArr(str){
           				var arr = [];

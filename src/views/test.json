@@ -25,9 +25,9 @@
         "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
         "UOM": "33",
         "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
-        "REAL_COMMISSION_PRICE": 0.2688888,
+        "REAL_COMMISSION_PRICE": 0,
         "STATUS":"我是一段测试文字",
-        "NET_PRICE": 2
+        "NET_PRICE": 1232.1234
     },{
         "SP_USER_NO": 349471,
         "UOM_QTY": 1,
@@ -39,7 +39,7 @@
         "UOM": "33",
         "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
         "REAL_COMMISSION_PRICE": 0.16,
-        "NET_PRICE": 2
+        "NET_PRICE": 1232.00000
     },{
         "SP_USER_NO": 349471,
         "UOM_QTY": 1,

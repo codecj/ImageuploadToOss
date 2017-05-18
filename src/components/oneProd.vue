@@ -1,7 +1,7 @@
 <template>
   <div id="oneProd">
    <!-- 每个产品 --> 
-      <div class="searchItem" v-for="item in prodList" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
+      <div class="searchItem" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
         <div class="onephoto">
           <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
         </div>
@@ -27,8 +27,8 @@
         </p>
         <p>
           <span>￥{{item.NET_PRICE}}</span>
-          <span>{{item.commissionPrice ? "奖" : ''}}</span>
-          <span>{{item.commissionPrice ? '￥'+item.commissionPrice : ''}}</span>
+          <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
+          <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
           <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)">
         </p>
     </div>
@@ -46,7 +46,7 @@
     components: {
     },
     props:{
-      prodList:Array
+      item:Object,
     },
     methods:{
        gocart(value){
@@ -104,7 +104,7 @@
 
 }
 .changeItem .searchItem>p:nth-child(3){
-  font-size: 22px;
+  font-size: 26px;
   color: #9DA2B5;
   letter-spacing: 0;
   float:left;
@@ -137,6 +137,7 @@
   width:450px;
   float:left;
   margin-left:28px;
+  position: relative;
 }
 .changeItem .searchItem>p:nth-child(5) span:nth-child(1){
   font-size: 30px;
@@ -162,9 +163,11 @@
 
 }
 .changeItem .searchItem .gocart{
-  width:48px;
-  height:48px;
-  float:right;
+  width:80px;
+  height:80px;
+  position: absolute;
+  right:0;
+  bottom:-8px;
 }
 
 /*content横着布局方式*/
@@ -255,6 +258,7 @@
 }
 .content .searchItem>p:nth-child(5){
   margin-top:20px;
+  position: relative;
 }
 .content .searchItem>p:nth-child(5) span{
   font-size: 30px;
@@ -263,10 +267,13 @@
   margin:8px 0 0 10px;
 }
 .content .searchItem .gocart{
-  width:48px;
-  height:48px;
+  width:80px;
+  height:80px;
   float:right;
   margin-right:24px;
+   position: absolute;
+  right:0;
+  bottom:-8px;
 }
 
 

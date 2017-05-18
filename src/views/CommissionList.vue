@@ -9,10 +9,10 @@
                     <img :src="item.PRODUCT_THUMBNAIL" alt="" class="goodsImg">
                     <h4 class="goodsName">{{item.STK_NAME}}</h4>
                     <span class="specification">规格：{{item.UOM}}</span>
-                    <span class="price">￥{{item.price}}</span>
+                    <span class="price">￥{{item.price | float2bits}}</span>
                     <span class="praise">奖</span>
-                    <span class="praisePrice">￥{{item.praisePrice}}</span>
-                    <span class="goodsCount">x{{item.UOM_QTY}}</span>
+                    <span class="praisePrice">￥{{item.praisePrice | float2bits}}</span>
+                    <span class="goodsCount">x{{item.UOM_QTY }}</span>
                  </div>
                 <div class="footer">
                     <span :class="{commissionStatusGrey:grey,commissionStatusOrange:orange}">{{item.STATUS}}</span>
@@ -72,38 +72,28 @@ export default {
             };
             Request.post(pargrmList).then((response) =>{
                 console.log(response);
+                // testJson -> 换成 response
                 Indicator.close();
-                this.dataArray=testJson.data;
-                for (var i = 0; i < testJson.data.length; i++) {
-                    var obj = testJson.data[i];
-                    obj.price = this.getCalPriceArr(obj.NET_PRICE.toString());
-                    obj.praisePrice = this.getCalPriceArr(obj.REAL_COMMISSION_PRICE.toString());
-                    obj.allCommissionPrice = this.getCalPriceArr(obj.COMMISSION_PRICE.toString());
+                this.dataArray = JSON.parse(response.data.result).data;
+                // this.dataArray = testJson.data;
+                for (var i = 0; i < this.dataArray.length; i++) {
+                    var obj = this.dataArray[i];
+
+                    obj.price = obj.NET_PRICE;
+                    obj.praisePrice = obj.REAL_COMMISSION_PRICE;
+                    obj.allCommissionPrice = obj.COMMISSION_PRICE;
+
                     console.log(obj.STATUS);
                     if (obj.STATUS === '' || obj.STATUS === undefined) {
                         obj.STATUS = '已结算';
                     }
+
                 }
-                console.log(this.dataArray);
             }
             ).catch(function(error) {
                 Indicator.close();
             }
             )
-        },
-        getCalPriceArr:function (value){
-             var value = Math.round(parseFloat(value)*100)/100;
-             var xsd = value.toString().split(".");
-             if(xsd.length == 1){
-                value = value.toString()+".00";
-                return value;
-             }
-             if(xsd.length > 1){
-                if(xsd[1].length<2){
-                   value=value.toString()+"0";
-                }
-                return value;
-             }
         }
     }
 }
