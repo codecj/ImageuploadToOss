@@ -83,7 +83,7 @@ export default {
                 imgShow: true,
                 isHide: false,
                 areaId: this.$route.query.areaId,
-                stkc: '',
+                stkc: this.$route.query.stkc,
                 userName: this.$route.query.userName,
                 userid: this.$route.query.userid,
                 skuDate: [],
@@ -96,8 +96,7 @@ export default {
             }
         },
         mounted: function() {
-            this.$set(this.$data,this.stkc,this.$route.query.stkc,)
-            console.log(this.$route.query.stkc)
+            // this.stkc=this.$route.query.stkc
             this.detailMsg()
             this.activeMsg()
             Indicator.open()
@@ -186,6 +185,7 @@ export default {
                 })
             },
             detailMsg() {
+                let _thisStkc=this.stkc
                 Indicator.open();
                 let pargrmList = {
                     oper: 'findWqSpec',
@@ -209,7 +209,8 @@ export default {
                             'goodsId': this.skuDate.stkSpecGroupList[i].specValueIdList.join('|')
                         });
                     }
-                    this._getDefalut()
+                    this._getDefalut(_thisStkc)
+
                     Indicator.close();
                 }).catch(error => {
                     Indicator.close();
@@ -246,38 +247,25 @@ export default {
                     }
                 })
             },
-            _getDefalut() {
+            _getDefalut(stkc) {
                 let defalutChose = []
                 this.skuDate.stkSpecGroupList.forEach((items) => {
-                    if (this.stkc == items.stkC) {
+                    if (stkc == items.stkC) {
                         defalutChose = items.specValueIdList
                     }
                 });
-
                 this.defalutRule.forEach((items) => {
                     items.specValueList.forEach((index) => {
                         if (this.in_array(index.SPEC_VALUE_ID, defalutChose)) {
-                            index.isAct = true
-                            items.isChose = true
+                            this.changGet(index)
                         }
                     })
+
                 });
-                let all_ids = this.filterAttrs(defalutChose);
-                let has =[]
-                let notYet =[]
-                this.defalutRule.forEach((items) => {
-                    console.log(items)
-                    if (items.isChose) {
-                        has.push(items)
-                    }else{
-                        notYet.push(items)
-                    }
-                });
-                this.update_2(has)
-                this.set_block(notYet, all_ids);
             },
             // 规格点击的一系列操作
             changGet(item) {
+                console.log(item)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);

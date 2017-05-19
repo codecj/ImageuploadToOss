@@ -188,8 +188,8 @@ export default {
     height: 0;
     line-height: 96px;
     display: flex;
-    transition: height 0.5s;
-    -webkit-transition: height 0.5s;
+    /*transition: height 0.5s;
+    -webkit-transition: height 0.5s;*/
     overflow: hidden;
 }
 .wrap .list-menu.show {
