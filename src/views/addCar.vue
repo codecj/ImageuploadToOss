@@ -83,7 +83,7 @@ export default {
                 imgShow: true,
                 isHide: false,
                 areaId: this.$route.query.areaId,
-                stkc: this.$route.query.stkc,
+                stkc: '',
                 userName: this.$route.query.userName,
                 userid: this.$route.query.userid,
                 skuDate: [],
@@ -91,10 +91,13 @@ export default {
                 defalutRule: [],
                 count: 1,
                 sku_list: [],
-                activeData: []
+                activeData: [],
+                thisId:''
             }
         },
         mounted: function() {
+            this.$set(this.$data,this.stkc,this.$route.query.stkc,)
+            console.log(this.$route.query.stkc)
             this.detailMsg()
             this.activeMsg()
             Indicator.open()
@@ -258,17 +261,33 @@ export default {
                             items.isChose = true
                         }
                     })
-                    if (items.isChose) {
-                        this.update_2(items)
-                    }
-                    this.set_block(items, defalutChose);
-                    console.log(items)
                 });
+                let all_ids = this.filterAttrs(defalutChose);
+                let has =[]
+                let notYet =[]
+                this.defalutRule.forEach((items) => {
+                    console.log(items)
+                    if (items.isChose) {
+                        has.push(items)
+                    }else{
+                        notYet.push(items)
+                    }
+                });
+                this.update_2(has)
+                this.set_block(notYet, all_ids);
             },
             // 规格点击的一系列操作
             changGet(item) {
-
-                item.isAct || item.not_allow ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
+                if(item.not_allow) return
+                this.thisId=item.SPEC_VALUE_ID
+                item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
+                this.defalutRule.forEach((index) => {
+                    if(item.SPEC_NAME==index.specName){
+                        index.specValueList.forEach(items => {
+                            if(items.SPEC_VALUE_ID!=item.SPEC_VALUE_ID ) this.$set(items, 'isAct', false)
+                        })
+                    }
+                })
                 this.$forceUpdate()
                 let select_ids = this._getSelAttrId();
                 if (this.defalutRule.length == select_ids.length) {
@@ -281,13 +300,18 @@ export default {
                     this.activeMsg()
                 }
                 let all_ids = this.filterAttrs(select_ids);
+                let has =[]
+                let notYet =[]
                 this.defalutRule.forEach((items) => {
                     console.log(items)
                     if (items.isChose) {
-                        this.update_2(items)
+                        has.push(items)
+                    }else{
+                        notYet.push(items)
                     }
-                    this.set_block(items, all_ids);
                 });
+                this.update_2(has)
+                this.set_block(notYet, all_ids);
             },
             //已选择的节点数组
             _getSelAttrId() {
@@ -325,16 +349,16 @@ export default {
             // 若该属性值 $li 是未选中状态的话，设置同级的其他属性是否可选
             update_2($goods_attr) {
                 let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, $goods_attr.SPEC_VALUE_ID);
+                let select_ids2 = this.del_array_val(select_ids, this.thisId);
                 let all_ids = this.filterAttrs(select_ids2);
                 this.set_block($goods_attr, all_ids);
             },
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
                 let delArr = [];
-                for (let i; i < arr.length; i++) {
-                    if (arr[i] != val) {
-                        delArr.push(arr[i]);
+                for (var k in arr) {
+                    if (arr[k] != val) {
+                        delArr.push(arr[k]);
                     }
                 }
                 return delArr;
@@ -360,7 +384,7 @@ export default {
             },
             //根据 $goods_attr下的所有节点是否在可选节点中（all_ids） 来设置可选状态
             set_block($goods_attr, all_ids) {
-                this.defalutRule.forEach((items) => {
+                $goods_attr.forEach((items) => {
                     items.specValueList.forEach((index) => {
                         if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
                             index.not_allow = true
