@@ -116,6 +116,8 @@ export default {
 
 .wrap .list .list-left {
     display: inline-block;
+    -webkit-box-flex: 1;
+    flex-grow: 0.05;
     padding: 41px 21px 43px 32px;
     width: 140px;
     height: 140px
