@@ -252,7 +252,7 @@ export default {
                         this.$set(this, 'isHide', false)
                     }
                     this.activeData = activeData.data
-                    console.log(activeData.data)
+                    // console.log(activeData.data)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -276,12 +276,11 @@ export default {
                             this.changGet(index)
                         }
                     })
-
                 });
             },
             // 规格点击的一系列操作
             changGet(item) {
-                console.log(item)
+                // console.log(item)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
@@ -307,7 +306,7 @@ export default {
                 let has =[]
                 let notYet =[]
                 this.defalutRule.forEach((items) => {
-                    console.log(items)
+                    // console.log(items)
                     if (items.isChose) {
                         has.push(items)
                     }else{
