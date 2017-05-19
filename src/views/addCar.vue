@@ -44,17 +44,33 @@
                         <p>促销活动</p>
                         <!-- <p></p> -->
                     </li>
-                    <li @click="gotTo(value,key)" v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
-                        <span class="left" v-if='key=="ALIST"'>单品打折</span>
+                    <div v-for="(value, key, index) in activeData">
+                        <li v-for="item in value" v-if='key=="ALIST"' @click="gotTo(value,key)" class="activeTap">
+                            <span class="left">单品打折</span>
+                            <span class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
+                        </li>
+                        <li v-if='key=="BLIST"' @click="gotTo(value,key)" v-for="item in value" class="activeTap">
+                            <span class="left">单品满赠</span>
+                            <span class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                        </li>
+                        <li v-for="item in value" v-if='key=="ELIST"' @click="gotTo(value,key)" class="activeTap">
+                            <span class="left">混搭满赠</span>
+                            <span class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                        </li>
+                        <li v-if='key=="CLIST"&&arrLength(value)' @click="gotTo(value,key)" class="activeTap">
+                            <span class="left">优惠套餐</span>
+                            <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
+                        </li>
+                        <!-- <span class="left" v-if='key=="ALIST"'>单品打折</span>
                         <span class="left" v-if='key=="BLIST"'>单品满赠</span>
                         <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
-                        <span class="left" v-if='key=="ELIST"'>混搭满赠</span>
+                        <span class="left" v-if='key=="ELIST"'>混搭满赠</span> -->
                         <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
-                        <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
-                        <span v-for="item in value" class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
-                        <span v-for="item in value" class="right" v-if='key=="CLIST"'>共有{{arrLength(item.FREE_LIST)}}种套餐</span>
-                        <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
-                    </li>
+                        <!-- <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span> -->
+                        
+                        <!-- <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
+                        <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span> -->
+                    </div>
                 </ul>
             </div>
         </transition>
