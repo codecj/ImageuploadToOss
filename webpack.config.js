@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+// const compiler = require(' vue-template-compiler')  
 module.exports = {
   entry: './src/main.js',
   output: {
