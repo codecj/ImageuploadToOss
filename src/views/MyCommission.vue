@@ -1,18 +1,20 @@
 <!-- 我的佣金模块 -->
 <template>
 	<div id="MyCommission">
-		<div class="header">
-			<h4>待结算佣金</h4>
+		<div @click='jumpToNativeCommission'>
+			<div class="header">
+			<h4>预计可得佣金</h4>
 			<div class="price">
 				<span>￥</span>
 				<span>{{PLACE_PRICE_BIG}}</span>
 				<span>{{PLACE_PRICE_SIGLE}}</span>
 			</div>
-		</div>
-		<div class="content" @click='jumpToNativeCommission'>
-			<span>上月已结算佣金</span>
-			<span>￥{{ALREADY_PRICE}}</span>
-			<img src="../assets/icon17.png" class="right">
+			</div>
+			<div class="content">
+				<span>累计已结算佣金</span>
+				<span>￥{{ALREADY_PRICE}}</span>
+				<img src="../assets/icon17.png" class="right">
+			</div>
 		</div>
 		<div class="footer" @click='jumpToNativeMyAmount'>
 			<img src="../assets/icon21.png" class="left">
@@ -98,6 +100,7 @@
           		})
 			},
 			jumpToNativeCommission(){ // 跳转到结算佣金的详情
+				alert(1);
 				Request.jsBbridge(bridge=>{
 					bridge.callHandler(
 						'jumpToCommissionDetail'
