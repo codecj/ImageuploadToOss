@@ -42,7 +42,6 @@
                     <li class="tittle">
                         <p @click="goBack()"></p>
                         <p>促销活动</p>
-                        <!-- <p></p> -->
                     </li>
                     <div v-for="(value, key, index) in activeData">
                         <li v-for="item in value" v-if='key=="ALIST"' @click="gotTo(value,key)" class="activeTap">
@@ -61,15 +60,6 @@
                             <span class="left">优惠套餐</span>
                             <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
                         </li>
-                        <!-- <span class="left" v-if='key=="ALIST"'>单品打折</span>
-                        <span class="left" v-if='key=="BLIST"'>单品满赠</span>
-                        <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
-                        <span class="left" v-if='key=="ELIST"'>混搭满赠</span> -->
-                        <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
-                        <!-- <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span> -->
-                        
-                        <!-- <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
-                        <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span> -->
                     </div>
                 </ul>
             </div>
@@ -306,7 +296,6 @@ export default {
                 let has =[]
                 let notYet =[]
                 this.defalutRule.forEach((items) => {
-                    // console.log(items)
                     if (items.isChose) {
                         has.push(items)
                     }else{
@@ -324,7 +313,7 @@ export default {
                     items.specValueList.forEach((index) => {
                         if (index.isAct) {
                             list.push(index.SPEC_VALUE_ID)
-                            items.isChose = true
+                            this.$set(items, 'isChose', true)
                         }
                     })
                 });
@@ -349,7 +338,7 @@ export default {
                 });
                 return result;
             },
-            // 若该属性值 $li 是未选中状态的话，设置同级的其他属性是否可选
+            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
             update_2($goods_attr) {
                 let select_ids = this._getSelAttrId();
                 let select_ids2 = this.del_array_val(select_ids, this.thisId);
@@ -385,14 +374,17 @@ export default {
                 }
                 return false;
             },
-            //根据 $goods_attr下的所有节点是否在可选节点中（all_ids） 来设置可选状态
+            //根据 $goods_attr下的所有数据是否在可选数据中（all_ids） 来设置可选状态
             set_block($goods_attr, all_ids) {
                 $goods_attr.forEach((items) => {
                     items.specValueList.forEach((index) => {
                         if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
-                            index.not_allow = true
+                            // index.not_allow = true
+                            this.$set(index, 'not_allow', true)
                         } else {
-                            index.not_allow = false
+                            // index.not_allow = false
+                            // this.$set(items, 'isChose', true)
+                            this.$set(index, 'not_allow', false)
                         }
                     })
                 });
