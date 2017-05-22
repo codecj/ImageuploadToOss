@@ -124,6 +124,14 @@ export default {
                 responseCallback(data);
             });
         })
+        Request.jsBbridge(bridge => {
+            bridge.registerHandler("buttonjs",(data,responseCallback)=>{
+                this.page.pageno=1
+                // alert(this.page.pageno)
+                // responseCallback("button js callback");
+                this.ajax()
+            });
+        })
     },
     methods: {
         overHide(isHide) {
@@ -355,7 +363,7 @@ export default {
                     'advDetail',{'advResult':this.advResult}
                 )
             })
-        }　　
+        }　
     }
 }
 </script>

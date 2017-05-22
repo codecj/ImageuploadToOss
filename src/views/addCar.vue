@@ -104,7 +104,7 @@ export default {
         mounted: function() {
             // this.stkc=this.$route.query.stkc
             this.detailMsg()
-            this.activeMsg()
+            // this.activeMsg()
             Indicator.open()
         },
         methods: {
