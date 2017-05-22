@@ -2,11 +2,11 @@
     <div>
         <div class="heards">
             <span><img @click="back()" src="../assets/icon10.png"></span>
-            <form @submit.prevent="submit">
+            <form @submit.icon56.png="submit">
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-                        <input type="search" :value="keyword" v-model="keyword" class="" v-focus="abc"></input>
+                        <input type="search" :value="keyword" v-model="keyword" class=""></input>
                     </div>
                 </div>
             </form>
@@ -94,7 +94,7 @@ export default {
                 Request.post(pargrm).then((res) => {
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
-                    if (getData.code !== "200" && this.listDate.length==0) {
+                    if (getData.code="8") {
                         this.codpng = true
                         this.codpng2 = false
                     } else {
@@ -137,6 +137,23 @@ export default {
                     //              }
                 })
             },
+            sortMenus: function(arr) {
+                let len = arr.length,
+                    j;
+                let temp;
+                while (len > 0) {
+                    for (j = 0; j < len - 1; j++) {
+                        if (parseInt(arr[j].orderBy) > parseInt(arr[j + 1].orderBy)) {
+                            temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                    len--;
+                }
+                console.log(arr);
+                return arr;
+            },
             requestMenus() {
                 const pargrmList = {
                     oper: 'findResources',
@@ -145,7 +162,7 @@ export default {
                 };
                 //ajax调用
                 Request.post(pargrmList).then(res => {
-                const getData = JSON.parse(res.data.result);
+                    const getData = JSON.parse(res.data.result);
                     if (parseInt(getData.code) != 200) {
                         console.log(getData.msg);
                         Toast({
@@ -173,7 +190,7 @@ export default {
                         } else if (temp.url == 'chexiao') {
                             temp.imgSrc = require('../assets/icon50.png');
                         } else if (temp.url == 'baifang') {
-                            temp.imgSrc = require('../assets/icon50.png');
+                            temp.imgSrc = require('../assets/icon56.png');
                         }
                         var temp1 = this.menuList[1];
                         if (temp1.url == 'xiadan') {
@@ -181,7 +198,7 @@ export default {
                         } else if (temp1.url == 'chexiao') {
                             temp1.imgSrc = require('../assets/icon50.png');
                         } else if (temp1.url == 'baifang') {
-                            temp1.imgSrc = require('../assets/icon50.png');
+                            temp1.imgSrc = require('../assets/icon56.png');
                         }
                         console.log(this.menuList);
                     }
@@ -196,7 +213,6 @@ export default {
                     }
                 })
             },
-
             loadMore() {
                 this.loading = true;
                 this.page.pageno = parseInt(this.page.pageno) + 1
