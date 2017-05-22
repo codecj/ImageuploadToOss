@@ -42,19 +42,25 @@
                     <li class="tittle">
                         <p @click="goBack()"></p>
                         <p>促销活动</p>
-                        <!-- <p></p> -->
                     </li>
-                    <li @click="gotTo(value)" v-for="(value, key, index) in activeData" v-if="value.length>0" class="activeTap">
-                        <span class="left" v-if='key=="ALIST"'>单品打折</span>
-                        <span class="left" v-if='key=="BLIST"'>单品满赠</span>
-                        <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
-                        <span class="left" v-if='key=="ELIST"'>混搭满赠</span>
-                        <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
-                        <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
-                        <span v-for="item in value" class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
-                        <span v-for="item in value" class="right" v-if='key=="CLIST"'>共有{{arrLength(item.FREE_LIST)}}种套餐</span>
-                        <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
-                    </li>
+                    <div v-for="(value, key, index) in activeData">
+                        <li v-for="item in value" v-if='key=="ALIST"' @click="gotTo(value,key)" class="activeTap">
+                            <span class="left">单品打折</span>
+                            <span class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
+                        </li>
+                        <li v-if='key=="BLIST"' @click="gotTo(value,key)" v-for="item in value" class="activeTap">
+                            <span class="left">单品满赠</span>
+                            <span class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                        </li>
+                        <li v-for="item in value" v-if='key=="ELIST"' @click="gotTo(value,key)" class="activeTap">
+                            <span class="left">混搭满赠</span>
+                            <span class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                        </li>
+                        <li v-if='key=="CLIST"&&arrLength(value)' @click="gotTo(value,key)" class="activeTap">
+                            <span class="left">优惠套餐</span>
+                            <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </transition>
@@ -91,17 +97,19 @@ export default {
                 defalutRule: [],
                 count: 1,
                 sku_list: [],
-                activeData: []
+                activeData: [],
+                thisId:''
             }
         },
         mounted: function() {
+            // this.stkc=this.$route.query.stkc
             this.detailMsg()
-            this.activeMsg()
+            // this.activeMsg()
             Indicator.open()
         },
         methods: {
-            gotTo(item) {
-                if (item.FREE_LIST) {
+            gotTo(item,type) {
+                if (type!=='CLIST') {
                     Request.jsBbridge(bridge => {
                         bridge.callHandler(
                             'commonActivities', {
@@ -115,7 +123,7 @@ export default {
                     Request.jsBbridge(bridge => {
                         bridge.callHandler(
                             'packageActivities', {
-                                'CLIST': item.FREE_LIST
+                                'CLIST': item
                             }
                         )
                     })
@@ -153,6 +161,7 @@ export default {
                 this.count++
             },
             addToCar() {
+                Indicator.open();
                 let select_ids = this._getSelAttrId();
                 if (this.defalutRule.length !== select_ids.length) return
                 let pargrmList = {
@@ -170,6 +179,7 @@ export default {
                         message: getData.msg,
                         duration: 2000
                     });
+                    Indicator.close();
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -181,6 +191,8 @@ export default {
                 })
             },
             detailMsg() {
+                let _thisStkc=this.stkc
+                Indicator.open();
                 let pargrmList = {
                     oper: 'findWqSpec',
                     type: 'wqProduct',
@@ -203,7 +215,9 @@ export default {
                             'goodsId': this.skuDate.stkSpecGroupList[i].specValueIdList.join('|')
                         });
                     }
-                    this._getDefalut()
+                    this._getDefalut(_thisStkc)
+
+                    Indicator.close();
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -228,7 +242,7 @@ export default {
                         this.$set(this, 'isHide', false)
                     }
                     this.activeData = activeData.data
-                    console.log(activeData.data)
+                    // console.log(activeData.data)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -239,31 +253,34 @@ export default {
                     }
                 })
             },
-            _getDefalut() {
+            _getDefalut(stkc) {
                 let defalutChose = []
                 this.skuDate.stkSpecGroupList.forEach((items) => {
-                    if (this.stkc == items.stkC) {
+                    if (stkc == items.stkC) {
                         defalutChose = items.specValueIdList
                     }
                 });
-
                 this.defalutRule.forEach((items) => {
                     items.specValueList.forEach((index) => {
                         if (this.in_array(index.SPEC_VALUE_ID, defalutChose)) {
-                            index.isAct = true
-                        } else {
-                            index.isChose = false
+                            this.changGet(index)
                         }
                     })
-                    if (items.isChose) {
-                        this.update_2(items)
-                    }
-                    this.set_block(items, defalutChose);
                 });
             },
             // 规格点击的一系列操作
             changGet(item) {
-                item.isAct || item.not_allow ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
+                // console.log(item)
+                if(item.not_allow) return
+                this.thisId=item.SPEC_VALUE_ID
+                item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
+                this.defalutRule.forEach((index) => {
+                    if(item.SPEC_NAME==index.specName){
+                        index.specValueList.forEach(items => {
+                            if(items.SPEC_VALUE_ID!=item.SPEC_VALUE_ID ) this.$set(items, 'isAct', false)
+                        })
+                    }
+                })
                 this.$forceUpdate()
                 let select_ids = this._getSelAttrId();
                 if (this.defalutRule.length == select_ids.length) {
@@ -276,23 +293,27 @@ export default {
                     this.activeMsg()
                 }
                 let all_ids = this.filterAttrs(select_ids);
+                let has =[]
+                let notYet =[]
                 this.defalutRule.forEach((items) => {
                     if (items.isChose) {
-                        this.update_2(items)
+                        has.push(items)
+                    }else{
+                        notYet.push(items)
                     }
-                    this.set_block(items, all_ids);
                 });
+                this.update_2(has)
+                this.set_block(notYet, all_ids);
             },
             //已选择的节点数组
             _getSelAttrId() {
                 let list = [];
                 this.defalutRule.forEach((items) => {
+                    items.isChose = false
                     items.specValueList.forEach((index) => {
                         if (index.isAct) {
                             list.push(index.SPEC_VALUE_ID)
-                            items.isChose = true
-                        } else {
-                            items.isChose = false
+                            this.$set(items, 'isChose', true)
                         }
                     })
                 });
@@ -317,19 +338,19 @@ export default {
                 });
                 return result;
             },
-            // 若该属性值 $li 是未选中状态的话，设置同级的其他属性是否可选
+            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
             update_2($goods_attr) {
                 let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, $goods_attr.SPEC_VALUE_ID);
+                let select_ids2 = this.del_array_val(select_ids, this.thisId);
                 let all_ids = this.filterAttrs(select_ids2);
                 this.set_block($goods_attr, all_ids);
             },
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
                 let delArr = [];
-                for (let i; i < arr.length; i++) {
-                    if (arr[i] != val) {
-                        delArr.push(arr[i]);
+                for (var k in arr) {
+                    if (arr[k] != val) {
+                        delArr.push(arr[k]);
                     }
                 }
                 return delArr;
@@ -353,14 +374,17 @@ export default {
                 }
                 return false;
             },
-            //根据 $goods_attr下的所有节点是否在可选节点中（all_ids） 来设置可选状态
+            //根据 $goods_attr下的所有数据是否在可选数据中（all_ids） 来设置可选状态
             set_block($goods_attr, all_ids) {
-                this.defalutRule.forEach((items) => {
+                $goods_attr.forEach((items) => {
                     items.specValueList.forEach((index) => {
                         if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
-                            index.not_allow = true
+                            // index.not_allow = true
+                            this.$set(index, 'not_allow', true)
                         } else {
-                            index.not_allow = false
+                            // index.not_allow = false
+                            // this.$set(items, 'isChose', true)
+                            this.$set(index, 'not_allow', false)
                         }
                     })
                 });

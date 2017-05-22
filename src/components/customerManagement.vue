@@ -116,6 +116,8 @@ export default {
 
 .wrap .list .list-left {
     display: inline-block;
+    -webkit-box-flex: 1;
+    flex-grow: 0.05;
     padding: 41px 21px 43px 32px;
     width: 140px;
     height: 140px
@@ -187,9 +189,9 @@ export default {
     background-color: #4D5679;
     height: 0;
     line-height: 96px;
-    display: flex;
-    transition: height 0.5s;
-    -webkit-transition: height 0.5s;
+   display:  -webkit-flex;
+    /*transition: height 0.5s;
+    -webkit-transition: height 0.5s;*/
     overflow: hidden;
 }
 .wrap .list-menu.show {

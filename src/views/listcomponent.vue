@@ -98,6 +98,8 @@
     methods:{ 
       ajax() {
         Indicator.open();
+        this.prodList=[];
+
         const pargrmList = {
           pagination: JSON.stringify(this.page),
           oper: 'getWqSearchApp',
