@@ -2,7 +2,7 @@
   <div id="prods">
     <header>
       <div id="backClick" @click="backClick"><img src="../assets/icon10.png" alt=""/></div>
-      <form action="" @submit.prevent="ajax">
+      <form action="" @submit.prevent="submit">
          <input type="search" placeholder="请输入关键字搜索商品" :value="pagram.keyword" v-model="pagram.keyword">
       </form>
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
@@ -100,6 +100,10 @@
       oneprod
     },
     methods:{ 
+      submit() {
+        this.page.pageno=0;
+        this.ajax();
+      }
       ajax() {
         Indicator.open();
         this.prodList=[];
