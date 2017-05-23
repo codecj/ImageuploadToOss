@@ -117,17 +117,17 @@ export default {
 .wrap .list .list-left {
     display: inline-block;
     padding: 41px 21px 43px 32px;
-    width: 140px;
-    height: 140px
+    width: 18.6666%;
+    height: 18.6666%;
 }
 
 .wrap .list .list-left img {
-    width: 140px;
-    height: 140px
+    width: 100%;
+    height: 100%;
 }
 
 .wrap .list .list-mid {
-	width: 55%;
+	width: 52%;
     overflow: hidden;
 	margin: 4px 0 6px 0;
 }
@@ -176,8 +176,8 @@ export default {
 
 .wrap .list .list-right {
 	/*position: relative;*/
-    -webkit-box-flex: 1;
-    padding: 29px 29px;
+    /*-webkit-box-flex: 1;*/
+    /*padding: 29px 29px;*/
 }
 
 .wrap .list .list-right span {
@@ -203,6 +203,7 @@ export default {
     height: 96px;
 }
 .wrap .list-menu a {
+	display: inline-block;
     color: #fff;
     text-align: center;
     width: 25%;
