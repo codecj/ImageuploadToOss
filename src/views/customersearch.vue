@@ -60,7 +60,8 @@ export default {
                     menuId: this.$route.query.menuId
                 },
                 picno: this.$route.query.picno,
-                isLoad: false
+                isLoad: false,
+                flag:false
             }
         },
         components: {
@@ -70,9 +71,16 @@ export default {
         mounted: function() {
            
         },
-        methods: {
+        methods:{
             submit() {
-                this.ajax();
+            	this.page.pageno = "1";
+            	this.$nextTick(()=>{
+                this.listDate = []
+            	})
+//          	this.flag = true;
+                this.ajax();  
+//          	this.flag = false;
+                
             },
             ajax() {
                 Indicator.open();
@@ -84,7 +92,9 @@ export default {
                     }
                     //ajax调用
                 Request.post(pargrm).then((res) => {
-                    this.listDate = []
+//              	if(this.flag){
+//                  this.listDate = []	
+//              	}
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
                     if (getData.code == '8') {
