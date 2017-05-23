@@ -271,6 +271,7 @@ export default {
             // 规格点击的一系列操作
             changGet(item) {
                 // console.log(item)
+                console.log(this.defalutRule)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
@@ -283,6 +284,9 @@ export default {
                     }
                 })
                 let select_ids = this._getSelAttrId();
+                let all_ids = this.filterAttrs(select_ids);
+                let has =[]
+                let notYet =[]
                 // select_ids.push(item.SPEC_VALUE_ID)
                 if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
@@ -293,9 +297,6 @@ export default {
                     });
                     this.activeMsg()
                 }
-                let all_ids = this.filterAttrs(select_ids);
-                let has =[]
-                let notYet =[]
                 // this.defalutRule.forEach((items) => {
                 //     if (items.isChose) {
                 //         has.push(items)
@@ -346,13 +347,6 @@ export default {
                 });
                 return result;
             },
-            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
-            update_2($goods_attr) {
-                let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, this.thisId);
-                let all_ids = this.filterAttrs(select_ids2);
-                this.set_block($goods_attr, all_ids);
-            },
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
                 let delArr = [];
@@ -381,6 +375,13 @@ export default {
                     }
                 }
                 return false;
+            },
+            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
+            update_2($goods_attr) {
+                let select_ids = this._getSelAttrId();
+                let select_ids2 = this.del_array_val(select_ids, this.thisId);
+                let all_ids = this.filterAttrs(select_ids2);
+                this.set_block($goods_attr, all_ids);
             },
             //根据 $goods_attr下的所有数据是否在可选数据中（all_ids） 来设置可选状态
             set_block($goods_attr, all_ids) {

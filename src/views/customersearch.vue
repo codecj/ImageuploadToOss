@@ -2,7 +2,7 @@
     <div>
         <div class="heards">
             <span><img @click="back()" src="../assets/icon10.png"></span>
-            <form @submit.icon56.png="submit">
+            <form @submit.prevent="submit">
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
@@ -38,9 +38,6 @@ Vue.use(Lazyload, {
     loading: require('../assets/holde.png'),
     listenEvents: ['scroll']
 })
-import {
-    focus
-} from 'vue-focus';
 export default {
     data() {
             return {
@@ -48,7 +45,6 @@ export default {
                     pageno: "0",
                     pagesize: "20"
                 },
-                abc: true,
                 keyword: '',
                 codpng: false,
                 codpng2: true,
@@ -71,11 +67,8 @@ export default {
             customerlIst,
             nosearch
         },
-        // directives: {
-        //     focus: focus
-        // },
         mounted: function() {
-            // this.autofocus && this.$refs.input.focus();
+           
         },
         methods: {
             submit() {
@@ -94,7 +87,7 @@ export default {
                 Request.post(pargrm).then((res) => {
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
-                    if (getData.code="8") {
+                    if (getData.code == '8') {
                         this.codpng = true
                         this.codpng2 = false
                     } else {
@@ -128,13 +121,6 @@ export default {
                             duration: 2000
                         });
                     }
-                    //              else {
-                    //                  Toast({
-                    ////                      message: error.message,
-                    //                      message: "没有消息",
-                    //                      duration: 2000
-                    //                  });
-                    //              }
                 })
             },
             sortMenus: function(arr) {
