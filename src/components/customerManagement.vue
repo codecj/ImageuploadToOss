@@ -111,12 +111,11 @@ export default {
 .wrap .list {
     display: -webkit-flex;
     width: 100%;
+    position: relative;
 }
 
 .wrap .list .list-left {
     display: inline-block;
-    -webkit-box-flex: 1;
-    flex-grow: 0.05;
     padding: 41px 21px 43px 32px;
     width: 140px;
     height: 140px
@@ -128,10 +127,9 @@ export default {
 }
 
 .wrap .list .list-mid {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+	width: 55%;
     overflow: hidden;
-    padding-right: 10%;
+	margin: 4px 0 6px 0;
 }
 
 .wrap .list .list-mid img {
@@ -139,11 +137,12 @@ export default {
 }
 
 .wrap .list .list-mid .list-names {
+	width: 100%;
     font-size: 30px;
     color: #3B456C;
     letter-spacing: 0;
     line-height: 30px;
-    padding: 42px 182px 20px 0px;
+    padding: 42px 0px 20px 0px;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -151,6 +150,8 @@ export default {
 }
 
 .wrap .list .list-mid .list-map {
+	width: 100%;
+	
     line-height: 50px;
     font-size: 26px;
     color: #9DA2B5;
@@ -163,6 +164,8 @@ export default {
 .wrap .list .list-mid .list-time {
     font-size: 26px;
     color: #9DA2B5;
+	width: 100%;
+    
 }
 
 .wrap .list .list-mid .list-map img {
@@ -172,7 +175,7 @@ export default {
 }
 
 .wrap .list .list-right {
-	position: relative;
+	/*position: relative;*/
     -webkit-box-flex: 1;
     padding: 29px 29px;
 }
@@ -189,9 +192,9 @@ export default {
     clear: both;
     background-color: #4D5679;
     height: 0;
+ 	display: flex;
     line-height: 96px;
-   display:  -webkit-flex;
-   display: flex;
+  	display:  -webkit-flex;
     /*transition: height 0.5s;
     -webkit-transition: height 0.5s;*/
     overflow: hidden;
