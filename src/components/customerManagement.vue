@@ -111,6 +111,7 @@ export default {
 .wrap .list {
     display: -webkit-flex;
     width: 100%;
+    position: relative;
 }
 
 .wrap .list .list-left {
@@ -126,9 +127,9 @@ export default {
 }
 
 .wrap .list .list-mid {
-    -webkit-box-flex: 1;
+	width: 55%;
     overflow: hidden;
-	margin: 4px 110px 6px 0;
+	margin: 4px 0 6px 0;
 }
 
 .wrap .list .list-mid img {
@@ -136,11 +137,12 @@ export default {
 }
 
 .wrap .list .list-mid .list-names {
+	width: 100%;
     font-size: 30px;
     color: #3B456C;
     letter-spacing: 0;
     line-height: 30px;
-    padding: 42px 182px 20px 0px;
+    padding: 42px 0px 20px 0px;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -148,6 +150,8 @@ export default {
 }
 
 .wrap .list .list-mid .list-map {
+	width: 100%;
+	
     line-height: 50px;
     font-size: 26px;
     color: #9DA2B5;
@@ -160,6 +164,8 @@ export default {
 .wrap .list .list-mid .list-time {
     font-size: 26px;
     color: #9DA2B5;
+	width: 100%;
+    
 }
 
 .wrap .list .list-mid .list-map img {
@@ -169,7 +175,7 @@ export default {
 }
 
 .wrap .list .list-right {
-	position: relative;
+	/*position: relative;*/
     -webkit-box-flex: 1;
     padding: 29px 29px;
 }
