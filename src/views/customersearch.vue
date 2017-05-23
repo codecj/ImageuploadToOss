@@ -6,7 +6,7 @@
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-                        <input type="search" :value="keyword" v-model="keyword" class=""></input>
+                        <input type="search" :value="keyword" v-model="keyword" lazy class=""></input>
                     </div>
                 </div>
             </form>
@@ -73,7 +73,10 @@ export default {
         methods: {
             submit() {
                 this.listDate = []
+                this.$forceUpdate()
                 this.ajax();
+                
+                
             },
             ajax() {
                 Indicator.open();
@@ -233,6 +236,7 @@ export default {
 .heards .input-wrap {
     border: 0;
     float: left;
+        width: 73.06%;
 }
 
 .heards .input-wrap div {}
@@ -240,7 +244,7 @@ export default {
 .heards .input-wrap input {
     border: none;
     background-color: #EBECF0;
-    width: 490px;
+    width: 93%;
     height: 62px;
     margin-left: 24px;
     font-size: 30px;
@@ -250,7 +254,7 @@ export default {
 
 .heards .input-wrap div {
     float: left;
-    width: 548px;
+	width: 100%;
     height: 62px;
     background-color: #EBECF0;
     margin-top: 11px;
