@@ -16,7 +16,7 @@
                  </div>
                  <div class="footer">
                     <span :class="{commissionStatusGrey:grey,commissionStatusOrange:orange}">{{item.STATUS}}</span>
-                    <span class="commissionPrice">￥{{item.TOTAL_COMMISSION_PRICE | float2bits}}</span>
+                    <span class="commissionPrice">￥{{item.ALL_COMMISSION | float2bits}}</span>
                     <span class="praise">奖</span>
                 </div>
              </li>
