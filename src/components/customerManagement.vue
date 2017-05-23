@@ -1,7 +1,7 @@
 <template>
     <div class="wrap ">
         <div v-for="(item, index) in listDate" class="listWrap" :key="index">
-            <div class="list activeTap" @click="tabChose(item)">
+            <div class="list activeTap borderBottom" @click="tabChose(item)">
                 <div class="list-left"><img v-lazy="item.SHOP_IMAGE"></div>
                 <div class="list-mid">
                     <div class="list-names">{{item.SHOP_NAME}}</div>
@@ -111,7 +111,6 @@ export default {
 .wrap .list {
     display: -webkit-flex;
     width: 100%;
-    border-bottom: 0.026667rem solid #F1F2F7;
 }
 
 .wrap .list .list-left {
@@ -129,8 +128,10 @@ export default {
 }
 
 .wrap .list .list-mid {
+    -webkit-flex-grow: 1;
     flex-grow: 1;
     overflow: hidden;
+    padding-right: 10%;
 }
 
 .wrap .list .list-mid img {
@@ -156,7 +157,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-right: 2.8rem;
+    padding-right: 182px;
 }
 
 .wrap .list .list-mid .list-time {
@@ -190,6 +191,7 @@ export default {
     height: 0;
     line-height: 96px;
    display:  -webkit-flex;
+   display: flex;
     /*transition: height 0.5s;
     -webkit-transition: height 0.5s;*/
     overflow: hidden;

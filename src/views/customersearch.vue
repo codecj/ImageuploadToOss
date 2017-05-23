@@ -6,7 +6,7 @@
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-                        <input type="search" :value="keyword" v-model="keyword" class=""></input>
+                        <input type="search" :value="keyword" v-model="keyword" lazy class=""></input>
                     </div>
                 </div>
             </form>
@@ -72,7 +72,6 @@ export default {
         },
         methods: {
             submit() {
-                this.listDate = []
                 this.ajax();
             },
             ajax() {
@@ -85,6 +84,7 @@ export default {
                     }
                     //ajax调用
                 Request.post(pargrm).then((res) => {
+                    this.listDate = []
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
                     if (getData.code == '8') {
@@ -100,7 +100,7 @@ export default {
                         this.listDate.push(value)
                     })
                     this.requestMenus();
-                    if (this.listDate.length == getData.pagination.totalcount) {
+                    if (this.listDate.length == getData.pagination.totalcount && this.listDate.length>20) {
                         Toast({
                             message: '已经是最后一页啦',
                             duration: 2000
@@ -233,6 +233,7 @@ export default {
 .heards .input-wrap {
     border: 0;
     float: left;
+        width: 73.06%;
 }
 
 .heards .input-wrap div {}
@@ -240,7 +241,7 @@ export default {
 .heards .input-wrap input {
     border: none;
     background-color: #EBECF0;
-    width: 490px;
+    width: 93%;
     height: 62px;
     margin-left: 24px;
     font-size: 30px;
@@ -250,7 +251,7 @@ export default {
 
 .heards .input-wrap div {
     float: left;
-    width: 548px;
+	width: 100%;
     height: 62px;
     background-color: #EBECF0;
     margin-top: 11px;
