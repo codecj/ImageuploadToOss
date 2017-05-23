@@ -88,7 +88,7 @@
   float:left;
 }
 .changeItem .searchItem>p:nth-child(2){
-  width:450px;
+  width:60%;
   height:80px;
   float:left;
   font-size: 30px;
@@ -100,12 +100,14 @@
   text-overflow: ellipsis;
   word-break: normal;
   display: -webkit-box; 
+  display: box; 
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; 
 
 }
 .changeItem .searchItem>p:nth-child(3){
   font-size: 26px;
+  width:60%;
   color: #9DA2B5;
   letter-spacing: 0;
   float:left;
@@ -113,7 +115,7 @@
   margin-left:28px;
 }
 .changeItem .searchItem>p:nth-child(4){
-  width:430px;
+  width:60%;
   height:40px;
   float:left;
   margin-top:8px;
@@ -135,7 +137,7 @@
   margin-top:4px;
   height:44px;
   line-height:44px;
-  width:450px;
+  width:60%;
   float:left;
   margin-left:28px;
   position: relative;
