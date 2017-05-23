@@ -109,7 +109,7 @@ export default {
 }
 
 .wrap .list {
-    display: flex;
+    display: -webkit-flex;
     width: 100%;
     border-bottom: 0.026667rem solid #F1F2F7;
 }
@@ -189,7 +189,7 @@ export default {
     background-color: #4D5679;
     height: 0;
     line-height: 96px;
-   display: flex;
+   display:  -webkit-flex;
     /*transition: height 0.5s;
     -webkit-transition: height 0.5s;*/
     overflow: hidden;
