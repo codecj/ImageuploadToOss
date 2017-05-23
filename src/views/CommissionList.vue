@@ -5,7 +5,7 @@
                  <div class="header borderBottom"> 
                     <h3>{{item.SHOP_NAME}}</h3> 
                  </div> 
-                 <div class="content borderBottom" v-for="goods in item.orders">
+                 <div class="content borderBottom" v-for="goods in item.ORDERS">
                     <img :src="goods.PRODUCT_THUMBNAIL" alt="" class="goodsImg">
                     <h4 class="goodsName">{{goods.STK_NAME}}</h4>
                     <span class="specification">规格：{{goods.UOM}}</span>
@@ -16,7 +16,7 @@
                  </div>
                  <div class="footer">
                     <span :class="{commissionStatusGrey:grey,commissionStatusOrange:orange}">{{item.STATUS}}</span>
-                    <span class="commissionPrice">￥{{item.ALL_COMMISSION | float2bits}}</span>
+                    <span class="commissionPrice">￥{{item.TOTAL_COMMISSION_PRICE | float2bits}}</span>
                     <span class="praise">奖</span>
                 </div>
              </li>
@@ -71,14 +71,14 @@ export default {
                 para: '{"userid":"'+JSON.parse(this.commissionData).userId+'"}'
             };
             Request.post(pargrmList).then((response) =>{
-                console.log(response);
                 // testJson -> 换成 response
                 Indicator.close();
                 this.dataArray = JSON.parse(response.data.result).data;
+                console.log(this.dataArray);
                 for (var i = 0; i < this.dataArray.length; i++) {
                     var obj = this.dataArray[i];
-                    for(var j = 0; j < obj.orders.length; j++) {
-                        var item = obj.orders[j];
+                    for(var j = 0; j < obj.ORDERS.length; j++) {
+                        var item = obj.ORDERS[j];
                         item.price = item.NET_PRICE;
                         item.praisePrice = item.REAL_COMMISSION_PRICE;
                         item.allCommissionPrice = item.COMMISSION_PRICE;
@@ -86,6 +86,7 @@ export default {
                     if (obj.STATUS === '' || obj.STATUS === undefined) {
                         obj.STATUS = '已结算';
                     }
+
                 }
             }
             ).catch((error)=>{
