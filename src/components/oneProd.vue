@@ -81,11 +81,13 @@
   padding:50px 40px 50px 32px;
 
 }
-
+.changeItem .searchItem .onephoto {
+  float:left;
+  
+}
 .changeItem .searchItem .onephoto .photo{
   width:200px;
   height:200px;
-  float:left;
 }
 .changeItem .searchItem>p:nth-child(2){
   width:60%;
