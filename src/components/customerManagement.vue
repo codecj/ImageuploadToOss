@@ -189,7 +189,7 @@ export default {
     background-color: #4D5679;
     height: 0;
     line-height: 96px;
-   display:  -webkit-flex;
+   display: flex;
     /*transition: height 0.5s;
     -webkit-transition: height 0.5s;*/
     overflow: hidden;
