@@ -9,19 +9,19 @@
         <p>{{item.NAME}}</p>
         <p>规格：{{item.MODLE}}</p>
         <p>
-            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'">
+            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
             单品打折
             </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'">
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'" class="border">
             单品满赠
             </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'">
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'" class="border">
             套装
             </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'">
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'" class="border">
             抢购商品
             </span>
-            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'">
+            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'" class="border">
             混搭满赠
             </span>
         </p>
@@ -125,7 +125,7 @@
   font-size: 18px;
   color: #FF783C;
   letter-spacing: 0;
-  border: 1px solid #FF783C;
+  /*border: 1px solid #FF783C;*/
   border-radius: 2px;
   display:inline-block;
   padding:1px 10px 1px 10px;
@@ -252,7 +252,6 @@
   font-size: 18px;
   color: #FF783C;
   letter-spacing: 0;
-  border: 1px solid #FF783C;
   border-radius: 2px;
   display:inline-block;
   padding:1px 6px 1px 6px;
