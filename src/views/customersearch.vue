@@ -72,6 +72,8 @@ export default {
         },
         methods: {
             submit() {
+                this.page.pageno='1'
+                this.listDate = []
                 this.ajax();
             },
             ajax() {
@@ -84,10 +86,9 @@ export default {
                     }
                     //ajax调用
                 Request.post(pargrm).then((res) => {
-                    this.listDate = []
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
-                    if (getData.code == '8') {
+                    if (getData.code == '8'&&this.page.pageno=='1') {
                         this.codpng = true
                         this.codpng2 = false
                     } else {

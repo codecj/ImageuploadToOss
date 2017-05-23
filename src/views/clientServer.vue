@@ -126,9 +126,8 @@ export default {
         })
         Request.jsBbridge(bridge => {
             bridge.registerHandler("buttonjs",(data,responseCallback)=>{
-                this.page.pageno=1
-                // alert(this.page.pageno)
-                // responseCallback("button js callback");
+                this.page.pageno='1'
+                this.listDate=[]
                 this.ajax()
             });
         })
