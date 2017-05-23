@@ -34,3 +34,10 @@ input{-webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appe
   border: 1px solid #FF783C;
 
 }
+.borderBottom{border-bottom: 1px solid #F1F2F7;}
+.borderTop{border-top: 1px solid #F1F2F7;}
+.borderLeft{border-left: 1px solid #F1F2F7;}
+.borderRight{border-right: 1px solid #F1F2F7;}
+.borderDefalut{
+  border: 1px solid #F1F2F7;
+}
