@@ -15,54 +15,87 @@
     },
     "code": "200",
     "msg": "成功",
-    "data": [{
-        "SP_USER_NO": 349471,
-        "UOM_QTY": 1,
-        "CUST_NAME": "LY10",
-        "COMMISSION_PRICE": 1111111.2,
-        "STK_C": "1017547",
-        "USER_NO": 351335,
-        "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
-        "UOM": "33",
-        "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
-        "REAL_COMMISSION_PRICE": 0,
-        "STATUS":"我是一段测试文字",
-        "NET_PRICE": 1232.1234
-    },{
-        "SP_USER_NO": 349471,
-        "UOM_QTY": 1,
-        "CUST_NAME": "LY10",
-        "COMMISSION_PRICE": 0.2,
-        "STK_C": "1017547",
-        "USER_NO": 351335,
-        "STK_NAME": "石磨纯芝麻油(1*2瓶)",
-        "UOM": "33",
-        "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
-        "REAL_COMMISSION_PRICE": 0.16,
-        "NET_PRICE": 1232.00000
-    },{
-        "SP_USER_NO": 349471,
-        "UOM_QTY": 1,
-        "CUST_NAME": "LY10",
-        "COMMISSION_PRICE": 0.2,
-        "STK_C": "1017547",
-        "USER_NO": 351335,
-        "STK_NAME": "石磨纯芝麻油(1*2瓶)",
-        "UOM": "33",
-        "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
-        "REAL_COMMISSION_PRICE": 0.16,
-        "NET_PRICE": 2
-    },{
-        "SP_USER_NO": 349471,
-        "UOM_QTY": 1,
-        "CUST_NAME": "LY10",
-        "COMMISSION_PRICE": 0.2,
-        "STK_C": "1017547",
-        "USER_NO": 351335,
-        "STK_NAME": "石磨纯芝麻油(1*2瓶)",
-        "UOM": "33",
-        "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
-        "REAL_COMMISSION_PRICE": 0.16,
-        "NET_PRICE": 2
-    }]
+    "data": [
+        {
+            "shopName":"店铺1", 
+            "orderNum":"123", 
+            "allCommission":"999.00", 
+            "SP_USER_NO": 349471,
+            "CUST_NAME": "LY10",
+            "USER_NO": 351335,
+            "STATUS":"待配送", 
+            "orders":[
+                {
+                    "UOM_QTY": 1,
+                    "COMMISSION_PRICE": 1111111.2,
+                    "STK_C": "1017547",
+                    "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
+                    "UOM": "33",
+                    "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
+                    "REAL_COMMISSION_PRICE": 0,
+                    "NET_PRICE": 1232.1234
+                },{
+                    "UOM_QTY": 1,
+                    "COMMISSION_PRICE": 1111111.2,
+                    "STK_C": "1017547",
+                    "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
+                    "UOM": "33",
+                    "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
+                    "REAL_COMMISSION_PRICE": 0,
+                    "NET_PRICE": 1232.1234
+                }
+            ]
+        },
+        {
+            "shopName":"店铺1", 
+            "orderNum":"123", 
+            "allCommission":"999.00", 
+            "SP_USER_NO": 349471,
+            "CUST_NAME": "LY10",
+            "USER_NO": 351335,
+            "STATUS":"待配送", 
+            "orders":[
+                {
+                    "UOM_QTY": 1,
+                    "COMMISSION_PRICE": 1111111.2,
+                    "STK_C": "1017547",
+                    "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
+                    "UOM": "33",
+                    "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
+                    "REAL_COMMISSION_PRICE": 0,
+                    "NET_PRICE": 1232.1234
+                },{
+                    "UOM_QTY": 1,
+                    "COMMISSION_PRICE": 1111111.2,
+                    "STK_C": "1017547",
+                    "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
+                    "UOM": "33",
+                    "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
+                    "REAL_COMMISSION_PRICE": 0,
+                    "NET_PRICE": 1232.1234
+                }
+            ]
+        },
+        {
+            "shopName":"店铺2", 
+            "orderNum":"123", 
+            "allCommission":"888", 
+            "SP_USER_NO": 349471,
+            "CUST_NAME": "LY10",
+            "USER_NO": 351335,
+            "STATUS":"待配送", 
+            "orders":[
+                {
+                    "UOM_QTY": 1,
+                    "COMMISSION_PRICE": 1111111.2,
+                    "STK_C": "1017547",
+                    "STK_NAME": "石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)石磨纯芝麻油(1*2瓶)",
+                    "UOM": "33",
+                    "PRODUCT_THUMBNAIL": "http://img-test.qpwa.cn/upload/prod/list/1892.jpg@!source",
+                    "REAL_COMMISSION_PRICE": 0,
+                    "NET_PRICE": 1232.1234
+                }
+            ]
+        }
+    ]
 }
