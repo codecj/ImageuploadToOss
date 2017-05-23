@@ -110,7 +110,7 @@
             // console.log(this.pagram.keyword)
         Request.post(pargrmList).then(res=>{
             const getData = JSON.parse(res.data.result)
-            console.log(getData)
+            // console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
@@ -145,6 +145,7 @@
         this.listStatus=!this.listStatus
       },
       changeSort(item,index) {
+
         this.price=!this.price;
         this.$nextTick(function () {
           let that=this;
@@ -154,7 +155,7 @@
           that.$set(item,"show",true);
         })
         this.prodList=[];
-        if (item.index == 0) {
+        if (index == 0) {
           if (item.show == true) {
             this.page.orderby = "AS";
           }else{
