@@ -75,28 +75,6 @@ export default {
                 // testJson -> 换成 response
                 Indicator.close();
                 this.dataArray = JSON.parse(response.data.result).data;
-                // this.dataArray = testJson.data;
-                for (var i = 0; i < this.dataArray.length; i++) {
-                    var obj = this.dataArray[i];
-
-                    obj.price = obj.NET_PRICE;
-                    obj.praisePrice = obj.REAL_COMMISSION_PRICE;
-                    obj.allCommissionPrice = obj.COMMISSION_PRICE;
-
-                    console.log(obj.STATUS);
-                    if (obj.STATUS === '' || obj.STATUS === undefined) {
-                        obj.STATUS = '已结算';
-                    }
-
-                }
-            }
-            ).catch((error)=>{
-                Indicator.close();
-
-                // 测试数据
-                this.dataArray = testJson.data;
-                console.log(this.dataArray);
-
                 for (var i = 0; i < this.dataArray.length; i++) {
                     var obj = this.dataArray[i];
                     for(var j = 0; j < obj.orders.length; j++) {
@@ -109,6 +87,29 @@ export default {
                         obj.STATUS = '已结算';
                     }
                 }
+
+            }
+            ).catch((error)=>{
+                Indicator.close();
+
+                // 测试数据
+                // this.dataArray = testJson.data;
+                // console.log(this.dataArray);
+
+                // for (var i = 0; i < this.dataArray.length; i++) {
+                //     var obj = this.dataArray[i];
+                //     for(var j = 0; j < obj.orders.length; j++) {
+                //         var item = obj.orders[j];
+                //         item.price = item.NET_PRICE;
+                //         item.praisePrice = item.REAL_COMMISSION_PRICE;
+                //         item.allCommissionPrice = item.COMMISSION_PRICE;
+                //     }
+                //     if (obj.STATUS === '' || obj.STATUS === undefined) {
+                //         obj.STATUS = '已结算';
+                //     }
+                // }
+
+                
             }
             )
         }
