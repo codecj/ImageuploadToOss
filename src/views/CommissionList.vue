@@ -3,7 +3,7 @@
         <ul> 
             <li v-for="(item,index) in dataArray" :key="item.STK_C">
                  <div class="header borderBottom"> 
-                    <h3>{{item.shopName}}</h3> 
+                    <h3>{{item.SHOP_NAME}}</h3> 
                  </div> 
                  <div class="content borderBottom" v-for="goods in item.orders">
                     <img :src="goods.PRODUCT_THUMBNAIL" alt="" class="goodsImg">
@@ -16,7 +16,7 @@
                  </div>
                  <div class="footer">
                     <span :class="{commissionStatusGrey:grey,commissionStatusOrange:orange}">{{item.STATUS}}</span>
-                    <span class="commissionPrice">￥{{item.allCommission | float2bits}}</span>
+                    <span class="commissionPrice">￥{{item.ALL_COMMISSION | float2bits}}</span>
                     <span class="praise">奖</span>
                 </div>
              </li>
@@ -87,7 +87,6 @@ export default {
                         obj.STATUS = '已结算';
                     }
                 }
-
             }
             ).catch((error)=>{
                 Indicator.close();
