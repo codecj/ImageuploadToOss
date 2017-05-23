@@ -42,7 +42,6 @@
                     <li class="tittle">
                         <p @click="goBack()"></p>
                         <p>促销活动</p>
-                        <!-- <p></p> -->
                     </li>
                     <div v-for="(value, key, index) in activeData">
                         <li v-for="item in value" v-if='key=="ALIST"' @click="gotTo(value,key)" class="activeTap">
@@ -61,15 +60,6 @@
                             <span class="left">优惠套餐</span>
                             <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
                         </li>
-                        <!-- <span class="left" v-if='key=="ALIST"'>单品打折</span>
-                        <span class="left" v-if='key=="BLIST"'>单品满赠</span>
-                        <span class="left" v-if='key=="CLIST"'>优惠套餐</span>
-                        <span class="left" v-if='key=="ELIST"'>混搭满赠</span> -->
-                        <!-- <span v-if='key=="ALIST"' class="right">{{key}}</span> -->
-                        <!-- <span v-for="item in value" class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span> -->
-                        
-                        <!-- <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
-                        <span v-for="item in value" class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span> -->
                     </div>
                 </ul>
             </div>
@@ -114,7 +104,7 @@ export default {
         mounted: function() {
             // this.stkc=this.$route.query.stkc
             this.detailMsg()
-            this.activeMsg()
+            // this.activeMsg()
             Indicator.open()
         },
         methods: {
@@ -281,9 +271,11 @@ export default {
             // 规格点击的一系列操作
             changGet(item) {
                 // console.log(item)
+                console.log(this.defalutRule)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
+                this.$forceUpdate()
                 this.defalutRule.forEach((index) => {
                     if(item.SPEC_NAME==index.specName){
                         index.specValueList.forEach(items => {
@@ -291,8 +283,11 @@ export default {
                         })
                     }
                 })
-                this.$forceUpdate()
                 let select_ids = this._getSelAttrId();
+                let all_ids = this.filterAttrs(select_ids);
+                let has =[]
+                let notYet =[]
+                // select_ids.push(item.SPEC_VALUE_ID)
                 if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
                         if (select_ids.sort().join('-') == items.specValueIdList.sort().join('-')) {
@@ -302,19 +297,22 @@ export default {
                     });
                     this.activeMsg()
                 }
-                let all_ids = this.filterAttrs(select_ids);
-                let has =[]
-                let notYet =[]
-                this.defalutRule.forEach((items) => {
-                    // console.log(items)
-                    if (items.isChose) {
-                        has.push(items)
+                // this.defalutRule.forEach((items) => {
+                //     if (items.isChose) {
+                //         has.push(items)
+                //     }else{
+                //         notYet.push(items)
+                //     }
+                // });
+                for(var i=0;i<this.defalutRule.length;i++){
+                    if (this.defalutRule[i].isChose) {
+                        has.push(this.defalutRule[i])
                     }else{
-                        notYet.push(items)
+                        notYet.push(this.defalutRule[i])
                     }
-                });
-                this.update_2(has)
+                }
                 this.set_block(notYet, all_ids);
+                this.update_2(has)
             },
             //已选择的节点数组
             _getSelAttrId() {
@@ -324,7 +322,7 @@ export default {
                     items.specValueList.forEach((index) => {
                         if (index.isAct) {
                             list.push(index.SPEC_VALUE_ID)
-                            items.isChose = true
+                            this.$set(items, 'isChose', true)
                         }
                     })
                 });
@@ -348,13 +346,6 @@ export default {
                     }
                 });
                 return result;
-            },
-            // 若该属性值 $li 是未选中状态的话，设置同级的其他属性是否可选
-            update_2($goods_attr) {
-                let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, this.thisId);
-                let all_ids = this.filterAttrs(select_ids2);
-                this.set_block($goods_attr, all_ids);
             },
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
@@ -385,14 +376,21 @@ export default {
                 }
                 return false;
             },
-            //根据 $goods_attr下的所有节点是否在可选节点中（all_ids） 来设置可选状态
+            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
+            update_2($goods_attr) {
+                let select_ids = this._getSelAttrId();
+                let select_ids2 = this.del_array_val(select_ids, this.thisId);
+                let all_ids = this.filterAttrs(select_ids2);
+                this.set_block($goods_attr, all_ids);
+            },
+            //根据 $goods_attr下的所有数据是否在可选数据中（all_ids） 来设置可选状态
             set_block($goods_attr, all_ids) {
                 $goods_attr.forEach((items) => {
                     items.specValueList.forEach((index) => {
-                        if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
-                            index.not_allow = true
+                        if (this.in_array(index.SPEC_VALUE_ID, all_ids)) {
+                            this.$set(index, 'not_allow', false)
                         } else {
-                            index.not_allow = false
+                            this.$set(index, 'not_allow', true)
                         }
                     })
                 });

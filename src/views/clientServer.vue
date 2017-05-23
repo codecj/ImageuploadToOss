@@ -1,7 +1,7 @@
 <template>
     <div :class="{'adv':adv,'':!adv}" id="clientServer">
         <!-- <div class="shadowLine"></div> -->
-        <div v-show="adv" class="advPlace">
+        <div @click="goAdv()" v-show="adv" class="advPlace">
             <img :src="adImg">
         </div>
         <div class="topHead">
@@ -101,7 +101,8 @@ export default {
             areaid: '',
             isEnd: false,
             adv: false,
-            adImg: ""
+            adImg: "",
+            advResult: {}
         }
     },
     components: {
@@ -117,12 +118,20 @@ export default {
         this.items[0].isShow = true;
         this.requestMenus();
         this.reqestAds();
-        Request.jsBbridge(bridge=> {
-         bridge.init(function(message, responseCallback) {
-            var data = {};
-            responseCallback(data);
-        });
-     })
+        Request.jsBbridge(bridge => {
+            bridge.init(function(message, responseCallback) {
+                var data = {};
+                responseCallback(data);
+            });
+        })
+        Request.jsBbridge(bridge => {
+            bridge.registerHandler("buttonjs",(data,responseCallback)=>{
+                this.page.pageno=1
+                // alert(this.page.pageno)
+                // responseCallback("button js callback");
+                this.ajax()
+            });
+        })
     },
     methods: {
         overHide(isHide) {
@@ -186,69 +195,74 @@ export default {
                 });
                 Indicator.close();
                 return
-             }).catch(error=>{
-          Indicator.close();
-          if (error.response) {
-                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                  Toast({
-                      message: error.response.status,
-                      duration: 2000
-                  });
-              }
-          })
-    },
-    reqestAds(){
-         let pargrmList = {
-            oper: 'getBanner',
-            type: 'specialevents',
-            para: JSON.stringify(this.ad_paragrams)
-        };
-         //ajax调用
-         Request.post(pargrmList).then(res=>{
-            const getData = JSON.parse(res.data.result);
-            console.log(getData)
-            if (parseInt(getData.code) == 4) {
-                this.adv = false;
-                return;
-            }
-            if (parseInt(getData.code) !=200){
-                console.log(getData.msg);
-                Toast({message: getData.msg,duration: 2000});
-            }else{
-                if (getData.data.EVENT_PIC_1 == null || getData.data.EVENT_PIC_1 == undefined) {
-                    this.adv = false;
-                }else{
-                    this.adv = true;
-                    this.adImg = getData.data.EVENT_PIC_1;
+            }).catch(error => {
+                Indicator.close();
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
                 }
-            }
+            })
+        },
+        reqestAds() {
+            let pargrmList = {
+                oper: 'getBanner',
+                type: 'specialevents',
+                para: JSON.stringify(this.ad_paragrams)
+            };
+            //ajax调用
+            Request.post(pargrmList).then(res => {
+                const getData = JSON.parse(res.data.result);
+                console.log(getData)
+                if (parseInt(getData.code) == 4) {
+                    this.adv = false;
+                    return;
+                }
+                if (parseInt(getData.code) != 200) {
+                    console.log(getData.msg);
+                    Toast({
+                        message: getData.msg,
+                        duration: 2000
+                    });
+                } else {
+                    if (getData.data.EVENT_PIC_1 == null || getData.data.EVENT_PIC_1 == undefined) {
+                        this.adv = false;
+                    } else {
+                        this.adv = true;
+                        this.advResult = getData.data;
+                        this.adImg = getData.data.EVENT_PIC_1;
+                    }
+                }
 
-        }).catch(error=>{
-          if (error.response) {
-              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-              Toast({
-                  message: error.response.status,
-                  duration: 2000
-              });
-          }
-      })
-    },
-    sortMenus:function(arr){
-       let len=arr.length,j;
-       let temp;
-       while(len>0){
-        for(j=0;j<len-1;j++){
-            if(parseInt(arr[j].orderBy)>parseInt(arr[j+1].orderBy)){
-                temp=arr[j];
-                arr[j]=arr[j+1];
-                arr[j+1]=temp;
+            }).catch(error => {
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                }
+            })
+        },
+        sortMenus: function(arr) {
+            let len = arr.length,
+                j;
+            let temp;
+            while (len > 0) {
+                for (j = 0; j < len - 1; j++) {
+                    if (parseInt(arr[j].orderBy) > parseInt(arr[j + 1].orderBy)) {
+                        temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+                len--;
             }
-        }
-        len--;
-    }
-    console.log(arr);
-    return arr;
-},
+            console.log(arr);
+            return arr;
+        },
         requestMenus() {
             const pargrmList = {
                 oper: 'findResources',
@@ -285,7 +299,7 @@ export default {
                     } else if (temp.url == 'chexiao') {
                         temp.imgSrc = require('../assets/icon50.png');
                     } else if (temp.url == 'baifang') {
-                        temp.imgSrc = require('../assets/icon50.png');
+                        temp.imgSrc = require('../assets/icon56.png');
                     }
                     var temp1 = this.menuList[1];
                     if (temp1.url == 'xiadan') {
@@ -293,7 +307,7 @@ export default {
                     } else if (temp1.url == 'chexiao') {
                         temp1.imgSrc = require('../assets/icon50.png');
                     } else if (temp1.url == 'baifang') {
-                        temp1.imgSrc = require('../assets/icon50.png');
+                        temp1.imgSrc = require('../assets/icon56.png');
                     }
                     console.log(this.menuList);
                 }
@@ -342,7 +356,14 @@ export default {
                 this.page.pageno = parseInt(this.page.pageno) + 1
                 this.ajax()
             }
-        }　　
+        },
+        goAdv() {
+            Request.jsBbridge(bridge => {
+                bridge.callHandler(
+                    'advDetail',{'advResult':this.advResult}
+                )
+            })
+        }　
     }
 }
 </script>
@@ -374,6 +395,7 @@ export default {
     bottom: 0;
     background: #f1f2f7;
 }
+
 
 /*#clientServer .shadowLine {
     position: absolute;
