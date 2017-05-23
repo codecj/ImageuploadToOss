@@ -2,7 +2,7 @@
     <div id="addCar">
         <transition name="begore">
             <div v-show="imgShow" class="inner_hide product_show">
-                <div class="goodInfo">
+                <div class="goodInfo borderBottom">
                     <div class="goodsImg">
                         <img :src='chose.imgUrl' height="300" width="300" alt="">
                     </div>
@@ -15,15 +15,15 @@
                     </div>
                 </div>
                 <div class="overscroll">
-                    <p v-show="isHide" @click="goActive()" class="activity activeTap">
+                    <p v-show="isHide" @click="goActive()" class="activity activeTap borderBottom">
                         该商品正在参与活动,查看活动信息
                         <img src="../assets/icon17.png" alt="">
                     </p>
-                    <ul v-for="item in defalutRule" :key="item.specId" class="goodsSku">
+                    <ul v-for="item in defalutRule" :key="item.specId" class="goodsSku borderBottom">
                         <p>{{item.specName}}</p>
                         <li @click="changGet(item)" :class="[{'notAllow':item.not_allow,'normal':!item.not_allow},{'active':item.isAct,'normal':!item.isAct}]" :data-id="item.SPEC_VALUE_ID" v-for="item in item.specValueList">{{item.SPECVALUE}}</li>
                     </ul>
-                    <div class="goodsNum">
+                    <div class="goodsNum borderBottom">
                         <p>购买数量</p>
                         <ul>
                             <li v-show="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
@@ -39,26 +39,26 @@
         <transition name="fold">
             <div v-show="!imgShow" class="activeList">
                 <ul>
-                    <li class="tittle">
+                    <li class="tittle borderBottom">
                         <p @click="goBack()"></p>
                         <p>促销活动</p>
                     </li>
                     <div v-for="(value, key, index) in activeData">
-                        <li v-for="item in value" v-if='key=="ALIST"' @click="gotTo(value,key)" class="activeTap">
+                        <li v-for="item in value" v-if='key=="ALIST"' @click="gotTo(value,key)" class="activeTap borderBottom">
                             <span class="left">单品打折</span>
                             <span class="right" v-if='key=="ALIST"'>{{item.REF_NO}}</span>
                         </li>
-                        <li v-if='key=="BLIST"' @click="gotTo(value,key)" v-for="item in value" class="activeTap">
+                        <li v-if='key=="BLIST"' @click="gotTo(value,key)" v-for="item in value" class="activeTap borderBottom">
                             <span class="left">单品满赠</span>
                             <!-- <span class="right" v-if='key=="BLIST"&&item.limitFlg=="N"'>买{{item.BASE_QTY}}件送赠品(不限购)</span> -->
                             <span class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                         </li>
-                        <li v-for="item in value" v-if='key=="ELIST"' @click="gotTo(value,key)" class="activeTap">
+                        <li v-for="item in value" v-if='key=="ELIST"' @click="gotTo(value,key)" class="activeTap borderBottom">
                             <span class="left">混搭满赠</span>
                             <span class="right" v-if='key=="ELIST"&&item.limitFlg=="N"'>买{{item.BASE_QTY}}件送赠品(不限购)</span>
                             <span class="right" v-if='key=="ELIST"&&item.limitFlg=="Y"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                         </li>
-                        <li v-if='key=="CLIST"&&arrLength(value)' @click="gotTo(value,key)" class="activeTap">
+                        <li v-if='key=="CLIST"&&arrLength(value)' @click="gotTo(value,key)" class="activeTap borderBottom">
                             <span class="left">优惠套餐</span>
                             <span class="right" v-if='key=="CLIST"'>共有{{arrLength(value)}}种套餐</span>
                         </li>
@@ -244,7 +244,6 @@ export default {
                         this.$set(this, 'isHide', false)
                     }
                     this.activeData = activeData.data
-                    // console.log(activeData.data)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -272,8 +271,6 @@ export default {
             },
             // 规格点击的一系列操作
             changGet(item) {
-                // console.log(item)
-                console.log(this.defalutRule)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
@@ -287,8 +284,6 @@ export default {
                 })
                 let select_ids = this._getSelAttrId();
                 let all_ids = this.filterAttrs(select_ids);
-                let has =[]
-                let notYet =[]
                 if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
                         if (select_ids.sort().join('-') == items.specValueIdList.sort().join('-')) {
@@ -300,13 +295,15 @@ export default {
                 }
                 for(var i=0;i<this.defalutRule.length;i++){
                     if (this.defalutRule[i].isChose) {
+                        let has =[]
                         has.push(this.defalutRule[i])
+                        this.update_2(has)
                     }else{
+                        let notYet =[]
                         notYet.push(this.defalutRule[i])
+                        this.set_block(notYet, all_ids);                        
                     }
                 }
-                this.set_block(notYet, all_ids);
-                this.update_2(has)
             },
             //已选择的节点数组
             _getSelAttrId() {
@@ -374,7 +371,15 @@ export default {
             // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
             update_2($goods_attr) {
                 let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, this.thisId);
+                let $li='';
+                $goods_attr.forEach((items) => {
+                    items.specValueList.forEach((index) => {
+                        if(index.isAct){
+                            $li=index.SPEC_VALUE_ID
+                        }
+                    })
+                })
+                let select_ids2 = this.del_array_val(select_ids, $li);
                 let all_ids = this.filterAttrs(select_ids2);
                 this.set_block($goods_attr, all_ids);
             },
@@ -385,9 +390,7 @@ export default {
                         if (this.in_array(index.SPEC_VALUE_ID, all_ids)) {
                             this.$set(index, 'not_allow', false)
                         } else {
-                            if(!items.isChose){
-                                this.$set(index, 'not_allow', true)
-                            }
+                            this.$set(index, 'not_allow', true)
                         }
                     })
                 });
@@ -485,7 +488,7 @@ html {
     line-height: 111px;
     height: 111px;
     padding: 0 25px 0 35px;
-    border-bottom: 2px solid #F1F2F7;
+    /*border-bottom: 2px solid #F1F2F7;*/
 }
 
 .activeList li.tittle p {
@@ -557,7 +560,7 @@ html {
 
 #addCar .goodInfo {
     width: 100%;
-    border-bottom: 2px solid #F1F2F7;
+    /*border-bottom: 2px solid #F1F2F7;*/
     /*padding: 30px 0 51px 251px;*/
     height: 216px;
     position: relative;
@@ -631,7 +634,7 @@ html {
 
 #addCar .goodsSku {
     padding: 41px 36px 24px 36px;
-    border-bottom: 2px solid #F1F2F7;
+    /*border-bottom: 2px solid #F1F2F7;*/
     overflow: hidden;
 }
 
@@ -662,7 +665,7 @@ html {
 #addCar .goodsNum {
     padding: 36px 34px;
     overflow: hidden;
-    border-bottom: 2px solid #F1F2F7;
+    /*border-bottom: 2px solid #F1F2F7;*/
 }
 
 #addCar .goodsNum p {
@@ -712,7 +715,7 @@ html {
     line-height: 110px;
     font-size: 26px;
     color: #FF783C;
-    border-bottom: 2px solid #F1F2F7;
+    /*border-bottom: 2px solid #F1F2F7;*/
     padding-left: 38px;
 }
 

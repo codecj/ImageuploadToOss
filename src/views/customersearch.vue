@@ -72,11 +72,7 @@ export default {
         },
         methods: {
             submit() {
-                this.listDate = []
-                this.$forceUpdate()
                 this.ajax();
-                
-                
             },
             ajax() {
                 Indicator.open();
@@ -88,6 +84,7 @@ export default {
                     }
                     //ajax调用
                 Request.post(pargrm).then((res) => {
+                    this.listDate = []
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
                     if (getData.code == '8') {
@@ -103,7 +100,7 @@ export default {
                         this.listDate.push(value)
                     })
                     this.requestMenus();
-                    if (this.listDate.length == getData.pagination.totalcount) {
+                    if (this.listDate.length == getData.pagination.totalcount && this.listDate.length>20) {
                         Toast({
                             message: '已经是最后一页啦',
                             duration: 2000

@@ -1,7 +1,7 @@
 <template>
   <div id="oneProd">
    <!-- 每个产品 --> 
-      <div class="searchItem" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
+      <div class="searchItem borderBottom" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
         <div class="onephoto">
           <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
         </div>
@@ -9,19 +9,19 @@
         <p>{{item.NAME}}</p>
         <p>规格：{{item.MODLE}}</p>
         <p>
-            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'">
+            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
             单品打折
             </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'">
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'" class="border">
             单品满赠
             </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'">
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'" class="border">
             套装
             </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'">
+             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'" class="border">
             抢购商品
             </span>
-            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'">
+            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'" class="border">
             混搭满赠
             </span>
         </p>
@@ -76,19 +76,21 @@
 .changeItem .searchItem{
   height:198px;
   width:100%;
-  border-top:2px solid #F1F2F7;
+  /*border-top:2px solid #F1F2F7;*/
   background:#fff;
   padding:50px 40px 50px 32px;
 
 }
+.changeItem .searchItem .onephoto {
+  float:left;
 
+}
 .changeItem .searchItem .onephoto .photo{
   width:200px;
   height:200px;
-  float:left;
 }
 .changeItem .searchItem>p:nth-child(2){
-  width:450px;
+  width:60%;
   height:80px;
   float:left;
   font-size: 30px;
@@ -100,12 +102,14 @@
   text-overflow: ellipsis;
   word-break: normal;
   display: -webkit-box; 
+  display: box; 
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; 
 
 }
 .changeItem .searchItem>p:nth-child(3){
   font-size: 26px;
+  width:60%;
   color: #9DA2B5;
   letter-spacing: 0;
   float:left;
@@ -113,7 +117,7 @@
   margin-left:28px;
 }
 .changeItem .searchItem>p:nth-child(4){
-  width:430px;
+  width:60%;
   height:40px;
   float:left;
   margin-top:8px;
@@ -125,17 +129,20 @@
   font-size: 18px;
   color: #FF783C;
   letter-spacing: 0;
-  border: 1px solid #FF783C;
   border-radius: 2px;
   display:inline-block;
-  padding:1px 10px 1px 10px;
+  height:32px;
+  line-height:32px;
+  width:110px;
+  text-align: center;
+  margin-bottom:5px;
   margin-right:10px;
 }
 .changeItem .searchItem>p:nth-child(5){
   margin-top:4px;
   height:44px;
   line-height:44px;
-  width:450px;
+  width:60%;
   float:left;
   margin-left:28px;
   position: relative;
@@ -252,7 +259,6 @@
   font-size: 18px;
   color: #FF783C;
   letter-spacing: 0;
-  border: 1px solid #FF783C;
   border-radius: 2px;
   display:inline-block;
   padding:1px 6px 1px 6px;
