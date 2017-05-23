@@ -4,14 +4,14 @@
         <div @click="goAdv()" v-show="adv" class="advPlace">
             <img :src="adImg">
         </div>
-        <div class="topHead">
-            <div class="activeTap" @click="fliterToggle()" :class="{ 'left change' : userFliter, 'left': !userFliter}"></div>
+        <div class="topHead borderBottom">
+            <div class="activeTap" @click="fliterToggle()" :class="{ 'left borderRight change' : userFliter, 'left borderRight': !userFliter}"></div>
             <div @click="toSearch()" class="mid">
                 <form>
                     <input disabled placeholder="请输入要搜索的客户" type="search">
                 </form>
             </div>
-            <div @click="createClient()" class="right activeTap"></div>
+            <div @click="createClient()" class="right borderLeft activeTap"></div>
         </div>
         <div v-show="userFliter" class="fliter">
             <div @click="getGps()" class="fliterBar activeTap">
@@ -411,7 +411,7 @@ export default {
     height: 94px;
     background-color: #fff;
     position: relative;
-    border-bottom: 2px solid #F1F2F7;
+    /*border-bottom: 2px solid #F1F2F7;*/
 }
 
 #clientServer .topHead .left,
@@ -428,7 +428,7 @@ export default {
 
 #clientServer .topHead .left {
     left: 0;
-    border-right: 2px solid #F1F2F7;
+    /*border-right: 2px solid #F1F2F7;*/
     line-height: 95px;
     text-align: center;
     background: url('../assets/icon15.png') center no-repeat;
@@ -437,7 +437,7 @@ export default {
 
 #clientServer .topHead .left.change {
     left: 0;
-    border-right: 2px solid #F1F2F7;
+    /*border-right: 2px solid #F1F2F7;*/
     line-height: 95px;
     text-align: center;
     background: url('../assets/icon14.png') center no-repeat;
