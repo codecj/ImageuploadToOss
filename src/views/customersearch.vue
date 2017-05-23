@@ -60,7 +60,8 @@ export default {
                     menuId: this.$route.query.menuId
                 },
                 picno: this.$route.query.picno,
-                isLoad: false
+                isLoad: false,
+                flag:false
             }
         },
         components: {
@@ -70,7 +71,7 @@ export default {
         mounted: function() {
            
         },
-        methods: {
+        methods:{
             submit() {
                 this.page.pageno='1'
                 this.listDate = []
