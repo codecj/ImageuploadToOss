@@ -50,11 +50,13 @@
                         </li>
                         <li v-if='key=="BLIST"' @click="gotTo(value,key)" v-for="item in value" class="activeTap">
                             <span class="left">单品满赠</span>
+                            <!-- <span class="right" v-if='key=="BLIST"&&item.limitFlg=="N"'>买{{item.BASE_QTY}}件送赠品(不限购)</span> -->
                             <span class="right" v-if='key=="BLIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                         </li>
                         <li v-for="item in value" v-if='key=="ELIST"' @click="gotTo(value,key)" class="activeTap">
                             <span class="left">混搭满赠</span>
-                            <span class="right" v-if='key=="ELIST"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
+                            <span class="right" v-if='key=="ELIST"&&item.limitFlg=="N"'>买{{item.BASE_QTY}}件送赠品(不限购)</span>
+                            <span class="right" v-if='key=="ELIST"&&item.limitFlg=="Y"'>买{{item.BASE_QTY}}件送赠品(每人限购{{item.SINGLE_CUST_QTY}}件)</span>
                         </li>
                         <li v-if='key=="CLIST"&&arrLength(value)' @click="gotTo(value,key)" class="activeTap">
                             <span class="left">优惠套餐</span>
@@ -275,7 +277,7 @@ export default {
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
-                this.$forceUpdate()
+                
                 this.defalutRule.forEach((index) => {
                     if(item.SPEC_NAME==index.specName){
                         index.specValueList.forEach(items => {
@@ -287,7 +289,6 @@ export default {
                 let all_ids = this.filterAttrs(select_ids);
                 let has =[]
                 let notYet =[]
-                // select_ids.push(item.SPEC_VALUE_ID)
                 if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
                         if (select_ids.sort().join('-') == items.specValueIdList.sort().join('-')) {
@@ -297,13 +298,6 @@ export default {
                     });
                     this.activeMsg()
                 }
-                // this.defalutRule.forEach((items) => {
-                //     if (items.isChose) {
-                //         has.push(items)
-                //     }else{
-                //         notYet.push(items)
-                //     }
-                // });
                 for(var i=0;i<this.defalutRule.length;i++){
                     if (this.defalutRule[i].isChose) {
                         has.push(this.defalutRule[i])
@@ -318,7 +312,8 @@ export default {
             _getSelAttrId() {
                 let list = [];
                 this.defalutRule.forEach((items) => {
-                    items.isChose = false
+                    // items.isChose = false
+                    this.$set(items, 'isChose', false)
                     items.specValueList.forEach((index) => {
                         if (index.isAct) {
                             list.push(index.SPEC_VALUE_ID)
@@ -390,7 +385,9 @@ export default {
                         if (this.in_array(index.SPEC_VALUE_ID, all_ids)) {
                             this.$set(index, 'not_allow', false)
                         } else {
-                            this.$set(index, 'not_allow', true)
+                            if(!items.isChose){
+                                this.$set(index, 'not_allow', true)
+                            }
                         }
                     })
                 });
