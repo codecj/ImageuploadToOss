@@ -101,7 +101,7 @@
     },
     methods:{ 
       submit() {
-        this.page.pageno=1;
+        this.page.pageno=0;
         this.ajax();
       }
       ajax() {
