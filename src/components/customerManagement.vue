@@ -115,8 +115,6 @@ export default {
 
 .wrap .list .list-left {
     display: inline-block;
-    -webkit-box-flex: 1;
-    flex-grow: 0.05;
     padding: 41px 21px 43px 32px;
     width: 140px;
     height: 140px
@@ -128,10 +126,9 @@ export default {
 }
 
 .wrap .list .list-mid {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+    -webkit-box-flex: 1;
     overflow: hidden;
-    padding-right: 10%;
+	margin: 4px 110px 6px 0;
 }
 
 .wrap .list .list-mid img {
@@ -189,9 +186,9 @@ export default {
     clear: both;
     background-color: #4D5679;
     height: 0;
+ 	display: flex;
     line-height: 96px;
-   display:  -webkit-flex;
-   display: flex;
+  	display:  -webkit-flex;
     /*transition: height 0.5s;
     -webkit-transition: height 0.5s;*/
     overflow: hidden;
