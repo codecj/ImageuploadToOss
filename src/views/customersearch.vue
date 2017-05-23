@@ -6,7 +6,7 @@
                 <div class="input-wrap">
                     <div>
                         <!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-                        <input type="search" :value="keyword" v-model="keyword" lazy class=""></input>
+                        <input id="search" type="search" :value="keyword" v-model="keyword" lazy class=""></input>
                     </div>
                 </div>
             </form>
@@ -22,12 +22,10 @@
 <script type="text/javascript">
 import {
     Toast,
-    Indicator
+    Indicator,
+    Lazyload
 } from 'mint-ui'
 import Vue from 'vue';
-import {
-    Lazyload
-} from 'mint-ui';
 import Request from "../util/API";
 import customerlIst from '../components/customerManagement.vue';
 import nosearch from '../components/nosearch.vue'
@@ -61,21 +59,24 @@ export default {
                 },
                 picno: this.$route.query.picno,
                 isLoad: false,
-                flag:false
+                flag: false
             }
         },
         components: {
             customerlIst,
             nosearch
         },
-        mounted: function() {
-           
+        mounted() {
+            this.$nextTick(() => {
+                document.getElementById("search").focus()
+            })
         },
-        methods:{
+        methods: {
             submit() {
-                this.page.pageno='1'
+                this.page.pageno = '1'
                 this.listDate = []
                 this.ajax();
+                document.getElementById("search").blur()
             },
             ajax() {
                 Indicator.open();
@@ -89,7 +90,7 @@ export default {
                 Request.post(pargrm).then((res) => {
                     Indicator.close();
                     const getData = JSON.parse(res.data.result)
-                    if (getData.code == '8'&&this.page.pageno=='1') {
+                    if (getData.code == '8' && this.page.pageno == '1') {
                         this.codpng = true
                         this.codpng2 = false
                     } else {
@@ -97,12 +98,12 @@ export default {
                         this.codpng2 = true
                     }
                     this.isLoad = true
-                    console.log(getData.data.shopslist)
+                        // console.log(getData.data.shopslist)
                     getData.data.shopslist.forEach(value => {
                         this.listDate.push(value)
                     })
                     this.requestMenus();
-                    if (this.listDate.length == getData.pagination.totalcount && this.listDate.length>20) {
+                    if (this.listDate.length == getData.pagination.totalcount && this.listDate.length > 20) {
                         Toast({
                             message: '已经是最后一页啦',
                             duration: 2000
@@ -139,7 +140,7 @@ export default {
                     }
                     len--;
                 }
-                console.log(arr);
+                // console.log(arr);
                 return arr;
             },
             requestMenus() {
@@ -152,7 +153,7 @@ export default {
                 Request.post(pargrmList).then(res => {
                     const getData = JSON.parse(res.data.result);
                     if (parseInt(getData.code) != 200) {
-                        console.log(getData.msg);
+                        // console.log(getData.msg);
                         Toast({
                             message: getData.msg,
                             duration: 2000
@@ -188,7 +189,7 @@ export default {
                         } else if (temp1.url == 'baifang') {
                             temp1.imgSrc = require('../assets/icon56.png');
                         }
-                        console.log(this.menuList);
+                        // console.log(this.menuList);
                     }
                 }).catch(error => {
 
@@ -235,7 +236,7 @@ export default {
 .heards .input-wrap {
     border: 0;
     float: left;
-        width: 73.06%;
+    width: 73.06%;
 }
 
 .heards .input-wrap div {}
@@ -253,7 +254,7 @@ export default {
 
 .heards .input-wrap div {
     float: left;
-	width: 100%;
+    width: 100%;
     height: 62px;
     background-color: #EBECF0;
     margin-top: 11px;
