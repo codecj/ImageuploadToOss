@@ -103,7 +103,7 @@
       submit() {
         this.page.pageno=0;
         this.ajax();
-      }
+      },
       ajax() {
         Indicator.open();
         this.prodList=[];
