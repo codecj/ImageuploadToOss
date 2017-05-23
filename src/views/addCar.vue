@@ -244,7 +244,6 @@ export default {
                         this.$set(this, 'isHide', false)
                     }
                     this.activeData = activeData.data
-                    // console.log(activeData.data)
                 }).catch(error => {
                     Indicator.close();
                     if (error.response) {
@@ -272,8 +271,6 @@ export default {
             },
             // 规格点击的一系列操作
             changGet(item) {
-                // console.log(item)
-                console.log(this.defalutRule)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
@@ -287,8 +284,6 @@ export default {
                 })
                 let select_ids = this._getSelAttrId();
                 let all_ids = this.filterAttrs(select_ids);
-                let has =[]
-                let notYet =[]
                 if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
                         if (select_ids.sort().join('-') == items.specValueIdList.sort().join('-')) {
@@ -300,13 +295,15 @@ export default {
                 }
                 for(var i=0;i<this.defalutRule.length;i++){
                     if (this.defalutRule[i].isChose) {
+                        let has =[]
                         has.push(this.defalutRule[i])
+                        this.update_2(has)
                     }else{
+                        let notYet =[]
                         notYet.push(this.defalutRule[i])
+                        this.set_block(notYet, all_ids);                        
                     }
                 }
-                this.set_block(notYet, all_ids);
-                this.update_2(has)
             },
             //已选择的节点数组
             _getSelAttrId() {
@@ -374,7 +371,15 @@ export default {
             // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
             update_2($goods_attr) {
                 let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, this.thisId);
+                let $li='';
+                $goods_attr.forEach((items) => {
+                    items.specValueList.forEach((index) => {
+                        if(index.isAct){
+                            $li=index.SPEC_VALUE_ID
+                        }
+                    })
+                })
+                let select_ids2 = this.del_array_val(select_ids, $li);
                 let all_ids = this.filterAttrs(select_ids2);
                 this.set_block($goods_attr, all_ids);
             },
@@ -385,9 +390,7 @@ export default {
                         if (this.in_array(index.SPEC_VALUE_ID, all_ids)) {
                             this.$set(index, 'not_allow', false)
                         } else {
-                            if(!items.isChose){
-                                this.$set(index, 'not_allow', true)
-                            }
+                            this.$set(index, 'not_allow', true)
                         }
                     })
                 });
