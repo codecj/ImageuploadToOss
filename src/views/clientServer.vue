@@ -124,6 +124,14 @@ export default {
                 responseCallback(data);
             });
         })
+        Request.jsBbridge(bridge => {
+            bridge.registerHandler("buttonjs",(data,responseCallback)=>{
+                this.page.pageno=1
+                // alert(this.page.pageno)
+                // responseCallback("button js callback");
+                this.ajax()
+            });
+        })
     },
     methods: {
         overHide(isHide) {
@@ -291,7 +299,7 @@ export default {
                     } else if (temp.url == 'chexiao') {
                         temp.imgSrc = require('../assets/icon50.png');
                     } else if (temp.url == 'baifang') {
-                        temp.imgSrc = require('../assets/icon50.png');
+                        temp.imgSrc = require('../assets/icon56.png');
                     }
                     var temp1 = this.menuList[1];
                     if (temp1.url == 'xiadan') {
@@ -299,7 +307,7 @@ export default {
                     } else if (temp1.url == 'chexiao') {
                         temp1.imgSrc = require('../assets/icon50.png');
                     } else if (temp1.url == 'baifang') {
-                        temp1.imgSrc = require('../assets/icon50.png');
+                        temp1.imgSrc = require('../assets/icon56.png');
                     }
                     console.log(this.menuList);
                 }
@@ -355,7 +363,7 @@ export default {
                     'advDetail',{'advResult':this.advResult}
                 )
             })
-        }　　
+        }　
     }
 }
 </script>

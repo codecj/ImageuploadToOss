@@ -100,7 +100,6 @@
           		})
 			},
 			jumpToNativeCommission(){ // 跳转到结算佣金的详情
-				alert(1);
 				Request.jsBbridge(bridge=>{
 					bridge.callHandler(
 						'jumpToCommissionDetail'

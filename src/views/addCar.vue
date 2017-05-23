@@ -104,7 +104,7 @@ export default {
         mounted: function() {
             // this.stkc=this.$route.query.stkc
             this.detailMsg()
-            this.activeMsg()
+            // this.activeMsg()
             Indicator.open()
         },
         methods: {
@@ -271,9 +271,11 @@ export default {
             // 规格点击的一系列操作
             changGet(item) {
                 // console.log(item)
+                console.log(this.defalutRule)
                 if(item.not_allow) return
                 this.thisId=item.SPEC_VALUE_ID
                 item.isAct ? this.$set(item, 'isAct', false) : this.$set(item, 'isAct', true);
+                this.$forceUpdate()
                 this.defalutRule.forEach((index) => {
                     if(item.SPEC_NAME==index.specName){
                         index.specValueList.forEach(items => {
@@ -281,8 +283,11 @@ export default {
                         })
                     }
                 })
-                this.$forceUpdate()
                 let select_ids = this._getSelAttrId();
+                let all_ids = this.filterAttrs(select_ids);
+                let has =[]
+                let notYet =[]
+                // select_ids.push(item.SPEC_VALUE_ID)
                 if (this.defalutRule.length == select_ids.length) {
                     this.skuDate.stkSpecGroupList.forEach((items) => {
                         if (select_ids.sort().join('-') == items.specValueIdList.sort().join('-')) {
@@ -292,18 +297,22 @@ export default {
                     });
                     this.activeMsg()
                 }
-                let all_ids = this.filterAttrs(select_ids);
-                let has =[]
-                let notYet =[]
-                this.defalutRule.forEach((items) => {
-                    if (items.isChose) {
-                        has.push(items)
+                // this.defalutRule.forEach((items) => {
+                //     if (items.isChose) {
+                //         has.push(items)
+                //     }else{
+                //         notYet.push(items)
+                //     }
+                // });
+                for(var i=0;i<this.defalutRule.length;i++){
+                    if (this.defalutRule[i].isChose) {
+                        has.push(this.defalutRule[i])
                     }else{
-                        notYet.push(items)
+                        notYet.push(this.defalutRule[i])
                     }
-                });
-                this.update_2(has)
+                }
                 this.set_block(notYet, all_ids);
+                this.update_2(has)
             },
             //已选择的节点数组
             _getSelAttrId() {
@@ -338,13 +347,6 @@ export default {
                 });
                 return result;
             },
-            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
-            update_2($goods_attr) {
-                let select_ids = this._getSelAttrId();
-                let select_ids2 = this.del_array_val(select_ids, this.thisId);
-                let all_ids = this.filterAttrs(select_ids2);
-                this.set_block($goods_attr, all_ids);
-            },
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
                 let delArr = [];
@@ -374,17 +376,21 @@ export default {
                 }
                 return false;
             },
+            // 若该属性值是未选中状态的话，设置同级的其他属性是否可选
+            update_2($goods_attr) {
+                let select_ids = this._getSelAttrId();
+                let select_ids2 = this.del_array_val(select_ids, this.thisId);
+                let all_ids = this.filterAttrs(select_ids2);
+                this.set_block($goods_attr, all_ids);
+            },
             //根据 $goods_attr下的所有数据是否在可选数据中（all_ids） 来设置可选状态
             set_block($goods_attr, all_ids) {
                 $goods_attr.forEach((items) => {
                     items.specValueList.forEach((index) => {
-                        if (!this.in_array(index.SPEC_VALUE_ID, all_ids)) {
-                            // index.not_allow = true
-                            this.$set(index, 'not_allow', true)
-                        } else {
-                            // index.not_allow = false
-                            // this.$set(items, 'isChose', true)
+                        if (this.in_array(index.SPEC_VALUE_ID, all_ids)) {
                             this.$set(index, 'not_allow', false)
+                        } else {
+                            this.$set(index, 'not_allow', true)
                         }
                     })
                 });

@@ -109,7 +109,7 @@ export default {
 }
 
 .wrap .list {
-    display: flex;
+    display: -webkit-flex;
     width: 100%;
     border-bottom: 0.026667rem solid #F1F2F7;
 }
