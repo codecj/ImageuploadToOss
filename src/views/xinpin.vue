@@ -10,7 +10,6 @@
         </div>
       </div>
       <div class="over">
-        <shopcart></shopcart>
         <p>
           <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
         </p>     
@@ -22,7 +21,6 @@
 <script type="text/javascript">
   import Vue from 'vue'
   import getbottom from "../components/getbottom.vue"
-  import shopcart from "../components/shopcart.vue"
   import oneprod from "../components/oneProd.vue"
   import Request from "../util/API"
   import { Lazyload } from 'mint-ui'
@@ -57,7 +55,7 @@
         }
     },
     components: {
-      getbottom,shopcart,oneprod
+      getbottom,oneprod
     },
     methods:{
         ajax() {
@@ -148,7 +146,6 @@
   height:112px;
   display: inline-block;
   float:right;
-  margin-right:100px;
   text-align: center;
 }
 .over img {

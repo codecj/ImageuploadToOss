@@ -68,6 +68,10 @@
           vendorusername:this.$route.query.vendorusername,
           vendorcode:this.$route.query.vendorcode,
           userno:this.$route.query.userno,
+          catidl3list:this.$route.query.catidl3list,
+          catidl2 :this.$route.query.catidl2,
+          // atp :this.$route.query.atp,
+          brandclist :this.$route.query.brandclist,
           keyword:""
         },
         change:[
@@ -99,7 +103,6 @@
       ajax() {
         Indicator.open();
         this.prodList=[];
-
         const pargrmList = {
           pagination: JSON.stringify(this.page),
           oper: 'getWqSearchApp',
