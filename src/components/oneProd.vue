@@ -1,7 +1,7 @@
 <template>
   <div id="oneProd">
    <!-- 每个产品 --> 
-      <div class="searchItem" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
+      <div class="searchItem borderBottom" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
         <div class="onephoto">
           <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
         </div>
@@ -76,16 +76,18 @@
 .changeItem .searchItem{
   height:198px;
   width:100%;
-  border-top:2px solid #F1F2F7;
+  /*border-top:2px solid #F1F2F7;*/
   background:#fff;
   padding:50px 40px 50px 32px;
 
 }
+.changeItem .searchItem .onephoto {
+  float:left;
 
+}
 .changeItem .searchItem .onephoto .photo{
   width:200px;
   height:200px;
-  float:left;
 }
 .changeItem .searchItem>p:nth-child(2){
   width:60%;
@@ -127,10 +129,13 @@
   font-size: 18px;
   color: #FF783C;
   letter-spacing: 0;
-  /*border: 1px solid #FF783C;*/
   border-radius: 2px;
   display:inline-block;
-  padding:1px 10px 1px 10px;
+  height:32px;
+  line-height:32px;
+  width:110px;
+  text-align: center;
+  margin-bottom:5px;
   margin-right:10px;
 }
 .changeItem .searchItem>p:nth-child(5){
