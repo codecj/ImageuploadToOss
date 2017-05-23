@@ -1,22 +1,22 @@
 <template> 
     <div id="settledCommission"> 
         <ul> 
-            <li v-for="item in dataArray" :key="item.STK_C">
-                 <div class="header"> 
-                    <h3>{{item.CUST_NAME}}</h3> 
+            <li v-for="(item,index) in dataArray" :key="item.STK_C">
+                 <div class="header borderBottom"> 
+                    <h3>{{item.shopName}}</h3> 
                  </div> 
-                 <div class="content">
-                    <img :src="item.PRODUCT_THUMBNAIL" alt="" class="goodsImg">
-                    <h4 class="goodsName">{{item.STK_NAME}}</h4>
-                    <span class="specification">规格：{{item.UOM}}</span>
-                    <span class="price">￥{{item.price | float2bits}}</span>
+                 <div class="content borderBottom" v-for="goods in item.orders">
+                    <img :src="goods.PRODUCT_THUMBNAIL" alt="" class="goodsImg">
+                    <h4 class="goodsName">{{goods.STK_NAME}}</h4>
+                    <span class="specification">规格：{{goods.UOM}}</span>
+                    <span class="price">￥{{goods.price | float2bits}}</span>
                     <span class="praise">奖</span>
-                    <span class="praisePrice">￥{{item.praisePrice | float2bits}}</span>
-                    <span class="goodsCount">x{{item.UOM_QTY }}</span>
+                    <span class="praisePrice">￥{{goods.praisePrice | float2bits}}</span>
+                    <span class="goodsCount">x{{goods.UOM_QTY }}</span>
                  </div>
-                <div class="footer">
+                 <div class="footer">
                     <span :class="{commissionStatusGrey:grey,commissionStatusOrange:orange}">{{item.STATUS}}</span>
-                    <span class="commissionPrice">￥{{item.allCommissionPrice}}</span>
+                    <span class="commissionPrice">￥{{item.allCommission | float2bits}}</span>
                     <span class="praise">奖</span>
                 </div>
              </li>
@@ -75,23 +75,41 @@ export default {
                 // testJson -> 换成 response
                 Indicator.close();
                 this.dataArray = JSON.parse(response.data.result).data;
-                // this.dataArray = testJson.data;
                 for (var i = 0; i < this.dataArray.length; i++) {
                     var obj = this.dataArray[i];
-
-                    obj.price = obj.NET_PRICE;
-                    obj.praisePrice = obj.REAL_COMMISSION_PRICE;
-                    obj.allCommissionPrice = obj.COMMISSION_PRICE;
-
-                    console.log(obj.STATUS);
+                    for(var j = 0; j < obj.orders.length; j++) {
+                        var item = obj.orders[j];
+                        item.price = item.NET_PRICE;
+                        item.praisePrice = item.REAL_COMMISSION_PRICE;
+                        item.allCommissionPrice = item.COMMISSION_PRICE;
+                    }
                     if (obj.STATUS === '' || obj.STATUS === undefined) {
                         obj.STATUS = '已结算';
                     }
-
                 }
+
             }
-            ).catch(function(error) {
+            ).catch((error)=>{
                 Indicator.close();
+
+                // 测试数据
+                // this.dataArray = testJson.data;
+                // console.log(this.dataArray);
+
+                // for (var i = 0; i < this.dataArray.length; i++) {
+                //     var obj = this.dataArray[i];
+                //     for(var j = 0; j < obj.orders.length; j++) {
+                //         var item = obj.orders[j];
+                //         item.price = item.NET_PRICE;
+                //         item.praisePrice = item.REAL_COMMISSION_PRICE;
+                //         item.allCommissionPrice = item.COMMISSION_PRICE;
+                //     }
+                //     if (obj.STATUS === '' || obj.STATUS === undefined) {
+                //         obj.STATUS = '已结算';
+                //     }
+                // }
+
+                
             }
             )
         }
@@ -105,7 +123,6 @@ export default {
 #settledCommission li {
     background-color: #fff;
     width: 750px;
-    height: 528px;
     border-top: 24px solid rgb(239, 240, 246);
 }
 
@@ -113,7 +130,6 @@ export default {
     width: 750px;
     height: 114px;
     position: relative;
-    border-bottom: 1px solid #F1F2F7;
 }
 
 #settledCommission .header h3 {
@@ -132,7 +148,6 @@ export default {
     height: 298px;
     width: 750px;
     position: relative;
-    border-bottom: 2px solid #F1F2F7;
 }
 
 #settledCommission .content .goodsImg {
