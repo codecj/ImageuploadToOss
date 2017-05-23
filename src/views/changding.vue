@@ -81,7 +81,7 @@ export default ({
 
                 })
 
-                if (this.prodList.length == getData.pagination.totalcount) {
+                if (this.prodList.length == getData.pagination.totalcount  && this.prodList.length>20) {
                     this.load=true;
                     this.show = true;
                     Indicator.close();
