@@ -5,33 +5,35 @@
         <div class="onephoto">
           <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
         </div>
-        
-        <p>{{item.NAME}}</p>
-        <p>规格：{{item.MODLE}}</p>
-        <p>
-            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
-            单品打折
-            </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'" class="border">
-            单品满赠
-            </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'" class="border">
-            套装
-            </span>
-             <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'" class="border">
-            抢购商品
-            </span>
-            <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'" class="border">
-            混搭满赠
-            </span>
-        </p>
-        <p>
-          <span>￥{{item.NET_PRICE}}</span>
-          <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
-          <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
-          <img src="../assets/icon43.png" alt="" class="gocart" v-if="item.ATP_QTY==0" :class="{'cartShow':cartShow}">
-           <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0" :class="{'cartShow':!cartShow}">
-        </p>
+        <div class="prodDetail">
+              <p>{{item.NAME}}</p>
+              <p>规格：{{item.MODLE}}</p>
+              <p>
+                  <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
+                  单品打折
+                  </span>
+                   <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMB'" class="border">
+                  单品满赠
+                  </span>
+                   <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMC'" class="border">
+                  套装
+                  </span>
+                   <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMD'" class="border">
+                  抢购商品
+                  </span>
+                  <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROME'" class="border">
+                  混搭满赠
+                  </span>
+              </p>
+              <p>
+                <span>￥{{item.NET_PRICE}}</span>
+                <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
+                <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
+                 <img src="../assets/icon43.png" alt="" class="gocart" v-if="item.ATP_QTY==0" :class="{'cartShow':cartShow}">
+                 <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0" :class="{'cartShow':!cartShow}">
+              </p>
+        </div>
+
     </div>
   </div>    
 </template>
@@ -89,8 +91,12 @@
   width:200px;
   height:200px;
 }
-.changeItem .searchItem>p:nth-child(2){
-  width:60%;
+.prodDetail{
+  width:65%;
+  float:left;
+}
+.changeItem .searchItem .prodDetail>p:nth-child(1){
+  width:80%;
   height:80px;
   float:left;
   font-size: 30px;
@@ -107,24 +113,24 @@
   -webkit-line-clamp: 2; 
 
 }
-.changeItem .searchItem>p:nth-child(3){
+.changeItem .searchItem .prodDetail>p:nth-child(2){
   font-size: 26px;
-  width:60%;
+  width:80%;
   color: #9DA2B5;
   letter-spacing: 0;
   float:left;
   width:450px;
   margin-left:28px;
 }
-.changeItem .searchItem>p:nth-child(4){
-  width:60%;
+.changeItem .searchItem .prodDetail>p:nth-child(3){
+  width:80%;
   height:40px;
-  float:left;
+  /*float:left;*/
   margin-top:8px;
   margin-left:32px;
   overflow: hidden;
 }
-.changeItem .searchItem>p:nth-child(4) span{
+.changeItem .searchItem .prodDetail>p:nth-child(3) span{
   float:left;
   font-size: 18px;
   color: #FF783C;
@@ -135,24 +141,23 @@
   line-height:32px;
   width:110px;
   text-align: center;
-  margin-bottom:5px;
-  margin-right:10px;
+  margin:3px 5px 3px 0;
 }
-.changeItem .searchItem>p:nth-child(5){
+.changeItem .searchItem .prodDetail>p:nth-child(4){
   margin-top:4px;
   height:44px;
   line-height:44px;
-  width:60%;
-  float:left;
+  /*width:60%;*/
+  /*float:left;*/
   margin-left:28px;
   position: relative;
 }
-.changeItem .searchItem>p:nth-child(5) span:nth-child(1){
+.changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(1){
   font-size: 30px;
   color: #FF783C;
   letter-spacing: 0;
 }
-.changeItem .searchItem>p:nth-child(5) span:nth-child(2){
+.changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(2){
   font-size: 18px;
   color: #FFFFFF;
   letter-spacing: 0;
@@ -164,7 +169,7 @@
   display: inline-block;
 
 }
-.changeItem .searchItem>p:nth-child(5) span:nth-child(3){
+.changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(3){
   font-size: 22px;
   color: #FF783C;
   letter-spacing: 0;
@@ -205,7 +210,7 @@
   height:367px;
 }
 
-.content .searchItem>p:nth-child(2){
+.content .searchItem .prodDetail>p:nth-child(1){
   width:330px;
   height:80px;
   font-size: 30px;
@@ -220,14 +225,14 @@
   -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
   -webkit-line-clamp: 2; /** 显示的行数 **/
 }
-.content .searchItem>p:nth-child(3){
+.content .searchItem .prodDetail>p:nth-child(2){
   font-size: 22px;
   color: #9DA2B5;
   letter-spacing: 0;
   height:30px;
   margin:16px 0 10px 23px;
 }
-.content .searchItem>p:nth-child(5) span:nth-child(2){
+.content .searchItem .prodDetail>p:nth-child(4) span:nth-child(2){
     font-size: 18px;
     color: #FFFFFF;
     letter-spacing: 0;
@@ -241,10 +246,10 @@
     display:inline-block;
     margin-right:0;
 }
-.content .searchItem>p:nth-child(5) span:nth-child(3){
+.content .searchItem .prodDetail>p:nth-child(4) span:nth-child(3){
     margin-left:0;
 }
-.content .searchItem>p:nth-child(4){
+.content .searchItem .prodDetail>p:nth-child(3){
   height:48px;
   padding-top:10px;
   opacity: 0.9;
@@ -255,7 +260,7 @@
   width:357px;
 
 }
-.content .searchItem>p:nth-child(4) span{
+.content .searchItem .prodDetail>p:nth-child(3) span{
   font-size: 18px;
   color: #FF783C;
   letter-spacing: 0;
@@ -263,11 +268,11 @@
   display:inline-block;
   padding:1px 6px 1px 6px;
 }
-.content .searchItem>p:nth-child(5){
+.content .searchItem .prodDetail>p:nth-child(4){
   margin-top:20px;
   position: relative;
 }
-.content .searchItem>p:nth-child(5) span{
+.content .searchItem .prodDetail>p:nth-child(4) span{
   font-size: 30px;
   color: #FF783C;
   letter-spacing: 0;
@@ -278,7 +283,7 @@
   height:80px;
   float:right;
   margin-right:24px;
-   position: absolute;
+  position: absolute;
   right:0;
   bottom:-8px;
 }
