@@ -15,7 +15,6 @@
     "fastclick": "^1.0.6",
     "lib-flexible": "^0.3.2",
     "mint-ui": "^2.2.5",
-    "swiper": "^3.4.2",
     "vue": "^2.2.1",
     "vue-focus": "^2.1.0",
     "vue-router": "^2.4.0"
