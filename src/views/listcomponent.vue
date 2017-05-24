@@ -101,8 +101,10 @@
     },
     methods:{ 
       submit() {
-        this.page.pageno=0;
+        this.page.pageno=1;
+        this.listDate = []
         this.ajax();
+        document.getElementById("search").blur()
       },
       ajax() {
         Indicator.open();
@@ -121,7 +123,9 @@
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
-            if(this.prodList.length==getData.pagination.totalcount && this.prodList.length>20) {
+            if(this.prodList.length==getData.pagination.totalcount) {
+             // if (this.page.pageno > (getData.pagination.totalcount)/20 && this.prodList.length > 20) {
+
               this.load=true;
               this.show = true;
               Indicator.close();
