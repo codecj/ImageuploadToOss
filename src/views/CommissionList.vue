@@ -164,7 +164,7 @@ export default {
 
 #settledCommission .content .goodsName {
     position: absolute;
-    width: 450px;
+    width: 60%;
     top: 48px;
     left: 260px;
     height: 80px;
