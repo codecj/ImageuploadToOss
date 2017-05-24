@@ -165,7 +165,12 @@ export default {
             addToCar() {
                 Indicator.open();
                 let select_ids = this._getSelAttrId();
-                if (this.defalutRule.length !== select_ids.length) return
+                if (this.defalutRule.length !== select_ids.length){
+                    Toast({
+                        message: '请选择商品属性',
+                        duration: 2000
+                    });
+                }
                 let pargrmList = {
                     oper: 'save',
                     type: 'cart',

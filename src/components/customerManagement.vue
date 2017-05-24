@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
-                <a @click="menuTouchUpInside(menu,item)" class="menu-1" v-for="(menu,index) in menuList" :style="{backgroundImage:'url('+ menu.imgSrc+')'}">{{menu.name}}</a>
+                <a @click="menuTouchUpInside(menu,item)" class="menu-1 borderRight" v-for="(menu,index) in menuList" :style="{backgroundImage:'url('+ menu.imgSrc+')'}">{{menu.name}}</a>
                <!--  <a class="menu-1">下单</a>
                 <a class="menu-2">车销</a>
                 <a class="menu-3" @click="telbox(item)">联系</a>
@@ -219,10 +219,7 @@ export default {
     -webkit-box-sizing: border-box;
 }
 
-.wrap .list-menu a:nth-child(2) {
-    border-right: 2px solid rgba(255, 255, 255, 0.5);
-    border-left: 2px solid rgba(255, 255, 255, 0.5);
-}
+
 
 .list-menu .menu-1 {
     /*background: url(../assets/icon49.png) no-repeat;*/
@@ -231,8 +228,8 @@ export default {
     background-repeat: no-repeat;
 }
 
-.wrap .list-menu a:nth-child(3) {
-    border-right: 2px solid rgba(255, 255, 255, 0.5)
+.wrap .list-menu a:nth-child(4) {
+  border: none;
 }
 
 .wrap-popup {
