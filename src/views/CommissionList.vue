@@ -74,14 +74,14 @@ export default {
                 // testJson -> 换成 response
                 Indicator.close();
                 this.dataArray = JSON.parse(response.data.result).data;
+                console.log(response);
                 console.log(this.dataArray);
                 for (var i = 0; i < this.dataArray.length; i++) {
                     var obj = this.dataArray[i];
                     for(var j = 0; j < obj.ORDERS.length; j++) {
                         var item = obj.ORDERS[j];
                         item.price = item.NET_PRICE;
-                        item.praisePrice = item.REAL_COMMISSION_PRICE;
-                        item.allCommissionPrice = item.COMMISSION_PRICE;
+                        item.praisePrice = item.REAL_COMMISSION_PRICE / item.UOM_QTY;
                     }
                     if (obj.STATUS === '' || obj.STATUS === undefined) {
                         obj.STATUS = '已结算';
@@ -91,7 +91,10 @@ export default {
             }
             ).catch((error)=>{
                 Indicator.close();
-
+                Toast({
+                            message: error.response.status,
+                            duration: 2000
+                        });
                 // 测试数据
                 // this.dataArray = testJson.data;
                 // console.log(this.dataArray);
