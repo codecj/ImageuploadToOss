@@ -170,6 +170,7 @@ export default {
                         message: '请选择商品属性',
                         duration: 2000
                     });
+                    return
                 }
                 let pargrmList = {
                     oper: 'save',
