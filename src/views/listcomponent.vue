@@ -102,13 +102,13 @@
     methods:{ 
       submit() {
         this.page.pageno=1;
-        this.listDate = []
+        this.prodList = [];
         this.ajax();
-        document.getElementById("search").blur()
+        document.getElementById("search").blur();
       },
       ajax() {
         Indicator.open();
-        this.prodList=[];
+        // this.prodList=[];
         const pargrmList = {
           pagination: JSON.stringify(this.page),
           oper: 'getWqSearchApp',
@@ -123,7 +123,7 @@
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
-            if(this.prodList.length==getData.pagination.totalcount) {
+            if(this.prodList.length==getData.pagination.totalcount&& this.prodList.length >20) {
              // if (this.page.pageno > (getData.pagination.totalcount)/20 && this.prodList.length > 20) {
 
               this.load=true;
