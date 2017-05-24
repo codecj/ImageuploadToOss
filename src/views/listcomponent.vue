@@ -3,7 +3,7 @@
     <header>
       <div id="backClick" @click="backClick"><img src="../assets/icon10.png" alt=""/></div>
       <form action="" @submit.prevent="submit">
-         <input type="search" placeholder="请输入关键字搜索商品" :value="pagram.keyword" v-model="pagram.keyword">
+         <input type="search" placeholder="请输入关键字搜索商品" :value="pagram.keyword" v-model="pagram.keyword" id="search">
       </form>
       <div @click="changeList" :class="{'statusactive':status,'statusleft':!status}"></div>
     </header>

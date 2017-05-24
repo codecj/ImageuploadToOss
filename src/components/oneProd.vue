@@ -29,8 +29,8 @@
                 <span>￥{{item.NET_PRICE}}</span>
                 <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
                 <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
-                 <img src="../assets/icon43.png" alt="" class="gocart" v-if="item.ATP_QTY==0" :class="{'cartShow':cartShow}">
-                 <img src="../assets/icon43.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0" :class="{'cartShow':!cartShow}">
+                 <img src="../assets/icon2.png" alt="" class="gocart" v-if="item.ATP_QTY==0">
+                 <img src="../assets/icon57.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0">
               </p>
         </div>
 
@@ -178,8 +178,8 @@
 
 }
 .changeItem .searchItem .gocart{
-  width:80px;
-  height:80px;
+  width:60px;
+  height:60px;
   position: absolute;
   right:0;
   bottom:-8px;
@@ -288,14 +288,6 @@
   position: absolute;
   right:0;
   bottom:-8px;
-}
-.cartShow{
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);   
-    filter: grayscale(100%);
-    filter: gray;
 }
 
 
