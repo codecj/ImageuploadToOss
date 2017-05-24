@@ -116,6 +116,7 @@ export default {
 
 .wrap .list .list-left {
     display: inline-block;
+    float: left;
     padding: 41px 21px 43px 32px;
     width: 18.6666%;
     height: 18.6666%;
@@ -130,6 +131,7 @@ export default {
 
 .wrap .list .list-mid {
 	display: inline-block;
+	float: left;
 	width: 52%;
     overflow: hidden;
 	margin: 4px 0 6px 0;
@@ -206,7 +208,6 @@ export default {
     height: 96px;
 }
 .wrap .list-menu a {
-	display: inline-block;
     color: #fff;
     text-align: center;
     width: 25%;
