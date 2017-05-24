@@ -119,11 +119,13 @@ export default {
     padding: 41px 21px 43px 32px;
     width: 18.6666%;
     height: 18.6666%;
+	overflow: hidden;
 }
 
 .wrap .list .list-left img {
     width: 100%;
     height: 100%;
+
 }
 
 .wrap .list .list-mid {
