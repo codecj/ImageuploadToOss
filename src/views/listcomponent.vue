@@ -170,7 +170,7 @@
           }
           console.log(this.price)
         }else{
-          if (this.show == true) {
+          if (this.price == true) {
             this.page.orderby = "BS";
 
           }else{
