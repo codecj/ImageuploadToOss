@@ -152,7 +152,6 @@
         this.listStatus=!this.listStatus
       },
       changeSort(item,index) {
-
         this.price=!this.price;
         this.$nextTick(function () {
           let that=this;
@@ -163,16 +162,20 @@
         })
         this.prodList=[];
         if (index == 0) {
-          if (item.show == true) {
+          if (this.price == true) {
             this.page.orderby = "AS";
+
           }else{
             this.page.orderby = "AA";
           }
+          console.log(this.price)
         }else{
-          if (item.show == true) {
+          if (this.show == true) {
             this.page.orderby = "BS";
+
           }else{
             this.page.orderby = "BA";
+
           }
         }
         this.ajax()

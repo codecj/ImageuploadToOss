@@ -138,7 +138,9 @@
   border-radius: 2px;
   display:inline-block;
   height:32px;
-  line-height:32px;
+  line-height:34px;
+/*  display:inline-block;
+  padding:0 10px;*/
   width:110px;
   text-align: center;
   margin:3px 5px 3px 0;
