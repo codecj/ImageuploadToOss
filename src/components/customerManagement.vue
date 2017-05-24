@@ -127,6 +127,7 @@ export default {
 }
 
 .wrap .list .list-mid {
+	display: inline-block;
 	width: 52%;
     overflow: hidden;
 	margin: 4px 0 6px 0;
@@ -211,7 +212,8 @@ export default {
     height: 64px;
     line-height: 76px;
     margin-top: 15px;
-    padding-left: 44px
+    padding-left: 44px;
+    box-sizing: border-box;
 }
 
 .wrap .list-menu a:nth-child(2) {
