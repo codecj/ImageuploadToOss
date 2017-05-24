@@ -29,8 +29,8 @@
                 <span>￥{{item.NET_PRICE}}</span>
                 <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
                 <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
-                 <img src="../assets/icon2.png" alt="" class="gocart" v-if="item.ATP_QTY==0">
-                 <img src="../assets/icon57.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0">
+                 <img src="../assets/icon57.png" alt="" class="gocart" v-if="item.ATP_QTY==0">
+                 <img src="../assets/icon2.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0">
               </p>
         </div>
 
