@@ -118,8 +118,8 @@ export default {
     display: inline-block;
     float: left;
     padding: 41px 21px 43px 32px;
-    width: 18.6666%;
-    height: 18.6666%;
+    width: 140px;
+    height: 140px;
 	overflow: hidden;
 }
 
@@ -156,7 +156,6 @@ export default {
 
 .wrap .list .list-mid .list-map {
 	width: 100%;
-	
     line-height: 50px;
     font-size: 26px;
     color: #9DA2B5;
@@ -170,7 +169,6 @@ export default {
     font-size: 26px;
     color: #9DA2B5;
 	width: 100%;
-    
 }
 
 .wrap .list .list-mid .list-map img {
@@ -208,6 +206,7 @@ export default {
     height: 96px;
 }
 .wrap .list-menu a {
+	display: inline-block;
     color: #fff;
     text-align: center;
     width: 25%;
@@ -217,6 +216,7 @@ export default {
     margin-top: 15px;
     padding-left: 44px;
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .wrap .list-menu a:nth-child(2) {
