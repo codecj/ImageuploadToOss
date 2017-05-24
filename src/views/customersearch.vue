@@ -103,7 +103,7 @@ export default {
                         this.listDate.push(value)
                     })
                     this.requestMenus();
-                    if (this.listDate.length == getData.pagination.totalcount && this.listDate.length > 20) {
+                    if (this.page.pageno > (getData.pagination.totalcount)/20 && this.listDate.length > 20) {
                         Toast({
                             message: '已经是最后一页啦',
                             duration: 2000
