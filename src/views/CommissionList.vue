@@ -125,12 +125,12 @@ export default {
 
 #settledCommission li {
     background-color: #fff;
-    width: 750px;
+    width: 100%;
     border-top: 24px solid rgb(239, 240, 246);
 }
 
 #settledCommission .header {
-    width: 750px;
+    width: 100%;
     height: 114px;
     position: relative;
 }
@@ -149,7 +149,7 @@ export default {
 
 #settledCommission .content {
     height: 298px;
-    width: 750px;
+    width: 100%;
     position: relative;
 }
 
@@ -228,7 +228,7 @@ export default {
 #settledCommission .footer {
     position: relative;
     height: 112px;
-    width: 750px;
+    width: 100%;
 }
 
 #settledCommission .footer .commissionStatusGrey {
