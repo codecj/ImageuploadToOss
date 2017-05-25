@@ -348,7 +348,7 @@ export default {
             //去除 数组 arr中的 val ，返回一个新数组
             del_array_val(arr, val) {
                 let delArr = [];
-                for (var k in arr) {
+                for (let k in arr) {
                     if (arr[k] != val) {
                         delArr.push(arr[k]);
                     }
@@ -358,8 +358,8 @@ export default {
             //获取 经过已选节点 所有线路上的全部节点
             //根据已经选择得属性值，得到余下还能选择的属性值
             filterAttrs(ids) {
-                var products = this.filterProduct(ids);
-                var result = [];
+                let products = this.filterProduct(ids);
+                let result = [];
                 products.map(function(v, k) {
                     result = result.concat(v['goodsId'].split('|'));
                 });
@@ -367,7 +367,7 @@ export default {
             },
             //数组内元素查找元素
             in_array(search, array) {
-                for (var i in array) {
+                for (let i in array) {
                     if (array[i] == search) {
                         return true;
                     }

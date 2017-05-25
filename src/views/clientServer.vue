@@ -28,10 +28,10 @@
                 确定
             </div>
         </div>
-        <div v-show="!userFliter" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
+        <mt-loadmore v-show="!userFliter" :top-method="loadTop" ref="loadmore" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
             <customerlIst @listSay="overHide" :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom>
-        </div>
+        </mt-loadmore>
     </div>
 </template>
 <script type="text/javascript">
@@ -40,7 +40,8 @@ import Vue from 'vue'
 import {
     Toast,
     Indicator,
-    Lazyload
+    Lazyload,
+    Loadmore
 } from 'mint-ui'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
@@ -362,6 +363,13 @@ export default {
                     'advDetail',{'advResult':this.advResult}
                 )
             })
+        },
+        loadTop(){
+            console.log(1)
+            this.page.pageno='1'
+            this.listDate=[]
+            this.ajax()
+            this.$refs.loadmore.onTopLoaded();
         }　
     }
 }

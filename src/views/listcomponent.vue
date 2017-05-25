@@ -20,11 +20,11 @@
         </li> -->
       </ul>
     </div>
-    <div :class="{'changeItem':!listStatus,'content':listStatus}" style="" id="oneprods">
-      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <div style="">
+      <div id="oneprods" :class="{'changeItem':!listStatus,'content':listStatus}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
         <oneprod v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod> 
+        <getbottom v-show="show"></getbottom> 
       </div>
-      <getbottom v-show="show"></getbottom>     
     </div> 
     <div class="over">
         <shopcart></shopcart>
@@ -87,11 +87,12 @@
         ] ,
         prodList:[],
         page:{
-          pageno:"0",
+          pageno:"1",
           pagesize:"20",
           orderby: "ZH",
           asc: true
-        }
+        },
+        pageSize:''
       }
     },
     components: {
@@ -119,14 +120,14 @@
         // ajax调用
             // console.log(this.pagram.keyword)
         Request.post(pargrmList).then(res=>{
-            const getData = JSON.parse(res.data.result)
+            let getData = JSON.parse(res.data.result)
+            this.pageSize = getData.pagination.totalcount
             // console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
             if(this.prodList.length==getData.pagination.totalcount&& this.prodList.length >20) {
-             // if (this.page.pageno > (getData.pagination.totalcount)/20 && this.prodList.length > 20) {
-
+            // if (this.page.pageno == (getData.pagination.totalcount)/20 && this.prodList.length > 20) {
               this.load=true;
               this.show = true;
               Indicator.close();
@@ -146,7 +147,8 @@
         })
       },
       loadMore() {
-        if(!this.load){
+        if(this.prodList.length==this.pageSize) return 
+        if(this.prodList!=''){
            this.loading = true;
            this.page.pageno=parseInt(this.page.pageno)+1;
            this.ajax();
@@ -157,6 +159,8 @@
         this.listStatus=!this.listStatus
       },
       changeSort(item,index) {
+        this.page.pageno=1;
+        this.show=false
         this.price=!this.price;
         this.$nextTick(function () {
           let that=this;
@@ -187,6 +191,8 @@
        
       },
       zongHe() {
+        this.page.pageno=1;
+        this.show=false
         this.prodList=[];
         this.page.orderby = "ZH";
         this.ajax()
@@ -213,6 +219,7 @@
       }
     },
     mounted() {
+      this.ajax()
       var scroll = document.getElementById("oneprods");
       scroll.addEventListener('scroll', this.onScroll);
     }
