@@ -29,9 +29,10 @@
             </div>
         </div>
         <mt-loadmore v-show="!userFliter" :top-method="loadTop" ref="loadmore" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
-            <customerlIst @listSay="overHide" :listDate='listDate' :menuList='menuList'></customerlIst>
+            <customerlIst @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom>
         </mt-loadmore>
+        <contactMsg v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>
     </div>
 </template>
 <script type="text/javascript">
@@ -43,6 +44,7 @@ import {
     Lazyload,
     Loadmore
 } from 'mint-ui'
+import contactMsg from '../components/contactMsg.vue'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
 import utils from '../util/utils'
@@ -58,7 +60,7 @@ export default {
     name: 'clientServer',
     data() {
         return {
-            listH: '',
+            listH: false,
             gps: {
                 latitude: this.$route.query.latitude,
                 longitude: this.$route.query.longitude
@@ -103,12 +105,14 @@ export default {
             isEnd: false,
             adv: false,
             adImg: "",
-            advResult: {}
+            advResult: {},
+            phoneItem:{}
         }
     },
     components: {
         customerlIst,
-        getbottom
+        getbottom,
+        contactMsg
     },
     mounted: function() {
         this.$nextTick(() => {
@@ -134,6 +138,10 @@ export default {
         })
     },
     methods: {
+        contactMsg(data){
+            this.listH = true
+            this.phoneItem=data
+        },
         overHide(isHide) {
             this.listH = isHide
         },

@@ -73,7 +73,7 @@
             getData.data.npv.forEach(value=> {
               this.prodList.push(value)
             })
-            if(this.prodList.length==getData.pagination.totalcount && this.prodList.length>20) {
+            if(this.prodList.length==getData.pagination.totalcount) {
               this.load=true;
               this.show=true;
               Indicator.close();
@@ -93,6 +93,7 @@
         })
       },
       loadMore() {
+        if(this.prodList.length==this.pageSize) return
         if(!this.load){
           this.loading = true;
           this.page.pageno=parseInt(this.page.pageno)+1;

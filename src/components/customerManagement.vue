@@ -14,85 +14,75 @@
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
                 <a @click="menuTouchUpInside(menu,item)" class="menu-1 borderRight" v-for="(menu,index) in menuList" :style="{backgroundImage:'url('+ menu.imgSrc+')'}">{{menu.name}}</a>
-               <!--  <a class="menu-1">下单</a>
-                <a class="menu-2">车销</a>
-                <a class="menu-3" @click="telbox(item)">联系</a>
-                <a class="menu-4">更多</a> -->
-            </div>
-            <div class="wrap-popup" v-show="item.telBox">
-                <div class="content-popup">
-                    <ul>
-                        <li class="popup-names"><span>{{item.SHOP_NAME}}</span><span><img @click="telClose(item)" src="../assets/icon18.png"></span></li>
-                        <li @click="mobile(item.MOBILE)" v-if="item.MOBILE" class="popup-tel"><a href="javascript:;">{{item.MOBILE}}<img src="../assets/icon1.png"></a></li>
-                        <li @click="tel(item.TEL)" v-if="item.TEL" class="popup-tel"><a href="javascript:;">{{item.TEL}}<img src="../assets/icon1.png"></a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
 </template>
 <script type="text/javascript">
 import Request from "../util/API"
+import {
+    Toast
+} from 'mint-ui'
 export default {
     data() {
             return {
-                isHide:true,
-                activeColor: 'red'
+                // activeColor: 'red'
             }
         },
         props: {
-            listDate:Array,
-            menuList:Array
+            listDate: Array,
+            menuList: Array
         },
-        mounted: function() {
-        },
+        mounted: function() {},
         methods: {
-            telClose(item){
-                this.isHide=false
-                this.$emit('listSay',this.isHide);
-                item.telBox=!item.telBox
-            },
             tabChose(item) {
-                item.whichTab ? this.$set(item, 'whichTab', false):this.$set(item, 'whichTab', true);
-            	this.listDate.forEach(items => {
-                    if(items.SHOP_CODE!=item.SHOP_CODE ) this.$set(items, 'whichTab', false)
+                item.whichTab ? this.$set(item, 'whichTab', false) : this.$set(item, 'whichTab', true);
+                this.listDate.forEach(items => {
+                    if (items.SHOP_CODE != item.SHOP_CODE) this.$set(items, 'whichTab', false)
                 })
             },
-            menuTouchUpInside(menu,item){
-                if (menu.url=='lianxi'){
+            menuTouchUpInside(menu, item) {
+                if (menu.url == 'lianxi') {
                     this.telbox(item);
-                }else{
-                    Request.jsBbridge(bridge=> {
+                } else {
+                    Request.jsBbridge(bridge => {
                         bridge.callHandler(
-                            'menuClicked',
-                            {menu:menu,shopItem:item}
+                            'menuClicked', {
+                                menu: menu,
+                                shopItem: item
+                            }
                         )
                     })
                 }
             },
             telbox(item) {
-                this.isHide=true
-                this.$emit('listSay',this.isHide);
-                this.listDate.forEach((item) => {
-                    this.$set(item, 'telBox', false);
-                })
-                this.$set(item, 'telBox', true);
+                this.$emit('contactMsg',item);
+                if (item.MOBILE != null || item.TEL != null) {
+                    this.$set(item, 'telBox', true);
+                } else {
+                    Toast({
+                        message: '暂无联系方式',
+                        duration: 2000
+                    });
+                }
             },
-               mobile(item){
-                console.log(item,1);
-                Request.jsBbridge(bridge=> {
+            mobile(item) {
+                console.log(item, 1);
+                Request.jsBbridge(bridge => {
                     bridge.callHandler(
-                        'callPhoneClick',
-                        {item:item}
+                        'callPhoneClick', {
+                            item: item
+                        }
                     )
                 })
             },
-            tel(item){
-                console.log(item,2);
-                Request.jsBbridge(bridge=> {
+            tel(item) {
+                console.log(item, 2);
+                Request.jsBbridge(bridge => {
                     bridge.callHandler(
-                        'callPhoneClick',
-                        {item:item}
+                        'callPhoneClick', {
+                            item: item
+                        }
                     )
                 })
             }
@@ -101,9 +91,16 @@ export default {
 }
 </script>
 <style scoped>
-.shown{ display: none; }
-.showb{ display: block; }
+.shown {
+    display: none;
+}
+
+.showb {
+    display: block;
+}
+
 .wrap {
+    /*position: static;*/
     width: 100%;
     background-color: #fff
 }
@@ -120,21 +117,20 @@ export default {
     padding: 41px 21px 43px 32px;
     width: 140px;
     height: 140px;
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .wrap .list .list-left img {
     width: 100%;
     height: 100%;
-
 }
 
 .wrap .list .list-mid {
-	display: inline-block;
-	float: left;
-	width: 52%;
+    display: inline-block;
+    float: left;
+    width: 52%;
     overflow: hidden;
-	margin: 4px 0 6px 0;
+    margin: 4px 0 6px 0;
 }
 
 .wrap .list .list-mid img {
@@ -142,7 +138,7 @@ export default {
 }
 
 .wrap .list .list-mid .list-names {
-	width: 100%;
+    width: 100%;
     font-size: 30px;
     color: #3B456C;
     letter-spacing: 0;
@@ -155,7 +151,7 @@ export default {
 }
 
 .wrap .list .list-mid .list-map {
-	width: 100%;
+    width: 100%;
     line-height: 50px;
     font-size: 26px;
     color: #9DA2B5;
@@ -168,7 +164,7 @@ export default {
 .wrap .list .list-mid .list-time {
     font-size: 26px;
     color: #9DA2B5;
-	width: 100%;
+    width: 100%;
 }
 
 .wrap .list .list-mid .list-map img {
@@ -178,7 +174,7 @@ export default {
 }
 
 .wrap .list .list-right {
-	/*position: relative;*/
+    /*position: relative;*/
     /*-webkit-box-flex: 1;*/
     /*padding: 29px 29px;*/
 }
@@ -195,18 +191,20 @@ export default {
     clear: both;
     background-color: #4D5679;
     height: 0;
- 	display: flex;
+    display: flex;
     line-height: 96px;
-  	display:  -webkit-flex;
+    display: -webkit-flex;
     /*transition: height 0.5s;
     -webkit-transition: height 0.5s;*/
     overflow: hidden;
 }
+
 .wrap .list-menu.show {
     height: 96px;
 }
+
 .wrap .list-menu a {
-	display: inline-block;
+    display: inline-block;
     color: #fff;
     text-align: center;
     width: 25%;
@@ -219,8 +217,6 @@ export default {
     -webkit-box-sizing: border-box;
 }
 
-
-
 .list-menu .menu-1 {
     /*background: url(../assets/icon49.png) no-repeat;*/
     background-size: 30px;
@@ -229,63 +225,17 @@ export default {
 }
 
 .wrap .list-menu a:nth-child(4) {
-  border: none;
+    border: none;
 }
 
-.wrap-popup {
+
+/*.wrap-popup {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    position: fixed;
-    z-index: 99;
-    top: 0
-}
-
-.wrap-popup .content-popup {
-    width: 526px;
-    height: auto;
+    background-color: rgba(0, 0, 0, 0);
     position: absolute;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: #fff;
-    top: 50%;
-}
+    top: 0;
+    z-index: 999;
+}*/
 
-.popup-names {
-    line-height: 94px;
-    text-align: center;
-    color: #3B456C;
-    font-size: 36px
-}
-
-.popup-names img {
-    width: 30px;
-    float: right;
-    margin: 31px 31px;
-    position: absolute;
-    right: 0;
-}
-
-.popup-tel img {
-    width: 40px;
-    float: right;
-    margin: 32px 32px;
-}
-
-.popup-tel {
-    line-height: 111px;
-}
-.popup-tel:nth-child(2){
-    border-top: 2px solid #F1F2F7
-}
-.popup-tel:nth-child(3){
-    border-top: 2px solid #F1F2F7
-}
-.popup-tel a {
-    display: block;
-    overflow: hidden;
-    padding-left: 32px;
-    font-size: 30px;
-    color: #3B456C;
-}
 </style>
