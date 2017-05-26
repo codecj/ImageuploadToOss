@@ -11,7 +11,7 @@
     </div>
 </template>
 <script type="text/javascript">
-// import Request from "../util/API"
+import Request from "../util/API"
 export default ({
     name: "contact",
     data() {
@@ -28,6 +28,26 @@ export default ({
         telClose(item) {
             this.listH=false
             this.$emit('listSay', this.listH);
+        },
+        mobile(item) {
+            // console.log(item, 1);
+            Request.jsBbridge(bridge => {
+                bridge.callHandler(
+                    'callPhoneClick', {
+                        item: item
+                    }
+                )
+            })
+        },
+        tel(item) {
+            // console.log(item, 2);
+            Request.jsBbridge(bridge => {
+                bridge.callHandler(
+                    'callPhoneClick', {
+                        item: item
+                    }
+                )
+            })
         }
     }
 })

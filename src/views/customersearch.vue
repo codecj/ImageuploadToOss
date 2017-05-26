@@ -6,7 +6,7 @@
 				<div class="input-wrap">
 					<div>
 						<!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-						<input id="search" placeholder="请输入要搜索的客户" type="search" :value="keyword" v-model="keyword" lazy class="" autofocus></input>
+						<input id="search" placeholder="请输入要搜索的客户" type="search" :value="keyword" v-model="keyword">
 					</div>
 				</div>
 			</form>
@@ -83,11 +83,6 @@
                 document.getElementById("search").click()
 				document.getElementById("search").focus()
 			})
-            // Request.jsBbridge(bridge => {
-            //     bridge.callHandler(
-            //         'popSuperiorClick'
-            //     )
-            // })　
 		},
 		methods: {
             contactMsg(data){

@@ -65,28 +65,7 @@ export default {
                         duration: 2000
                     });
                 }
-            },
-            mobile(item) {
-                console.log(item, 1);
-                Request.jsBbridge(bridge => {
-                    bridge.callHandler(
-                        'callPhoneClick', {
-                            item: item
-                        }
-                    )
-                })
-            },
-            tel(item) {
-                console.log(item, 2);
-                Request.jsBbridge(bridge => {
-                    bridge.callHandler(
-                        'callPhoneClick', {
-                            item: item
-                        }
-                    )
-                })
             }
-
         }
 }
 </script>

@@ -28,7 +28,7 @@
                 确定
             </div>
         </div>
-        <mt-loadmore v-show="!userFliter" :top-method="loadTop" ref="loadmore" :class="{'listBox overhide':listH,'listBox':!listH}" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
+        <mt-loadmore v-show="!userFliter" :top-method="loadTop" ref="loadmore" class="listBox" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
             <customerlIst @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom>
         </mt-loadmore>
@@ -48,7 +48,7 @@ import contactMsg from '../components/contactMsg.vue'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
 import utils from '../util/utils'
-console.log(utils.md5('1234'));
+// console.log(utils.md5('1234'));
 Vue.use(Lazyload, {
     preLoad: 1.3,
     lazyComponent: true,
@@ -188,7 +188,7 @@ export default {
                 //ajax调用
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result)
-                console.log(getData)
+                // console.log(getData)
                 getData.data.shopslist.forEach(value => {
                     this.listDate.push(value)
                 })
@@ -223,13 +223,13 @@ export default {
             //ajax调用
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result);
-                console.log(getData)
+                // console.log(getData)
                 if (parseInt(getData.code) == 4) {
                     this.adv = false;
                     return;
                 }
                 if (parseInt(getData.code) != 200) {
-                    console.log(getData.msg);
+                    // console.log(getData.msg);
                     Toast({
                         message: getData.msg,
                         duration: 2000
@@ -268,7 +268,7 @@ export default {
                 }
                 len--;
             }
-            console.log(arr);
+            // console.log(arr);
             return arr;
         },
         requestMenus() {
@@ -281,7 +281,7 @@ export default {
             Request.post(pargrmList).then(res => {
                 const getData = JSON.parse(res.data.result);
                 if (parseInt(getData.code) != 200) {
-                    console.log(getData.msg);
+                    // console.log(getData.msg);
                     Toast({
                         message: getData.msg,
                         duration: 2000
@@ -317,7 +317,7 @@ export default {
                     } else if (temp1.url == 'baifang') {
                         temp1.imgSrc = require('../assets/icon56.png');
                     }
-                    console.log(this.menuList);
+                    // console.log(this.menuList);
                 }
             }).catch(error => {
 
@@ -373,7 +373,7 @@ export default {
             })
         },
         loadTop(){
-            console.log(1)
+            // console.log(1)
             this.page.pageno='1'
             this.listDate=[]
             this.ajax()
