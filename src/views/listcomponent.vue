@@ -122,7 +122,7 @@
         Request.post(pargrmList).then(res=>{
             let getData = JSON.parse(res.data.result)
             this.pageSize = getData.pagination.totalcount
-            // console.log(getData)
+            console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
