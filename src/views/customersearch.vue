@@ -6,13 +6,13 @@
 				<div class="input-wrap">
 					<div>
 						<!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-						<input id="search" type="search" :value="keyword" v-model="keyword" lazy class=""></input>
+						<input id="search" placeholder="请输入要搜索的客户" type="search" :value="keyword" v-model="keyword">
 					</div>
 				</div>
 			</form>
 		</div>
 		<div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" v-show="codpng2">
-			<customerlIst :listDate='listDate' :menuList='menuList'></customerlIst>
+			<customerlIst @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
 			<div class="content-3" v-show="bottom">
 				<getbottom></getbottom>
 			</div>
@@ -21,7 +21,7 @@
 		<div class="content-2" v-show="codpng">
 			<nosearch></nosearch>
 		</div>
-
+        <contactMsg v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>
 	</div>
 </template>
 <script type="text/javascript">
@@ -32,6 +32,7 @@
 	} from 'mint-ui'
 	import Vue from 'vue';
 	import Request from "../util/API";
+    import contactMsg from '../components/contactMsg.vue'
 	import customerlIst from '../components/customerManagement.vue';
 	import nosearch from '../components/nosearch.vue';
 	import getbottom from "../components/getbottom.vue"
@@ -66,20 +67,31 @@
 				picno: this.$route.query.picno,
 				isLoad: false,
 				flag: false,
-				bottom: false
+				bottom: false,
+                listH:false,
+                phoneItem:{}
 			}
 		},
 		components: {
 			customerlIst,
 			nosearch,
 			getbottom,
+            contactMsg
 		},
 		mounted() {
 			this.$nextTick(() => {
+                document.getElementById("search").click()
 				document.getElementById("search").focus()
 			})
 		},
 		methods: {
+            contactMsg(data){
+                this.listH = true
+                this.phoneItem=data
+            },
+            overHide(isHide) {
+                this.listH = isHide
+            },
 			submit() {
 				this.page.pageno = '1'
 				this.listDate = []
@@ -112,12 +124,6 @@
 					})
 					this.requestMenus();
 					if(this.page.pageno > (getData.pagination.totalcount) / 20 && this.listDate.length > 20) {
-						//          if(this.listDate.length==getData.pagination.totalcount&& this.listDate.length >20) {
-
-						//                      Toast({
-						//                          message: '已经是最后一页啦',
-						//                          duration: 2000
-						//                      })
 						this.bottom = true;
 						Indicator.close();
 						return
