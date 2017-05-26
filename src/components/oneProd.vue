@@ -187,6 +187,7 @@ export default ({
     line-height: 30px;
     text-align: center;
     display: inline-block;
+    padding:2px 5px;
 }
 
 .changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(3) {
