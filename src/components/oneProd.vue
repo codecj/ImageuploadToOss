@@ -27,8 +27,8 @@
                 </p>
                 <p>
                     <span>￥{{item.NET_PRICE}}</span>
-                    <span>{{item.COMMISSION_PRICE ? "奖" : ''}}</span>
-                    <span>{{item.COMMISSION_PRICE ? '￥'+item.COMMISSION_PRICE : ''}}</span>
+                    <span v-show="item.COMMISSION_PRICE">奖</span>
+                    <span v-show="item.COMMISSION_PRICE">"￥" + item.COMMISSION_PRICE</span>
                     <img src="../assets/icon57.png" alt="" class="gocart" v-if="item.ATP_QTY==0">
                     <img src="../assets/icon2.png" alt="" class="gocart" @click.stop="gocart(item.STK_C)" v-else="item.ATP_QTY>0">
                 </p>
@@ -187,7 +187,7 @@ export default ({
     line-height: 30px;
     text-align: center;
     display: inline-block;
-    padding:2px 5px;
+    padding:5px 5px;
 }
 
 .changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(3) {
