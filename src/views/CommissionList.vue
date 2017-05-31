@@ -31,7 +31,6 @@ import {
     Indicator
 }
 from 'mint-ui';
-import testJson from './test.json'
 export default {
     data() {
         return {
