@@ -308,7 +308,7 @@ export default ({
 }
 
 .content .searchItem .prodDetail>p:nth-child(4) span {
-    /*font-size: 30px;*/
+    font-size: 22px;
     color: #FF783C;
     letter-spacing: 0;
     margin: 8px 0 0 10px;
