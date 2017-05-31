@@ -104,7 +104,7 @@ export default ({
             })
         },
         loadMore() {
-            if(this.prodList.length==this.pageSize) return
+            // if(this.prodList.length==this.pageSize) return
             if(!this.load){
                this.loading = true;
                this.page.pageno = parseInt(this.page.pageno) + 1;

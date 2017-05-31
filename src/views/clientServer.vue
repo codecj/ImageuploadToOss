@@ -376,6 +376,7 @@ export default {
             // console.log(1)
             this.page.pageno='1'
             this.listDate=[]
+            this.isEnd=false
             this.ajax()
             this.$refs.loadmore.onTopLoaded();
         }　
