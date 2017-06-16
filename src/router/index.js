@@ -9,7 +9,7 @@ import changding from '../views/changding.vue'
 import yongjin from '../views/yongjinshangpin.vue'
 import xinpin from '../views/xinpin.vue'
 import nosearch from '../views/nosearch.vue'
-
+import selectTrunckGoods from '../views/carSale/selectTrunkGoods.vue'
 export default {
     // mode:'history',
     routes: [{
@@ -47,6 +47,10 @@ export default {
         {
         	path:'/nosearch',
         	component:nosearch
+        },
+        {
+            path:'/selectTrunckGoods',
+            component:selectTrunckGoods
         }
     ]
 }
