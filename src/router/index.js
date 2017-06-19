@@ -10,6 +10,10 @@ import yongjin from '../views/yongjinshangpin.vue'
 import xinpin from '../views/xinpin.vue'
 import nosearch from '../views/nosearch.vue'
 import selectTrunckGoods from '../views/carSale/selectTrunkGoods.vue'
+const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
+const test = resolve => require(['../views/test.vue'], resolve)
+
+
 export default {
     // mode:'history',
     routes: [{
@@ -47,6 +51,14 @@ export default {
         {
         	path:'/nosearch',
         	component:nosearch
+        },
+        {
+            path: '/carSellerManagerHome',
+            component: carSellerManagerHome
+        },
+        {
+            path:'/test',
+            component: test
         },
         {
             path:'/selectTrunckGoods',
