@@ -1,7 +1,7 @@
 <template>
   <div @click="backTap()" class="depot">
   	<ul>
-  		<li v-for="depot in depotList" @click.stop="selectDepot(depot)"><label>{{depot.depotName}}</label></li >
+  		<li v-for="depot in depotList" @click.stop="selectDepot(depot)" class="borderB"><label>{{depot.depotName}}</label></li >
   	</ul>
 	<div @click.stop="cancelView()"><label>取消</label></div>
   </div>
@@ -17,8 +17,12 @@
 			depotList: Array
 		},
 		methods: {
-			backTap:() => { alert('点击了背景') },
-			cancelView:() => { alert('取消') },
+			backTap(){
+				this.$emit('cancelDepotList');
+			},
+			cancelView(){
+				this.$emit('cancelDepotList');
+			},
 			selectDepot(depot){
 				this.$emit('depotSelected',depot);
 			}
@@ -51,12 +55,14 @@
 		height: 88px;
 		background-color: white;
 		padding: 1px;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 	.depot li label{
 		display: block;
 		width: 100%;
-		height: 86px;
-		line-height: 86px;
+		height: 85px;
+		line-height: 85px;
 		text-align: center;
 		background-color: white;
 	}

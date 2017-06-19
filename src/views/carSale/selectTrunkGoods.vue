@@ -6,7 +6,7 @@
   			<img src='../../assets/icon20.png'></img>
  
   	</div>
-  	<DepotList v-show="showDev" :depotList="depotList" @depotSelected='depotSelected'>
+  	<DepotList v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
   		
   	</DepotList>
   	<div class="search">
@@ -19,7 +19,7 @@
   	<mt-loadmore :bottom-method="requestMore" :top-method="loadTop" 
                      :bottom-all-loaded="allLoaded" :bottomPullText='bottomText'
                      ref="loadmore" class="table">
-                 <div>sdsaas</div>
+                <div>sdsaas</div>
                 <div>sdsaas</div>
     </mt-loadmore>
   	<!-- <selectcarspec></selectcarspec> -->
@@ -60,6 +60,9 @@ import DepotList from '../../components/carSale/DepotList.vue'
 	   		// },
 	   		depotSelected(depot){
 	   			alert('回调:'+depot.depotName);
+	   		},
+	   		cancelDepotList(){
+	   			this.showDev = false;
 	   		},
 	    	search(){
 	    		alert('搜说');
@@ -103,7 +106,7 @@ import DepotList from '../../components/carSale/DepotList.vue'
 		position: absolute;
 		height: 64px;
 		text-align: center;
-		right: 300px;
+		right: 280px;
 		margin-top: 12px;
 		max-width: 280px;
 		line-height: 64px;
@@ -120,7 +123,7 @@ import DepotList from '../../components/carSale/DepotList.vue'
 		position: absolute;
 		height: 44px;
 		width: 44px;
-		right:250px;
+		right:230px;
 		margin-top: 22px;
 	}
 
