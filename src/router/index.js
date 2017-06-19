@@ -10,6 +10,9 @@ const xinpin = resolve => require(['../views/xinpin.vue'], resolve)
 const addCar = resolve => require(['../views/addCar.vue'], resolve)
 const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
 
+
+
+
 export default {
     // mode:'history',
     routes: [{
@@ -42,6 +45,13 @@ export default {
         }, {
             path: '/addCar',//加入购物车弹窗
             component: addCar
+        },{
+            path: '/carSellerManagerHome',
+            component: carSellerManagerHome
+        },
+        {
+            path:'/test',
+            component: test
         },
         { path: '*', redirect: '/clientServer' },
         {

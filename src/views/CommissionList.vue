@@ -276,6 +276,13 @@ export default {
     font-size: 48px;
     color: #FF783C;
     height: 67px;
+    /*
+.content {height: 298px;width: 100%;position: relative;}
+    .goodsImg {position: absolute;top: 48px;left: 32px;width: 200px;height: 200px;border: 1px solid #fff;}
+    .goodsName {position: absolute;width: 60%;top: 48px;left: 260px;height: 80px;font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 40px;display: -webkit-box;overflow: hidden;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;}
+*/
 }
 
 </style>
+
+
