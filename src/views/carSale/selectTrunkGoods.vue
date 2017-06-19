@@ -6,9 +6,11 @@
   			<img src='../../assets/icon20.png'></img>
  
   	</div>
-  	<DepotList v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
+  <!-- 	<DepotList v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
   		
-  	</DepotList>
+  	</DepotList> -->
+
+	<AddStkcView v-show="showDev"></AddStkcView>
   	<div class="search">
   		<button @click="scan()">扫一扫</button>
   		<form @submit.prevent="search">
@@ -28,6 +30,7 @@
 <script>
 import selectcarspec from '../../components/carSale/SelectCarSpec.vue'
 import DepotList from '../../components/carSale/DepotList.vue'
+import AddStkcView from '../../components/carSale/AddStkcView.vue'
 	export default {
 	    data () {
 	        return {
@@ -85,7 +88,8 @@ import DepotList from '../../components/carSale/DepotList.vue'
 	    },
 	    components: {
         	selectcarspec,
-        	DepotList
+        	DepotList,
+        	AddStkcView
    		 },
 	}
 
