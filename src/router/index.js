@@ -9,6 +9,8 @@ const yongjin = resolve => require(['../views/yongjinshangpin.vue'], resolve)
 const xinpin = resolve => require(['../views/xinpin.vue'], resolve)
 const addCar = resolve => require(['../views/addCar.vue'], resolve)
 const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
+const backdepot = resolve => require(['../views/backDepot.vue'], resolve)
+
 
 
 
@@ -45,13 +47,10 @@ export default {
         }, {
             path: '/addCar',//加入购物车弹窗
             component: addCar
-        },{
-            path: '/carSellerManagerHome',
-            component: carSellerManagerHome
         },
         {
-            path:'/test',
-            component: test
+            path: '/backdepot',//返回仓库
+            component: backdepot
         },
         { path: '*', redirect: '/clientServer' },
         {
