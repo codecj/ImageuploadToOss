@@ -10,6 +10,7 @@ import {focus} from 'vue-focus';
 import  routerConfig from './router'
 import FastClick from 'fastclick'
 import filters from './filters'
+
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 //开启debug模式
 Vue.config.debug = true;
@@ -20,6 +21,7 @@ if ('addEventListener' in document) {
 }  
 
 Vue.use(VueRouter);
+
 const router=new VueRouter(routerConfig);
 const app = new Vue({
     router: router,
