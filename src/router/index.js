@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
 const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
 const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
@@ -11,14 +12,32 @@ const xinpin = resolve => require(['../views/xinpin.vue'], resolve)
 const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
+=======
+const clientServer = resolve => require(['../views/clientServer.vue'], resolve)
+const searchList = resolve => require(['../views/listcomponent.vue'], resolve)
+const search = resolve => require(['../views/customersearch.vue'], resolve)
+const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
+const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
+const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
+const changding = resolve => require(['../views/changding.vue'], resolve)
+const yongjin = resolve => require(['../views/yongjinshangpin.vue'], resolve)
+const xinpin = resolve => require(['../views/xinpin.vue'], resolve)
+const addCar = resolve => require(['../views/addCar.vue'], resolve)
+const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
+const backdepot = resolve => require(['../views/backDepot.vue'], resolve)
+
+
+
+
+>>>>>>> e217c2d15695ef7020bc74f9db086038829e5bc5
 
 export default {
     // mode:'history',
     routes: [{
-            path: '/clientServer',
-            component: clientServer //客户服务首页
+            path: '/clientServer',//客户服务首页
+            component: clientServer 
         },{
-            path: '/list',
+            path: '/list',//商品列表
             component: searchList //商品列表
         }, {
             path: '/search', //客户列表搜索
@@ -44,6 +63,10 @@ export default {
         }, {
             path: '/addCar',//加入购物车弹窗
             component: addCar
+        },
+        {
+            path: '/backdepot',//返回仓库
+            component: backdepot
         },
         { path: '*', redirect: '/clientServer' },
         {
