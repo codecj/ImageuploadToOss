@@ -118,7 +118,6 @@
 						this.codpng2 = true
 					}
 					this.isLoad = true
-					// console.log(getData.data.shopslist)
 					getData.data.shopslist.forEach(value => {
 						this.listDate.push(value)
 					})
