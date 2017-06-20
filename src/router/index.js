@@ -13,6 +13,7 @@ const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
 const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
+const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
 
 export default {
     // mode:'history',
@@ -64,11 +65,10 @@ export default {
         {
             path:'/selectTrunckGoods',
             component:selectTrunckGoods
+        },
+        {
+            path: '/goodgocar',
+            component: goodgocar
         }
-        // ,
-        // {
-        //     path: '/goodgocar',
-        //     component: GoodGoCar
-        // }
     ]
 }
