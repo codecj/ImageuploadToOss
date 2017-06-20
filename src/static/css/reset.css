@@ -41,3 +41,6 @@ input{-webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appe
 .borderDefalut{
   border: 1px solid #F1F2F7;
 }
+body{
+	background-color: rgb(237, 238, 245);
+}

@@ -6,8 +6,7 @@
   			<img @click='navBack()'  class="left" src='../../assets/icon10.png'></img>
   			<img @click="selectDev()" class="right" src="../../assets/arrow-down.png"></img>
   	</div>
-  	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
-  		
+  	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
   	</DepotList>
 
 	<AddStkcView v-show="showStkcView" :baseStkc={} @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
