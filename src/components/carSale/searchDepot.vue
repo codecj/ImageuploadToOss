@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class='search'>
-        <div align="center" @click="scan"><img src="../../assets/icon58.png" alt=""></div>
+        <div align="center" @click="scan" id="scan"><img src="../../assets/icon58.png" alt=""></div>
         <div align="right">
           <form action="" @submit.prevent="search">
             <input type="search" placeholder="请输入要搜索的产品" id="search">
@@ -24,18 +24,38 @@ import Request from "../../util/API"
 
       },
       methods:{
-        scan(){
-          Request.jsBbridge(function(bridge) {
-            bridge.callHandler(
-              // 'pushSearchWebClick'
-            )
-          })
-        },
+        // scan(){
+        //   Request.jsBbridge(function(bridge) {
+        //     bridge.callHandler(
+        //       // 'pushSearchWebClick'
+        //     )
+        //   })
+        // },
         search(){
           //搜索请求
           // console.log(1)
+
         }
       
+      },
+      mounted(){
+        // 扩展API加载完毕后调用onPlusReady回调函数 
+          document.addEventListener( "plusready", onPlusReady, false );
+          // 扩展API加载完毕，现在可以正常调用扩展API
+          function onPlusReady() {
+            var e = document.getElementById("scan");
+            e.removeAttribute( "disabled" );
+          }
+          // 从图片中扫描 
+          function scan() {
+            plus.barcode.scan( '', function (type,result) {
+                // alert( "Scan success:("+type+")"+result );
+                console.log(1)
+              }, function (error) {
+                // alert( error.message );
+                console.log(2)
+              } );
+          }
       }
   })
  
