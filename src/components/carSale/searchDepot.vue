@@ -1,16 +1,20 @@
 <template>
   <div>
       <div class='search'>
-        <div align="center"><img src="../../assets/icon58.png" alt=""></div>
-        <div align="right"><input type="search" placeholder="请输入要搜索的产品" id="search"></div>
-        <div>搜索</div>
+        <div align="center" @click="scan"><img src="../../assets/icon58.png" alt=""></div>
+        <div align="right">
+          <form action="" @submit.prevent="search">
+            <input type="search" placeholder="请输入要搜索的产品" id="search">
+          </form>
+        </div>
+        <div @click="search">搜索</div>
       </div>
   </div>
   
 </template>
 
 <script type="text/javascript">
-
+import Request from "../../util/API"
   export default({
       data(){
         return{
@@ -20,6 +24,17 @@
 
       },
       methods:{
+        scan(){
+          Request.jsBbridge(function(bridge) {
+            bridge.callHandler(
+              // 'pushSearchWebClick'
+            )
+          })
+        },
+        search(){
+          //搜索请求
+          // console.log(1)
+        }
       
       }
   })

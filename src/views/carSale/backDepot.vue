@@ -16,8 +16,7 @@
           <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
           <div>确认回库</div>
       </footer>
-  </div>
-  
+  </div> 
 </template>
 
 <script type="text/javascript">
