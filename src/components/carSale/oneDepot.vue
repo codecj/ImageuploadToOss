@@ -2,7 +2,7 @@
   <div class="onedepot">
   	<div class="depot" v-for="(item,index) in list" >
   		<div @click="changeBg"  :class="{'noselect':!selectStatus,'selectBg':selectStatus}"></div>
-	    <div><img src="../../assets/placehold.png" alt=""></div>
+	    <div><img src="../../assets/icon1.png" alt=""></div>
 	    <div>
 	    	<p>{{item.name}}</p>
 	    	<p>{{item.num}}个</p>
@@ -12,15 +12,16 @@
 	    		<span @click="backDepot">回库</span>
 	    	</p>
 	    </div>
-	  	<AddStkcView v-show="showDev" :cancelAddStkcView="cancelAddStkcView"></AddStkcView>
+	  	
 	   
   	</div>
+  	<!-- <AddStkcView v-show="showDev" ></AddStkcView> -->
   </div>
   
 </template>
 
 <script type="text/javascript">
- import AddStkcView from './AddStkcView.vue'
+ // import AddStkcView from './AddStkcView.vue'
  export default({
  	name:"onedepot",
  	data(){
@@ -28,7 +29,7 @@
  			showDev:false
  		}
  	},
- 	components:{AddStkcView},
+ 	// components:{AddStkcView},
  	props:{
  		list:Array,
  		selectStatus:Boolean
@@ -42,11 +43,10 @@
  			}
  		},
  		backDepot(){
- 			this.showDev = !this.showDev;
- 		},
- 		cancelAddStkcView(){
- 				// console.log(1)
+ 			this.$emit("back");
+ 			// this.showDev = !this.showDev;
  		}
+ 		
  	}
  })
 </script>

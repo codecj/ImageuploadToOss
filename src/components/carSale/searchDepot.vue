@@ -1,0 +1,78 @@
+<template>
+  <div>
+      <div class='search'>
+        <div align="center"><img src="../../assets/icon58.png" alt=""></div>
+        <div align="right"><input type="search" placeholder="请输入要搜索的产品" id="search"></div>
+        <div>搜索</div>
+      </div>
+  </div>
+  
+</template>
+
+<script type="text/javascript">
+
+  export default({
+      data(){
+        return{
+         }
+      },
+      components:{
+
+      },
+      methods:{
+      
+      }
+  })
+ 
+</script>
+
+<style scoped>
+
+.search{
+    height:96px;
+    line-height: 96px;
+    width:100%;
+    background: #fff;
+  }
+  .search div{
+    display:inline-block;
+    float:left;
+  }
+  .search div:nth-child(1){
+    width:15%;
+    height:96px;
+    border-right:2px solid #F1F2F7;
+  }
+  .search div:nth-child(1) img{
+    width:60px;
+    height:60px;
+    vertical-align: middle;
+  }
+  .search div:nth-child(2){
+
+    width:65%;
+    height:96px;
+    background:url(../../assets/icon20.png) no-repeat 20px center;
+    background-size: 10%;
+  }
+  .search div:nth-child(2) input{
+    font-size: 26px;
+    color: #9DA2B5;
+    letter-spacing: 0;
+    width:80%;
+    height:90px;
+    border:none;
+
+  }
+  .search div:nth-child(3){
+    width:19%;
+    height:96px;
+    text-align: center;
+    font-size: 30px;
+    color: #3B456C;
+    letter-spacing: 0;
+    border-left:2px solid #F1F2F7;
+  }
+
+</style>
+

@@ -2,21 +2,15 @@
   <div>
       <header>
         <div align="center"><img src="../../assets/icon10.png" alt=""></div>
-        <div>选择商品回库的仓库</div>
+        <div>{{depotName}}</div>
         <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>
       </header>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
-      
         </depotlist>
-        <!-- <AddStkcView v-show="showDev" :backdepot="backdepot"></AddStkcView> -->
+        <AddStkcView v-show="showDatail" @cancelAddStkcView="cancelAddStkcView"></AddStkcView>
       <content>
-          <div class='search'>
-            <div align="center"><img src="../../assets/icon58.png" alt=""></div>
-            <div align="right"><input type="search" placeholder="请输入要搜索的产品" id="search"></div>
-            <div>搜索</div>
-          </div>
-          <onedepot :list="this.list" :selectStatus="selectStatus"></onedepot>
-         
+          <searchDepot></searchDepot>
+          <onedepot :list="this.list" :selectStatus="selectStatus"  @back="back"></onedepot>        
       </content>
       <footer>
           <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
@@ -29,12 +23,15 @@
 <script type="text/javascript">
   import onedepot from "../../components/carSale/oneDepot.vue"
   import depotlist from "../../components/carSale/DepotList.vue"
-  // import AddStkcView from '../../components/carSale/AddStkcView.vue'
+  import AddStkcView from '../../components/carSale/AddStkcView.vue'
+  import searchDepot from '../../components/carSale/searchDepot.vue'
   export default({
       data(){
         return{
           selectStatus:true,
           showDev:false,
+          showDatail:false,
+          depotName:"",
           list:[
             {
               name:"墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨",
@@ -50,27 +47,34 @@
               depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
             },
             {
-              depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
+              depotName:"难吃难吃啊啊 啊啊 啊啊啊啊啊啊啊啊"
             }
           ]
         }
       },
       components:{
-        onedepot,depotlist
-        // ,AddStkcView
+        onedepot,depotlist,AddStkcView,searchDepot
       },
       methods:{
         selectAll(){
             this.selectStatus = !this.selectStatus;           
         },
         depotSelected(depot){
-          console.log('回调:'+depot.depotName);
+          this.showDev = false;
+          this.depotName = depot.depotName;
+          // console.log('回调:'+depot.depotName);
         },
         cancelDepotList(){
           this.showDev = false;
         },
         selectDev(){
           this.showDev = !this.showDev;
+        },
+        back(){
+          this.showDatail = !this.showDatail;
+        },
+        cancelAddStkcView(){
+          this.showDatail = false;
         }
   
       },
@@ -109,6 +113,8 @@
   header div:nth-child(2){
     text-align: center;
     width:76%;
+    height:88px;
+    overflow: hidden;
     font-size: 40px;
     color: #3B456C;
     letter-spacing: 0;
@@ -163,7 +169,7 @@
     color: #9DA2B5;
     letter-spacing: 0;
     width:80%;
-    height:96px;
+    height:90px;
     border:none;
 
   }

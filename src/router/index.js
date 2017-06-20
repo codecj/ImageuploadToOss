@@ -13,6 +13,8 @@ const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerMana
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
 
+
+
 export default {
     // mode:'history',
     routes: [{
@@ -64,5 +66,10 @@ export default {
             path:'/selectTrunckGoods',
             component:selectTrunckGoods
         }
+        // ,
+        // {
+        //     path: '/goodgocar',
+        //     component: GoodGoCar
+        // }
     ]
 }
