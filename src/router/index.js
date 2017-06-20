@@ -10,6 +10,8 @@ import yongjin from '../views/yongjinshangpin.vue'
 import xinpin from '../views/xinpin.vue'
 import nosearch from '../views/nosearch.vue'
 import selectTrunckGoods from '../views/carSale/selectTrunkGoods.vue'
+import GoodGoCar from '../views/carSale/goodGoCar.vue'
+
 export default {
     // mode:'history',
     routes: [{
@@ -51,6 +53,10 @@ export default {
         {
             path:'/selectTrunckGoods',
             component:selectTrunckGoods
+        },
+        {
+            path: '/goodgocar',
+            component: GoodGoCar
         }
     ]
 }
