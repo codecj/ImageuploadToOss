@@ -10,14 +10,10 @@ import yongjin from '../views/yongjinshangpin.vue'
 import xinpin from '../views/xinpin.vue'
 import nosearch from '../views/nosearch.vue'
 import selectTrunckGoods from '../views/carSale/selectTrunkGoods.vue'
-<<<<<<< HEAD
 import GoodGoCar from '../views/carSale/goodGoCar.vue'
-=======
 const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
 const test = resolve => require(['../views/test.vue'], resolve)
-
->>>>>>> ec04571aa3630f559db5a2370031cad8dffd103e
-
+const trunkList = resolve => require(['../views/carSale/trunkList.vue'],resolve)
 export default {
     // mode:'history',
     routes: [{
@@ -71,6 +67,10 @@ export default {
         {
             path: '/goodgocar',
             component: GoodGoCar
+        },
+        {
+            path:'/trunkList',
+            component:trunkList
         }
     ]
 }

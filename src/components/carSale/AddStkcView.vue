@@ -1,5 +1,5 @@
 <template>
-  <div @click="backTap()" class="addStkc">
+  <div  class="addStkc">
   	<div class="content">
   		<div class="goodsInfo borderB">
   			<img class="goodsImg"></img>
@@ -50,16 +50,14 @@
 			}
 		},
 		props: {
-			depotList: Array
+			baseStkc: Object
 		},
 		methods: {
 			backTap(){
-				alert('backTap');
 				this.$emit('cancelAddStkcView');
 			},
 			addStkc(){
 				this.stock++;
-				alert(this.stock);
 			},
 			reduceStkc(){
 				if (this.stock == 0) {
@@ -67,7 +65,6 @@
 				}else{
 					this.stock--;
 				}
-				alert(this.stock);
 			},
 			submitStkc(){
 				alert(this.stock);
