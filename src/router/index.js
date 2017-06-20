@@ -1,26 +1,26 @@
-import MyCommission from '../views/MyCommission.vue'
-import SettledCommission from '../views/SettledCommission.vue'
-import PresettleCommission from '../views/PresettleCommission.vue'
-import clientServer from '../views/clientServer.vue'
-import addCar from '../views/addCar.vue'
-import searchList from '../views/listcomponent.vue'
-import search from '../views/customersearch.vue'
-import changding from '../views/changding.vue'
-import yongjin from '../views/yongjinshangpin.vue'
-import xinpin from '../views/xinpin.vue'
-import nosearch from '../views/nosearch.vue'
-import selectTrunckGoods from '../views/carSale/selectTrunkGoods.vue'
-import GoodGoCar from '../views/carSale/goodGoCar.vue'
+
+const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
+const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
+const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
+const clientServer = resolve => require(['../views/clientServer.vue'], resolve)
+const addCar = resolve => require(['../views/addCar.vue'], resolve)
+const searchList = resolve => require(['../views/listcomponent.vue'], resolve)
+const search = resolve => require(['../views/customersearch.vue'], resolve)
+const changding = resolve => require(['../views/changding.vue'], resolve)
+const yongjin = resolve => require(['../views/yongjinshangpin.vue'], resolve)
+const xinpin = resolve => require(['../views/xinpin.vue'], resolve)
+const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
 const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
-const test = resolve => require(['../views/test.vue'], resolve)
+const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
+const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
 
 export default {
     // mode:'history',
     routes: [{
-            path: '/clientServer',
-            component: clientServer //客户服务首页
+            path: '/clientServer',//客户服务首页
+            component: clientServer 
         },{
-            path: '/list',
+            path: '/list',//商品列表
             component: searchList //商品列表
         }, {
             path: '/search', //客户列表搜索
@@ -47,6 +47,10 @@ export default {
             path: '/addCar',//加入购物车弹窗
             component: addCar
         },
+        {
+            path: '/backdepot',//返回仓库
+            component: backdepot
+        },
         { path: '*', redirect: '/clientServer' },
         {
         	path:'/nosearch',
@@ -56,17 +60,15 @@ export default {
             path: '/carSellerManagerHome',
             component: carSellerManagerHome
         },
-        {
-            path:'/test',
-            component: test
-        },
+       
         {
             path:'/selectTrunckGoods',
             component:selectTrunckGoods
-        },
-        {
-            path: '/goodgocar',
-            component: GoodGoCar
         }
+        // ,
+        // {
+        //     path: '/goodgocar',
+        //     component: GoodGoCar
+        // }
     ]
 }

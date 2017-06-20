@@ -6,9 +6,9 @@
   			<img src='../../assets/icon20.png'></img>
  
   	</div>
-  <!-- 	<DepotList v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
+  	<DepotList v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
   		
-  	</DepotList> -->
+  	</DepotList>
 
 	<AddStkcView v-show="showDev"></AddStkcView>
   	<div class="search">
