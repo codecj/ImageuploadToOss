@@ -10,9 +10,13 @@ import yongjin from '../views/yongjinshangpin.vue'
 import xinpin from '../views/xinpin.vue'
 import nosearch from '../views/nosearch.vue'
 import selectTrunckGoods from '../views/carSale/selectTrunkGoods.vue'
+<<<<<<< HEAD
+import GoodGoCar from '../views/carSale/goodGoCar.vue'
+=======
 const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
 const test = resolve => require(['../views/test.vue'], resolve)
 
+>>>>>>> ec04571aa3630f559db5a2370031cad8dffd103e
 
 export default {
     // mode:'history',
@@ -63,6 +67,10 @@ export default {
         {
             path:'/selectTrunckGoods',
             component:selectTrunckGoods
+        },
+        {
+            path: '/goodgocar',
+            component: GoodGoCar
         }
     ]
 }
