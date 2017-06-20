@@ -1,7 +1,7 @@
 <template>
   <div class="onedepot">
   	<div class="depot" v-for="(item,index) in list" >
-  		<div @click="changeBg()"  :class="{'noselect':!selectStatus,'selectBg':selectStatus}"></div>
+  		<div @click="changeBg"  :class="{'noselect':!selectStatus,'selectBg':selectStatus}"></div>
 	    <div><img src="../../assets/placehold.png" alt=""></div>
 	    <div>
 	    	<p>{{item.name}}</p>
@@ -9,21 +9,26 @@
 	    	<p>
 	    		<span>1箱</span>
 	    		<span>26个</span>
-	    		<span>回库</span>
+	    		<span @click="backDepot">回库</span>
 	    	</p>
 	    </div>
+	  	<AddStkcView v-show="showDev" :cancelAddStkcView="cancelAddStkcView"></AddStkcView>
+	   
   	</div>
   </div>
   
 </template>
 
 <script type="text/javascript">
+ import AddStkcView from './AddStkcView.vue'
  export default({
  	name:"onedepot",
  	data(){
  		return{
+ 			showDev:false
  		}
  	},
+ 	components:{AddStkcView},
  	props:{
  		list:Array,
  		selectStatus:Boolean
@@ -35,6 +40,12 @@
  			}else{
  				event.target.className ="noselect"
  			}
+ 		},
+ 		backDepot(){
+ 			this.showDev = !this.showDev;
+ 		},
+ 		cancelAddStkcView(){
+ 				// console.log(1)
  		}
  	}
  })

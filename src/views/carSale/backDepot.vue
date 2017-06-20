@@ -3,8 +3,12 @@
       <header>
         <div align="center"><img src="../../assets/icon10.png" alt=""></div>
         <div>选择商品回库的仓库</div>
-        <div align="center"><img src="../../assets/icon10.png" alt=""></div>
+        <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>
       </header>
+       <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
+      
+        </depotlist>
+        <!-- <AddStkcView v-show="showDev" :backdepot="backdepot"></AddStkcView> -->
       <content>
           <div class='search'>
             <div align="center"><img src="../../assets/icon58.png" alt=""></div>
@@ -12,7 +16,7 @@
             <div>搜索</div>
           </div>
           <onedepot :list="this.list" :selectStatus="selectStatus"></onedepot>
-          <!-- <onedepot></onedepot> -->
+         
       </content>
       <footer>
           <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
@@ -24,10 +28,13 @@
 
 <script type="text/javascript">
   import onedepot from "../../components/carSale/oneDepot.vue"
+  import depotlist from "../../components/carSale/DepotList.vue"
+  // import AddStkcView from '../../components/carSale/AddStkcView.vue'
   export default({
       data(){
         return{
           selectStatus:true,
+          showDev:false,
           list:[
             {
               name:"墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨",
@@ -37,16 +44,35 @@
               name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
               num:"13"
             }
+          ],
+          depotList:[
+            {
+              depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
+            },
+            {
+              depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
+            }
           ]
         }
       },
       components:{
-        onedepot
+        onedepot,depotlist
+        // ,AddStkcView
       },
       methods:{
         selectAll(){
             this.selectStatus = !this.selectStatus;           
+        },
+        depotSelected(depot){
+          console.log('回调:'+depot.depotName);
+        },
+        cancelDepotList(){
+          this.showDev = false;
+        },
+        selectDev(){
+          this.showDev = !this.showDev;
         }
+  
       },
       mounted() {
 
@@ -204,3 +230,4 @@
     background: linear-gradient(-18deg, #FF4848 0%, #FF8739 100%);
   }
 </style>
+

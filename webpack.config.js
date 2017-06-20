@@ -54,11 +54,7 @@ module.exports = {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-<<<<<<< HEAD
     // host:'192.168.200.235',
-=======
-    host:"192.168.200.132",
->>>>>>> e217c2d15695ef7020bc74f9db086038829e5bc5
     historyApiFallback: true,
     noInfo: true
   },
