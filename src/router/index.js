@@ -15,7 +15,7 @@ const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerMana
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
 const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
-
+const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
 export default {
     // mode:'history',
     routes: [{
@@ -75,6 +75,10 @@ export default {
         {
             path:'/trunkList',
             component:trunkList
+        },
+        {
+            path:'/selectTrunckGoodsWithNoStock',
+            component:selectTrunckGoodsWithNoStock
         }
     ]
 }

@@ -93,7 +93,8 @@ import AddStkcView from '../../components/carSale/AddStkcView.vue'
 
 	    	navBack(){
 	    		//调用router回退页面
-        		this.$router.go(-1);
+        		 this.$router.go(-1);
+        		
 	    	},
 	    	
 	    	selectDev(){

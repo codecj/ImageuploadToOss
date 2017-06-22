@@ -19,7 +19,9 @@ if ('addEventListener' in document) {
     FastClick.attach(document.body);  
   }, false);  
 }  
-
+VueRouter.prototype.goBack = function(){
+	window.history.go(-1);
+}
 Vue.use(VueRouter);
 
 const router=new VueRouter(routerConfig);

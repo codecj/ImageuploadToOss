@@ -1,6 +1,6 @@
 <template>
 	<div class="trunkList">
-		<div class="addStkc">添加商品</div>
+		<router-link to="selectTrunckGoodsWithNoStock" ><div class="addStkc">添加商品</div></router-link>
 		<div class="nav borderB">
   			<img @click='navBack()'  class="left" src='../../assets/icon10.png'>
   			<img @click="selectDev()" class="right" src='../../assets/add.png'>
@@ -8,17 +8,20 @@
   				<input class="search" id="search" placeholder="请输入关键字搜索商品" type="search" v-model="keyWord">
   			</form>
   		</div>
-  		<ul class="table">
-  			 <div class="cell list-li">
-                	<img class="gooodImg">
+  		<ul class="table list-ul">
+  			<li class="cell" v-for="n in 10">
+			
+  					<img class="gooodImg">
                 	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
                 	<label class="vendorName">库存:20箱10件8个</label>  
-                	<div class="btn" @click='deleteItem'>删除</div>	
-            </div>
+  			
+                <div class="btn" @click='deleteItem'>删除</div>
+  			</li>
   		</ul>
 	</div>
 </template>
 <script>
+	import { navBack } from '../../util/JsBridge.js'
 	export default {
 		data () {
 			return {
@@ -27,14 +30,21 @@
 			}
 		},
 		mounted(){
-
+			
 		},
+	
 		methods:{
 			search(){
 	    		document.getElementById("search").blur();
 	    	},
 	    	deleteItem(){
 
+	    	},
+	    	addStkc(){
+	    		 this.$router.push('/selectTrunckGoodsWithNoStock');
+	    	},
+	    	navBack(){
+	    		navBack();
 	    	}
 		}
 	}
@@ -77,19 +87,25 @@
 	}
 
 	.trunkList .nav .left{
-		float: left;
-		height: 44px;
-		width: 44px;
-		margin-left: 37px;
-		margin-top: 22px;
+		/*float: left;*/
+		display: block;
+		position: absolute;
+		height: 54px;
+		width: 54px;
+		left: 37px;
+		top: 17px;
+		
 	}
 	
 	.trunkList .nav .right{
-		float: right;
+		/*float: right;*/
+		display: block;
+		position: absolute;
 		height: 44px;
 		width: 44px;
-		margin-right: 37px;
-		margin-top: 22px;
+		right: 37px;
+		top: 22px;
+		
 	}
 
 	.trunkList .nav .search{
@@ -116,6 +132,8 @@
 		bottom: 0px;
 		top:108px;
 		background-color: #f1f2f7;
+		overflow-y: scroll;
+		overflow-x:hidden;
 	}
 
 	.trunkList .table .cell{
@@ -166,6 +184,7 @@
     	text-overflow: ellipsis;
     	-webkit-line-clamp: 2;
 	}
-	.list-li{ border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;-webkit-transform: translateX(0px);}
-	.btn{ position: absolute; top: 0; right: -20%; text-align: center; background: #ffcb20; width: 20%;height: 298px;line-height: 298px;background-image: linear-gradient(17deg, #FF4848 2%, #FF8739 100%);font-size: 30px;color: #FFFFFF;}
+	.list-ul{overflow-x:hidden;}
+	.list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;-webkit-transform: translateX(0px);}
+    .btn{ position: absolute; top: 0; right: -20%; text-align: center; background: #ffcb20; width: 20%;height: 298px;line-height: 298px;background-image: linear-gradient(17deg, #FF4848 2%, #FF8739 100%);font-size: 30px;color: #FFFFFF;}
 </style>
