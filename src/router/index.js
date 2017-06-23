@@ -12,6 +12,7 @@ const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
 const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
+const test = resolve => require(['../views/carSale/test.vue'], resolve)
 
 
 
@@ -19,7 +20,15 @@ export default {
     // mode:'history',
     routes: [{
             path: '/clientServer',//客户服务首页
-            component: clientServer 
+            component: clientServer
+            // children:[
+            //     {path: 'clientServer/list',
+            //     component: searchList,
+            //     children:[
+            //         {path:'/myCommission',component: MyCommission}
+            //     ]
+            // }
+            // ]
         },{
             path: '/list',//商品列表
             component: searchList //商品列表
@@ -65,6 +74,10 @@ export default {
         {
             path:'/selectTrunckGoods',
             component:selectTrunckGoods
+        },
+        {
+            path:'/test',
+            component:test
         }
         // ,
         // {

@@ -7,7 +7,7 @@ Vue.use(MintUI)
 import App from './App.vue';
 import VueRouter from "vue-router";
 import {focus} from 'vue-focus';
-import  routerConfig from './router'
+import routerConfig from './router'
 import FastClick from 'fastclick'
 import filters from './filters'
 
@@ -19,6 +19,7 @@ if ('addEventListener' in document) {
     FastClick.attach(document.body);  
   }, false);  
 }  
+
 
 Vue.use(VueRouter);
 
