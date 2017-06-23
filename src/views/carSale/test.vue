@@ -122,12 +122,13 @@ export default {
         
       },
       backToNative(){
-        alert("打印订单")
-        Request.jsBbridge(bridge=>{
-          bridge.callHandler(
-            'backToNative'
-          )
-        })
+        // alert("打印订单")
+        // Request.jsBbridge(bridge=>{
+        //   bridge.callHandler(
+        //     'backToNative'
+        //   )
+        // })
+        this.$router.goBack();
       },
       printGoodsDetail(){ // alert("打印订单")
           Request.jsBbridge(bridge => {

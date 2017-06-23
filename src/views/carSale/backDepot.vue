@@ -1,8 +1,8 @@
 <template>
   <div>
       <header>
-        <div align="center"><img src="../../assets/icon10.png" alt=""></div>
-        <div>{{depotName}}</div>
+        <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
+        <router-link :to="'test'"><div>{{depotName}}</div></router-link>
         <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
       </header>
         <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
@@ -119,6 +119,9 @@
           //   console.log(value)
           // })
            this.depotName = this.depotList[0].depotName;
+        },
+        goback(){
+          this.$router.goBack();
         }
   
       },
