@@ -65,7 +65,8 @@
         </div>
         <div class="tool-box" v-show="boxShowStatus" @click="showToolBox">
             <ul>
-                <li @click="addGoods">添加商品</li>
+                <!-- @click="addGoods" -->
+                <router-link to="selectTrunckGoods"><li>添加商品</li></router-link>
                 <li @click="carSaleStatistics">车销统计</li>
                 <li @click="returnCar">退货回车</li>
             </ul>
