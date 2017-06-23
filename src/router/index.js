@@ -17,6 +17,7 @@ const test = resolve => require(['../views/carSale/test.vue'], resolve)
 const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
 import PageTransition from '../Components/carSale/PageTransition.vue'
 const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
+
 export default {
     // mode:'history',
     routes: [{
@@ -80,9 +81,9 @@ export default {
                 },{
                     path:'/selectTrunckGoodsWithNoStock',
                     component:selectTrunckGoodsWithNoStock
-                }
+                },{ path: '*', redirect: '/clientServer'} 
             ]
         } 
-        ,{ path: '*', redirect: '/clientServer'} 
+        
     ]
 }

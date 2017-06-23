@@ -223,7 +223,6 @@ export default {
            })
           function getObj(event){
             var obj = event.target;
-            console.log(obj);
             if (obj.className == 'tool-box') {
                 // event.preventDefault && event.preventDefault();
                 // event.returnValue=false;
