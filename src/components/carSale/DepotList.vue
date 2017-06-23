@@ -46,13 +46,13 @@
 		width: 100%;
 		overflow:scroll;
 		position: absolute;
-		bottom: 100px;
-		max-height: 600px;
+		bottom: 120px;
+		max-height: 640px;
 	}
 
 	.depot li{
 		width: 100%;
-		height: 88px;
+		height: 98px;
 		background-color: white;
 		padding: 1px;
 		-webkit-box-sizing: border-box;
@@ -61,8 +61,8 @@
 	.depot li label{
 		display: block;
 		width: 100%;
-		height: 85px;
-		line-height: 85px;
+		height: 95px;
+		line-height: 95px;
 		text-align: center;
 		background-color: white;
 	}
@@ -70,7 +70,7 @@
 
 	.depot div{
 		width: 100%;
-		height: 88px;
+		height: 98px;
 		background-color: white;
 		position: absolute;
 		bottom: 0;
@@ -81,8 +81,8 @@
 		font-size: 34px;
 		margin: 0px auto;
 		width: 100%;
-		height: 88px;
-		line-height: 88px;
+		height: 98px;
+		line-height: 98px;
 		text-align: center;
 	}
 

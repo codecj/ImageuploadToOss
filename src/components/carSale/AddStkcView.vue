@@ -12,7 +12,7 @@
 				<label class="spec">包 (1*2个)</label>
 				<label class="price">¥200.00</label>
 				<img @click.stop="addStkc()" class="add" src="../../assets/icon9.png"></img>
-				<input type="number"  class="amount" v-model="stock">
+				<input type="tel"  class="amount" v-model="stock">
 				<img @click.stop="reduceStkc()" class="reduce" src="../../assets/icon3.png"></img>
 				<label class="stkcStock">库存 1242</label>
 			</li>
@@ -20,7 +20,7 @@
 				<label class="spec">包 (1*2个)</label>
 				<label class="price">¥200.00</label>
 				<img class="add" src="../../assets/icon9.png"></img>
-				<input type="number"  class="amount" v-model="stock">
+				<input type="tel"  class="amount" v-model="stock">
 				<img class="reduce" src="../../assets/icon3.png"></img>
 				<label class="stkcStock">库存 1242</label>
 			</li>
