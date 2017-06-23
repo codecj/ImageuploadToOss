@@ -20,7 +20,7 @@
       } else {
         this.transitionName = 'slide-left'
       }
-      this.$router.isBack = false
+      this.$router.isBack = false      
       next()
     }
   }

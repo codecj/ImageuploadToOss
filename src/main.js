@@ -22,6 +22,7 @@ if ('addEventListener' in document) {
 
 VueRouter.prototype.goBack = function(){
 	window.history.go(-1);
+	this.isBack = true;
 }
 
 Vue.use(VueRouter);
