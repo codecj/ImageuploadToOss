@@ -9,19 +9,20 @@
   			</form>
   		</div>
   		<ul class="table list-ul">
+
   			<li class="cell" v-for="n in 10">
-			
+  				<LeftSlider :index = n @deleteItem='deleteItem'>
   					<img class="gooodImg">
                 	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
-                	<label class="vendorName">库存:20箱10件8个</label>  
-  			
-                <div class="btn" @click='deleteItem'>删除</div>
+                	<label class="vendorName">库存:20箱10件8个</label>
+       			</LeftSlider>
   			</li>
   		</ul>
 	</div>
 </template>
 <script>
 	import { navBack } from '../../util/JsBridge.js'
+	import LeftSlider from '../../components/carSale/LeftSlider.vue'
 	export default {
 		data () {
 			return {
@@ -45,8 +46,14 @@
 	    	},
 	    	navBack(){
 	    		navBack();
+	    	},
+	    	deleteItem( index ){
+	    		alert(index);
 	    	}
-		}
+		},
+		components: {
+        	LeftSlider
+   		 },
 	}
 </script>
 <style scoped>
@@ -65,13 +72,13 @@
 		top:88px;
 		right: 32px;
 		width: 184px;
-		height: 70px;
+		height: 80px;
 		opacity: 0.7;
 		background: #000000;
 		border-radius: 4px;
 		color: white;
 		font-size: 30px;
-		line-height: 70px;
+		line-height: 80px;
 		text-align: center;
 	}
 	.trunkList .nav{
