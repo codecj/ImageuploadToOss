@@ -1,4 +1,4 @@
-
+//路由懒加载
 const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
 const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
 const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
