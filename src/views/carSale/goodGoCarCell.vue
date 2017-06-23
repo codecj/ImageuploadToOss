@@ -1,24 +1,36 @@
 <template>
 	<div class="gocarCell">
-		<img src="../../assets/is-selected@2x.png" class="cellselect-img">
-		<img src="../../assets/placehold.png" class="cell-img">
+		<span class="cellselect-img" :class="{cellNoselect:!isSelected, cellIsselect:isSelected}" @click="tap"></span>
+		<img v-lazy="this.good.PRODUCT_THUMBNAIL" class="cell-img">
 		<div class="cell-msg">
 			<div class="cell-title">
-				在这种情况下，模板不再简单和清晰。在意识到这是反向显示 message 之前，你不得不再次确认第二遍。当你想要在模板中多次反向显示 message 的时候，问题会变得更糟糕。
+				{{this.good.STK_NAME}}
 			</div>
 			<div class="cell-num">
-				5箱30个
+				{{this.good.UOM_QTY}}
 			</div>
 			<div class="cell-add">
-				<div class="cell-dianp">世纪联华小卖铺</div>
-				<div class="cell-time">09/07 08:50</div>
+				<div class="cell-dianp">{{this.good.CUST_NAME}}</div>
+				<div class="cell-time">{{this.good.MAS_DATE}}</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	
+	export default{
+		data(){
+			return {
+				isSelected:false,
+			}
+		},
+		methods:{
+			tap(){
+				this.isSelected = !this.isSelected
+			}
+		},
+		props: ['good']
+	}
 </script>
 
 <style scoped>
@@ -34,10 +46,18 @@
 	}
 	.cellselect-img{
 		position: absolute;
-		left: 24px;
-		top: 125px;
-		width: 48px;
-		height: 48px;
+		left: 0px;
+		top: 0px;
+		width: 96px;
+		height: 296px;
+	}
+	.cellNoselect{
+		background: url("../../assets/icon59.png") no-repeat center center;
+		background-size: 48px 48px;
+	}
+	.cellIsselect{
+		background: url("../../assets/icon59-1.png") no-repeat center center;
+		background-size: 48px 48px;
 	}
 	.cell-img{
 		position: absolute;
@@ -50,6 +70,7 @@
 		margin: 52px 36px 16px 28px;
 		color: #3b456c;
 		font-size: 30px;
+		height: 80px;
 		overflow: hidden;
   		text-overflow: ellipsis;
   		-webkit-line-clamp:2;

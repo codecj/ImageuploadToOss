@@ -29,7 +29,7 @@
 <style scoped>
   .child-view {
     width:100%;
-    transition: all .2s ease;
+    transition: all .3s ease;
   }
   .slide-left-enter, .slide-right-leave-active {
     opacity: 0;

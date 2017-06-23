@@ -67,9 +67,10 @@ import Request from "../../util/API"
     vertical-align: middle;
   }
   .search div:nth-child(2){
-
+  
     width:65%;
-    height:96px;
+    height:95px;
+    line-height: 95px;
     background:url(../../assets/icon20.png) no-repeat 20px center;
     background-size: 10%;
   }
@@ -79,7 +80,7 @@ import Request from "../../util/API"
     letter-spacing: 0;
     width:80%;
     height:90px;
-    border:none;
+    border: none;
 
   }
   .search div:nth-child(3){

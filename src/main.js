@@ -10,7 +10,14 @@ import {focus} from 'vue-focus';
 import routerConfig from './router'
 import FastClick from 'fastclick'
 import filters from './filters'
-
+import {  Lazyload } from 'mint-ui'
+Vue.use(Lazyload, {
+    preLoad: 1.3,
+    lazyComponent: true,
+    error: require('./assets/holde.png'),
+    loading: require('./assets/holde.png'),
+    listenEvents: ['scroll']
+})
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 //开启debug模式
 Vue.config.debug = true;

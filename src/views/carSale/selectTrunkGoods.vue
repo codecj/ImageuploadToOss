@@ -41,6 +41,8 @@
 import selectcarspec from '../../components/carSale/SelectCarSpec.vue'
 import DepotList from '../../components/carSale/DepotList.vue'
 import AddStkcView from '../../components/carSale/AddStkcView.vue'
+import { navBack,scan } from '../../util/JsBridge.js'
+import  Request from '../../util/API.js'
 	export default {
 	    data () {
 	        return {
@@ -67,6 +69,12 @@ import AddStkcView from '../../components/carSale/AddStkcView.vue'
 	    	this.depotList.push(temp3);
 	    	this.depotList.push(temp4);
 	    	this.depotList.push(temp5);
+		    Request.jsBbridge(bridge => {
+		        bridge.init(function(message, responseCallback) {
+		            var data = {};
+		            responseCallback(data);
+		        });
+		    })
 	    },
 	    methods: {
 	   		// depotSelected: (depot) => {
@@ -89,9 +97,13 @@ import AddStkcView from '../../components/carSale/AddStkcView.vue'
 
 	    	scan(){
 				alert('扫一扫');
+				scan((response) =>{
+					alert(response);
+				});
 	    	},
 
 	    	navBack(){
+	    		alert('111');
 	    		//调用router回退页面
         		 this.$router.goBack();
         		
@@ -108,9 +120,11 @@ import AddStkcView from '../../components/carSale/AddStkcView.vue'
 
 	    	requestMore(){
 	    		alert('requestMore');
+	    		this.$refs.loadmore.onBottomLoaded();
 	    	},
 	    	loadTop(){
 	    		alert('refresh');
+	    		this.$refs.loadmore.onTopLoaded();
 	    	}
 	    },
 	    components: {
@@ -144,18 +158,18 @@ import AddStkcView from '../../components/carSale/AddStkcView.vue'
 
 	.selectCarGoods .nav .left{
 		float: left;
-		height: 44px;
-		width: 44px;
+		height: 62px;
+		width: 62px;
 		margin-left: 37px;
-		margin-top: 22px;
+		margin-top: 8px;
 	}
 	
 	.selectCarGoods .nav .right{
 		float: right;
-		height: 20px;
-		width: 44px;
+		height: 30px;
+		width: 58px;
 		margin-right: 37px;
-		margin-top: 34px;
+		margin-top: 30px;
 	}
 
 	.selectCarGoods .search{
