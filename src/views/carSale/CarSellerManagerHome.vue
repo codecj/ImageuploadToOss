@@ -1,7 +1,7 @@
 <template>
     <div id="carSellerManagerHome" :style='{height:elmHeight}'>
         <!-- 内容 -->
-        <div>
+        <div class="content">
             <div class="header">
                 <img class="left-btn" src="../../assets/icon10.png" @click="backToNative"></img>
                 <form @submit.prevent="submit">
@@ -76,7 +76,7 @@ export default {
 
       },
       carSaleStatistics(){//alert("车销统计");
-
+        
       },
       returnCar(){//alert("退货回车");
         
