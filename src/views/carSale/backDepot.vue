@@ -1,15 +1,18 @@
 <template>
   <div>
       <header>
-        <div align="center"><img src="../../assets/icon10.png" alt=""></div>
-        <div>{{depotName}}</div>
-        <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>
+        <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
+        <router-link :to="'test'"><div>{{depotName}}</div></router-link>
+        <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
       </header>
-       <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
+        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
         </depotlist>
-        <AddStkcView v-show="showDatail" @cancelAddStkcView="cancelAddStkcView"></AddStkcView>
+        <AddStkcView v-show="showDatail" @cancelAddStkcView="cancelAddStkcView"></AddStkcView>   
       <content>
+        <div class="searchs">
           <searchDepot></searchDepot>
+        </div>
+     
           <onedepot :list="this.list" :selectStatus="selectStatus"  @back="back"></onedepot>        
       </content>
       <footer>
@@ -24,6 +27,16 @@
   import depotlist from "../../components/carSale/DepotList.vue"
   import AddStkcView from '../../components/carSale/AddStkcView.vue'
   import searchDepot from '../../components/carSale/searchDepot.vue'
+  import Vue from 'vue'
+  import { Lazyload } from 'mint-ui'
+  import { Toast,Indicator } from 'mint-ui'
+    // 懒加载效果
+  Vue.use(Lazyload, {
+    preLoad: 1.3,
+    error: require('../../assets/holde.png'),
+    loading: require('../../assets/holde.png'),
+    attempt: 1
+  })
   export default({
       data(){
         return{
@@ -34,14 +47,39 @@
           list:[
             {
               name:"墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨",
-              num:"12"
+              num:"12",
+              URL_ADDR:"../../assets/icon1.png"
 
             },{
               name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
-              num:"13"
+              num:"13",
+              URL_ADDR:"../../assets/icon1.png"
+            }
+            ,{
+              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
+              num:"13",
+              URL_ADDR:"../../assets/icon1.png"
+            },{
+              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
+              num:"13",
+              URL_ADDR:"../../assets/icon1.png"
+            },{
+              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
+              num:"13",
+              URL_ADDR:"../../assets/icon1.png"
+            },{
+              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
+              num:"13",
+              URL_ADDR:"../../assets/icon1.png"
             }
           ],
           depotList:[
+            {
+              depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
+            },
+            {
+              depotName:"难吃难吃啊啊 啊啊 啊啊啊啊啊啊啊啊"
+            }, 
             {
               depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
             },
@@ -74,11 +112,21 @@
         },
         cancelAddStkcView(){
           this.showDatail = false;
+        },
+        selectdepotName(){
+          // console.log(1)
+          // this.list.forEach(value=>{
+          //   console.log(value)
+          // })
+           this.depotName = this.depotList[0].depotName;
+        },
+        goback(){
+          this.$router.goBack();
         }
   
       },
       mounted() {
-
+        this.selectdepotName();
       }
 
   })
@@ -126,7 +174,7 @@
   }
   content{
     position: absolute;
-    top:88px;
+    top:204px;
     bottom:88px;
     left:0;
     z-index:-1;
@@ -134,57 +182,18 @@
     height:auto;
     width:100%;
     overflow: auto;
-    padding-top:20px;
+    /*padding-top:20px;*/
+
   }
-  content .search{
-    height:96px;
-    line-height: 96px;
-    width:100%;
+  .searchs{
     background: #fff;
-  }
-  .search div{
-    display:inline-block;
-    float:left;
-  }
-  .search div:nth-child(1){
-    width:15%;
+    width:100%;
     height:96px;
-    border-right:2px solid #F1F2F7;
-  }
-  .search div:nth-child(1) img{
-    width:60px;
-    height:60px;
-    vertical-align: middle;
-  }
-  .search div:nth-child(2){
-
-    width:65%;
-    height:96px;
-    background:url(../../assets/icon20.png) no-repeat 20px center;
-    background-size: 10%;
-  }
-  .search div:nth-child(2) input{
-    font-size: 26px;
-    color: #9DA2B5;
-    letter-spacing: 0;
-    width:80%;
-    height:90px;
-    border:none;
-
-  }
-  .search div:nth-child(3){
-    width:19%;
-    height:96px;
-    text-align: center;
-    font-size: 30px;
-    color: #3B456C;
-    letter-spacing: 0;
-    border-left:2px solid #F1F2F7;
+    position: fixed;top:108px;left:0;
   }
   footer{
     height:88px;
     width:100%;
-    /*background:#f00;*/
     position: fixed;
     bottom:0;
     left:0;

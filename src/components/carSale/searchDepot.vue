@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class='search'>
-        <div align="center" @click="scan"><img src="../../assets/icon58.png" alt=""></div>
+        <div align="center" @click="scan" id="scan"><img src="../../assets/icon58.png" alt=""></div>
         <div align="right">
           <form action="" @submit.prevent="search">
             <input type="search" placeholder="请输入要搜索的产品" id="search">
@@ -33,9 +33,12 @@ import Request from "../../util/API"
         },
         search(){
           //搜索请求
-          // console.log(1)
+
         }
       
+      },
+      mounted(){
+        
       }
   })
  
