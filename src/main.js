@@ -18,8 +18,11 @@ if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function() {  
     FastClick.attach(document.body);  
   }, false);  
-}  
+}
 
+VueRouter.prototype.goBack = function(){
+	window.history.go(-1);
+}
 
 Vue.use(VueRouter);
 

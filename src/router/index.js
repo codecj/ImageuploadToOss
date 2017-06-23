@@ -1,3 +1,5 @@
+const test = resolve => require(['../views/test.vue'], resolve)
+const trunkList = resolve => require(['../views/carSale/trunkList.vue'],resolve)
 const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
 const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
 const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
@@ -13,9 +15,8 @@ const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerMana
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
 const test = resolve => require(['../views/carSale/test.vue'], resolve)
-
-
-
+const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
+const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
 export default {
     // mode:'history',
     routes: [{
@@ -78,11 +79,19 @@ export default {
         {
             path:'/test',
             component:test
+        },
+        {
+            path: '/goodgocar',
+            component: goodgocar
+
+        },
+        {
+            path:'/trunkList',
+            component:trunkList
+        },
+        {
+            path:'/selectTrunckGoodsWithNoStock',
+            component:selectTrunckGoodsWithNoStock
         }
-        // ,
-        // {
-        //     path: '/goodgocar',
-        //     component: GoodGoCar
-        // }
     ]
 }
