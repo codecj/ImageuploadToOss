@@ -29,10 +29,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
+        loader:"url-loader?limit=10000name=img/[name][hash:8].[ext]"
       }
     ]
   },

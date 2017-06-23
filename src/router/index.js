@@ -14,10 +14,16 @@ const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerMana
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
 const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
+import PageTransition from '../Components/carSale/PageTransition.vue'
+
 
 export default {
     // mode:'history',
     routes: [{
+        path:'/',
+        component:PageTransition,
+        children:[
+            {
             path: '/clientServer',//客户服务首页
             component: clientServer 
         },{
@@ -54,8 +60,8 @@ export default {
         },
         { path: '*', redirect: '/clientServer' },
         {
-        	path:'/nosearch',
-        	component:nosearch
+            path:'/nosearch',
+            component:nosearch
         },
         {
             path: '/carSellerManagerHome',
@@ -70,5 +76,7 @@ export default {
             path: '/goodgocar',
             component: goodgocar
         }
+        ]
+      }  
     ]
 }
