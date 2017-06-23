@@ -1,7 +1,7 @@
 <template>
     <div id="carSellerManagerHome" :style='{height:elmHeight}'>
         <!-- 内容 -->
-        <div>
+        <div class="content">
             <div class="header">
                 <img class="left-btn" src="../../assets/icon10.png" @click="backToNative"></img>
                 <form @submit.prevent="submit">
@@ -79,12 +79,18 @@ export default {
 
       },
       returnCar(){//alert("退货回车");
-        
+        this.$router.push({
+        path: 'goodgocar',
+        query: {
+          username:'123'
+        },
+      });
       },
       backToNative(){
+        alert(1);
         Request.jsBbridge(bridge=>{
           bridge.callHandler(
-            'backToNative'
+            'navBack'
           )
         })
       },
@@ -120,8 +126,8 @@ export default {
 
     /*工具条*/
     .tool-box {width: 100%;background-color: rgba(0,0,0,0);position: fixed;top: 0;bottom:0;left: 0;height: 2000px;z-index: 20;}
-    .tool-box ul {position: absolute;top:128px;right: 32px;opacity: 0.9;background: #333333;border-radius: 4px;width: 184px;height: 208px; text-align: center;}
-    .tool-box ul li {height: 68px;line-height: 68px;font-size: 30px;color: #FFFFFF;border-bottom: 2px solid #fff;}
+    .tool-box ul {position: absolute;top:128px;right: 32px;opacity: 0.9;background: #333333;border-radius: 4px;width: 240px;height: 300px; text-align: center;}
+    .tool-box ul li {height: 100px;line-height: 100px;font-size: 30px;color: #FFFFFF;border-bottom: 2px solid #fff;}
     /*.hiddenDom{overflow:hidden;}*/
 </style>
 
