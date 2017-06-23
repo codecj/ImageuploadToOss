@@ -99,14 +99,14 @@
 					this.page.pageno = parseInt(this.page.pageno) + 1;
 					this.ajax();
 				}
-			},
-			mounted(){
-				this.ajax();
 			}
 		},
 		components:{
 			Cell,
 			ScanSearch
+		},
+		mounted(){
+			this.ajax();
 		}
 	}
 </script>

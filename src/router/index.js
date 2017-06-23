@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 //路由懒加载
-=======
 const trunkList = resolve => require(['../views/carSale/trunkList.vue'],resolve)
->>>>>>> 3c587c9511822ec5b246416ec2565845a6d692f4
 const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
 const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
 const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
