@@ -1,38 +1,22 @@
 <template>
 	<div class="goodgocar">
 		<div class="header">
-			选择商品回车仓库
-			<img src="../../assets/icon10.png" class="back">
-			<img src="../../assets/icon10.png" class="arrow-down">
+			<span>选择商品回车仓库</span>
+			<div><img src="../../assets/icon10.png" class="back"></div>
+			<div><img src="../../assets/icon10.png" class="arrow-down"></div>
 			<div class="scan">
 				<ScanSearch></ScanSearch>
 			</div>
 		</div>
 		<div class="content">
 			<ul>
-				<li>
-					<Cell></Cell>
-				</li>
-				<li>
-					<Cell></Cell>
-				</li>
-				<li>
-					<Cell></Cell>
-				</li>
-					<li>
-					<Cell></Cell>
-				</li>
-					<li>
-					<Cell></Cell>
-				</li>
-					<li>
-					<Cell></Cell>
+				<li v-for="item in goodList">
+					<Cell :good='item'></Cell>
 				</li>
 			</ul>
 		</div>
 		<div class="footer">
-			<img src="../../assets/is-selected@2x.png" @click="allselect" class="select-img">
-			<span class="select-title">全选</span>
+			<span class="select-title" :class="{noselect:!isAllSelect,isselect:isAllSelect}" @click="allselect">全选</span>
 			<span class="btnCar">回车销售</span>
 		</div>
 	</div>
@@ -40,34 +24,101 @@
 
 <script>
 	import Cell from './goodGoCarCell.vue'
-	import ScanSearch from './ScanSearch.vue'
+	import ScanSearch from '../../components/carSale/searchDepot.vue'
+	import Request from "../../util/API"
+	import {
+    	Lazyload
+	} from 'mint-ui'
+	import {
+    	Toast,
+    	Indicator
+	} from 'mint-ui'
+
 	export default {
 		data(){
 			return{
 				isAllSelect:false,
-				imgname: 'no-selected@2x.png'
+				load:false,
+				show:false,
+				goodList:[],
+				page: {
+                	pageno: "0",
+                	pagesize: "20"
+            	},
+            	param:{
+                	username:"zhujyps01",
+                	userno:"728415"
+            	}
 			}
 		},
 		methods:{
 			allselect(){
 				 this.isAllSelect = !this.isAllSelect
+				 this.ajax();
+			},
+			ajax(){
+				Indicator.open();
+				const pargrmList = {
+					pagination: JSON.stringify(this.page),
+					oper: 'getReturnListForTruckFour',
+					type: 'return',
+					para: JSON.stringify(this.param) 
+				}
+				Request.post(pargrmList).then(res => {
+					const getData = JSON.parse(res.data.result)
+
+					getData.data.forEach(value => {
+						this.goodList.push(value);
+					})
+					console.log(this.goodList)
+					if (this.goodList.length == getData.pagination.totalcount){
+						this.load = true;
+						this.show = true;
+						Indicator.close();
+						return
+					}
+
+					if (getData.code !== "200") Toast({
+						message:getData.msg,
+						duration: 2000
+					});
+					Indicator.close();
+				}).catch(error => {
+					Indicator.close();
+					if (error.response){
+						Toast({
+							message: error.response.status,
+							duration: 2000
+						});
+					}
+				})
+			},
+			loadMore(){
+				if (!this.load){
+					this.loading = true;
+					this.page.pageno = parseInt(this.page.pageno) + 1;
+					this.ajax();
+				}
 			}
 		},
 		components:{
 			Cell,
 			ScanSearch
+		},
+		mounted(){
+			this.ajax();
 		}
 	}
 </script>
 
 <style scoped>
 	.header{
-		height: 128px;
+		height: 88px;
 		width: 100%;
 		color: #3B456C;
 		font-size: 40px;
 		text-align: center;
-		line-height: 128px;
+		line-height: 88px;
 		position: fixed;
 		background-color: white;
 		top: 0;
@@ -77,28 +128,30 @@
 	.header .back{
 		position: absolute;
 		left: 37px;
-		bottom: 30px;
+		bottom: 14px;
 		height: 60px;
 		width: 60px;
 	}
 	.header .arrow-down{
 		position: absolute;
 		right: 37px;
-		bottom: 30px;
+		bottom: 14px;
 		width: 60px;
 		height: 60px;
+		transform:rotate(270deg);
 	}
 	.scan{
 		padding-top:28px;
 		height: 98px;
 		width: 100%;
 		background-color: rgb(237, 238, 245);
-/*		position: fixed;
-		left: 0;
-		top: 128px;*/
 	}
 	.content{
-		margin-top:250px;
+		margin-top:210px;
+		background-color: rgb(237, 238, 245);
+		width: 100%;
+		height: 100%;
+		position: absolute;
 	}
 	.content ul li:last-child{
 		margin-bottom: 99px;
@@ -111,19 +164,24 @@
 		width: 100%;
 		background-color: #fff;
 	}
-	.footer .select-img{
-		position: absolute;
-		left: 24px;
-		top: 25px;
-		width: 48px;
-		height: 48px;
-	}
+	
 	.footer .select-title{
-		position: absolute;
-		top: 30px;
-		left: 80px;
 		font-size: 26px;
 		color: #4d5679;
+		width:120px;
+		height:98px;
+		line-height: 98px;
+		display:inline-block;
+		text-align: right;
+		margin-left: 24px;
+	}
+	.footer .noselect{
+		background: url("../../assets/icon59.png") no-repeat center left;
+		background-size: 48px 48px;
+	}
+	.footer .isselect{
+		background: url("../../assets/icon59-1.png") no-repeat center left;
+		background-size: 48px 48px;
 	}
 	.footer .btnCar{
 		float: right;

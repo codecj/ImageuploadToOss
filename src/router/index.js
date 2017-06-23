@@ -1,3 +1,4 @@
+//路由懒加载
 const trunkList = resolve => require(['../views/carSale/trunkList.vue'],resolve)
 const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
 const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
