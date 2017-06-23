@@ -94,24 +94,6 @@ export default {
                             message: error.response.status,
                             duration: 2000
                         });
-                // 测试数据
-                // this.dataArray = testJson.data;
-                // console.log(this.dataArray);
-
-                // for (var i = 0; i < this.dataArray.length; i++) {
-                //     var obj = this.dataArray[i];
-                //     for(var j = 0; j < obj.orders.length; j++) {
-                //         var item = obj.orders[j];
-                //         item.price = item.NET_PRICE;
-                //         item.praisePrice = item.REAL_COMMISSION_PRICE;
-                //         item.allCommissionPrice = item.COMMISSION_PRICE;
-                //     }
-                //     if (obj.STATUS === '' || obj.STATUS === undefined) {
-                //         obj.STATUS = '已结算';
-                //     }
-                // }
-
-                
             }
             )
         }

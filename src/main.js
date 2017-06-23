@@ -7,7 +7,7 @@ Vue.use(MintUI)
 import App from './App.vue';
 import VueRouter from "vue-router";
 import {focus} from 'vue-focus';
-import  routerConfig from './router'
+import routerConfig from './router'
 import FastClick from 'fastclick'
 import filters from './filters'
 
@@ -18,7 +18,11 @@ if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function() {  
     FastClick.attach(document.body);  
   }, false);  
-}  
+}
+
+VueRouter.prototype.goBack = function(){
+	window.history.go(-1);
+}
 
 Vue.use(VueRouter);
 

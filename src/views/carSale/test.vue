@@ -1,6 +1,5 @@
 <template>
     <div id="carSellerManagerHome" :style='{height:elmHeight}'>
-      <!-- :class="{hiddenDom:boxShowStatus}" -->
         <!-- 标题区 -->
         <div class="content">
             <div class="header">
@@ -38,7 +37,7 @@
                     </ul>
                 </div>
                 <div class="wait-car-content" v-show="waitCarActive">
-                    <div class="static-cell" @click="printGoodsDetail">
+                    <div class="static-cell">
                         <div>打印明细</div>
                         <div>打印待装车商品明细</div>
                     </div>
@@ -63,16 +62,20 @@
                 </div>
             </div>
         </div>
-        <div class="tool-box" v-show="boxShowStatus" @click="showToolBox">
+        <div class="tool-box" v-show="boxShowStatus" :class="{elmHeight}" @click.stop="showToolBox">
             <ul>
-                <!-- @click="addGoods" -->
-                <router-link to="selectTrunckGoods"><li>添加商品</li></router-link>
+                <li @click="addGoods">添加商品</li>
                 <li @click="carSaleStatistics">车销统计</li>
                 <li @click="returnCar">退货回车</li>
             </ul>
         </div>
     </div>
 </template>
+
+
+
+
+
 
 <script>
 import Request from "../../util/API";
@@ -119,6 +122,7 @@ export default {
         
       },
       backToNative(){
+        alert("打印订单")
         Request.jsBbridge(bridge=>{
           bridge.callHandler(
             'backToNative'
@@ -222,15 +226,8 @@ export default {
               }
            })
           function getObj(event){
-            var obj = event.target;
-            console.log(obj);
-            if (obj.className == 'tool-box') {
-                // event.preventDefault && event.preventDefault();
-                // event.returnValue=false;
-                // event.stopPropagation && event.stopPropagation();
-            } else {
-            }
-            obj = event.target.parentNode.parentNode;
+            var obj = event.target.parentNode.parentNode;
+            console.log(111);
             if (obj.className == "list-li") {
               return obj;
             } else {
@@ -289,10 +286,9 @@ export default {
     .btn{ position: absolute; top: 0; right: -20%; text-align: center; background: #ffcb20; width: 20%;height: 298px;line-height: 298px;background-image: linear-gradient(17deg, #FF4848 2%, #FF8739 100%);font-size: 30px;color: #FFFFFF;}
     
     /*工具条*/
-    .tool-box {width: 100%;background-color: rgba(0,0,0,0);position: fixed;top: 0;bottom:0;left: 0;height: 2000px;z-index: 20;}
+    .tool-box {width: 100%;background-color: rgba(0,0,0,0.1);position: absolute;top: 0;left: 0;height: 2000px;z-index: 20;}
     .tool-box ul {position: absolute;top:128px;right: 32px;opacity: 0.9;background: #333333;border-radius: 4px;width: 184px;height: 208px; text-align: center;}
     .tool-box ul li {height: 68px;line-height: 68px;font-size: 30px;color: #FFFFFF;border-bottom: 2px solid #fff;}
-    /*.hiddenDom{overflow:hidden;}*/
 </style>
 
 
