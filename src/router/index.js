@@ -20,8 +20,9 @@ import PageTransition from '../Components/carSale/PageTransition.vue'
 export default {
     // mode:'history',
     routes: [{
-        path:'/',
-        component:PageTransition,
+            path: '/',
+            name: 'PageTransition',
+            component: PageTransition,
         children:[
             {
             path: '/clientServer',//客户服务首页
