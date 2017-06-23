@@ -32,8 +32,9 @@
             <customerlIst @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom>
         </mt-loadmore>
-        <contactMsg v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>
+        <contactMsg v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>  
     </div>
+
 </template>
 <script type="text/javascript">
 import Request from "../util/API"
