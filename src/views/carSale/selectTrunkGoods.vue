@@ -21,13 +21,13 @@
                      :bottom-all-loaded="allLoaded" :bottomPullText='bottomText'
                      ref="loadmore" class="table">
                 <div class="cell">
-                	<img class="gooodImg" v-lazy="testurl">
+                	<img class="gooodImg" v-view="testurl">
                 	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
                 	<label class="vendorName">绍兴无语有限公司</label>
                 	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
                 </div>
                  <div class="cell">
-                	<img class="gooodImg" v-lazy="">
+                	<img class="gooodImg" v-view="">
                 	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
                 	<label class="vendorName">绍兴无语有限公司</label>
                 	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
@@ -43,23 +43,10 @@ import DepotList from '../../components/carSale/DepotList.vue'
 import AddStkcView from '../../components/carSale/AddStkcView.vue'
 import { navBack,scan } from '../../util/JsBridge.js'
 import  Request from '../../util/API.js'
-import Vue from 'vue'
 import {
     Toast,
-    Indicator,
-    Lazyload,
-    Loadmore
+    Indicator
 } from 'mint-ui'
-
-
-Vue.use(Lazyload, {
-    preLoad: 1.3,
-    lazyComponent: true,
-    error: require('../../assets/holde.png'),
-    loading: require('../../assets/holde.png'),
-    listenEvents: ['scroll']
-})
-
 
 	export default {
 	    data () {
@@ -103,7 +90,7 @@ Vue.use(Lazyload, {
 		            responseCallback(data);
 		        });
 		    });
-		   // this.requestDepot();
+		    this.requestDepot();
 	    },
 	    methods: {
 	   		// depotSelected: (depot) => {
