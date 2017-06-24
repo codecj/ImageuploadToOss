@@ -16,119 +16,344 @@
             </div>
             <div class="content">
                 <my-storage-content v-show="myStorageActive" :myStorageData="myStorageData"></my-storage-content>
-                <wait-car-content v-show="waitCarActive" :waitCarData="waitCarData"></wait-car-content>
+                <wait-car-content v-show="waitCarActive" :waitCarData="waitCarData" v-on:deleteRemoteItem="deleteRemoteItem" v-on:clickEdit="edit"></wait-car-content>
             </div>
         </div>
         <div class="tool-box" v-show="boxShowStatus" @click="showToolBox">
             <ul>
                 <!-- @click="addGoods" -->
-                <router-link to="selectTrunckGoods"><li>添加商品</li></router-link>
+                <li @click="addGoods">添加商品</li>
                 <li @click="carSaleStatistics">车销统计</li>
                 <li @click="returnCar">退货回车</li>
             </ul>
         </div>
+        <add-stkc-view v-show="addStkcShow" :baseStkc="stkcItemData"></add-stkc-view>
     </div>
 </template>
-
 <script>
-
 import Request from "../../util/API";
 import MyStorageContent from "../../components/carSale/MyStorageContent.vue"
 import WaitCarContent from "../../components/carSale/WaitCarContent.vue"
+import AddStkcView from "../../components/carSale/AddStkcView.vue"
+import {
+    Toast,
+    Indicator,
+    Lazyload,
+    Loadmore
+} from 'mint-ui'
+import storageJson from "./storage.json"
 
 export default {
-  name: 'page-navbar',
-  components:{
-    MyStorageContent,
-    WaitCarContent
-  },
-  data() {
-    return {
-      myStorageActive:true,
-      waitCarActive:false,
-      elmHeight:'100px',
-      boxShowStatus:false,
-      keyword:'',
-      waitCarData:'',
-      myStorageData:''
-    };
-  },
-  methods:{
-      switchToMyStorage(){
-        this.myStorageActive = true;
-        this.waitCarActive = false;
-      },
-      switchToWaitCar(){
-        this.myStorageActive = false;
-        this.waitCarActive = true;
-      },
-      leftButtonHandler(evt) { 
+    name: 'page-navbar',
+    components: {
+        MyStorageContent,
+        WaitCarContent,
+        AddStkcView
+    },
+    data() {
+        return {
+            myStorageActive: true,
+            waitCarActive: false,
+            boxShowStatus: false,
+            addStkcShow:false,
+            stkcItemData:{},
+            elmHeight: '100px',
+            keyword: '',
+            waitCarData: '',
+            myStorageData: '',
+            username: this.$route.query.username,
+            vusername: this.$route.query.vusername,
+            userno: this.$route.query.userno,
+            spUserName: this.$route.query.spUserName,
+            spUserNo: this.$route.query.spUserNo,
+            userid: this.$route.query.userid,
+            truckType: 'S',
+            storageStatus: 'A' // 待装车
+        };
+    },
+    created() {
+        this.getElementH();
+        this.getListData();
+    },
+    methods: {
+        getListData() { // 获取我的仓库列表信息
+            Indicator.open();
+            console.log(this.myStorageActive);
+            if (this.myStorageActive == false) { // 待装车
+                this.storageStatus = 'A'
+            } else { // 我的仓库
+                this.storageStatus = 'B'
+            }
+            var _this = this;
+            _this.username = 'k1111';
+            _this.vusername = 'HZSOP';
 
-      },
-      getElementH(){ // 获取屏幕的高度
-        var deviceH = document.documentElement.clientHeight;
-        this.$data.elmHeight = deviceH + 'px';
-      },
-      showToolBox(){ // 展示右上角的工具条
-        this.$data.boxShowStatus = !this.$data.boxShowStatus;
-      },
-      addGoods(){//alert("添加商品");
-
-      },
-      carSaleStatistics(){//alert("车销统计");
-
-      },
-      returnCar(){//alert("退货回车");
-        this.$router.push({
-        path: 'goodgocar',
-        query: {
-          username:'123'
+            let pargrmList = {
+                oper: 'getTruckListFour',
+                type: 'truck',
+                para: '{"username":"' + _this.username + '","key":"' + _this.keyword + '","vusername":"' + _this.vusername + '","truckType":"' + this.truckType + '","storageStatus":"' + _this.storageStatus + '"}'
+            };
+            Request.post(pargrmList).then(function(response) {
+                Indicator.close();
+                console.log(response);
+                // var resData = storageJson
+                var resData = JSON.parse(response.data.result);
+                if (_this.myStorageActive) {
+                    _this.myStorageData = resData.data;
+                } else {
+                    _this.waitCarData = resData.data;
+                }
+            }).catch(function(error) {
+                Indicator.close();
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    console.log(error.response.status);
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                } else {
+                    console.log('Error', error.message);
+                    Toast({
+                        message: error.message,
+                        duration: 2000
+                    });
+                }
+            })
         },
-      });
-      },
-      backToNative(){
-        alert(1);
-        Request.jsBbridge(bridge=>{
-          bridge.callHandler(
-            'navBack'
-          )
-        })
-      },
-      submit() {
-        alert(this.$data.keyword);
-        document.getElementById("search").blur()
-      }
-  },
-  created(){
-      this.getElementH();
-      
-  }
+        deleteRemoteItem(index) { // 删除
+            var storageItemData = this.myStorageData[index];
+            // this.myStorageData.splice(index, 1);
+            // var divs = document.getElementsByClassName("list-li");
+            // if (divs.length<=0) {return}
+            // console.log(divs);
+            // for (var item of divs) {
+            //     item.style.transform = "translateX(0px)";
+            // }
+            // alert(index);
+            Indicator.open();
+            let pargrmList = {
+                oper: 'delTruckIoItem',
+                type: 'truck',
+                para: '{"username":"' + _this.username + '","userno":"' + _this.userno + '","stkcs":"'+storageItemData.BASE_STK_C+'"}'
+            };
+            Request.post(pargrmList).then(function(response) {
+                Indicator.close();
+
+
+            }).catch(function(error) {
+                Indicator.close();
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    console.log(error.response.status);
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                } else {
+                    console.log('Error', error.message);
+                    Toast({
+                        message: error.message,
+                        duration: 2000
+                    });
+                }
+            })
+        },
+        switchToMyStorage() { // 切换至我的仓库
+            this.myStorageActive = true;
+            this.waitCarActive = false;
+            this.getStorageData();
+        },
+        switchToWaitCar() { // 切换至待装车
+            this.myStorageActive = false;
+            this.waitCarActive = true;
+            this.getStorageData();
+        },
+        getElementH() { // 获取屏幕的高度
+            var deviceH = document.documentElement.clientHeight;
+            this.$data.elmHeight = deviceH + 'px';
+        },
+        showToolBox() { // 展示右上角的工具条
+            this.$data.boxShowStatus = !this.$data.boxShowStatus;
+        },
+        addGoods() { //alert("添加商品");
+            this.$router.push({
+                path: 'selectTrunckGoods',
+                query: {
+                    userName: this.username,
+                    userId:this.userId,
+                    spUserName: this.spUserName,
+                    spUserNo: this.spUserNo
+                },
+            });
+        },
+        carSaleStatistics() { //alert("车销统计");
+            Request.jsBbridge(bridge => {
+                bridge.callHandler(
+                    'navBack'
+                )
+            })
+        },
+        edit(item){ // 编辑商品
+            this.stkcItemData = item;
+        },
+        returnCar() { //alert("退货回车");
+            this.$router.push({
+                path: 'goodgocar',
+                query: {
+                    userName: this.username,
+                    userId:this.userId,
+                    spUserName: this.spUserName,
+                    spUserNo: this.spUserNo
+                },
+            });
+        },
+        backToNative() {
+            alert(1);
+            Request.jsBbridge(bridge => {
+                bridge.callHandler(
+                    'navBack'
+                )
+            })
+        },
+        submit() { // 搜索
+            alert(this.$data.keyword);
+            document.getElementById("search").blur()
+            this.getListData();
+        }
+    }
 };
 </script>
-
 <style scoped>
+#carSellerManagerHome {
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(237, 238, 245);
+}
 
-    #carSellerManagerHome {position:relative;top:0;left:0;bottom:0;background-color: rgb(237,238,245);}
+.header {
+    height: 120px;
+    background-color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
 
-    .header {height: 120px;background-color: white;position: fixed;left: 0;top: 0;width: 100%; z-index: 10;}
-    .header .left-btn {margin: 50px 0 0 15px;width: 62px;height: 62px;}
-    .header .header-glass {position: absolute; left: 105px; top: 60px;}
-    .header .right-btn{width: 62px;height: 62px;position: absolute;top: 50px;right: 3%;}
-    .header form {position: absolute; top: 50px; left: 13%; height: 62px; right: 13%;}
-    .header .header-search {width: 100%;height: 62px;border: none; background-color: #EBECF0; padding-left: 80px;color: #9DA2B5;font-size: 26px; position: absolute; top: 0;}
-    
-    .tab-bar {position: fixed;left: 0;top:120px;background-color:white;width:100%;height: 99px;color: #9DA2B5;z-index: 10;}
-    .tab-bar > div{height: 96px; width: 50%;float: left;text-align: center;line-height: 96px;font-size: 30px;}
-    .tab-bar > div > span {line-height: 96px;height: 96px;display: block;width: 40%; margin:0 auto;}
-    .tabActive {color: #3B456C;border-bottom: 3px solid #FF783C;}
+.header .left-btn {
+    margin: 50px 0 0 15px;
+    width: 62px;
+    height: 62px;
+}
 
-    .content {position: absolute;top: 120px;width: 100%;left: 0;}
+.header .header-glass {
+    position: absolute;
+    left: 105px;
+    top: 60px;
+}
 
-    /*工具条*/
-    .tool-box {width: 100%;background-color: rgba(0,0,0,0);position: fixed;top: 0;bottom:0;left: 0;height: 2000px;z-index: 20;}
-    .tool-box ul {position: absolute;top:128px;right: 32px;opacity: 0.9;background: #333333;border-radius: 4px;width: 240px;height: 300px; text-align: center;}
-    .tool-box ul li {height: 100px;line-height: 100px;font-size: 30px;color: #FFFFFF;border-bottom: 2px solid #fff;}
-    /*.hiddenDom{overflow:hidden;}*/
+.header .right-btn {
+    width: 62px;
+    height: 62px;
+    position: absolute;
+    top: 50px;
+    right: 3%;
+}
+
+.header form {
+    position: absolute;
+    top: 50px;
+    left: 13%;
+    height: 62px;
+    right: 13%;
+}
+
+.header .header-search {
+    width: 100%;
+    height: 62px;
+    border: none;
+    background-color: #EBECF0;
+    padding-left: 80px;
+    color: #9DA2B5;
+    font-size: 26px;
+    position: absolute;
+    top: 0;
+}
+
+.tab-bar {
+    position: fixed;
+    left: 0;
+    top: 120px;
+    background-color: white;
+    width: 100%;
+    height: 99px;
+    color: #9DA2B5;
+    z-index: 10;
+}
+
+.tab-bar > div {
+    height: 96px;
+    width: 50%;
+    float: left;
+    text-align: center;
+    line-height: 96px;
+    font-size: 30px;
+}
+
+.tab-bar > div > span {
+    line-height: 96px;
+    height: 96px;
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.tabActive {
+    color: #3B456C;
+    border-bottom: 3px solid #FF783C;
+}
+
+.content {
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    left: 0;
+}
+
+/*工具条*/
+.tool-box {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 2000px;
+    z-index: 20;
+}
+
+.tool-box ul {
+    position: absolute;
+    top: 128px;
+    right: 32px;
+    opacity: 0.9;
+    background: #333333;
+    border-radius: 4px;
+    width: 240px;
+    height: 300px;
+    text-align: center;
+}
+
+.tool-box ul li {
+    height: 100px;
+    line-height: 100px;
+    font-size: 30px;
+    color: #FFFFFF;
+    border-bottom: 2px solid #fff;
+}
+
+/*.hiddenDom{overflow:hidden;}*/
 </style>
-
-

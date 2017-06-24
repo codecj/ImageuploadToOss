@@ -1,6 +1,6 @@
 <template>
 	<div class="gocarCell">
-		<span class="cellselect-img" :class="{cellNoselect:!isSelected, cellIsselect:isSelected}" @click="tap"></span>
+		<span class="cellselect-img" :class="{cellNoselect:!this.good.isSelected, cellIsselect:this.good.isSelected}" @click="tap"></span>
 		<img v-lazy="this.good.PRODUCT_THUMBNAIL" class="cell-img">
 		<div class="cell-msg">
 			<div class="cell-title">
@@ -18,18 +18,33 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import {
+    Toast,
+    Lazyload
+} from 'mint-ui'
+
+Vue.use(Lazyload, {
+    preLoad: 1.3,
+    lazyComponent: true,
+    error: require('../../assets/holde.png'),
+    loading: require('../../assets/holde.png'),
+    listenEvents: ['scroll']
+})
+
 	export default{
 		data(){
 			return {
-				isSelected:false,
+				
 			}
 		},
 		methods:{
 			tap(){
-				this.isSelected = !this.isSelected
+				this.good.isSelected = !this.good.isSelected
+				this.$emit('fromCell', this.index, this.good.isSelected);
 			}
 		},
-		props: ['good']
+		props: ['good','index']
 	}
 </script>
 

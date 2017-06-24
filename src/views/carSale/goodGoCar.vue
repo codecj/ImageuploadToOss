@@ -2,7 +2,7 @@
 	<div class="goodgocar">
 		<div class="header">
 			<span>选择商品回车仓库</span>
-			<div><img src="../../assets/icon10.png" class="back"></div>
+			<div><img src="../../assets/icon10.png" class="back" @click="back"></div>
 			<div><img src="../../assets/icon10.png" class="arrow-down"></div>
 			<div class="scan">
 				<ScanSearch></ScanSearch>
@@ -10,8 +10,8 @@
 		</div>
 		<div class="content">
 			<ul>
-				<li v-for="item in goodList">
-					<Cell :good='item'></Cell>
+				<li v-for="(item, index) in goodList">
+					<Cell :good='item' :index='index' @fromCell="fromCell"></Cell>
 				</li>
 			</ul>
 		</div>
@@ -26,6 +26,7 @@
 	import Cell from './goodGoCarCell.vue'
 	import ScanSearch from '../../components/carSale/searchDepot.vue'
 	import Request from "../../util/API"
+	import {navBack} from '../../util/JsBridge.js'
 	import {
     	Lazyload
 	} from 'mint-ui'
@@ -46,15 +47,20 @@
                 	pagesize: "20"
             	},
             	param:{
-                	username:"zhujyps01",
-                	userno:"728415"
+                	username : this.$route.query.username,
+					userno : this.$route.query.userno
             	}
 			}
 		},
 		methods:{
 			allselect(){
 				 this.isAllSelect = !this.isAllSelect
-				 this.ajax();
+				 for (var value of this.goodList){
+				 	value.isSelected = this.isAllSelect
+				 }
+			},
+			fromCell(index, status){
+				this.goodList[index].isSelected = status
 			},
 			ajax(){
 				Indicator.open();
@@ -66,8 +72,8 @@
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
-
 					getData.data.forEach(value => {
+						this.$set(value,"isSelected", false)
 						this.goodList.push(value);
 					})
 					console.log(this.goodList)
@@ -99,6 +105,9 @@
 					this.page.pageno = parseInt(this.page.pageno) + 1;
 					this.ajax();
 				}
+			},
+			back(){
+				navBack();
 			}
 		},
 		components:{
@@ -106,6 +115,12 @@
 			ScanSearch
 		},
 		mounted(){
+			 Request.jsBbridge(bridge => {
+		        bridge.init(function(message, responseCallback) {
+		            var data = {};
+		            responseCallback(data);
+		        });
+		    })
 			this.ajax();
 		}
 	}
@@ -150,7 +165,6 @@
 		margin-top:210px;
 		background-color: rgb(237, 238, 245);
 		width: 100%;
-		height: 100%;
 		position: absolute;
 	}
 	.content ul li:last-child{
@@ -163,6 +177,7 @@
 		left: 0;
 		width: 100%;
 		background-color: #fff;
+		border-top: 1px solid rgb(237, 238, 245);
 	}
 	
 	.footer .select-title{
