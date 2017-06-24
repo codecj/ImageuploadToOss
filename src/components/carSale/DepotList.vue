@@ -1,7 +1,7 @@
 <template>
   <div @click="backTap()" class="depot">
   	<ul>
-  		<li v-for="depot in depotList" @click.stop="selectDepot(depot)" class="borderB"><label>{{depot.depotName}}</label></li >
+  		<li v-for="depot in depotList" @click.stop="selectDepot(depot)" class="borderB"><label>{{depot.NAME}}</label></li >
   	</ul>
 	<div @click.stop="cancelView()"><label>取消</label></div>
   </div>

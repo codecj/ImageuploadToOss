@@ -17,22 +17,16 @@
   		</form>
 
   	</div>
-  	<mt-loadmore :bottom-method="requestMore" :top-method="loadTop" 
-                     :bottom-all-loaded="allLoaded" :bottomPullText='bottomText'
-                     ref="loadmore" class="table">
-                <div class="cell">
-                	<img class="gooodImg" v-view="testurl">
-                	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
-                	<label class="vendorName">绍兴无语有限公司</label>
+  	<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
+  	class="table">
+
+ 	<div v-for="item in this.baseStkcList" class="cell">
+                	<img class="gooodImg" v-view="item.URL_ADDR">
+                	<label class="goodName">{{item.STK_NAME}}</label>
+                	<label class="vendorName">{{item.VENDOR_NAME}}</label>
                 	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
-                </div>
-                 <div class="cell">
-                	<img class="gooodImg" v-view="">
-                	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
-                	<label class="vendorName">绍兴无语有限公司</label>
-                	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
-                </div>
-             
+                </div>  
+
     </mt-loadmore>
   
   </div>
@@ -45,7 +39,8 @@ import { navBack,scan } from '../../util/JsBridge.js'
 import  Request from '../../util/API.js'
 import {
     Toast,
-    Indicator
+    Indicator,
+    Loadmore
 } from 'mint-ui'
 
 	export default {
@@ -53,9 +48,10 @@ import {
 	        return {
 	            showDepot:false,
 	            showStkcView:false,
-	            dopName:'仓库1',
+	            dopName:'',
 	            currentDepot:null,
 	            depotList:[],
+	            baseStkcList:[],
 	            keyWord:'',
 	            getScoreLog: [],
 		        pageNo: 1,
@@ -65,39 +61,44 @@ import {
 		        testurl:'http://192.168.200.235:8080/oo.png',
 		        depotParam:{
 		        	//业务员userno
-		        	userno:'',
+		        	userno:'359320',
 		        	//业务员对应的供应商username
-		        	vusername:'',
+		        	vusername:'HZSOP',
 		        	//业务员username
-		        	username:''
-		        }
+		        	username:'k1111'
+		        },
+		        baseStkcByDepotParam:{
+		        	//业务员userno
+		        	userno:'359320',
+		        	//业务员username
+		        	username:'k1111',
+		        	vname:'HZSOP',
+		        	whc:'',
+		        	key:'',
+		        	truckType:'S'
+		        },
+		        item:{STK_NAME:'',VENDOR_NAME:''}
+		       
 	        }
 	    },
 	    mounted(){
-	    	let temp1 = {depotName:'沈半路仓库1'};
-	    	let temp2 = {depotName:'沈半路仓库2'};
-	    	let temp3 = {depotName:'沈半路仓库3'};
-	    	let temp4 = {depotName:'沈半路仓库4'};
-	    	let temp5 = {depotName:'沈半路仓库5'};
-	    	this.depotList.push(temp1);
-	    	this.depotList.push(temp2);
-	    	this.depotList.push(temp3);
-	    	this.depotList.push(temp4);
-	    	this.depotList.push(temp5);
 		    Request.jsBbridge(bridge => {
 		        bridge.init(function(message, responseCallback) {
 		            var data = {};
 		            responseCallback(data);
 		        });
 		    });
-		    this.requestDepot();
+		   // this.requestDepot();
 	    },
 	    methods: {
 	   		// depotSelected: (depot) => {
 	   		// 	alert('回调:'+depot.depotName);
 	   		// },
 	   		depotSelected(depot){
-	   			alert('回调:'+depot.depotName);
+	   			this.showDepot = false;
+	   			this.currentDepot = depot;
+	   			this.dopName = depot.NAME;
+	   			this.requestBaseStkcByDepot();
 	   		},
 	   		//仓库列表取消回调
 	   		cancelDepotList(){
@@ -112,14 +113,12 @@ import {
 	    	},
 
 	    	scan(){
-				alert('扫一扫');
 				scan((response) =>{
 					alert(response);
 				});
 	    	},
 
 	    	navBack(){
-	    		alert('111');
 	    		//调用router回退页面
         		 this.$router.goBack();
         		
@@ -135,8 +134,14 @@ import {
 	    	},
 
 	    	requestMore(){
-	    		alert('requestMore');
-	    		this.$refs.loadmore.onBottomLoaded();
+	    		//alert('requestMore');
+	    		//this.$refs.loadmore.onBottomLoaded();
+	    		if (this.baseStkcList.length == 0) {
+	    			this.requestDepot();
+	    		}else{
+	    			// this.loading = true;
+	    		}
+	    		
 	    	},
 	    	loadTop(){
 	    		alert('refresh');
@@ -184,7 +189,49 @@ import {
 	        },
 
 	        requestBaseStkcByDepot(){
+	        	this.baseStkcByDepotParam.whc =  this.currentDepot.WH_C;
+	        	let pargrmList = {
+               	 	oper: 'getVendorStkFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.baseStkcByDepotParam)
+            	};
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                	 Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                  	this.baseStkcList = getData.data;
+	                  	this.item = this.baseStkcList[0];
+	                  	this.baseStkcList.push(this.item);
+	                  	this.baseStkcList.push(this.item);
+	                  		this.baseStkcList.push(this.item);
+	                  			this.baseStkcList.push(this.item);
+	                  				this.baseStkcList.push(this.item);	this.baseStkcList.push(this.item);
+	                  					this.baseStkcList.push(this.item);	this.baseStkcList.push(this.item);
+	                }
 
+	            }).catch(error => {
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
 	        }
 	    },
 	    components: {
@@ -242,16 +289,17 @@ import {
 	.selectCarGoods .table{
 		width: 100%;
 		top:197px;
-		overflow-y: auto;
+		overflow-y: scroll;
 		position: absolute;
 		background-color: #f1f2f7;
 		bottom: 0px;
+		-webkit-overflow-scrolling: touch;
 	}
 
 
 	.selectCarGoods .table .cell{
 		height:296px;width:100%;
-		background-color: #ffffff;
+		background-color: white;
 		position: relative;
 		margin-top: 10px;
 		-webkit-box-sizing: border-box;
