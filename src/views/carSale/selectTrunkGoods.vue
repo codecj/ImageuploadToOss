@@ -2,7 +2,7 @@
 <template>
   <div class="selectCarGoods">
   	<div class="nav borderB">
-  			<label>仓库:仓库1</label>
+  			<label>仓库:{{dopName}}</label>
   			<img @click='navBack()'  class="left" src='../../assets/icon10.png'></img>
   			<img @click="selectDev()" class="right" src="../../assets/arrow-down.png"></img>
   	</div>
@@ -21,13 +21,13 @@
                      :bottom-all-loaded="allLoaded" :bottomPullText='bottomText'
                      ref="loadmore" class="table">
                 <div class="cell">
-                	<img class="gooodImg">
+                	<img class="gooodImg" v-view="testurl">
                 	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
                 	<label class="vendorName">绍兴无语有限公司</label>
                 	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
                 </div>
                  <div class="cell">
-                	<img class="gooodImg">
+                	<img class="gooodImg" v-view="">
                 	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
                 	<label class="vendorName">绍兴无语有限公司</label>
                 	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
@@ -43,19 +43,34 @@ import DepotList from '../../components/carSale/DepotList.vue'
 import AddStkcView from '../../components/carSale/AddStkcView.vue'
 import { navBack,scan } from '../../util/JsBridge.js'
 import  Request from '../../util/API.js'
+import {
+    Toast,
+    Indicator
+} from 'mint-ui'
+
 	export default {
 	    data () {
 	        return {
 	            showDepot:false,
 	            showStkcView:false,
-	            dopName:'请选择仓库的世界顶级',
+	            dopName:'仓库1',
+	            currentDepot:null,
 	            depotList:[],
 	            keyWord:'',
 	            getScoreLog: [],
 		        pageNo: 1,
 		        allLoaded: false,
 		        bottomText: '上拉加载更多...',
-		        totalCount: ''
+		        totalCount: '',
+		        testurl:'http://192.168.200.235:8080/oo.png',
+		        depotParam:{
+		        	//业务员userno
+		        	userno:'',
+		        	//业务员对应的供应商username
+		        	vusername:'',
+		        	//业务员username
+		        	username:''
+		        }
 	        }
 	    },
 	    mounted(){
@@ -74,7 +89,8 @@ import  Request from '../../util/API.js'
 		            var data = {};
 		            responseCallback(data);
 		        });
-		    })
+		    });
+		    this.requestDepot();
 	    },
 	    methods: {
 	   		// depotSelected: (depot) => {
@@ -125,13 +141,57 @@ import  Request from '../../util/API.js'
 	    	loadTop(){
 	    		alert('refresh');
 	    		this.$refs.loadmore.onTopLoaded();
-	    	}
+	    	},
+	    	requestDepot(){
+	    		let pargrmList = {
+               	 	oper: 'getVendorwhcFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.depotParam)
+            	};
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   this.depotList = getData.data;
+	                   if (this.depotList.length == 0) {
+	                   		return;
+	                   }
+	                   let depotModel = this.depotList[0];
+	                   this.currentDepot = depotModel;
+	                   this.dopName = depotModel.NAME;
+	                   this.requestBaseStkcByDepot();
+	                }
+
+	            }).catch(error => {
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	        },
+
+	        requestBaseStkcByDepot(){
+
+	        }
 	    },
 	    components: {
         	selectcarspec,
         	DepotList,
         	AddStkcView
-   		 },
+   		 }
 	}
 
 </script>
@@ -201,7 +261,7 @@ import  Request from '../../util/API.js'
 		position: absolute;
 		width: 200px;
 		height: 200px;
-		background-color: red;
+		background-color: white;
 		left: 32px;
 		top:51px;
 		border: none;
