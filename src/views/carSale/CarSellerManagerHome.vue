@@ -82,8 +82,9 @@ export default {
         this.$router.push({
         path: 'goodgocar',
         query: {
-          username:'123'
-        },
+          username:"zhujyps01",
+          userno:"728415"
+        }
       });
       },
       backToNative(){

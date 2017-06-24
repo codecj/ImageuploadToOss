@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class='search'>
-        <div align="center" @click="scan" id="scan"><img src="../../assets/icon58.png" alt=""></div>
+        <div align="center" id="scan"><img @click="scanBtn" src="../../assets/icon58.png" alt=""></div>
         <div align="right">
           <form action="" @submit.prevent="search">
             <input type="search" placeholder="请输入要搜索的产品" id="search">
@@ -15,6 +15,7 @@
 
 <script type="text/javascript">
 import Request from "../../util/API"
+import {scan} from '../../util/JsBridge.js'
   export default({
       data(){
         return{
@@ -24,16 +25,12 @@ import Request from "../../util/API"
 
       },
       methods:{
-        scan(){
-          Request.jsBbridge(function(bridge) {
-            bridge.callHandler(
-              // 'pushSearchWebClick'
-            )
-          })
-        },
         search(){
           //搜索请求
 
+        },
+        scanBtn(){
+          scan()
         }
       
       },
