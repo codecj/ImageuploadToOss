@@ -6,20 +6,20 @@
             <div>打印待装车商品明细</div>
         </div>
         <ul class="list-ul">
-            <li class="borderBottom" v-for="n in 10">
+            <li class="borderBottom" v-for="(item,index) in waitCarData">
                 <div class="cell-header borderBottom">
                     <span>待仓管确认装车</span>
-                    <span>编辑</span>
+                    <span @click="editGoods(item)">编辑</span>
                 </div>
                 <div class="list-li">
                     <div class="con">
                         <div class="cell-content">
-                            <img src="../../assets/add.png" class="goodsImg">
-                            <h4 class="goodsName">我是很牛逼的商品</h4>
-                            <h5 class="goodsSpec">我是商品规格</h5>
+                            <img v-view="item.URL_ADDR" class="goodsImg">
+                            <h4 class="goodsName">{{item.STK_NAME}}</h4>
+                            <h5 class="goodsSpec">{{item.STOCK}}</h5>
                         </div>
                     </div>
-                    <div class="btn" @click='deleteItem'>删除</div>
+                    <div class="btn" @click='deleteItem(index)'>删除</div>
                 </div>
             </li>
         </ul>
@@ -30,40 +30,44 @@
 import Request from "../../util/API";
 import tools from "../../util/tools.js"
 export default {
-	data(){
-		return{
-			
-		}
-	},
-	props:['waitCarData'],
-    methods: {
-        deleteItem() { // 删除按钮点击事件
-            alert(2);
+    data(){
+            return {
+
+            }
         },
-        printGoodsDetail() { // alert("打印订单")
-            Request.jsBbridge(bridge => {
-                window.WebViewJavascriptBridge.callHandler(
-                    'printGoodsDetail', {
-                        'Data': 'json数据传给Android端'
-                    } //该类型是任意类型
-                    , (responseData) => {
-                        // var res = responseData
-                        //     // JSON.parse(JSON.stringify(responseData))
-                        // if ((typeof res) == 'string') {
-                        //     res = JSON.parse(responseData);
-                        // }
-                        // this.areaid = res.areaid;
-                        // res.areaid == '' ? this.address = '全部区域' : this.address = res.address;
-                    }
-                );
-            })
+        props: ['waitCarData'],
+        methods: {
+            editGoods(item){
+                this.$emit('clickEdit',item);
+            },
+            deleteItem(index) { // 删除按钮点击事件
+                this.$emit('deleteRemoteItem',index);
+            },
+            printGoodsDetail() { // alert("打印订单")
+                Request.jsBbridge(bridge => {
+                    window.WebViewJavascriptBridge.callHandler(
+                        'printGoodsDetail', {
+                            'Data': 'json数据传给Android端'
+                        } //该类型是任意类型
+                        , (responseData) => {
+                            // var res = responseData
+                            //     // JSON.parse(JSON.stringify(responseData))
+                            // if ((typeof res) == 'string') {
+                            //     res = JSON.parse(responseData);
+                            // }
+                            // this.areaid = res.areaid;
+                            // res.areaid == '' ? this.address = '全部区域' : this.address = res.address;
+                        }
+                    );
+                })
+            }
+        },
+        created() {
+            window.cellSwipe();
         }
-    },
-    created() {
-        window.cellSwipe();
-    }
 }
 </script>
+
 
 
 <style type="text/css" scoped>

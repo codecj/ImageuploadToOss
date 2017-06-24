@@ -7,16 +7,15 @@
                 <div>未售完商品退回至仓库</div>
             </div>
             <ul class="list-ul">
-                <li class="borderBottom" v-for="n in 10">
-                    <div class="list-li">
+                <li class="borderBottom" v-for='(item,index) in myStorageData'>
+                    <div class="storage-list-li">
                         <div class="con">
                             <div class="cell-content">
-                                <img src="../../assets/add.png" class="goodsImg">
-                                <h4 class="goodsName">我是很牛逼的商品</h4>
-                                <h5 class="goodsSpec">我是商品规格</h5>
+                                <img v-view="item.URL_ADDR" class="goodsImg">
+                                <h4 class="goodsName">{{item.STK_NAME}}</h4>
+                                <h5 class="goodsSpec">{{item.STOCK}}</h5>
                             </div>
                         </div>
-                        <div class="btn" @click='deleteItem'>删除</div>
                     </div>
                 </li>
             </ul>
@@ -29,17 +28,12 @@ import tools from "../../util/tools.js"
 	export default {
 		data(){
 			return{
-				
+
 			}
 		},
 		props:['myStorageData'],
-		methods:{
-      		deleteItem(){ // 删除按钮点击事件
-        		alert(2);
-      		}
-		},
 		created(){
-			window.cellSwipe();
+			// window.cellSwipe();
 		}
 	}
 </script>
@@ -60,10 +54,9 @@ import tools from "../../util/tools.js"
     .cell-content .goodsSpec {position: absolute;left: 260px;top: 182px;font-size: 26px;color: #3B456C; width: 200px;}
 
     /*list-li*/
-    .list-ul{overflow-x:hidden;overflow-y: auto;}
+    .list-ul{overflow: hidden;}
     .list-ul li {border-bottom: 24px solid rgb(237,238,245);}
-    .list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;-webkit-transform: translateX(0px); transform: translateX(0px);}
-    .btn{ position: absolute; top: 0; right: -20%; text-align: center; background: #ffcb20; width: 20%;height: 298px;line-height: 298px;background-image: linear-gradient(17deg, #FF4848 2%, #FF8739 100%);font-size: 30px;color: #FFFFFF;}
+    .storage-list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;}
 </style>
 
 
