@@ -45,11 +45,8 @@ import {
     Lazyload,
     Loadmore
 } from 'mint-ui'
-import contactMsg from '../components/contactMsg.vue'
-import customerlIst from '../components/customerManagement.vue'
-import getbottom from '../components/getbottom.vue'
-import utils from '../util/utils'
-// console.log(utils.md5('1234'));
+
+
 Vue.use(Lazyload, {
     preLoad: 1.3,
     lazyComponent: true,
@@ -57,6 +54,14 @@ Vue.use(Lazyload, {
     loading: require('../assets/holde.png'),
     listenEvents: ['scroll']
 })
+
+
+import contactMsg from '../components/contactMsg.vue'
+import customerlIst from '../components/customerManagement.vue'
+import getbottom from '../components/getbottom.vue'
+import utils from '../util/utils'
+// console.log(utils.md5('1234'));
+
 export default {
     name: 'clientServer',
     data() {

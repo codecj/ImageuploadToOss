@@ -1,0 +1,46 @@
+{
+    "sign": "", 
+    "secret": "", 
+    "oper": "getTruckListFour", 
+    "type": "truck", 
+    "source": "H", 
+    "version": "7", 
+    "device": {
+        "OS": "ios", 
+        "IMEI": "5284cc188ecb8d8118774e534eaa74a6d8437344", 
+        "OSV": "6.0"
+    }, 
+    "para": {
+        "key": "aa", 
+        "username": "zhujyps01", 
+        "whc": "zhujyps01", 
+        "truckType": "S", 
+        "storageStatus": "A", 
+        "vusername": "bb"
+    }, 
+    "data": [
+        {
+            "VENDOR_USER_NO": 377439, 
+            "VENDOR_USER_NAME": "QJ", 
+            "VENDOR_NAME": "全家便利店", 
+            "STK_NAME": "aaaaaa", 
+            "URL_ADDR": "http://img-test.qpwa.cn/upload/prod/list/1850.jpg", 
+            "BASE_STK_C": "1022912", 
+            "STOCK": "20箱10件8个", 
+            "MODLE_LIST": [
+                {
+                    "ACTUAL_QTY": "100", 
+                    "BASE_STK_C": "1022912", 
+                    "STD_QTY": "1", 
+                    "STK_QTY": 100, 
+                    "STK_C": "1022912", 
+                    "UOM": "瓶", 
+                    "MODLE": "1*1包", 
+                    "NET_PRICE": 1
+                }
+            ]
+        }
+    ], 
+    "code": "200", 
+    "msg": "成功"
+}
