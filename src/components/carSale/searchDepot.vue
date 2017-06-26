@@ -30,7 +30,10 @@ import {scan} from '../../util/JsBridge.js'
 
         },
         scanBtn(){
-          scan()
+          scan((response) =>{
+            // alert(response);
+            this.$emit('scanAfter', response)
+          });
         }
       
       },
