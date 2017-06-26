@@ -34,7 +34,9 @@ import { navBack,scan } from '../../util/JsBridge.js'
 
         },
         scanBtn(){
-          scan();
+          scan((response) =>{
+            this.$emit('scanAfter', response)
+          });
         }
       
       },
