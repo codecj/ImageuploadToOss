@@ -2,27 +2,19 @@
   <div  class="addStkc">
   	<div class="content">
   		<div class="goodsInfo borderB">
-  			<img class="goodsImg"></img>
-  			<label class="goodsName">墨西的我的企鹅未必瞧得起我好的起我的期望的武器</label>
+  			<img class="goodsImg" v-view="baseStkc.URL_ADDR"></img>
+  			<label class="goodsName">{{baseStkc.STK_NAME}}</label>
   			<img @click.stop="backTap()" class="cancel" src="../../assets/icon18.png"></img>
-			<label class="stock">库存:20箱10件8个</label>
+			<label class="stock">库存:{{baseStkc.STOCK}}</label>
   		</div>
 		<ul>
-			<li class="borderB">
-				<label class="spec">包 (1*2个)</label>
-				<label class="price">¥200.00</label>
-				<img @click.stop="addStkc()" class="add" src="../../assets/icon9.png"></img>
-				<input type="tel"  class="amount" v-model="stock">
-				<img @click.stop="reduceStkc()" class="reduce" src="../../assets/icon3.png"></img>
-				<label class="stkcStock">库存 1242</label>
-			</li>
-			<li class="borderB">
-				<label class="spec">包 (1*2个)</label>
-				<label class="price">¥200.00</label>
-				<img class="add" src="../../assets/icon9.png"></img>
-				<input type="tel"  class="amount" v-model="stock">
-				<img class="reduce" src="../../assets/icon3.png"></img>
-				<label class="stkcStock">库存 1242</label>
+			<li v-for="item in baseStkc.MODLE_LIST" class="borderB">
+				<label class="spec">{{item.UOM +'(' + item.MODLE +')'}}</label>
+				<label class="price">¥{{item.NET_PRICE}}</label>
+				<img @click.stop="addStkc(item)" class="add" src="../../assets/icon9.png"></img>
+				<input type="tel"  class="amount" v-model="item.qty">
+				<img @click.stop="reduceStkc(item)" class="reduce" src="../../assets/icon3.png"></img>
+				<label class="stkcStock">库存 {{item.ACTUAL_QTY}}</label>
 			</li>
 		</ul>
   		<div class="addBtn" @click.stop='submitStkc()'>添加</div>
@@ -34,7 +26,7 @@
 		data () {
 			return {
 				msg: '',
-				stock:10
+				stock:1
 			}
 		},
 		computed:{
@@ -54,14 +46,14 @@
 			backTap(){
 				this.$emit('cancelAddStkcView');
 			},
-			addStkc(){
-				this.stock++;
+			addStkc(item){
+				item.qty++;
 			},
-			reduceStkc(){
-				if (this.stock == 0) {
-					this.stock = 0;
+			reduceStkc(item){
+				if (item.qty == 0) {
+					
 				}else{
-					this.stock--;
+					item.qty--;
 				}
 			},
 			submitStkc(){

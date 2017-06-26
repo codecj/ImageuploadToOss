@@ -9,7 +9,7 @@
   	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
   	</DepotList>
 
-	<AddStkcView v-show="showStkcView" :baseStkc={} @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
+	<AddStkcView v-if="baseStkc != null" v-show="showStkcView" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
   	<div class="search">
   		<img src="../../assets/scanne@2x.png" @click="scan()"></img>
   		<form @submit.prevent="search">
@@ -20,12 +20,12 @@
   	<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
   	class="table">
 
- 	<div v-for="item in this.baseStkcList" class="cell">
-                	<img class="gooodImg" v-view="item.URL_ADDR">
-                	<label class="goodName">{{item.STK_NAME}}</label>
-                	<label class="vendorName">{{item.VENDOR_NAME}}</label>
-                	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
-                </div>  
+ 		<div v-for="item in this.baseStkcList" class="cell">
+        	<img class="gooodImg" v-view="item.URL_ADDR">
+        	<label class="goodName">{{item.STK_NAME}}</label>
+        	<label class="vendorName">{{item.VENDOR_NAME}}</label>
+        	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+		</div>  
 
     </mt-loadmore>
   
@@ -52,6 +52,7 @@ import {
 	            currentDepot:null,
 	            depotList:[],
 	            baseStkcList:[],
+	            baseStkc:null,
 	            keyWord:'',
 	            getScoreLog: [],
 		        pageNo: 1,
@@ -129,13 +130,19 @@ import {
 	    		this.showDepot = true;
 	    	},
 
-	    	addGoodStkc(){
+	    	addGoodStkc(item){
 	    		this.showStkcView = true;
+	    		this.baseStkc = item;
+	    		for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
+	    			let temp = this.baseStkc.MODLE_LIST[i];
+	    			this.$set(temp,'qty',1);
+	    			this.$set(temp,'urladdr',this.baseStkc.URL_ADDR);
+	    			this.$set(temp,'stkname',this.baseStkc.STK_NAME);
+	    		}
 	    	},
 
 	    	requestMore(){
-	    		//alert('requestMore');
-	    		//this.$refs.loadmore.onBottomLoaded();
+	    		
 	    		if (this.baseStkcList.length == 0) {
 	    			this.requestDepot();
 	    		}else{
