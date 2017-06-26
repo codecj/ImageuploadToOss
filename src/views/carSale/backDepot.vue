@@ -2,7 +2,7 @@
   <div>
       <header>
         <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
-        <router-link :to="'test'"><div>{{depotName}}</div></router-link>
+        <div>{{depotName}}</div>
         <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
       </header>
         <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
@@ -27,9 +27,11 @@
   import depotlist from "../../components/carSale/DepotList.vue"
   import AddStkcView from '../../components/carSale/AddStkcView.vue'
   import searchDepot from '../../components/carSale/searchDepot.vue'
+  import Request from "../../util/API"
   import Vue from 'vue'
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'
+
     // 懒加载效果
   Vue.use(Lazyload, {
     preLoad: 1.3,
@@ -73,20 +75,12 @@
               URL_ADDR:"../../assets/icon1.png"
             }
           ],
-          depotList:[
-            {
-              depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
-            },
-            {
-              depotName:"难吃难吃啊啊 啊啊 啊啊啊啊啊啊啊啊"
-            }, 
-            {
-              depotName:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好"
-            },
-            {
-              depotName:"难吃难吃啊啊 啊啊 啊啊啊啊啊啊啊啊"
-            }
-          ]
+          depotList:[{deptoName:"111"}],
+          pagram:{
+            vusername:"QJ",
+            userno:"",
+            username:""
+          }
         }
       },
       components:{
@@ -99,13 +93,25 @@
         depotSelected(depot){
           this.showDev = false;
           this.depotName = depot.depotName;
-          // console.log('回调:'+depot.depotName);
         },
         cancelDepotList(){
           this.showDev = false;
         },
-        selectDev(){
+        selectDev(){//点击弹出可选列表
           this.showDev = !this.showDev;
+          this.getList();
+        },
+        getList(){//获取列表数据
+          const pargrmList = {
+            oper: 'getVendorwhcFour',
+            type: 'truck',
+            para: JSON.stringify(this.pagram) 
+          }
+          Request.post(pargrmList).then(res=>{
+            console.log(res.data.result)
+          }).catch(error=>{
+             
+          })
         },
         back(){
           this.showDatail = !this.showDatail;
