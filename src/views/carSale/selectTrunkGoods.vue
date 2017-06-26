@@ -9,7 +9,7 @@
   	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
   	</DepotList>
 
-	<AddStkcView v-if="baseStkc != null" v-show="showStkcView" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
+	<AddStkcView v-if="baseStkc != null" v-show="showStkcView" :baseStkc="baseStkc" @submitStkc='submitStkc' @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
   	<div class="search">
   		<img src="../../assets/scanne@2x.png" @click="scan()"></img>
   		<form @submit.prevent="search">
@@ -21,7 +21,7 @@
   	class="table">
 
  		<div v-for="item in this.baseStkcList" class="cell">
-        	<img class="gooodImg" v-view="item.URL_ADDR">
+        	<img class="gooodImg" :src="item.URL_ADDR">
         	<label class="goodName">{{item.STK_NAME}}</label>
         	<label class="vendorName">{{item.VENDOR_NAME}}</label>
         	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
@@ -78,6 +78,19 @@ import {
 		        	key:'',
 		        	truckType:'S'
 		        },
+		        //添加商品到待装车
+		        addStckParam:{
+		        	whc:null,
+		        	username:'k1111',
+		        	vname:'HZSOP',
+		        	name:'kiki',
+		        	userno:'359320',
+		        	item:null
+		        },
+		        page: {
+                	pageno: "0",
+                	pagesize: "20"
+            	},
 		        item:{STK_NAME:'',VENDOR_NAME:''}
 		       
 	        }
@@ -136,8 +149,6 @@ import {
 	    		for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
 	    			let temp = this.baseStkc.MODLE_LIST[i];
 	    			this.$set(temp,'qty',1);
-	    			this.$set(temp,'urladdr',this.baseStkc.URL_ADDR);
-	    			this.$set(temp,'stkname',this.baseStkc.STK_NAME);
 	    		}
 	    	},
 
@@ -228,6 +239,64 @@ import {
 	                  			this.baseStkcList.push(this.item);
 	                  				this.baseStkcList.push(this.item);	this.baseStkcList.push(this.item);
 	                  					this.baseStkcList.push(this.item);	this.baseStkcList.push(this.item);
+	                }
+
+	            }).catch(error => {
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	        },
+	        submitStkc(baseStkc){
+	        	this.showStkcView = false;
+	        	let itemList = [];
+	        	for (let i = 0; i < baseStkc.MODLE_LIST.length; i++) {
+	        		let temp = baseStkc.MODLE_LIST[i];
+	        		if (temp.qty > 0) {
+	        			let model = {};
+	        			model.vendorname = temp.VENDOR_USER_NAME;
+	        			model.stkc = temp.STK_C;
+	        			model.stkname = temp.STK_NAME;
+	        			model.urladdr = temp.URLADDR;
+	        			model.pluc = temp.PLUC;
+	        			model.stkmodel = temp.MODLE;
+	        			model.qty = temp.qty+'';
+	        			itemList.push(model);
+	        		}
+	        	}
+	        	if (itemList.length == 0) {
+	        		 Toast({
+	                        message: '添加商品数量不能为空',
+	                        duration: 2000
+	                    });
+	        		 return;
+	        	}
+	        	this.addStckParam.whc =  this.currentDepot.WH_C;
+	        	this.addStckParam.item = JSON.stringify(itemList);
+	        	let pargrmList = {
+               	 	oper: 'saveTruckIoItem',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.addStckParam)
+            	};
+            	//ajax调用
+	            Request.post(pargrmList).then(res => {
+	                const getData = JSON.parse(res.data.result);
+	               
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   Toast({
+	                        message: '添加商品到待装车成功',
+	                        duration: 2000
+	                    });
 	                }
 
 	            }).catch(error => {

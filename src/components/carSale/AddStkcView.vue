@@ -14,7 +14,7 @@
 				<img @click.stop="addStkc(item)" class="add" src="../../assets/icon9.png"></img>
 				<input type="tel"  class="amount" v-model="item.qty">
 				<img @click.stop="reduceStkc(item)" class="reduce" src="../../assets/icon3.png"></img>
-				<label class="stkcStock">库存 {{item.ACTUAL_QTY}}</label>
+				<label class="stkcStock">库存 {{item.STKC_QTY}}</label>
 			</li>
 		</ul>
   		<div class="addBtn" @click.stop='submitStkc()'>添加</div>
@@ -57,7 +57,7 @@
 				}
 			},
 			submitStkc(){
-				alert(this.stock);
+				this.$emit('submitStkc',this.baseStkc);
 			}
 			// selectDepot:(depot) => {  this.$emit('depotSelected',depot); }
 		}
