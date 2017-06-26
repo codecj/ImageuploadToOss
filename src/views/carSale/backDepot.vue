@@ -13,7 +13,7 @@
           <searchDepot></searchDepot>
         </div>
      
-          <onedepot :list="this.list" :selectStatus="selectStatus"  @back="back"></onedepot>        
+          <onedepot :stockList="stockList" :selectStatus="selectStatus"  @back="back"></onedepot>        
       </content>
       <footer>
           <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
@@ -32,13 +32,6 @@
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'
 
-    // 懒加载效果
-  Vue.use(Lazyload, {
-    preLoad: 1.3,
-    error: require('../../assets/holde.png'),
-    loading: require('../../assets/holde.png'),
-    attempt: 1
-  })
   export default({
       data(){
         return{
@@ -46,40 +39,21 @@
           showDev:false,
           showDatail:false,
           depotName:"",
-          list:[
-            {
-              name:"墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨西哥辣鸡墨",
-              num:"12",
-              URL_ADDR:"../../assets/icon1.png"
-
-            },{
-              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
-              num:"13",
-              URL_ADDR:"../../assets/icon1.png"
-            }
-            ,{
-              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
-              num:"13",
-              URL_ADDR:"../../assets/icon1.png"
-            },{
-              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
-              num:"13",
-              URL_ADDR:"../../assets/icon1.png"
-            },{
-              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
-              num:"13",
-              URL_ADDR:"../../assets/icon1.png"
-            },{
-              name:"好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好吃好吃啊好",
-              num:"13",
-              URL_ADDR:"../../assets/icon1.png"
-            }
-          ],
-          depotList:[{deptoName:"111"}],
-          pagram:{
+          stockList:[],//库存列表
+          backdepotList:[],//点击回库列表
+          depotList:[],//仓库名称列表
+          pagram:{//可选仓库参数
             vusername:"QJ",
-            userno:"",
-            username:""
+            userno:"359320",
+            username:"k1111"
+          },
+          depotPagarm:{//待装车和我的库存搜索参数
+            key:"",
+            username:"k1111",
+            vusername:"HZSOP",
+            whc:"",
+            truckType:"S",
+            storageStatus:"B"
           }
         }
       },
@@ -92,7 +66,7 @@
         },
         depotSelected(depot){
           this.showDev = false;
-          this.depotName = depot.depotName;
+          this.depotName = depot.NAME;
         },
         cancelDepotList(){
           this.showDev = false;
@@ -101,30 +75,60 @@
           this.showDev = !this.showDev;
           this.getList();
         },
-        getList(){//获取列表数据
+        getList(){//可选仓库列表接口
+          this.depotList = [];
           const pargrmList = {
             oper: 'getVendorwhcFour',
             type: 'truck',
             para: JSON.stringify(this.pagram) 
           }
           Request.post(pargrmList).then(res=>{
-            console.log(res.data.result)
+            let dataList = JSON.parse(res.data.result);
+            dataList.data.forEach(value=> {
+              this.depotList.push(value)
+            })           
+            this.depotName = dataList.data[0].NAME;
+            if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
           }).catch(error=>{
-             
+             if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                Toast({
+                    message: error.response.status,
+                    duration: 2000
+                });
+            }
+          })
+        },
+        getSearch(){//待装车和我的库存搜索接口
+           const pargrmList = {
+            oper: 'getTruckListFour',
+            type: 'truck',
+            para: JSON.stringify(this.depotPagarm) 
+          }
+          Request.post(pargrmList).then(res=>{
+            let dataList = JSON.parse(res.data.result);
+            console.log(dataList)
+            dataList.data.forEach(value=> {
+              this.stockList.push(value)
+            })      
+            // console.log(this.stockList)     
+            if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+          }).catch(error=>{
+             if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                Toast({
+                    message: error.response.status,
+                    duration: 2000
+                });
+            }
           })
         },
         back(){
           this.showDatail = !this.showDatail;
+          this.getList();
         },
         cancelAddStkcView(){
           this.showDatail = false;
-        },
-        selectdepotName(){
-          // console.log(1)
-          // this.list.forEach(value=>{
-          //   console.log(value)
-          // })
-           this.depotName = this.depotList[0].depotName;
         },
         goback(){
           this.$router.goBack();
@@ -132,7 +136,8 @@
   
       },
       mounted() {
-        this.selectdepotName();
+        this.getSearch();
+        this.getList();
       }
 
   })
