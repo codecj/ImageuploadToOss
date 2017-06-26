@@ -4,21 +4,21 @@
         <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
         <div>{{depotName}}</div>
         <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
-      </header>
-        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
-        </depotlist>
-        <AddStkcView v-show="showDatail" @cancelAddStkcView="cancelAddStkcView"></AddStkcView>   
+      </header>  
+       <div class="searchs">
+          <searchDepot :depotPagarm="depotPagarm" @search="search"></searchDepot>
+        </div>   
       <content>
-        <div class="searchs">
-          <searchDepot></searchDepot>
-        </div>
-     
-          <onedepot :stockList="stockList" :selectStatus="selectStatus"  @back="back"></onedepot>        
+          
+          <onedepot :stockList="stockList" :selectStatus="selectStatus"  @back="back" @allSelect="allSelect"></onedepot>        
       </content>
       <footer>
           <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
-          <div>确认回库</div>
+          <div @click="sureBackDepot">确认回库</div>
       </footer>
+       <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
+      </depotlist>
+      <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView'></AddStkcView> 
   </div> 
 </template>
 
@@ -39,8 +39,8 @@
           showDev:false,
           showDatail:false,
           depotName:"",
+          baseStkc:null,
           stockList:[],//库存列表
-          backdepotList:[],//点击回库列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
             vusername:"QJ",
@@ -54,6 +54,13 @@
             whc:"",
             truckType:"S",
             storageStatus:"B"
+          },
+          backPagarm:{
+            userno:"359320",
+            username:"k1111",
+            whc:"QJ", 
+            name:"kiki",
+            item:[]
           }
         }
       },
@@ -61,10 +68,8 @@
         onedepot,depotlist,AddStkcView,searchDepot
       },
       methods:{
-        selectAll(){
-            this.selectStatus = !this.selectStatus;           
-        },
-        depotSelected(depot){
+
+        depotSelected(depot){//仓库title赋值
           this.showDev = false;
           this.depotName = depot.NAME;
         },
@@ -73,7 +78,6 @@
         },
         selectDev(){//点击弹出可选列表
           this.showDev = !this.showDev;
-          this.getList();
         },
         getList(){//可选仓库列表接口
           this.depotList = [];
@@ -100,6 +104,7 @@
           })
         },
         getSearch(){//待装车和我的库存搜索接口
+          Indicator.open();
            const pargrmList = {
             oper: 'getTruckListFour',
             type: 'truck',
@@ -107,12 +112,16 @@
           }
           Request.post(pargrmList).then(res=>{
             let dataList = JSON.parse(res.data.result);
-            console.log(dataList)
             dataList.data.forEach(value=> {
+              value.seletedStatus = true;
+              this.selectStatus = true;
               this.stockList.push(value)
-            })      
-            // console.log(this.stockList)     
+              value.MODLE_LIST.forEach(temp=>{
+                this.$set(temp,"qty",temp.STK_QTY);
+              })   
+            })  
             if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+             Indicator.close();
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -123,15 +132,89 @@
             }
           })
         },
-        back(){
+        sureBackDepot(){//点击确认回库
+           let arr = [];
+           this.stockList.forEach(value=>{
+              let param = {}
+              if(value.seletedStatus){
+                value.MODLE_LIST.forEach(item=>{
+                  param.cpmode = item.CP_MODE
+                  param.pluc = item.PLU_CODE
+                  param.urladdr = item.URL_ADDR
+                  param.stkname = item.NAME
+                  param.basestkc = item.BASE_STK_C
+                  param.stkc = item.STK_C
+                  param.stdqty = item.STD_QTY
+                  param.stkmodel = item.MODLE
+                  param.qty = item.STK_QTY 
+                })
+              }
+              if(param.qty > 0){
+                  arr.push(param);
+               }
+            })
+          this.backPagarm.item = JSON.stringify(arr);
+          const pargrmList = {
+            oper: 'saveTruck_OFour',
+            type: 'truck',
+            para: JSON.stringify(this.backPagarm) 
+          }
+          Request.post(pargrmList).then(res=>{
+            
+            Toast({message:"回库成功", duration: 2000 });
+          }).catch(error=>{
+             if (error.response) {
+                // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                Toast({
+                    message: error.response.status,
+                    duration: 2000
+                });
+            }
+          })
+        },
+        back(item){//点击回库
           this.showDatail = !this.showDatail;
-          this.getList();
+          this.baseStkc = item;
+          // item.MODLE_LIST.forEach(temp=>{
+          //   this.$set(temp,"qty",temp.STK_QTY);
+          // })         
         },
         cancelAddStkcView(){
           this.showDatail = false;
         },
-        goback(){
+        goback(){//返回按钮
           this.$router.goBack();
+        },
+        search(key){//搜索
+          console.log(key)
+          this.stockList = [];
+          this.getSearch();
+
+        },
+        selectAll(){//点击全选
+          this.selectStatus = !this.selectStatus;
+            this.stockList.forEach(value=>{
+                if (this.selectStatus) {
+                  value.seletedStatus = true;
+                } else {
+                  value.seletedStatus = false;
+                }
+            })                  
+        },
+        allSelect(){//点击列表选择按钮，判断是否全选
+          console.log(this.stockList);
+          var flag = true;
+          this.stockList.forEach(item=>{
+            if (!item.seletedStatus) {
+              flag = false;
+            }
+            // console.log(flag)
+          })
+          if (!flag) {
+            this.selectStatus = false;
+          } else {
+            this.selectStatus = true;
+          }
         }
   
       },
@@ -145,7 +228,6 @@
 </script>
 
 <style scoped>
-
   header{
     height:88px;
     line-height:88px;
@@ -193,14 +275,17 @@
     height:auto;
     width:100%;
     overflow: auto;
-    /*padding-top:20px;*/
 
   }
   .searchs{
-    background: #fff;
+    background: #f1f2f7;
     width:100%;
     height:96px;
-    position: fixed;top:108px;left:0;
+    padding-top:20px;
+    position: fixed;
+    top:88px;
+    left:0;
+
   }
   footer{
     height:88px;
@@ -214,6 +299,7 @@
     float:left;
   }
   footer div:nth-child(1){
+    background: #fff;
     width:75%;
     height:88px;
     /*padding-left:%;*/

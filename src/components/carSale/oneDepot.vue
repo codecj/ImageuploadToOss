@@ -1,16 +1,14 @@
 <template>
   <div class="onedepot">
   	<div class="depot" v-for="(item,index) in stockList" >
-  		<div @click="changeBg"  :class="{'noselect':!selectStatus,'selectBg':selectStatus}"></div>
-	    <!-- <div><img v-lazy="item.URL_ADDR" alt=""></div> -->
+  		<div @click="changeBg(item)"  :class="{'noselect':!item.seletedStatus,'selectBg':item.seletedStatus}"></div>
 	    <div><img v-view="item.URL_ADDR" alt=""></div>
 	    <div>
 	    	<p>{{item.STK_NAME}}</p>
 	    	<p>100个</p>
 	    	<p>
-	    		<!-- <span>1箱</span> -->
 	    		<span>{{item.STOCK}}</span>
-	    		<span @click="backDepot">回库</span>
+	    		<span @click="backDepot(item)">回库</span>
 	    	</p>
 	    </div>
 	  	
@@ -25,7 +23,8 @@
  	name:"onedepot",
  	data(){
  		return{
- 			showDev:false
+ 			showDev:false,
+ 			// status:true
  		}
  	},
  	props:{
@@ -33,15 +32,12 @@
  		selectStatus:Boolean
  	},
  	methods:{
- 		changeBg(){
- 			if(event.target.className == "noselect"){
- 				event.target.className = "selectBg"
- 			}else{
- 				event.target.className ="noselect"
- 			}
+ 		changeBg(item){		
+ 			item.seletedStatus = !item.seletedStatus;
+ 			this.$emit("allSelect");
  		},
- 		backDepot(){
- 			this.$emit("back");
+ 		backDepot(item){
+ 			this.$emit("back",item);
  		}
  		
  	}

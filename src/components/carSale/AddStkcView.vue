@@ -57,7 +57,7 @@
 				}
 			},
 			submitStkc(){
-				alert(this.stock);
+				// alert(this.stock);
 			}
 			// selectDepot:(depot) => {  this.$emit('depotSelected',depot); }
 		}

@@ -3,11 +3,11 @@
       <div class='search'>
         <div align="center" id="scan"><img @click="scanBtn" src="../../assets/icon58.png" alt=""></div>
         <div align="right">
-          <form action="" @submit.prevent="search">
-            <input type="search" placeholder="请输入要搜索的产品" id="search">
+          <form action="" @submit.prevent="search(depotPagarm.key)">
+           <input type="search" placeholder="请输入要搜索的产品" :value="depotPagarm.key" v-model="depotPagarm.key" id="search">
           </form>
         </div>
-        <div @click="search">搜索</div>
+        <div @click="search(depotPagarm.key)">搜索</div>
       </div>
   </div>
   
@@ -15,27 +15,37 @@
 
 <script type="text/javascript">
 import Request from "../../util/API"
-import {scan} from '../../util/JsBridge.js'
+import { navBack,scan } from '../../util/JsBridge.js'
   export default({
       data(){
         return{
          }
       },
+      props:{
+        depotPagarm:Object
+      },
       components:{
 
       },
       methods:{
-        search(){
+        search(key){
           //搜索请求
+          this.$emit("search",key)
 
         },
         scanBtn(){
-          scan()
+          scan();
         }
       
       },
       mounted(){
-        
+        Request.jsBbridge(bridge => {
+            bridge.init(function(message, responseCallback) {
+                var data = {};
+                responseCallback(data);
+            });
+        });
+       // this.requestDepot();
       }
   })
  
