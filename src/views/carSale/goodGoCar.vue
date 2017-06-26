@@ -3,9 +3,9 @@
 		<div class="header">
 			<span>选择商品回车仓库</span>
 			<div><img src="../../assets/icon10.png" class="back" @click="back"></div>
-			<div><img src="../../assets/icon10.png" class="arrow-down"></div>
+			<!-- <div><img src="../../assets/icon10.png" class="arrow-down"></div> -->
 			<div class="scan">
-				<ScanSearch></ScanSearch>
+				<ScanSearch @scanAfter="scanData"></ScanSearch>
 			</div>
 		</div>
 		<div class="content">
@@ -17,23 +17,31 @@
 		</div>
 		<div class="footer">
 			<span class="select-title" :class="{noselect:!isAllSelect,isselect:isAllSelect}" @click="allselect">全选</span>
-			<span class="btnCar">回车销售</span>
+			<span class="btnCar" @click="goCarRequest">回车销售</span>
 		</div>
 	</div>
 </template>
 
 <script>
-	import Cell from './goodGoCarCell.vue'
-	import ScanSearch from '../../components/carSale/searchDepot.vue'
-	import Request from "../../util/API"
-	import {navBack} from '../../util/JsBridge.js'
-	import {
-    	Lazyload
-	} from 'mint-ui'
+	import Vue from 'vue';
+	import Cell from './goodGoCarCell.vue';
+	import ScanSearch from '../../components/carSale/searchDepot.vue';
+	import Request from "../../util/API";
+	import {navBack} from '../../util/JsBridge.js';
 	import {
     	Toast,
-    	Indicator
+    	Indicator,
+    	Lazyload,
+    	Loadmore
 	} from 'mint-ui'
+
+	Vue.use(Lazyload, {
+    	preLoad: 1.3,
+    	lazyComponent: true,
+    	error: require('../../assets/holde.png'),
+    	loading: require('../../assets/holde.png'),
+    	listenEvents: ['scroll']
+	})
 
 	export default {
 		data(){
@@ -49,6 +57,11 @@
             	param:{
                 	username : this.$route.query.username,
 					userno : this.$route.query.userno
+            	},
+            	goCarParam:{
+            		spUserName : "zhujyps01",
+            		pkNos : "43224,43207,43202,43189,43142,43141,43137",
+            		spUserNo: "382005"
             	}
 			}
 		},
@@ -76,7 +89,45 @@
 						this.$set(value,"isSelected", false)
 						this.goodList.push(value);
 					})
-					console.log(this.goodList)
+					if (this.goodList.length == getData.pagination.totalcount){
+						this.load = true;
+						this.show = true;
+						Indicator.close();
+						return
+					}
+
+					if (getData.code !== "200") Toast({
+						message:getData.msg,
+						duration: 2000
+					});
+					Indicator.close();
+				}).catch(error => {
+					Indicator.close();
+					if (error.response){
+						Toast({
+							message: error.response.status,
+							duration: 2000
+						});
+					}
+				})
+			},
+			goCar(){
+				Indicator.open();
+				const pargrmList = {
+					pagination: JSON.stringify(this.page),
+					oper: 'backToTruckFour',
+					type: 'truck',
+					para: JSON.stringify(this.goCarParam) 
+				}
+				Request.post(pargrmList).then(res => {
+					const getData = JSON.parse(res.data.result)
+					// getData.data.forEach(value => {
+					// 	this.$set(value,"isSelected", false)
+					// 	this.goodList.push(value);
+					// })
+					// console.log(this.goodList)
+						alert("数据请求成功")
+						navBack()
 					if (this.goodList.length == getData.pagination.totalcount){
 						this.load = true;
 						this.show = true;
@@ -108,6 +159,13 @@
 			},
 			back(){
 				navBack();
+			},
+			scanData(data){
+				//扫描拿到的数据
+				alert(data)
+			},
+			goCarRequest(){
+				this.goCar();
 			}
 		},
 		components:{
@@ -147,14 +205,14 @@
 		height: 60px;
 		width: 60px;
 	}
-	.header .arrow-down{
+/*	.header .arrow-down{
 		position: absolute;
 		right: 37px;
 		bottom: 14px;
 		width: 60px;
 		height: 60px;
 		transform:rotate(270deg);
-	}
+	}*/
 	.scan{
 		padding-top:28px;
 		height: 98px;

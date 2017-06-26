@@ -26,17 +26,17 @@ const JsBridge = (callback) =>{
 //返回jsbridge
 export const navBack = () =>{
 	JsBridge(bridge => {
-                bridge.callHandler('navBack')
-            })
+      bridge.callHandler('navBack')
+  })
 };
 
 //扫一扫jsbridge
 export const scan = (cb) =>{
   JsBridge(bridge => {
-                window.WebViewJavascriptBridge.callHandler('scan',null,(responseData) => {
-                    cb(responseData);
-                })
-            })
+      window.WebViewJavascriptBridge.callHandler('scan',null,(responseData) => {
+          cb(responseData);
+      })
+  })
 };
 
  // Request.jsBbridge(bridge => {

@@ -1,7 +1,7 @@
 <template>
 	<div class="gocarCell">
 		<span class="cellselect-img" :class="{cellNoselect:!this.good.isSelected, cellIsselect:this.good.isSelected}" @click="tap"></span>
-		<img v-lazy="this.good.PRODUCT_THUMBNAIL" class="cell-img">
+		<img v-view="this.good.PRODUCT_THUMBNAIL" class="cell-img">
 		<div class="cell-msg">
 			<div class="cell-title">
 				{{this.good.STK_NAME}}
