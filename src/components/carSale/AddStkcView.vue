@@ -17,7 +17,7 @@
 				<label class="stkcStock">库存 {{item.ACTUAL_QTY}}</label>
 			</li>
 		</ul>
-  		<div class="addBtn" @click.stop='submitStkc()'>添加</div>
+  		<div class="addBtn" @click.stop='submitStkc(baseStkc.MODLE_LIST)'>添加</div>
   	</div>
   </div>
 </template>
@@ -56,10 +56,13 @@
 					item.qty--;
 				}
 			},
-			submitStkc(){
+			submitStkc(basestkc){				
+				this.$emit("basestkc",basestkc);
+
+				// console.log(modleList)
+
 				// alert(this.stock);
 			}
-			// selectDepot:(depot) => {  this.$emit('depotSelected',depot); }
 		}
 	}
 

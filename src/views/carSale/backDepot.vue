@@ -18,7 +18,8 @@
       </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
       </depotlist>
-      <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView'></AddStkcView> 
+      <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView' 
+      @basestkc="basestkc"></AddStkcView> 
   </div> 
 </template>
 
@@ -92,7 +93,8 @@
               this.depotList.push(value)
             })           
             this.depotName = dataList.data[0].NAME;
-            if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+            if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
+            return
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -120,8 +122,10 @@
                 this.$set(temp,"qty",temp.STK_QTY);
               })   
             })  
-            if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+            console.log(this.stockList)
+            if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
              Indicator.close();
+             return
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -132,7 +136,7 @@
             }
           })
         },
-        sureBackDepot(){//点击确认回库
+        sureBackDepot(){//点击"确认回库""
            let arr = [];
            this.stockList.forEach(value=>{
               let param = {}
@@ -160,8 +164,14 @@
             para: JSON.stringify(this.backPagarm) 
           }
           Request.post(pargrmList).then(res=>{
+            
+            if(res.code !== "200"){
+              Toast({message:res.msg, duration: 2000 });
+            }else{
+              Toast({message:"回库成功", duration: 2000 });
+            }
+            return
 
-            Toast({message:"回库成功", duration: 2000 });
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -215,6 +225,29 @@
           } else {
             this.selectStatus = true;
           }
+        },
+        basestkc(list){//更改回库列表的qty
+          this.showDatail = false;
+          // console.log(list)
+          // list.forEach(ite=>{
+          //   console.log(ite.qty)
+          // })          
+          // this.stockList.forEach(value=>{
+          //   value.MODLE_LIST.forEach(item=>{
+          //     // if(item.qty == list.qty){
+          //     //  console.log(item.qty)
+          //     // }
+          //   })
+
+            this.stockList.forEach(value=>{
+              value.MODLE_LIST.forEach(item=>{
+                    
+              })
+                value.MODLE_LIST.replace(list)
+            })
+           
+          // })
+        
         },
         scanData(data){//扫描结果
           console.log(data)
