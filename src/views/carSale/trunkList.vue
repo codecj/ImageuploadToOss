@@ -10,11 +10,11 @@
   		</div>
   		<ul class="table list-ul">
 
-  			<li class="cell" v-for="n in 10">
+  			<li class="cell" v-for="item in this.baseStkcList">
   				<LeftSlider :index = n @deleteItem='deleteItem'>
-  					<img class="gooodImg">
-                	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
-                	<label class="vendorName">库存:20箱10件8个</label>
+  					<img class="gooodImg" v-lazy="item.URL_ADDR">
+                	<label class="goodName">{{item.STK_NAME}}</label>
+                	<label class="vendorName">库存:{{item.STOCK}}</label>
        			</LeftSlider>
   			</li>
   		</ul>
@@ -23,13 +23,14 @@
 <script>
 	import { navBack } from '../../util/JsBridge.js'
 	import LeftSlider from '../../components/carSale/LeftSlider.vue'
+	import  Request from '../../util/API.js'
+	import {Toast,Indicator,Loadmore} from 'mint-ui'
 	export default {
 		data () {
 			return {
 				showRightArrow:false,
 				keyWord:'',
 				baseStkcByDepotParam:{
-		        	
 		        	//业务员username
 		        	username:'k1111',
 		        	vusername:'HZSOP',
@@ -37,10 +38,11 @@
 		        	truckType:'M',
 		        	storageStatus:'B'
 		        },
+		        baseStkcList:[]
 			}
 		},
 		mounted(){
-			
+			this.requestBaseStkc();
 		},
 	
 		methods:{
@@ -58,6 +60,47 @@
 	    	},
 	    	deleteItem( index ){
 	    		alert(index);
+	    	},
+	    	requestBaseStkc(){
+	    		let pargrmList = {
+               	 	oper: 'getTruckListFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.baseStkcByDepotParam)
+            	};
+            	Indicator.open();
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                	 Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                	  getData.data.forEach(value => {
+                   			 this.baseStkcList.push(value)
+               			 })
+                	}
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
 	    	}
 		},
 		components: {
