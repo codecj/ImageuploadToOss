@@ -19,7 +19,7 @@
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
       </depotlist>
       <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView' 
-      @basestkc="basestkc"></AddStkcView> 
+      @submitStkc="submitStkc"></AddStkcView> 
   </div> 
 </template>
 
@@ -122,7 +122,6 @@
                 this.$set(temp,"qty",temp.STK_QTY);
               })   
             })  
-            console.log(this.stockList)
             if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
              Indicator.close();
              return
@@ -164,9 +163,9 @@
             para: JSON.stringify(this.backPagarm) 
           }
           Request.post(pargrmList).then(res=>{
-            
-            if(res.code !== "200"){
-              Toast({message:res.msg, duration: 2000 });
+             const getData = JSON.parse(res.data.result);
+            if(getData.code !== "200"){
+              Toast({message:getData.msg, duration: 2000 });
             }else{
               Toast({message:"回库成功", duration: 2000 });
             }
@@ -184,10 +183,7 @@
         },
         back(item){//点击回库
           this.showDatail = !this.showDatail;
-          this.baseStkc = item;
-          // item.MODLE_LIST.forEach(temp=>{
-          //   this.$set(temp,"qty",temp.STK_QTY);
-          // })         
+          this.baseStkc = item;      
         },
         cancelAddStkcView(){
           this.showDatail = false;
@@ -226,35 +222,17 @@
             this.selectStatus = true;
           }
         },
-        basestkc(list){//更改回库列表的qty
+        submitStkc(basestkc){//更改回库列表的qty
+          console.log(basestkc)
           this.showDatail = false;
-          // console.log(list)
-          // list.forEach(ite=>{
-          //   console.log(ite.qty)
-          // })          
-          // this.stockList.forEach(value=>{
-          //   value.MODLE_LIST.forEach(item=>{
-          //     // if(item.qty == list.qty){
-          //     //  console.log(item.qty)
-          //     // }
-          //   })
-
-            this.stockList.forEach(value=>{
-              value.MODLE_LIST.forEach(item=>{
-                    
-              })
-                value.MODLE_LIST.replace(list)
-            })
-           
-          // })
-        
+         
         },
         scanData(data){//扫描结果
-          console.log(data)
+          // console.log(data)
         }
   
       },
-      mounted() {
+      mounted(){
         this.getSearch();
         this.getList();
       }

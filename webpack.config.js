@@ -27,21 +27,16 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader']
       },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      }
-     //  {test: /\.(png|jpg)$/, 
-     //    loader:"url-loader?limit=10000name=img/[name][hash:8].[ext]"
-     //  //   loader: 'url-loader',
-     //  //    options: {
-     //  //    limit: 10000,
-     //  //     name: '[name].[ext]?[hash]'
-     //  // }
-     // }
+      // {
+      //   test: /\.(png|jpg|gif|svg)$/,
+      //   loader: 'file-loader',
+      //   options: {
+      //     name: '[name].[ext]?[hash]'
+      //   }
+      // }
+      {test: /\.(png|jpg)$/, 
+        loader:"url-loader?limit=10000name=img/[name][hash:8].[ext]"
+     }
     ]
   },
   plugins: [
@@ -62,7 +57,6 @@ module.exports = {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-    // host:'192.168.200.132',
     host:'192.168.200.165',
     historyApiFallback: true,
     noInfo: true

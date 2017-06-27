@@ -2,13 +2,13 @@
   <div class="onedepot">
   	<div class="depot" v-for="(item,index) in stockList" >
   		<div @click="changeBg(item)"  :class="{'noselect':!item.seletedStatus,'selectBg':item.seletedStatus}"></div>
-	    <div><img v-view="item.URL_ADDR" alt=""></div>
+	    <div><img v-lazy="item.URL_ADDR" alt=""></div>
 	    <div>
 	    	<p>{{item.STK_NAME}}</p>
 	    	<p>100个</p>
 	    	<p>
 	    		<span>{{item.STOCK}}</span>
-	    		<span @click="backDepot(item)">回库</span>
+	    		<span @click="backDepot(item)">修改</span>
 	    	</p>
 	    </div>
 	  	
