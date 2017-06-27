@@ -14,7 +14,7 @@
                 <div class="list-li">
                     <div class="con">
                         <div class="cell-content">
-                            <img v-view="item.URL_ADDR" class="goodsImg">
+                            <img :src="item.URL_ADDR" class="goodsImg">
                             <h4 class="goodsName">{{item.STK_NAME}}</h4>
                             <h5 class="goodsSpec">{{item.STOCK}}</h5>
                         </div>
@@ -29,6 +29,7 @@
 <script type="text/javascript">
 import Request from "../../util/API";
 import tools from "../../util/tools.js"
+import printJson from '../../views/carSale/print.json'
 export default {
     data(){
             return {
@@ -47,16 +48,10 @@ export default {
                 Request.jsBbridge(bridge => {
                     window.WebViewJavascriptBridge.callHandler(
                         'printGoodsDetail', {
-                            'Data': 'json数据传给Android端'
-                        } //该类型是任意类型
-                        , (responseData) => {
-                            // var res = responseData
-                            //     // JSON.parse(JSON.stringify(responseData))
-                            // if ((typeof res) == 'string') {
-                            //     res = JSON.parse(responseData);
-                            // }
-                            // this.areaid = res.areaid;
-                            // res.areaid == '' ? this.address = '全部区域' : this.address = res.address;
+                            // 'Data': this.waitCarData
+                            'Data':printJson.data
+                        },(responseData) => {
+                            
                         }
                     );
                 })

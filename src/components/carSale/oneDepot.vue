@@ -1,16 +1,14 @@
 <template>
   <div class="onedepot">
-  	<div class="depot" v-for="(item,index) in list" >
-  		<div @click="changeBg"  :class="{'noselect':!selectStatus,'selectBg':selectStatus}"></div>
-	    <!-- <div><img v-lazy="item.URL_ADDR" alt=""></div> -->
-	    <div><img src="../../assets/icon1.png" alt=""></div>
+  	<div class="depot" v-for="(item,index) in stockList" >
+  		<div @click="changeBg(item)"  :class="{'noselect':!item.seletedStatus,'selectBg':item.seletedStatus}"></div>
+	    <div><img v-lazy="item.URL_ADDR" alt=""></div>
 	    <div>
-	    	<p>{{item.name}}</p>
-	    	<p>{{item.num}}个</p>
+	    	<p>{{item.STK_NAME}}</p>
+	    	<p>100个</p>
 	    	<p>
-	    		<span>1箱</span>
-	    		<span>26个</span>
-	    		<span @click="backDepot">回库</span>
+	    		<span>{{item.STOCK}}</span>
+	    		<span @click="backDepot(item)">修改</span>
 	    	</p>
 	    </div>
 	  	
@@ -25,23 +23,21 @@
  	name:"onedepot",
  	data(){
  		return{
- 			showDev:false
+ 			showDev:false,
+ 			// status:true
  		}
  	},
  	props:{
- 		list:Array,
+ 		stockList:Array,
  		selectStatus:Boolean
  	},
  	methods:{
- 		changeBg(){
- 			if(event.target.className == "noselect"){
- 				event.target.className = "selectBg"
- 			}else{
- 				event.target.className ="noselect"
- 			}
+ 		changeBg(item){		
+ 			item.seletedStatus = !item.seletedStatus;
+ 			this.$emit("allSelect");
  		},
- 		backDepot(){
- 			this.$emit("back");
+ 		backDepot(item){
+ 			this.$emit("back",item);
  		}
  		
  	}
@@ -98,6 +94,7 @@
 	letter-spacing: 0;
 	line-height: 40px;
 	width:100%;
+	height:80px;
 }
 .depot div:nth-child(3) p:nth-child(2){
 	font-size: 30px;
@@ -107,18 +104,15 @@
 .depot div:nth-child(3) p:nth-child(3){
 	position: relative;
 }
+
 .depot div:nth-child(3) p:nth-child(3) span:nth-child(1){
+	position: absolute;
+	right:180px;
 	font-size: 26px;
 	color: #3B456C;
 	letter-spacing: 0;
-	position: absolute;
-	right:260px;
 }
 .depot div:nth-child(3) p:nth-child(3) span:nth-child(2){
-	position: absolute;
-	right:180px;
-}
-.depot div:nth-child(3) p:nth-child(3) span:nth-child(3){
 	position: absolute;
 	right:0;
 	width:120px;
