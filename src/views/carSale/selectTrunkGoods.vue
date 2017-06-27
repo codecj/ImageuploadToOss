@@ -85,7 +85,8 @@ import {
 		        	vname:'HZSOP',
 		        	name:'kiki',
 		        	userno:'359320',
-		        	item:null
+		        	item:null,
+		        	truckType:'S'
 		        },
 		        page: {
                 	pageno: "1",
@@ -178,8 +179,12 @@ import {
 	    		
 	    	},
 	    	loadTop(){
-	    		alert('refresh');
 	    		this.$refs.loadmore.onTopLoaded();
+	    		this.isEnd = false;
+	   			this.page.pageno = "1";
+	   			this.baseStkcList = [];
+	   			this.baseStkcByDepotParam.key = this.keyWord;
+	   			this.requestBaseStkcByDepot();
 	    	},
 	    	requestDepot(){
 	    		Indicator.open();
