@@ -27,7 +27,16 @@
 		data () {
 			return {
 				showRightArrow:false,
-				keyWord:''
+				keyWord:'',
+				baseStkcByDepotParam:{
+		        	
+		        	//业务员username
+		        	username:'k1111',
+		        	vusername:'HZSOP',
+		        	key:'',
+		        	truckType:'M',
+		        	storageStatus:'B'
+		        },
 			}
 		},
 		mounted(){

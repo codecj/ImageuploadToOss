@@ -61,12 +61,11 @@ export default {
             keyword: '',
             waitCarData: '',
             myStorageData: '',
-            username: this.$route.query.username,
-            vusername: this.$route.query.vusername,
-            userno: this.$route.query.userno,
-            spUserName: this.$route.query.spUserName,
-            spUserNo: this.$route.query.spUserNo,
-            userid: this.$route.query.userid,
+            username: this.$route.query.username, // 业务员name
+            userno: this.$route.query.userno, // 业务员No
+            vusername: this.$route.query.vusername, // 供应商名称
+            name:this.$route.query.name, // 登录昵称
+            vnickname:this.$route.query.vnickname, // 供应商昵称
             truckType: 'S',
             storageStatus: 'A' // 待装车
         };
@@ -76,7 +75,9 @@ export default {
         this.getListData();
     },
     methods: {
+
         getListData() { // 获取我的仓库列表信息
+            alert(3);
             Indicator.open();
             console.log(this.myStorageActive);
             if (this.myStorageActive == false) { // 待装车
@@ -85,8 +86,6 @@ export default {
                 this.storageStatus = 'B'
             }
             var _this = this;
-            _this.username = 'k1111';
-            _this.vusername = 'HZSOP';
 
             let pargrmList = {
                 oper: 'getTruckListFour',
@@ -123,14 +122,6 @@ export default {
         },
         deleteRemoteItem(index) { // 删除
             var storageItemData = this.myStorageData[index];
-            // this.myStorageData.splice(index, 1);
-            // var divs = document.getElementsByClassName("list-li");
-            // if (divs.length<=0) {return}
-            // console.log(divs);
-            // for (var item of divs) {
-            //     item.style.transform = "translateX(0px)";
-            // }
-            // alert(index);
             Indicator.open();
             let pargrmList = {
                 oper: 'delTruckIoItem',
@@ -162,12 +153,12 @@ export default {
         switchToMyStorage() { // 切换至我的仓库
             this.myStorageActive = true;
             this.waitCarActive = false;
-            this.getStorageData();
+            this.getListData();
         },
         switchToWaitCar() { // 切换至待装车
             this.myStorageActive = false;
             this.waitCarActive = true;
-            this.getStorageData();
+            this.getListData();
         },
         getElementH() { // 获取屏幕的高度
             var deviceH = document.documentElement.clientHeight;
@@ -180,17 +171,17 @@ export default {
             this.$router.push({
                 path: 'selectTrunckGoods',
                 query: {
-                    userName: this.username,
-                    userId:this.userId,
-                    spUserName: this.spUserName,
-                    spUserNo: this.spUserNo
+                    username: this.username,
+                    userno:this.userno,
+                    name:this.name,
+                    vusername:this.vusername
                 },
             });
         },
         carSaleStatistics() { //alert("车销统计");
             Request.jsBbridge(bridge => {
                 bridge.callHandler(
-                    'navBack'
+                    'jumpToCalculate'
                 )
             })
         },
@@ -201,15 +192,12 @@ export default {
             this.$router.push({
                 path: 'goodgocar',
                 query: {
-                    userName: this.username,
-                    userId:this.userId,
-                    spUserName: this.spUserName,
-                    spUserNo: this.spUserNo
+                    username: this.username,
+                    userno:this.userno
                 },
             });
         },
         backToNative() {
-            alert(1);
             Request.jsBbridge(bridge => {
                 bridge.callHandler(
                     'navBack'

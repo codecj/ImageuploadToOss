@@ -2,7 +2,7 @@
   <div  class="addStkc">
   	<div class="content">
   		<div class="goodsInfo borderB">
-  			<img class="goodsImg" v-view="baseStkc.URL_ADDR"></img>
+  			<img class="goodsImg" v-lazy="baseStkc.URL_ADDR"></img>
   			<label class="goodsName">{{baseStkc.STK_NAME}}</label>
   			<img @click.stop="backTap()" class="cancel" src="../../assets/icon18.png"></img>
 			<label class="stock">库存:{{baseStkc.STOCK}}</label>
@@ -93,7 +93,7 @@
 		top:-25px;
 		width: 200px;
 		height: 200px;
-		background-color: red;
+		background-color: white;
 	}
 	.addStkc .content .goodsInfo .goodsName{
 		position: absolute;
