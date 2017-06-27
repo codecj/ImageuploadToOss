@@ -10,8 +10,19 @@ import {focus} from 'vue-focus';
 import routerConfig from './router'
 import FastClick from 'fastclick'
 import filters from './filters'
-import VueViewload from 'vue-viewload'
-//使用VueViewload
+import VueLazyload from 'vue-lazyload'
+
+Vue.use(VueLazyload)
+
+// or with options
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: require('./assets/holde.png'),
+  loading: require('./assets/holde.png'),
+  attempt: 1
+})
+// import VueViewload from 'vue-viewload'
+// //使用VueViewload
 
 // Vue.use(VueViewload, {
 //     defaultPic: './dist/holde.png',

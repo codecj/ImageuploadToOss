@@ -9,7 +9,7 @@
   	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
   	</DepotList>
 
-	<AddStkcView v-if="baseStkc != null" v-show="showStkcView" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
+	<AddStkcView v-if="baseStkc != null" v-show="showStkcView" :baseStkc="baseStkc" @submitStkc='submitStkc' @cancelAddStkcView='cancelAddStkcView'></AddStkcView>
   	<div class="search">
   		<img src="../../assets/scanne@2x.png" @click="scan()"></img>
   		<form @submit.prevent="search">
@@ -21,7 +21,7 @@
   	class="table">
 
  		<div v-for="item in this.baseStkcList" class="cell">
-        	<img class="gooodImg" v-view="item.URL_ADDR">
+        	<img class="gooodImg" v-lazy="item.URL_ADDR">
         	<label class="goodName">{{item.STK_NAME}}</label>
         	<label class="vendorName">{{item.VENDOR_NAME}}</label>
         	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
@@ -78,6 +78,20 @@ import {
 		        	key:'',
 		        	truckType:'S'
 		        },
+		        //添加商品到待装车
+		        addStckParam:{
+		        	whc:null,
+		        	username:'k1111',
+		        	vname:'HZSOP',
+		        	name:'kiki',
+		        	userno:'359320',
+		        	item:null
+		        },
+		        page: {
+                	pageno: "1",
+                	pagesize: "20"
+            	},
+            	isEnd:false,
 		        item:{STK_NAME:'',VENDOR_NAME:''}
 		       
 	        }
@@ -99,6 +113,9 @@ import {
 	   			this.showDepot = false;
 	   			this.currentDepot = depot;
 	   			this.dopName = depot.NAME;
+	   			this.isEnd = false;
+	   			this.page.pageno = "1";
+	   			this.baseStkcList = [];
 	   			this.requestBaseStkcByDepot();
 	   		},
 	   		//仓库列表取消回调
@@ -111,11 +128,20 @@ import {
 	   		},
 	    	search(){
 	    		document.getElementById("search").blur();
+	    		this.isEnd = false;
+	   			this.page.pageno = "1";
+	   			this.baseStkcList = [];
+	   			this.baseStkcByDepotParam.key = this.keyWord;
+	   			this.requestBaseStkcByDepot();
 	    	},
 
 	    	scan(){
 				scan((response) =>{
-					alert(response);
+					this.isEnd = false;
+		   			this.page.pageno = "1";
+		   			this.baseStkcList = [];
+		   			this.baseStkcByDepotParam.key = response;
+		   			this.requestBaseStkcByDepot();
 				});
 	    	},
 
@@ -136,18 +162,19 @@ import {
 	    		for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
 	    			let temp = this.baseStkc.MODLE_LIST[i];
 	    			this.$set(temp,'qty',1);
-	    			this.$set(temp,'urladdr',this.baseStkc.URL_ADDR);
-	    			this.$set(temp,'stkname',this.baseStkc.STK_NAME);
 	    		}
 	    	},
 
 	    	requestMore(){
-	    		
-	    		if (this.baseStkcList.length == 0) {
+	    		if (this.currentDepot == null) {
 	    			this.requestDepot();
-	    		}else{
-	    			// this.loading = true;
+	    			return;
 	    		}
+	    		if (!this.isEnd) {
+	                this.page.pageno = parseInt(this.page.pageno) + 1
+	              	this.requestBaseStkcByDepot();
+           		}
+	    		
 	    		
 	    	},
 	    	loadTop(){
@@ -155,6 +182,7 @@ import {
 	    		this.$refs.loadmore.onTopLoaded();
 	    	},
 	    	requestDepot(){
+	    		Indicator.open();
 	    		let pargrmList = {
                	 	oper: 'getVendorwhcFour',
                 	type: 'truck',
@@ -162,6 +190,7 @@ import {
             	};
 	            //ajax调用
 	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
 	                const getData = JSON.parse(res.data.result);
 	                // console.log(getData)
 	                if (parseInt(getData.code) == 4) {
@@ -185,6 +214,7 @@ import {
 	                }
 
 	            }).catch(error => {
+	            	Indicator.close();
 	                if (error.response) {
 	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
 	                    Toast({
@@ -198,12 +228,15 @@ import {
 	        requestBaseStkcByDepot(){
 	        	this.baseStkcByDepotParam.whc =  this.currentDepot.WH_C;
 	        	let pargrmList = {
+	        		pagination: JSON.stringify(this.page),
                	 	oper: 'getVendorStkFour',
                 	type: 'truck',
                	 	para: JSON.stringify(this.baseStkcByDepotParam)
             	};
+            	Indicator.open();
 	            //ajax调用
 	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
 	                const getData = JSON.parse(res.data.result);
 	                // console.log(getData)
 	                if (parseInt(getData.code) == 4) {
@@ -220,14 +253,73 @@ import {
 	                        duration: 2000
 	                    });
 	                } else {
-	                  	this.baseStkcList = getData.data;
-	                  	this.item = this.baseStkcList[0];
-	                  	this.baseStkcList.push(this.item);
-	                  	this.baseStkcList.push(this.item);
-	                  		this.baseStkcList.push(this.item);
-	                  			this.baseStkcList.push(this.item);
-	                  				this.baseStkcList.push(this.item);	this.baseStkcList.push(this.item);
-	                  					this.baseStkcList.push(this.item);	this.baseStkcList.push(this.item);
+	                	  getData.data.forEach(value => {
+                   			 this.baseStkcList.push(value)
+               			 })
+	                  
+	                  	//this.item = this.baseStkcList[0];
+	                   if (this.baseStkcList.length == getData.pagination.totalcount) {
+                   			this.isEnd = true;
+                   		}
+                	}
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	        },
+	        submitStkc(baseStkc){
+	        	this.showStkcView = false;
+	        	let itemList = [];
+	        	for (let i = 0; i < baseStkc.MODLE_LIST.length; i++) {
+	        		let temp = baseStkc.MODLE_LIST[i];
+	        		if (temp.qty > 0) {
+	        			let model = {};
+	        			model.vendorname = baseStkc.VENDOR_USER_NAME;
+	        			model.stkc = temp.STK_C;
+	        			model.cpmode = temp.CP_MODE;
+	        			model.stkname = temp.NAME;
+	        			model.urladdr = temp.URL_ADDR;
+	        			model.pluc = temp.PLU_C;
+	        			model.stkmodel = temp.MODLE;
+	        			model.qty = temp.qty+'';
+	        			itemList.push(model);
+	        		}
+	        	}
+	        	if (itemList.length == 0) {
+	        		 Toast({
+	                        message: '添加商品数量不能为空',
+	                        duration: 2000
+	                    });
+	        		 return;
+	        	}
+	        	this.addStckParam.whc =  this.currentDepot.WH_C;
+	        	this.addStckParam.item = JSON.stringify(itemList);
+	        	let pargrmList = {
+               	 	oper: 'saveTruckIoItem',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.addStckParam)
+            	};
+            	//ajax调用
+	            Request.post(pargrmList).then(res => {
+	                const getData = JSON.parse(res.data.result);
+	               
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   Toast({
+	                        message: '添加商品到待装车成功',
+	                        duration: 2000
+	                    });
 	                }
 
 	            }).catch(error => {

@@ -6,7 +6,7 @@
         <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
       </header>  
        <div class="searchs">
-          <searchDepot :depotPagarm="depotPagarm" @search="search"></searchDepot>
+          <searchDepot :depotPagarm="depotPagarm" @search="search" @scanAfter="scanData"></searchDepot>
         </div>   
       <content>
           
@@ -18,7 +18,8 @@
       </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
       </depotlist>
-      <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView'></AddStkcView> 
+      <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView' 
+      @submitStkc="submitStkc"></AddStkcView> 
   </div> 
 </template>
 
@@ -92,7 +93,8 @@
               this.depotList.push(value)
             })           
             this.depotName = dataList.data[0].NAME;
-            if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+            if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
+            return
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -120,8 +122,9 @@
                 this.$set(temp,"qty",temp.STK_QTY);
               })   
             })  
-            if(dataList.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+            if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
              Indicator.close();
+             return
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -132,7 +135,7 @@
             }
           })
         },
-        sureBackDepot(){//点击确认回库
+        sureBackDepot(){//点击"确认回库""
            let arr = [];
            this.stockList.forEach(value=>{
               let param = {}
@@ -160,8 +163,14 @@
             para: JSON.stringify(this.backPagarm) 
           }
           Request.post(pargrmList).then(res=>{
-            
-            Toast({message:"回库成功", duration: 2000 });
+             const getData = JSON.parse(res.data.result);
+            if(getData.code !== "200"){
+              Toast({message:getData.msg, duration: 2000 });
+            }else{
+              Toast({message:"回库成功", duration: 2000 });
+            }
+            return
+
           }).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
@@ -174,10 +183,7 @@
         },
         back(item){//点击回库
           this.showDatail = !this.showDatail;
-          this.baseStkc = item;
-          // item.MODLE_LIST.forEach(temp=>{
-          //   this.$set(temp,"qty",temp.STK_QTY);
-          // })         
+          this.baseStkc = item;      
         },
         cancelAddStkcView(){
           this.showDatail = false;
@@ -215,10 +221,18 @@
           } else {
             this.selectStatus = true;
           }
+        },
+        submitStkc(basestkc){//更改回库列表的qty
+          console.log(basestkc)
+          this.showDatail = false;
+         
+        },
+        scanData(data){//扫描结果
+          // console.log(data)
         }
   
       },
-      mounted() {
+      mounted(){
         this.getSearch();
         this.getList();
       }
