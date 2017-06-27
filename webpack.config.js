@@ -36,7 +36,10 @@ module.exports = {
       // }
       {test: /\.(png|jpg)$/, 
         loader:"url-loader?limit=10000name=img/[name][hash:8].[ext]"
+<<<<<<< HEAD
 
+=======
+>>>>>>> bf5ca648ce2b7e39a80c82d5cfd0afa13942704f
      }
     ]
   },
@@ -58,7 +61,7 @@ module.exports = {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-    host:'192.168.200.165',
+    host:'192.168.200.132',
     historyApiFallback: true,
     noInfo: true
   },

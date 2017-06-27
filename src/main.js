@@ -19,8 +19,8 @@ Vue.use(VueLazyload)
 // or with options
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: require('./assets/holde.png'),
-  loading: require('./assets/holde.png'),
+  // error: require('./assets/holde.png'),
+  // loading: require('./assets/holde.png'),
   attempt: 1
 })
 
