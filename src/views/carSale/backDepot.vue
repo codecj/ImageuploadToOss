@@ -6,7 +6,7 @@
         <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
       </header>  
        <div class="searchs">
-          <searchDepot :depotPagarm="depotPagarm" @search="search"></searchDepot>
+          <searchDepot :depotPagarm="depotPagarm" @search="search" @scanAfter="scanData"></searchDepot>
         </div>   
       <content>
           
@@ -160,7 +160,7 @@
             para: JSON.stringify(this.backPagarm) 
           }
           Request.post(pargrmList).then(res=>{
-            
+
             Toast({message:"回库成功", duration: 2000 });
           }).catch(error=>{
              if (error.response) {
@@ -215,6 +215,9 @@
           } else {
             this.selectStatus = true;
           }
+        },
+        scanData(data){//扫描结果
+          console.log(data)
         }
   
       },
