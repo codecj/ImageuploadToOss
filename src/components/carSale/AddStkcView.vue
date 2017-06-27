@@ -59,7 +59,6 @@
 			submitStkc(){
 				this.$emit('submitStkc',this.baseStkc);
 			}
-			// selectDepot:(depot) => {  this.$emit('depotSelected',depot); }
 		}
 	}
 

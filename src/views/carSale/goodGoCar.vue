@@ -3,10 +3,9 @@
 		<div class="header">
 			<span>选择商品回车仓库</span>
 			<div><img src="../../assets/icon10.png" class="back" @click="back"></div>
-			<!-- <div><img src="../../assets/icon10.png" class="arrow-down"></div> -->
-			<div class="scan">
-				<ScanSearch @scanAfter="scanData"></ScanSearch>
-			</div>
+		<div class="scan">
+
+		</div>
 		</div>
 		<div class="content">
 			<ul>
@@ -31,38 +30,51 @@
 	import {
     	Toast,
     	Indicator,
-    	Lazyload,
     	Loadmore
 	} from 'mint-ui'
 
-	Vue.use(Lazyload, {
-    	preLoad: 1.3,
-    	lazyComponent: true,
-    	error: require('../../assets/holde.png'),
-    	loading: require('../../assets/holde.png'),
-    	listenEvents: ['scroll']
-	})
+	Vue.component(Loadmore.name, Loadmore)
 
 	export default {
 		data(){
 			return{
 				isAllSelect:false,
-				load:false,
-				show:false,
+				isEnd: false,
+				allLoaded:false,
 				goodList:[],
+				goodSelect:[],
 				page: {
                 	pageno: "0",
                 	pagesize: "20"
             	},
             	param:{
-                	username : this.$route.query.username,
-					userno : this.$route.query.userno
+     //            	username : this.$route.query.username,
+					// userno : this.$route.query.userno
+					username: "JSNTSOP1Y1",
+					userno: ""
             	},
             	goCarParam:{
             		spUserName : "zhujyps01",
-            		pkNos : "43224,43207,43202,43189,43142,43141,43137",
             		spUserNo: "382005"
             	}
+			}
+		},
+		computed:{
+			pkNos(){
+				var arrayX = []
+				for (var item of this.goodList){
+					if (item.isSelected){
+						arrayX.push(item)
+					}
+				}
+				var str = ""
+				arrayX.forEach(function(element, index, array){
+					str  = str + element.PK_NO
+					if (index != arrayX.length - 1){
+						str = str + ","
+					}
+				});
+				return str
 			}
 		},
 		methods:{
@@ -77,6 +89,7 @@
 			},
 			ajax(){
 				Indicator.open();
+				this.page.pageno = this.pageno
 				const pargrmList = {
 					pagination: JSON.stringify(this.page),
 					oper: 'getReturnListForTruckFour',
@@ -90,8 +103,7 @@
 						this.goodList.push(value);
 					})
 					if (this.goodList.length == getData.pagination.totalcount){
-						this.load = true;
-						this.show = true;
+						this.isEnd = true;
 						Indicator.close();
 						return
 					}
@@ -113,6 +125,7 @@
 			},
 			goCar(){
 				Indicator.open();
+				this.goCarParam.pkNos = this.pkNos
 				const pargrmList = {
 					pagination: JSON.stringify(this.page),
 					oper: 'backToTruckFour',
@@ -126,7 +139,6 @@
 					// 	this.goodList.push(value);
 					// })
 					// console.log(this.goodList)
-						alert("数据请求成功")
 						navBack()
 					if (this.goodList.length == getData.pagination.totalcount){
 						this.load = true;
@@ -150,13 +162,6 @@
 					}
 				})
 			},
-			loadMore(){
-				if (!this.load){
-					this.loading = true;
-					this.page.pageno = parseInt(this.page.pageno) + 1;
-					this.ajax();
-				}
-			},
 			back(){
 				navBack();
 			},
@@ -166,7 +171,7 @@
 			},
 			goCarRequest(){
 				this.goCar();
-			}
+			},
 		},
 		components:{
 			Cell,
@@ -205,22 +210,12 @@
 		height: 60px;
 		width: 60px;
 	}
-/*	.header .arrow-down{
-		position: absolute;
-		right: 37px;
-		bottom: 14px;
-		width: 60px;
-		height: 60px;
-		transform:rotate(270deg);
-	}*/
 	.scan{
-		padding-top:28px;
-		height: 98px;
-		width: 100%;
+		height: 30px;
 		background-color: rgb(237, 238, 245);
 	}
 	.content{
-		margin-top:210px;
+		margin-top:117px;
 		background-color: rgb(237, 238, 245);
 		width: 100%;
 		position: absolute;

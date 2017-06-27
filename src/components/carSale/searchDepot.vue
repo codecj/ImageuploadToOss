@@ -17,21 +17,20 @@
 import Request from "../../util/API"
 import { navBack,scan } from '../../util/JsBridge.js'
   export default({
-      data(){
+    data(){
         return{
          }
-      },
-      props:{
+    },
+    props:{
         depotPagarm:Object
-      },
-      components:{
+    },
+    components:{
 
-      },
-      methods:{
+    },
+    methods:{
         search(key){
           //搜索请求
           this.$emit("search",key)
-
         },
         scanBtn(){
           scan((response) =>{
@@ -39,8 +38,8 @@ import { navBack,scan } from '../../util/JsBridge.js'
           });
         }
       
-      },
-      mounted(){
+    },
+    mounted(){
         Request.jsBbridge(bridge => {
             bridge.init(function(message, responseCallback) {
                 var data = {};
@@ -48,7 +47,7 @@ import { navBack,scan } from '../../util/JsBridge.js'
             });
         });
        // this.requestDepot();
-      }
+    }
   })
  
 </script>

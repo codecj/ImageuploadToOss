@@ -12,27 +12,17 @@ import FastClick from 'fastclick'
 import filters from './filters'
 import VueLazyload from 'vue-lazyload'
 
+// import VueLazyload from 'vue-lazyload/vue-lazyload-next'
+
 Vue.use(VueLazyload)
 
 // or with options
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: require('./assets/holde.png'),
-  loading: require('./assets/holde.png'),
+  // error: require('./assets/holde.png'),
+  // loading: require('./assets/holde.png'),
   attempt: 1
 })
-// import VueViewload from 'vue-viewload'
-// //使用VueViewload
-
-// Vue.use(VueViewload, {
-//     defaultPic: './dist/holde.png',
-//     errorPic: './dist/holde.png',
-//     threshold: -200,
-//     effectFadeIn: true,
-//     callback: function(ele, src) {
-//         console.log(ele.nodeName + '...' + src);
-//     }
-// })
 
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 //开启debug模式
