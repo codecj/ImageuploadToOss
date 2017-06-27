@@ -77,7 +77,6 @@ export default {
     methods: {
 
         getListData() { // 获取我的仓库列表信息
-            alert(3);
             Indicator.open();
             console.log(this.myStorageActive);
             if (this.myStorageActive == false) { // 待装车

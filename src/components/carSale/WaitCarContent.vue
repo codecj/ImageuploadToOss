@@ -14,7 +14,7 @@
                 <div class="list-li">
                     <div class="con">
                         <div class="cell-content">
-                            <img v-view="item.URL_ADDR" class="goodsImg">
+                            <img :src="item.URL_ADDR" class="goodsImg">
                             <h4 class="goodsName">{{item.STK_NAME}}</h4>
                             <h5 class="goodsSpec">{{item.STOCK}}</h5>
                         </div>
@@ -29,6 +29,7 @@
 <script type="text/javascript">
 import Request from "../../util/API";
 import tools from "../../util/tools.js"
+import printJson from '../../views/carSale/print.json'
 export default {
     data(){
             return {
@@ -47,7 +48,8 @@ export default {
                 Request.jsBbridge(bridge => {
                     window.WebViewJavascriptBridge.callHandler(
                         'printGoodsDetail', {
-                            'Data': this.waitCarData
+                            // 'Data': this.waitCarData
+                            'Data':printJson.data
                         },(responseData) => {
                             
                         }
