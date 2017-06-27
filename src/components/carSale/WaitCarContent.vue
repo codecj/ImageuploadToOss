@@ -47,16 +47,9 @@ export default {
                 Request.jsBbridge(bridge => {
                     window.WebViewJavascriptBridge.callHandler(
                         'printGoodsDetail', {
-                            'Data': 'json数据传给Android端'
-                        } //该类型是任意类型
-                        , (responseData) => {
-                            // var res = responseData
-                            //     // JSON.parse(JSON.stringify(responseData))
-                            // if ((typeof res) == 'string') {
-                            //     res = JSON.parse(responseData);
-                            // }
-                            // this.areaid = res.areaid;
-                            // res.areaid == '' ? this.address = '全部区域' : this.address = res.address;
+                            'Data': this.waitCarData
+                        },(responseData) => {
+                            
                         }
                     );
                 })
