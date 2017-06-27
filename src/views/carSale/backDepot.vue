@@ -1,26 +1,25 @@
 <template>
-  <div>
-      <header>
-        <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
-        <div>{{depotName}}</div>
-        <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
-      </header>  
-       <div class="searchs">
-          <searchDepot :depotPagarm="depotPagarm" @search="search" @scanAfter="scanData"></searchDepot>
+  	<div>
+      	<header>
+	        <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
+	        <div>{{depotName}}</div>
+	        <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
+     	</header>  
+       	<div class="searchs">
+          	<searchDepot :depotPagarm="depotPagarm" @search="search" @scanAfter="scanData"></searchDepot>
         </div>   
-      <content>
-          
-          <onedepot :stockList="stockList" :selectStatus="selectStatus"  @back="back" @allSelect="allSelect"></onedepot>        
-      </content>
-      <footer>
-          <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
-          <div @click="sureBackDepot">确认回库</div>
-      </footer>
+      	<content>         
+          	<onedepot :stockList="stockList" :selectStatus="selectStatus"  @back="back" @allSelect="allSelect"></onedepot>  
+      	</content>
+      	<footer>
+           <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
+           <div @click="sureBackDepot">确认回库</div>
+        </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
-      </depotlist>
-      <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView' 
+       </depotlist>
+       <AddStkcView v-if="baseStkc != null" v-show="showDatail" :baseStkc="baseStkc" @cancelAddStkcView='cancelAddStkcView' 
       @submitStkc="submitStkc"></AddStkcView> 
-  </div> 
+  	</div> 
 </template>
 
 <script type="text/javascript">
@@ -46,11 +45,11 @@
           pagram:{//可选仓库参数
             vusername:"QJ",
             userno:"359320",
-            username:"k1111"
+            username:"wq360"
           },
           depotPagarm:{//待装车和我的库存搜索参数
             key:"",
-            username:"k1111",
+            username:"wq360",
             vusername:"HZSOP",
             whc:"",
             truckType:"S",
@@ -58,7 +57,7 @@
           },
           backPagarm:{
             userno:"359320",
-            username:"k1111",
+            username:"wq360",
             whc:"QJ", 
             name:"kiki",
             item:[]
@@ -69,10 +68,10 @@
         onedepot,depotlist,AddStkcView,searchDepot
       },
       methods:{
-
         depotSelected(depot){//仓库title赋值
           this.showDev = false;
           this.depotName = depot.NAME;
+          this.getSearch();
         },
         cancelDepotList(){
           this.showDev = false;
@@ -136,49 +135,50 @@
           })
         },
         sureBackDepot(){//点击"确认回库""
-           let arr = [];
-           this.stockList.forEach(value=>{
-              let param = {}
-              if(value.seletedStatus){
-                value.MODLE_LIST.forEach(item=>{
-                  param.cpmode = item.CP_MODE
-                  param.pluc = item.PLU_CODE
-                  param.urladdr = item.URL_ADDR
-                  param.stkname = item.NAME
-                  param.basestkc = item.BASE_STK_C
-                  param.stkc = item.STK_C
-                  param.stdqty = item.STD_QTY
-                  param.stkmodel = item.MODLE
-                  param.qty = item.STK_QTY 
-                })
-              }
-              if(param.qty > 0){
-                  arr.push(param);
-               }
-            })
-          this.backPagarm.item = JSON.stringify(arr);
-          const pargrmList = {
-            oper: 'saveTruck_OFour',
-            type: 'truck',
-            para: JSON.stringify(this.backPagarm) 
-          }
-          Request.post(pargrmList).then(res=>{
-             const getData = JSON.parse(res.data.result);
-            if(getData.code !== "200"){
-              Toast({message:getData.msg, duration: 2000 });
-            }else{
-              Toast({message:"回库成功", duration: 2000 });
-            }
-            return
+            let arr = [];
+            this.stockList.forEach(value=>{
+              	let param = {}
+              	if(value.seletedStatus){
+               		value.MODLE_LIST.forEach(item=>{
+		                 param.cpmode = item.CP_MODE
+		                 param.pluc = item.PLU_CODE
+		                 param.urladdr = item.URL_ADDR
+		                 param.stkname = item.NAME
+		                 param.basestkc = item.BASE_STK_C
+		                 param.stkc = item.STK_C
+		                 param.stdqty = item.STD_QTY
+		                 param.stkmodel = item.MODLE
+		                 param.qty = item.qty 
 
-          }).catch(error=>{
+                	})
+              	}
+              	if(param.qty > 0){
+               		 arr.push(param);
+               	}
+            })
+            this.backPagarm.item = JSON.stringify(arr);
+            const pargrmList = {
+            	oper: 'saveTruck_OFour',
+            	type: 'truck',
+            	para: JSON.stringify(this.backPagarm) 
+            }
+          	Request.post(pargrmList).then(res=>{
+                const getData = JSON.parse(res.data.result);
+            if(getData.code !== "200"){
+                Toast({message:getData.msg, duration: 2000 });
+            }else{
+                Toast({message:"回库成功", duration: 2000 });
+            }
+            	return
+
+        	}).catch(error=>{
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
                 Toast({
                     message: error.response.status,
                     duration: 2000
                 });
-            }
+                }
           })
         },
         back(item){//点击回库
@@ -192,7 +192,6 @@
           this.$router.goBack();
         },
         search(key){//搜索
-          console.log(key)
           this.stockList = [];
           this.getSearch();
 
@@ -208,13 +207,11 @@
             })                  
         },
         allSelect(){//点击列表选择按钮，判断是否全选
-          console.log(this.stockList);
           var flag = true;
           this.stockList.forEach(item=>{
             if (!item.seletedStatus) {
               flag = false;
             }
-            // console.log(flag)
           })
           if (!flag) {
             this.selectStatus = false;
@@ -223,7 +220,6 @@
           }
         },
         submitStkc(basestkc){//更改回库列表的qty
-          console.log(basestkc)
           this.showDatail = false;
          
         },

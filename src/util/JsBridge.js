@@ -26,7 +26,7 @@ const JsBridge = (callback) =>{
 //返回jsbridge
 export const navBack = () =>{
 	JsBridge(bridge => {
-      bridge.callHandler('navBack')
+       bridge.callHandler('navBack')
   })
 };
 
