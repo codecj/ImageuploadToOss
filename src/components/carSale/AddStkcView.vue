@@ -17,8 +17,9 @@
 				<label class="stkcStock">库存 {{item.STKC_QTY}}</label>
 			</li>
 		</ul>
-  		<div class="addBtn" @click.stop='submitStkc()'>添加</div>
+  		
   	</div>
+  	<div class="addBtn" @click.stop='submitStkc()'>添加</div>
   </div>
 </template>
 <script>
@@ -77,9 +78,10 @@
 	.addStkc .content{
 		position: absolute;
 		width: 100%;
-		bottom: 0px;
+		bottom: 98px;
 		background-color: white;
 		height: 800px;
+		overflow-y: scroll;
 	}
 	.addStkc .content .goodsInfo{
 		position: relative;
@@ -119,8 +121,8 @@
 	.addStkc .content .goodsInfo .stock{
 		position: absolute;
 		left: 264px;
-		bottom:44px;
-		right: 130px;
+		bottom:34px;
+		right: 30px;
 		color: #3b456c;
 		font-size: 26px;
 	}
@@ -185,7 +187,7 @@
 		color: #3B456C;
 	}
 
-	.addStkc .content .addBtn{
+	.addStkc .addBtn{
 		position: absolute;
 		width: 100%;
 		background-color: #ff8739;

@@ -18,7 +18,8 @@
                 	<img class="gooodImg" v-lazy="item.URL_ADDR">
                 	<label class="goodName">{{item.STK_NAME}}</label>
                 	<label class="vendorName">{{item.VENDOR_NAME}}</label>
-                	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+                	<img v-if="item.TRUCKFLG == 'N' " @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+                	<img v-else @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon_del.png">
                 </div>  
     	</mt-loadmore>
 	</div>	
@@ -88,6 +89,9 @@
 				navBack();
 			},
 			addGoodStkc(item){
+				if (item.TRUCKFLG == 'Y') {
+					return;
+				}
 				let itemList = [];
 	        	for (let i = 0; i < item.MODLE_LIST.length; i++) {
 	        		let temp = item.MODLE_LIST[i];
@@ -135,6 +139,7 @@
 	                        message: '添加商品成功',
 	                        duration: 2000
 	                    });
+	                   	item.TRUCKFLG = 'Y';
 	                }
 
 	            }).catch(error => {
@@ -176,10 +181,10 @@
 	                const getData = JSON.parse(res.data.result);
 	                // console.log(getData)
 	                if (parseInt(getData.code) == 4) {
-	                	 Toast({
-	                        message: getData.msg,
-	                        duration: 2000
-	                    });
+	                	 // Toast({
+	                  //       message: getData.msg,
+	                  //       duration: 2000
+	                  //   });
 	                    return;
 	                }
 	                if (parseInt(getData.code) != 200) {
@@ -306,7 +311,7 @@
 		font-family: PingFangSC-Medium;
 		font-size: 30px;
 		color: #3B456C;
-		right: 40px;
+		left: 240px;
 		top:55px;
 		display: -webkit-box;
    		overflow: hidden;
@@ -322,7 +327,7 @@
 		font-size: 26px;
 		color: #3B456C;
 		opacity: 0.5;
-		right: 40px;
+		left: 240px;
 		bottom:86px;
 		display: -webkit-box;
    		overflow: hidden;

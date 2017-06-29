@@ -43,12 +43,18 @@
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
-            vusername:"QJ",
+            // vusername:this.$route.query.vusername,
+            // userno:this.$route.query.userno,
+            // username:this.$route.query.username
+
+            vusername:"HZSOP",
             userno:"359320",
             username:"wq360"
           },
           depotPagarm:{//待装车和我的库存搜索参数
             key:"",
+            // username:this.$route.query.username,
+            // vusername:this.$route.query.vusername,
             username:"wq360",
             vusername:"HZSOP",
             whc:"",
@@ -56,10 +62,10 @@
             storageStatus:"B"
           },
           backPagarm:{
-            userno:"359320",
-            username:"wq360",
+            userno:this.$route.query.userno,
+            username:this.$route.query.username,
             whc:"QJ", 
-            name:"kiki",
+            name:this.$route.query.name,
             item:[]
           }
         }
@@ -71,6 +77,7 @@
         depotSelected(depot){//仓库title赋值
           this.showDev = false;
           this.depotName = depot.NAME;
+          this.depotPagarm.whc = depot.WH_C;
           this.getSearch();
         },
         cancelDepotList(){
@@ -82,7 +89,7 @@
         getList(){//可选仓库列表接口
           this.depotList = [];
           const pargrmList = {
-            oper: 'getVendorwhcFour',
+            oper: 'getVendorwhc',
             type: 'truck',
             para: JSON.stringify(this.pagram) 
           }
@@ -105,6 +112,7 @@
           })
         },
         getSearch(){//待装车和我的库存搜索接口
+          this.stockList=[];
           Indicator.open();
            const pargrmList = {
             oper: 'getTruckListFour',
@@ -224,7 +232,7 @@
          
         },
         scanData(data){//扫描结果
-          // console.log(data)
+          alert(data);
         }
   
       },

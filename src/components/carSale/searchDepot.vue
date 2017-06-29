@@ -9,8 +9,7 @@
         </div>
         <div @click="search(depotPagarm.key)">搜索</div>
       </div>
-  </div>
-  
+  </div>  
 </template>
 
 <script type="text/javascript">

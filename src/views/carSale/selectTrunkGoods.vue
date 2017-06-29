@@ -13,7 +13,7 @@
   	<div class="search">
   		<img src="../../assets/scanne@2x.png" @click="scan()"></img>
   		<form @submit.prevent="search">
-  			<input class="borderR" id="search" placeholder="请输入关键字搜索商品" type="search" v-model="keyWord">
+  			<input class="borderRight" id="search" placeholder="请输入关键字搜索商品" type="search" v-model="keyWord">
   		</form>
 
   	</div>
@@ -24,7 +24,7 @@
         	<img class="gooodImg" v-lazy="item.URL_ADDR">
         	<label class="goodName">{{item.STK_NAME}}</label>
         	<label class="vendorName">{{item.VENDOR_NAME}}</label>
-        	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+        	<img  @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
 		</div>  
 
     </mt-loadmore>
@@ -148,7 +148,7 @@ import {
 
 	    	navBack(){
 	    		//调用router回退页面
-        		 this.$router.goBack();
+        		 navBack();
         		
 	    	},
 	    	
@@ -245,10 +245,10 @@ import {
 	                const getData = JSON.parse(res.data.result);
 	                // console.log(getData)
 	                if (parseInt(getData.code) == 4) {
-	                	 Toast({
-	                        message: getData.msg,
-	                        duration: 2000
-	                    });
+	                	 // Toast({
+	                  //       message: getData.msg,
+	                  //       duration: 2000
+	                  //   });
 	                    return;
 	                }
 	                if (parseInt(getData.code) != 200) {
@@ -372,7 +372,7 @@ import {
 		height: 62px;
 		width: 62px;
 		margin-left: 37px;
-		margin-top: 8px;
+		margin-top: 14px;
 	}
 	
 	.selectCarGoods .nav .right{
@@ -425,7 +425,7 @@ import {
 		font-family: PingFangSC-Medium;
 		font-size: 30px;
 		color: #3B456C;
-		right: 40px;
+		left: 240px;
 		top:55px;
 		display: -webkit-box;
    		overflow: hidden;
@@ -441,7 +441,7 @@ import {
 		font-size: 26px;
 		color: #3B456C;
 		opacity: 0.5;
-		right: 40px;
+		left: 240px;
 		bottom:86px;
 		display: -webkit-box;
    		overflow: hidden;
@@ -461,11 +461,13 @@ import {
 
 	.selectCarGoods .search input {
 		position: absolute;
+		display: inline-block;
 		border:none;
-		right: 94px;
+		left: 0px;
 		height: 100%;
-		width: 656px;
-		border-right: 1px solid #d9d9d9;
+		width: 85%;
+		/*right:100px;*/
+		/*border-right: 1px solid #d9d9d9;*/
 		text-align: left;
 		padding-left: 90px;
 		background: url('../../assets/icon20.png') left no-repeat;
