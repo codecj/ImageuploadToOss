@@ -378,7 +378,7 @@ import {
 	.selectCarGoods .nav .right{
 		float: right;
 		height: 30px;
-		width: 58px;
+		width: 50px;
 		margin-right: 37px;
 		margin-top: 30px;
 	}

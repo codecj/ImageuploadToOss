@@ -3,9 +3,7 @@
 		<div class="header">
 			<span>选择商品回车仓库</span>
 			<div><img src="../../assets/icon10.png" class="back" @click="back"></div>
-		<div class="scan">
-
-		</div>
+			<div class="scan"></div>
 		</div>
 		<div class="content">
 			<ul>
@@ -24,7 +22,6 @@
 <script>
 	import Vue from 'vue';
 	import Cell from './goodGoCarCell.vue';
-	import ScanSearch from '../../components/carSale/searchDepot.vue';
 	import Request from "../../util/API";
 	import {navBack} from '../../util/JsBridge.js';
 	import {
@@ -48,10 +45,8 @@
                 	pagesize: "20"
             	},
             	param:{
-     //            	username : this.$route.query.username,
-					// userno : this.$route.query.userno
-					username: "JSNTSOP1Y1",
-					userno: ""
+                	username : this.$route.query.username,
+                	userno: this.$route.query.userno
             	},
             	goCarParam:{
             		spUserName : "zhujyps01",
@@ -124,13 +119,17 @@
 				})
 			},
 			goCar(){
+				if (this.pkNos.length == 0){
+					Toast("不选,让我怎么提交");
+					return;
+				}
 				Indicator.open();
-				this.goCarParam.pkNos = this.pkNos
+				this.param.pkNos = this.pkNos
 				const pargrmList = {
 					pagination: JSON.stringify(this.page),
 					oper: 'backToTruckFour',
 					type: 'truck',
-					para: JSON.stringify(this.goCarParam) 
+					para: JSON.stringify(this.param) 
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
@@ -174,8 +173,7 @@
 			},
 		},
 		components:{
-			Cell,
-			ScanSearch
+			Cell
 		},
 		mounted(){
 			 Request.jsBbridge(bridge => {
