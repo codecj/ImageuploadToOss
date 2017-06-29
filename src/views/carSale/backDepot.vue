@@ -228,7 +228,7 @@
          
         },
         scanData(data){//扫描结果
-          // console.log(data)
+          alert(data);
         }
   
       },

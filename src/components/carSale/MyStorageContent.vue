@@ -2,7 +2,7 @@
 <template>
     <div>
         <div class="my-storage-content">
-            <div class="static-cell">
+            <div class="static-cell" @click="jumpToDepot">
                 <div>商品回库</div>
                 <div>未售完商品退回至仓库</div>
             </div>
@@ -31,6 +31,11 @@ import tools from "../../util/tools.js"
 
 			}
 		},
+        methods:{
+            jumpToDepot(){
+                this.$emit('toDepot')
+            }
+        },
 		props:['myStorageData'],
 		created(){
 			// window.cellSwipe();

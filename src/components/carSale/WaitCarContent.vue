@@ -48,7 +48,6 @@ export default {
                 Request.jsBbridge(bridge => {
                     window.WebViewJavascriptBridge.callHandler(
                         'printGoodsDetail', {
-                            // 'Data': this.waitCarData
                             'Data':printJson.data
                         },(responseData) => {
                             
