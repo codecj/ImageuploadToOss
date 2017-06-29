@@ -62,18 +62,18 @@ import {
 		        testurl:'http://192.168.200.235:8080/oo.png',
 		        depotParam:{
 		        	//业务员userno
-		        	userno:'359320',
+		        	userno:this.$route.query.userno,
 		        	//业务员对应的供应商username
-		        	vusername:'HZSOP',
+		        	vusername:this.$route.query.vusername,
 		        	//业务员username
-		        	username:'k1111'
+		        	username:this.$route.query.username
 		        },
 		        baseStkcByDepotParam:{
 		        	//业务员userno
-		        	userno:'359320',
+		        	userno:this.$route.query.userno,
 		        	//业务员username
-		        	username:'k1111',
-		        	vname:'HZSOP',
+		        	username:this.$route.query.username,
+		        	vname:this.$route.query.vusername,
 		        	whc:'',
 		        	key:'',
 		        	truckType:'S'
@@ -81,10 +81,10 @@ import {
 		        //添加商品到待装车
 		        addStckParam:{
 		        	whc:null,
-		        	username:'k1111',
-		        	vname:'HZSOP',
-		        	name:'kiki',
-		        	userno:'359320',
+		        	username:this.$route.query.username,
+		        	vname:this.$route.query.vusername,
+		        	name:this.$route.query.name,
+		        	userno:this.$route.query.userno,
 		        	item:null,
 		        	truckType:'S'
 		        },

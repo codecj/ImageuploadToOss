@@ -35,19 +35,19 @@
 				baseStkcList:[],
 				baseStkcByDepotParam:{
 		        	//业务员userno
-		        	userno:'359320',
+		        	userno:this.$route.query.userno,
 		        	//业务员username
-		        	username:'k1111',
-		        	vname:'HZSOP',
+		        	username:this.$route.query.username,
+		        	vname:this.$route.query.vusername,
 		        	key:'',
 		        	truckType:'M'
 		        },
 		         //添加商品到待装车
 		        addStckParam:{
-		        	username:'k1111',
-		        	vname:'HZSOP',
-		        	name:'kiki',
-		        	userno:'359320',
+		        	username:this.$route.query.username,
+		        	vname:this.$route.query.vusername,
+		        	name:this.$route.query.name,
+		        	userno:this.$route.query.userno,
 		        	item:null,
 		        	truckType:'M'
 		        },
@@ -118,8 +118,10 @@
                 	type: 'truck',
                	 	para: JSON.stringify(this.addStckParam)
             	};
+            	Indicator.open();
             	//ajax调用
 	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
 	                const getData = JSON.parse(res.data.result);
 	               
 	                if (parseInt(getData.code) != 200) {
@@ -136,6 +138,7 @@
 	                }
 
 	            }).catch(error => {
+	            	Indicator.close();
 	                if (error.response) {
 	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
 	                    Toast({

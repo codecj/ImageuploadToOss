@@ -4,8 +4,8 @@ export default {
     //请求的地址
     // url:'https://demowl.11wlw.cn/handle/execute.jhtml',
     // url:window.location.protocol+'//'+window.location.hostname+'/handle/execute.jhtml',
-    url:'http://192.168.200.70/handle/execute.jhtml',
-    // url:'http://192.168.200.16:8089/handle/execute.jhtml',
+    //url:'http://192.168.200.70/handle/execute.jhtml',
+    url:'http://192.168.200.16:8089/handle/execute.jhtml',
 
     isMobile: function() {
         var pType = navigator.userAgent.match(/(iphone|ipad|ipod|ios|android|mobile|blackberry|iemobile|mqqbrowser|juc|fennec|wosbrowser|browserng|Webos|symbian|windows phone)/i)[0];
@@ -21,8 +21,8 @@ export default {
       //参数里面的地址
       // data.url='https://demowl.11wlw.cn/api/execute.jhtml'
       //data.url=window.location.protocol+'//'+window.location.hostname+'/api/execute.jhtml';
-      data.url='http://192.168.200.70/api/execute.jhtml';
-      // data.url='http://192.168.200.16:8089/api/execute.jhtml';
+     // data.url='http://192.168.200.70/api/execute.jhtml';
+      data.url='http://192.168.200.16:8089/api/execute.jhtml';
 
       return Qs.stringify(data)
     },
