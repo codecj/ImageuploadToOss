@@ -46,7 +46,7 @@
             	},
             	param:{
                 	username : this.$route.query.username,
-					userno : this.$route.query.userno
+                	userno: this.$route.query.userno
             	},
             	goCarParam:{
             		spUserName : "zhujyps01",
@@ -119,6 +119,10 @@
 				})
 			},
 			goCar(){
+				if (this.pkNos.length == 0){
+					Toast("不选,让我怎么提交");
+					return;
+				}
 				Indicator.open();
 				this.param.pkNos = this.pkNos
 				const pargrmList = {
