@@ -145,6 +145,7 @@
             })
             if(this.stockList.length == noSelectArr.length){
                 Toast({message:"回库前请先进行选择", duration: 2000 });
+                return
             }
             let arr = [];
             this.stockList.forEach(value=>{
