@@ -15,7 +15,7 @@
                 <div class="tab-bar-right" @click="switchToWaitCar"><span :class="{tabActive :waitCarActive}">待装车</span></div>
             </div>
             <div class="content">
-                <my-storage-content v-show="myStorageActive" :myStorageData="myStorageData"></my-storage-content>
+                <my-storage-content v-show="myStorageActive" :myStorageData="myStorageData" @toDepot="jumpToDepot"></my-storage-content>
                 <wait-car-content v-show="waitCarActive" :waitCarData="waitCarData" v-on:deleteRemoteItem="deleteRemoteItem" v-on:clickEdit="edit"></wait-car-content>
             </div>
         </div>
@@ -23,7 +23,6 @@
             <ul>
                 <!-- @click="addGoods" -->
                 <li @click="addGoods">添加商品</li>
-                <li @click="carSaleStatistics">车销统计</li>
                 <li @click="returnCar">退货回车</li>
             </ul>
         </div>
@@ -75,7 +74,6 @@ export default {
         this.getListData();
     },
     methods: {
-
         getListData() { // 获取我的仓库列表信息
             Indicator.open();
             console.log(this.myStorageActive);
@@ -149,6 +147,16 @@ export default {
                 }
             })
         },
+        jumpToDepot(){
+            this.$router.push({
+                path:'backdepot',
+                query:{
+                    username: this.username,
+                    userno: this.userno,
+                    vusername: this.vusername
+                }                
+            })
+        },
         switchToMyStorage() { // 切换至我的仓库
             this.myStorageActive = true;
             this.waitCarActive = false;
@@ -171,18 +179,11 @@ export default {
                 path: 'selectTrunckGoods',
                 query: {
                     username: this.username,
-                    userno:this.userno,
-                    name:this.name,
-                    vusername:this.vusername
+                    userno: this.userno,
+                    name: this.name,
+                    vusername: this.vusername
                 },
             });
-        },
-        carSaleStatistics() { //alert("车销统计");
-            Request.jsBbridge(bridge => {
-                bridge.callHandler(
-                    'jumpToCalculate'
-                )
-            })
         },
         edit(item){ // 编辑商品
             this.stkcItemData = item;
@@ -330,7 +331,7 @@ export default {
     background: #333333;
     border-radius: 4px;
     width: 240px;
-    height: 300px;
+    height: 200px;
     text-align: center;
 }
 
@@ -342,5 +343,4 @@ export default {
     border-bottom: 2px solid #fff;
 }
 
-/*.hiddenDom{overflow:hidden;}*/
 </style>
