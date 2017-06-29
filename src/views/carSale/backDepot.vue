@@ -43,20 +43,14 @@
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
-            // vusername:this.$route.query.vusername,
-            // userno:this.$route.query.userno,
-            // username:this.$route.query.username
-
-            vusername:"HZSOP",
-            userno:"359320",
-            username:"wq360"
+            vusername:this.$route.query.vusername,
+            userno:this.$route.query.userno,
+            username:this.$route.query.username
           },
           depotPagarm:{//待装车和我的库存搜索参数
             key:"",
-            // username:this.$route.query.username,
-            // vusername:this.$route.query.vusername,
-            username:"wq360",
-            vusername:"HZSOP",
+            username:this.$route.query.username,
+            vusername:this.$route.query.vusername,
             whc:"",
             truckType:"S",
             storageStatus:"B"
@@ -143,6 +137,16 @@
           })
         },
         sureBackDepot(){//点击"确认回库""
+            let noSelectArr = [];//未选择的保存到一个数组
+            this.stockList.forEach(item=>{
+                if(item.seletedStatus == false){
+                    noSelectArr.push(item)
+                }               
+            })
+            if(this.stockList.length == noSelectArr.length){
+                Toast({message:"回库前请先进行选择", duration: 2000 });
+                return
+            }
             let arr = [];
             this.stockList.forEach(value=>{
               	let param = {}
@@ -232,7 +236,7 @@
          
         },
         scanData(data){//扫描结果
-          alert(data);
+          // console.log(data)
         }
   
       },

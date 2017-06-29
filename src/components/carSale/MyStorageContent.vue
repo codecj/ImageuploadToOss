@@ -11,7 +11,7 @@
                     <div class="storage-list-li">
                         <div class="con">
                             <div class="cell-content">
-                                <img :src="item.URL_ADDR" class="goodsImg">
+                                <img v-lazy="item.URL_ADDR" class="goodsImg">
                                 <h4 class="goodsName">{{item.STK_NAME}}</h4>
                                 <h5 class="goodsSpec">{{item.STOCK}}</h5>
                             </div>
