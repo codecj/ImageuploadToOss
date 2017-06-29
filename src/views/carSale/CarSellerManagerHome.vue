@@ -26,9 +26,10 @@
                 <li @click="returnCar">退货回车</li>
             </ul>
         </div>
-        <add-stkc-view v-show="addStkcShow" :baseStkc="stkcItemData"></add-stkc-view>
+        <add-stkc-view v-show="addStkcShow" :baseStkc="stkcItemData" @cancelAddStkcView="reloadData" @submitStkc="submitStkc"></add-stkc-view>
     </div>
 </template>
+
 <script>
 import Request from "../../util/API";
 import MyStorageContent from "../../components/carSale/MyStorageContent.vue"
@@ -54,8 +55,8 @@ export default {
             myStorageActive: true,
             waitCarActive: false,
             boxShowStatus: false,
-            addStkcShow:false,
-            stkcItemData:{},
+            addStkcShow: false,
+            stkcItemData: {},
             elmHeight: '100px',
             keyword: '',
             waitCarData: '',
@@ -63,20 +64,74 @@ export default {
             username: this.$route.query.username, // 业务员name
             userno: this.$route.query.userno, // 业务员No
             vusername: this.$route.query.vusername, // 供应商名称
-            name:this.$route.query.name, // 登录昵称
-            vnickname:this.$route.query.vnickname, // 供应商昵称
+            name: this.$route.query.name, // 登录昵称
+            vnickname: this.$route.query.vnickname, // 供应商昵称
             truckType: 'S',
-            storageStatus: 'A' // 待装车
+            storageStatus: 'A', // 待装车
+            whc:'',
+            addStckParam:{
+                username:this.$route.query.username,
+                vname:this.$route.query.vusername,
+                name:this.$route.query.name,
+                userno:this.$route.query.userno,
+                item:null,
+                truckType:'S',
+                whc:''
+            },
+            getStorageParam:{
+                userno:this.$route.query.userno,
+                vusername:this.$route.query.vusername,
+                username:this.$route.query.username
+            },
+            deleteRemoteItemParam:{
+                userno:this.$route.query.userno,
+                stkcs:'',
+                username:this.$route.query.username,
+                truckType:'S'
+            }
         };
     },
     created() {
         this.getElementH();
+        this.getStorageList();
         this.getListData();
     },
     methods: {
+        getStorageList(){ // 获取仓库列表
+            var _this = this;
+            Indicator.open();
+            let pargrmList = {
+                oper: 'getVendorwhcFour',
+                type: 'truck',
+                para: JSON.stringify(this.getStorageParam)
+            };
+            Request.post(pargrmList).then(function(response) {
+                Indicator.close();
+                var resData = JSON.parse(response.data.result).data;
+                if (resData.length != 0) {
+                    _this.whc = resData[0].WH_C; 
+                    _this.addStckParam.whc = resData[0].WH_C;
+                }
+            }).catch(function(error) {
+                Indicator.close();
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    console.log(error.response.status);
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                } else {
+                    console.log('Error', error.message);
+                    Toast({
+                        message: error.message,
+                        duration: 2000
+                    });
+                }
+            })
+        },
         getListData() { // 获取我的仓库列表信息
             Indicator.open();
-            console.log(this.myStorageActive);
             if (this.myStorageActive == false) { // 待装车
                 this.storageStatus = 'A'
             } else { // 我的仓库
@@ -91,8 +146,6 @@ export default {
             };
             Request.post(pargrmList).then(function(response) {
                 Indicator.close();
-                console.log(response);
-                // var resData = storageJson
                 var resData = JSON.parse(response.data.result);
                 if (_this.myStorageActive) {
                     _this.myStorageData = resData.data;
@@ -103,13 +156,11 @@ export default {
                 Indicator.close();
                 if (error.response) {
                     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                    console.log(error.response.status);
                     Toast({
                         message: error.response.status,
                         duration: 2000
                     });
                 } else {
-                    console.log('Error', error.message);
                     Toast({
                         message: error.message,
                         duration: 2000
@@ -120,26 +171,38 @@ export default {
         deleteRemoteItem(index) { // 删除
             var storageItemData = this.myStorageData[index];
             Indicator.open();
+            var _this = this;
+            this.deleteRemoteItemParam.stkcs = storageItemData.BASE_STK_C;
             let pargrmList = {
                 oper: 'delTruckIoItem',
                 type: 'truck',
-                para: '{"username":"' + _this.username + '","userno":"' + _this.userno + '","stkcs":"'+storageItemData.BASE_STK_C+'"}'
+                para: JSON.stringify(this.deleteRemoteItemParam)
             };
             Request.post(pargrmList).then(function(response) {
                 Indicator.close();
-
-
+                alert('1');
+                const getData = JSON.parse(response.data.result);
+                if (parseInt(getData.code) != 200) {
+                    Toast({
+                        message: getData.msg,
+                        duration: 2000
+                    });
+                } else {
+                    Toast({
+                        message: '删除成功',
+                        duration: 2000
+                    });
+                    _this.getListData();
+                }
             }).catch(function(error) {
                 Indicator.close();
                 if (error.response) {
                     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                    console.log(error.response.status);
                     Toast({
                         message: error.response.status,
                         duration: 2000
                     });
                 } else {
-                    console.log('Error', error.message);
                     Toast({
                         message: error.message,
                         duration: 2000
@@ -147,14 +210,14 @@ export default {
                 }
             })
         },
-        jumpToDepot(){
+        jumpToDepot() {
             this.$router.push({
-                path:'backdepot',
-                query:{
+                path: 'backdepot',
+                query: {
                     username: this.username,
                     userno: this.userno,
                     vusername: this.vusername
-                }                
+                }
             })
         },
         switchToMyStorage() { // 切换至我的仓库
@@ -185,15 +248,21 @@ export default {
                 },
             });
         },
-        edit(item){ // 编辑商品
+        edit(item) { // 编辑商品
+            console.log(item);
+            for (let i = 0; i < item.MODLE_LIST.length; i++) {
+                let temp = item.MODLE_LIST[i];
+                this.$set(temp, 'qty', temp.STK_QTY);
+            }
             this.stkcItemData = item;
+            this.addStkcShow = true;
         },
         returnCar() { //alert("退货回车");
             this.$router.push({
                 path: 'goodgocar',
                 query: {
                     username: this.username,
-                    userno:this.userno
+                    userno: this.userno
                 },
             });
         },
@@ -205,13 +274,77 @@ export default {
             })
         },
         submit() { // 搜索
-            alert(this.$data.keyword);
             document.getElementById("search").blur()
             this.getListData();
+        },
+        reloadData() { //修改规格点击空白
+            this.addStkcShow = false;
+        },
+        submitStkc(baseStkc) {
+            this.addStkcShow = false;
+            let itemList = [];
+            for (let i = 0; i < baseStkc.MODLE_LIST.length; i++) {
+                let temp = baseStkc.MODLE_LIST[i];
+                if (temp.qty > 0) {
+                    let model = {};
+                    model.vendorname = baseStkc.VENDOR_USER_NAME;
+                    model.stkc = temp.STK_C;
+                    model.cpmode = temp.CP_MODE;
+                    model.stkname = temp.NAME;
+                    model.urladdr = temp.URL_ADDR;
+                    model.pluc = temp.PLU_CODE;
+                    model.stkmodel = temp.MODLE;
+                    model.qty = temp.qty + '';
+                    itemList.push(model);
+                }
+            }
+            if (itemList.length == 0) {
+                Toast({
+                    message: '添加商品数量不能为空',
+                    duration: 2000
+                });
+                return;
+            }
+            this.addStckParam.item = JSON.stringify(itemList);
+            console.log(this.addStckParam);
+
+            let pargrmList = {
+                oper: 'upTruckIoItem',
+                type: 'truck',
+                para: JSON.stringify(this.addStckParam)
+            };
+            //ajax调用
+            Request.post(pargrmList).then(res => {
+                const getData = JSON.parse(res.data.result);
+
+                if (parseInt(getData.code) != 200) {
+                    // console.log(getData.msg);
+                    Toast({
+                        message: getData.msg,
+                        duration: 2000
+                    });
+                } else {
+                    Toast({
+                        message: '添加商品到待装车成功',
+                        duration: 2000
+                    });
+                    this.getListData();
+                }
+
+            }).catch(error => {
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                }
+            })
         }
     }
 };
 </script>
+
 <style scoped>
 #carSellerManagerHome {
     position: relative;
