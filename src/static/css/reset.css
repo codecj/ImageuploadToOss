@@ -41,3 +41,19 @@ input{-webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appe
 .borderDefalut{
   border: 1px solid #F1F2F7;
 }
+
+img[lazy=loading] {
+    background-position:center center!important;
+    background: url("../../assets/holde.png");
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+img[lazy=error] {
+    background-position:center center!important;
+    background: url("../../assets/holde.png");
+    background-repeat:no-repeat;
+
+    -webkit-background-size: cover;
+    background-size: cover;
+}

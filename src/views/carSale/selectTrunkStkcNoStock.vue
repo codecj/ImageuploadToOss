@@ -12,59 +12,199 @@
 	  		</form>
   		</div>
 
-  		<mt-loadmore :bottom-method="requestMore" :top-method="loadTop" 
-                     :bottom-all-loaded="allLoaded" :bottomPullText='bottomText'
-                     ref="loadmore" class="table">
-                <div class="cell">
-                	<img class="gooodImg">
-                	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
-                	<label class="vendorName">绍兴无语有限公司</label>
-                	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon9.png">
-                </div>
-                 <div class="cell">
-                	<img class="gooodImg">
-                	<label class="goodName">墨西哥辣点击对我的期望的我带我去打网球的期待的强大</label>
-                	<label class="vendorName">绍兴无语有限公司</label>
-                	<img @click="addGoodStkc()" class="addGoods" src="../../assets/icon_del.png">
-                </div>
-             
+  		<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
+  	class="table">
+                <div v-for="item in this.baseStkcList" class="cell">
+                	<img class="gooodImg" v-lazy="item.URL_ADDR">
+                	<label class="goodName">{{item.STK_NAME}}</label>
+                	<label class="vendorName">{{item.VENDOR_NAME}}</label>
+                	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+                </div>  
     	</mt-loadmore>
 	</div>	
 </template>
 <script>
-	import { navBack } from '../../util/JsBridge.js'
+	import { navBack,scan } from '../../util/JsBridge.js'
+	import  Request from '../../util/API.js'
+	import {Toast,Indicator,Loadmore} from 'mint-ui'
 	export default {
 		data () {
 			return {
 				showRightArrow:false,
 				keyWord:'',
-				allLoaded:false,
-				bottomText:'上拉加载更多数据'
+				baseStkcList:[],
+				baseStkcByDepotParam:{
+		        	//业务员userno
+		        	userno:'359320',
+		        	//业务员username
+		        	username:'k1111',
+		        	vname:'HZSOP',
+		        	key:'',
+		        	truckType:'M'
+		        },
+		         //添加商品到待装车
+		        addStckParam:{
+		        	username:'k1111',
+		        	vname:'HZSOP',
+		        	name:'kiki',
+		        	userno:'359320',
+		        	item:null,
+		        	truckType:'M'
+		        },
+		        page: {
+                	pageno: "0",
+                	pagesize: "20"
+            	},
+            	isEnd:false
 			}
 		},
 		mounted(){
-
+			 Request.jsBbridge(bridge => {
+		        bridge.init(function(message, responseCallback) {
+		            var data = {};
+		            responseCallback(data);
+		        });
+		    });
 		},
 		methods:{
 			scan(){
-
+				scan((response) =>{
+					this.isEnd = false;
+		   			this.page.pageno = "1";
+		   			this.baseStkcList = [];
+		   			this.baseStkcByDepotParam.key = response;
+		   			this.requestBaseStkc();
+				});
 			},
 			search(){
-
+				document.getElementById("search").blur();
+	    		this.isEnd = false;
+	   			this.page.pageno = "1";
+	   			this.baseStkcList = [];
+	   			this.baseStkcByDepotParam.key = this.keyWord;
+	   			this.requestBaseStkc();
 			},
 			backNav(){
 				navBack();
 			},
-			addGoodStkc(){
+			addGoodStkc(item){
+				let itemList = [];
+	        	for (let i = 0; i < item.MODLE_LIST.length; i++) {
+	        		let temp = item.MODLE_LIST[i];
+	        		if (temp.STK_QTY > 0) {
+	        			let model = {};
+	        			model.vendorname = item.VENDOR_USER_NAME;
+	        			model.stkc = temp.STK_C;
+	        			model.cpmode = temp.CP_MODE;
+	        			model.stkname = temp.NAME;
+	        			model.urladdr = temp.URL_ADDR;
+	        			model.pluc = temp.PLU_C;
+	        			model.stkmodel = temp.MODLE;
+	        			model.qty = temp.STK_QTY+'';
+	        			model.basestkc = item.BASE_STK_C;
+	        			itemList.push(model);
+	        		}
+	        	}
+	        	if (itemList.length == 0) {
+	        		 Toast({
+	                        message: '添加商品数量不能为空',
+	                        duration: 2000
+	                    });
+	        		 return;
+	        	}
+	        	this.addStckParam.item = JSON.stringify(itemList);
+	        	let pargrmList = {
+               	 	oper: 'saveTruckIoItem',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.addStckParam)
+            	};
+            	//ajax调用
+	            Request.post(pargrmList).then(res => {
+	                const getData = JSON.parse(res.data.result);
+	               
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   Toast({
+	                        message: '添加商品成功',
+	                        duration: 2000
+	                    });
+	                }
 
+	            }).catch(error => {
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
 			},
 			requestMore(){
-	    		alert('requestMore');
-	    		this.$refs.loadmore.onBottomLoaded();
+	    		if (!this.isEnd) {
+	                this.page.pageno = parseInt(this.page.pageno) + 1;
+	              	this.requestBaseStkc();
+           		}
 	    	},
 	    	loadTop(){
-	    		alert('refresh');
 	    		this.$refs.loadmore.onTopLoaded();
+	    		this.isEnd = false;
+	   			this.page.pageno = "1";
+	   			this.baseStkcList = [];
+	   			this.baseStkcByDepotParam.key = this.keyWord;
+	   			this.requestBaseStkc();
+	    	},
+	    	requestBaseStkc(){
+	    		let pargrmList = {
+	        		pagination: JSON.stringify(this.page),
+               	 	oper: 'getVendorStkFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.baseStkcByDepotParam)
+            	};
+            	Indicator.open();
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                	 Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                	  getData.data.forEach(value => {
+                   			 this.baseStkcList.push(value)
+               			 })
+	                  
+	                  	//this.item = this.baseStkcList[0];
+	                   if (this.baseStkcList.length == getData.pagination.totalcount) {
+                   			this.isEnd = true;
+                   		}
+                	}
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
 	    	}
 		}
 	}
@@ -151,7 +291,7 @@
 		position: absolute;
 		width: 200px;
 		height: 200px;
-		background-color: red;
+		background-color: white;
 		left: 32px;
 		top:51px;
 		border: none;

@@ -1,20 +1,20 @@
 <template>
 	<div class="trunkList">
-		<router-link to="selectTrunckGoodsWithNoStock" ><div class="addStkc">添加商品</div></router-link>
+		<div @click="addStkc()" v-show="showAddStkc" class="addStkc">添加商品</div>
 		<div class="nav borderB">
   			<img @click='navBack()'  class="left" src='../../assets/icon10.png'>
-  			<img @click="selectDev()" class="right" src='../../assets/add.png'>
+  			<img @click="rightAdd()" class="right" src='../../assets/add.png'>
   			<form @submit.prevent="search">
   				<input class="search" id="search" placeholder="请输入关键字搜索商品" type="search" v-model="keyWord">
   			</form>
   		</div>
   		<ul class="table list-ul">
 
-  			<li class="cell" v-for="item in this.baseStkcList">
-  				<LeftSlider :index = n @deleteItem='deleteItem'>
+  			<li class="cell" v-for="(item,index) in this.baseStkcList">
+  				<LeftSlider :index = 'index' @deleteItem='deleteItem'>
   					<img class="gooodImg" v-lazy="item.URL_ADDR">
                 	<label class="goodName">{{item.STK_NAME}}</label>
-                	<label class="vendorName">库存:{{item.STOCK}}</label>
+                	<!-- <label class="vendorName">库存:{{item.STOCK}}</label> -->
        			</LeftSlider>
   			</li>
   		</ul>
@@ -30,6 +30,7 @@
 			return {
 				showRightArrow:false,
 				keyWord:'',
+				showAddStkc:false,
 				baseStkcByDepotParam:{
 		        	//业务员username
 		        	username:'k1111',
@@ -37,6 +38,14 @@
 		        	key:'',
 		        	truckType:'M',
 		        	storageStatus:'B'
+		        },
+		        deleStkcParam:{
+		        	//业务员userno
+		        	userno:'359320',
+		        	//商品stkc
+		        	stkcs:'',
+		        	username:'k1111',
+		        	truckType:'M'
 		        },
 		        baseStkcList:[]
 			}
@@ -48,9 +57,11 @@
 		methods:{
 			search(){
 	    		document.getElementById("search").blur();
+	    		this.baseStkcByDepotParam.key = this.keyWord;
+	    		this.requestBaseStkc();
 	    	},
-	    	deleteItem(){
-
+	    	rightAdd(){
+	    		this.showAddStkc = !this.showAddStkc;
 	    	},
 	    	addStkc(){
 	    		 this.$router.push('/selectTrunckGoodsWithNoStock');
@@ -59,8 +70,40 @@
 	    		navBack();
 	    	},
 	    	deleteItem( index ){
-	    		alert(index);
+	    		let temp = this.baseStkcList[index];
+	    		this.deleStkcParam.stkcs = temp.BASE_STK_C;
+	    		let pargrmList = {
+               	 	oper: 'delTruckIoItem',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.deleStkcParam)
+            	};
+            	Indicator.open();
+            	//ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	 
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                	this.requestBaseStkc();
+                	}
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
 	    	},
+
 	    	requestBaseStkc(){
 	    		let pargrmList = {
                	 	oper: 'getTruckListFour',
@@ -207,7 +250,7 @@
 		position: absolute;
 		width: 200px;
 		height: 200px;
-		background-color: red;
+		background-color: white;
 		left: 32px;
 		top:51px;
 		border: none;
