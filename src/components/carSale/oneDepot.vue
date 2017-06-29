@@ -24,7 +24,6 @@
  	data(){
  		return{
  			showDev:false,
- 			// status:true
  		}
  	},
  	props:{
@@ -125,4 +124,5 @@
 	color: #4D5679;
 	letter-spacing: 0;
 }
+
 </style>
