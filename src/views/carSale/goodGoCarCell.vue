@@ -1,7 +1,7 @@
 <template>
 	<div class="gocarCell">
 		<span class="cellselect-img" :class="{cellNoselect:!this.good.isSelected, cellIsselect:this.good.isSelected}" @click="tap"></span>
-		<img v-view="this.good.PRODUCT_THUMBNAIL" class="cell-img">
+		<img v-lazy="this.good.PRODUCT_THUMBNAIL" class="cell-img">
 		<div class="cell-msg">
 			<div class="cell-title">
 				{{this.good.STK_NAME}}
@@ -20,7 +20,6 @@
 <script>
 import Vue from 'vue'
 import {
-    Toast,
     Lazyload
 } from 'mint-ui'
 
@@ -29,7 +28,6 @@ Vue.use(Lazyload, {
     lazyComponent: true,
     error: require('../../assets/holde.png'),
     loading: require('../../assets/holde.png'),
-    listenEvents: ['scroll']
 })
 
 	export default{
@@ -85,7 +83,7 @@ Vue.use(Lazyload, {
 		margin: 52px 36px 16px 28px;
 		color: #3b456c;
 		font-size: 30px;
-		height: 80px;
+		height: 90px;
 		overflow: hidden;
   		text-overflow: ellipsis;
   		-webkit-line-clamp:2;
