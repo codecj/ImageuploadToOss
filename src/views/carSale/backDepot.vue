@@ -236,7 +236,8 @@
          
         },
         scanData(data){//扫描结果
-          // console.log(data)
+            this.depotPagarm.key = data;
+            this.getSearch();
         }
   
       },

@@ -18,7 +18,8 @@
                 	<img class="gooodImg" v-lazy="item.URL_ADDR">
                 	<label class="goodName">{{item.STK_NAME}}</label>
                 	<label class="vendorName">{{item.VENDOR_NAME}}</label>
-                	<img @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+                	<img v-if="item.TRUCKFLG == 'N' " @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+                	<img v-else @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon_del.png">
                 </div>  
     	</mt-loadmore>
 	</div>	
@@ -35,19 +36,19 @@
 				baseStkcList:[],
 				baseStkcByDepotParam:{
 		        	//业务员userno
-		        	userno:'359320',
+		        	userno:this.$route.query.userno,
 		        	//业务员username
-		        	username:'k1111',
-		        	vname:'HZSOP',
+		        	username:this.$route.query.username,
+		        	vname:this.$route.query.vusername,
 		        	key:'',
 		        	truckType:'M'
 		        },
 		         //添加商品到待装车
 		        addStckParam:{
-		        	username:'k1111',
-		        	vname:'HZSOP',
-		        	name:'kiki',
-		        	userno:'359320',
+		        	username:this.$route.query.username,
+		        	vname:this.$route.query.vusername,
+		        	name:this.$route.query.name,
+		        	userno:this.$route.query.userno,
 		        	item:null,
 		        	truckType:'M'
 		        },
@@ -88,6 +89,9 @@
 				navBack();
 			},
 			addGoodStkc(item){
+				if (item.TRUCKFLG == 'Y') {
+					return;
+				}
 				let itemList = [];
 	        	for (let i = 0; i < item.MODLE_LIST.length; i++) {
 	        		let temp = item.MODLE_LIST[i];
@@ -118,8 +122,10 @@
                 	type: 'truck',
                	 	para: JSON.stringify(this.addStckParam)
             	};
+            	Indicator.open();
             	//ajax调用
 	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
 	                const getData = JSON.parse(res.data.result);
 	               
 	                if (parseInt(getData.code) != 200) {
@@ -133,9 +139,11 @@
 	                        message: '添加商品成功',
 	                        duration: 2000
 	                    });
+	                   	item.TRUCKFLG = 'Y';
 	                }
 
 	            }).catch(error => {
+	            	Indicator.close();
 	                if (error.response) {
 	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
 	                    Toast({
@@ -173,10 +181,10 @@
 	                const getData = JSON.parse(res.data.result);
 	                // console.log(getData)
 	                if (parseInt(getData.code) == 4) {
-	                	 Toast({
-	                        message: getData.msg,
-	                        duration: 2000
-	                    });
+	                	 // Toast({
+	                  //       message: getData.msg,
+	                  //       duration: 2000
+	                  //   });
 	                    return;
 	                }
 	                if (parseInt(getData.code) != 200) {
@@ -303,7 +311,7 @@
 		font-family: PingFangSC-Medium;
 		font-size: 30px;
 		color: #3B456C;
-		right: 40px;
+		left: 240px;
 		top:55px;
 		display: -webkit-box;
    		overflow: hidden;
@@ -319,7 +327,7 @@
 		font-size: 26px;
 		color: #3B456C;
 		opacity: 0.5;
-		right: 40px;
+		left: 240px;
 		bottom:86px;
 		display: -webkit-box;
    		overflow: hidden;
