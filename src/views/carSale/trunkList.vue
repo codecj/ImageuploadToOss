@@ -98,7 +98,7 @@
 	                        duration: 2000
 	                    });
 	                } else {
-	                	this.requestBaseStkc();
+	                	this.baseStkcList.splice(index,1);
                 	}
 	            }).catch(error => {
 	            	Indicator.close();
