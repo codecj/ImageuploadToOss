@@ -127,7 +127,7 @@
              Indicator.close();
              return
           }).catch(error=>{
-             Indicator.close();
+            Indicator.close();
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
                 Toast({

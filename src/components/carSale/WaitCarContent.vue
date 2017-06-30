@@ -31,12 +31,19 @@ import Request from "../../util/API";
 import tools from "../../util/tools.js"
 import printJson from '../../views/carSale/print.json'
 export default {
-    data(){
+        data(){
             return {
 
             }
         },
-        props: ['waitCarData'],
+        props: ['waitCarData','deleteFinish'],
+        computed: {
+            normalizedSize: function () {
+                console.log(this.deleteFinish);
+                alert(1);
+                return this.deleteFinish;
+            }
+        },
         methods: {
             editGoods(item){
                 this.$emit('clickEdit',item);
@@ -48,7 +55,7 @@ export default {
                 Request.jsBbridge(bridge => {
                     window.WebViewJavascriptBridge.callHandler(
                         'printGoodsDetail', {
-                            'Data':printJson.data
+                            'Data':this.waitCarData
                         },(responseData) => {
                             
                         }
@@ -58,7 +65,15 @@ export default {
         },
         created() {
             window.cellSwipe();
-        }
+        },
+        updated(){
+            console.log('组件更新完毕');
+            var lis = document.getElementsByClassName('list-li');
+            for (var i = 0; i < lis.length; i++) {
+                console.log(i);
+                lis[i].style.transform = 'translateX(0px)';
+            }
+        },
 }
 </script>
 
