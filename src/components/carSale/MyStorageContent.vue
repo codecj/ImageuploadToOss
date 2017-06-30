@@ -38,7 +38,7 @@ import tools from "../../util/tools.js"
         },
 		props:['myStorageData'],
 		created(){
-			// window.cellSwipe();
+            
 		}
 	}
 </script>
