@@ -33,18 +33,18 @@
 				showAddStkc:false,
 				baseStkcByDepotParam:{
 		        	//业务员username
-		        	username:'k1111',
-		        	vusername:'HZSOP',
+		        	username:this.$route.query.username,
+		        	vusername:this.$route.query.vusername,
 		        	key:'',
 		        	truckType:'M',
 		        	storageStatus:'B'
 		        },
 		        deleStkcParam:{
 		        	//业务员userno
-		        	userno:'359320',
+		        	userno:this.$route.query.userno,
 		        	//商品stkc
 		        	stkcs:'',
-		        	username:'k1111',
+		        	username:this.$route.query.username,
 		        	truckType:'M'
 		        },
 		        baseStkcList:[]
@@ -64,7 +64,15 @@
 	    		this.showAddStkc = !this.showAddStkc;
 	    	},
 	    	addStkc(){
-	    		 this.$router.push('/selectTrunckGoodsWithNoStock');
+	    		this.$router.push({
+	    		 	path:'/selectTrunckGoodsWithNoStock',
+	    		 	query: {
+		                username: this.$route.query.username,
+		                userno:this.$route.query.userno,
+		                name:this.$route.query.name,
+		                vusername:this.$route.query.vusername
+                	}
+	    		});
 	    	},
 	    	navBack(){
 	    		navBack();
@@ -90,7 +98,7 @@
 	                        duration: 2000
 	                    });
 	                } else {
-	                	this.requestBaseStkc();
+	                	this.baseStkcList.splice(index,1);
                 	}
 	            }).catch(error => {
 	            	Indicator.close();
