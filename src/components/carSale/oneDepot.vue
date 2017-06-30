@@ -11,8 +11,7 @@
 	    		<span @click="backDepot(item)">修改</span>
 	    	</p>
 	    </div>
-	  	
-	   
+	  	   
   	</div>
   </div>
   
