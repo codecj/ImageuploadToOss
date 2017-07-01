@@ -3,7 +3,7 @@
         <!-- 每个产品 -->
         <div class="searchItem borderBottom" @click='goodsClick(item.STK_C)' :data-id="item.STK_NAME_EXT">
             <div class="onephoto">
-                <img alt="" class="photo" v-view="item.URL_ADDR" width="157" height="157">
+                <img alt="" class="photo" v-lazy="item.URL_ADDR" width="157" height="157">
             </div>
             <div class="prodDetail">
                 <p>{{item.NAME}}</p>
