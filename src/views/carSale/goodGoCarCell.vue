@@ -52,6 +52,7 @@ Vue.use(Lazyload, {
 		width: 100%;
 		height: 296px;
 		border-top: 1px solid rgb(237, 238, 245);
+		border-bottom: 1px solid rgb(237, 238, 245);
 		position: relative;
 	}
 	.cell-msg{
