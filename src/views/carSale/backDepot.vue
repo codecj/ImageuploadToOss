@@ -91,6 +91,7 @@
           Request.post(pargrmList).then(res=>{
             let dataList = JSON.parse(res.data.result);
             this.depotPagarm.whc = dataList.data[0].WH_C
+            this.backPagarm.whc = dataList.data[0].WH_C
             this.getSearch();
             dataList.data.forEach(value=> {
               this.depotList.push(value)
