@@ -4,6 +4,7 @@ export default {
     //请求的地址
     // url:'https://demowl.11wlw.cn/handle/execute.jhtml',
     // url:window.location.protocol+'//'+window.location.hostname+'/handle/execute.jhtml',
+    // url:'http://192.168.200.70/handle/execute.jhtml',
     url:'http://192.168.200.16:8089/handle/execute.jhtml',
 
     isMobile: function() {
