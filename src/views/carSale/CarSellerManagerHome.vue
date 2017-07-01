@@ -139,10 +139,10 @@ export default {
             Indicator.open();
             if (this.myStorageActive == false) { // 待装车
                 this.storageStatus = 'A';
-                _this.waitCarData = {};
+                this.waitCarData = {};
             } else { // 我的仓库
                 this.storageStatus = 'B'
-                _this.myStorageData = {};
+                this.myStorageData = {};
             }
             var _this = this;
             let pargrmList = {
