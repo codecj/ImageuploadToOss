@@ -39,7 +39,6 @@ export default {
         props: ['waitCarData','deleteFinish'],
         computed: {
             normalizedSize: function () {
-                console.log(this.deleteFinish);
                 alert(1);
                 return this.deleteFinish;
             }
@@ -67,10 +66,8 @@ export default {
             window.cellSwipe();
         },
         updated(){
-            console.log('组件更新完毕');
             var lis = document.getElementsByClassName('list-li');
             for (var i = 0; i < lis.length; i++) {
-                console.log(i);
                 lis[i].style.transform = 'translateX(0px)';
             }
         },

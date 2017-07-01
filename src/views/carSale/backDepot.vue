@@ -55,7 +55,7 @@
             truckType:"S",
             storageStatus:"B"
           },
-          backPagarm:{
+          backPagarm:{//点击确认回库
             userno:this.$route.query.userno,
             username:this.$route.query.username,
             whc:"", 
@@ -72,6 +72,7 @@
           this.showDev = false;
           this.depotName = depot.NAME;
           this.depotPagarm.whc = depot.WH_C;
+          this.backPagarm.whc = depot.WH_C;
           this.getSearch();
         },
         cancelDepotList(){
@@ -172,6 +173,7 @@
                		 arr.push(param);
                	}
             })
+
             this.backPagarm.item = JSON.stringify(arr);
             const pargrmList = {
             	oper: 'saveTruck_OFour',
