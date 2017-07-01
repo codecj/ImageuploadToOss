@@ -146,6 +146,7 @@
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
+<<<<<<< HEAD
 					Indicator.close();
 					if (getData.code !== "200") {
 						Toast({
@@ -155,6 +156,8 @@
 						return;
 					}	
 	
+=======
+>>>>>>> d11af06df1ed8159af7602e8554f364bc093eb99
 						navBack()
 					if (this.goodList.length == getData.pagination.totalcount){
 						this.load = true;
