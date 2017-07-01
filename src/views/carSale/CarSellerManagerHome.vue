@@ -124,13 +124,11 @@ export default {
                 Indicator.close();
                 if (error.response) {
                     // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                    console.log(error.response.status);
                     Toast({
                         message: error.response.status,
                         duration: 2000
                     });
                 } else {
-                    console.log('Error', error.message);
                     Toast({
                         message: error.message,
                         duration: 2000
@@ -187,7 +185,6 @@ export default {
         },
         deleteRemoteItem(index) { // 删除
             var storageItemData = this.waitCarData[index];
-            console.log(storageItemData);
             Indicator.open();
             var _this = this;
             this.deleteRemoteItemParam.stkcs = storageItemData.BASE_STK_C;
@@ -266,7 +263,6 @@ export default {
             });
         },
         edit(item) { // 编辑商品
-            console.log(item);
             for (let i = 0; i < item.MODLE_LIST.length; i++) {
                 let temp = item.MODLE_LIST[i];
                 this.$set(temp, 'qty', temp.STK_QTY);
@@ -323,7 +319,6 @@ export default {
                 return;
             }
             this.addStckParam.item = JSON.stringify(itemList);
-            console.log(this.addStckParam);
 
             let pargrmList = {
                 oper: 'upTruckIoItem',
@@ -335,7 +330,6 @@ export default {
                 const getData = JSON.parse(res.data.result);
 
                 if (parseInt(getData.code) != 200) {
-                    // console.log(getData.msg);
                     Toast({
                         message: getData.msg,
                         duration: 2000

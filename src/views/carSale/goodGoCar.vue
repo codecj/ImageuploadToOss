@@ -133,11 +133,6 @@
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
-					// getData.data.forEach(value => {
-					// 	this.$set(value,"isSelected", false)
-					// 	this.goodList.push(value);
-					// })
-					// console.log(this.goodList)
 						navBack()
 					if (this.goodList.length == getData.pagination.totalcount){
 						this.load = true;
