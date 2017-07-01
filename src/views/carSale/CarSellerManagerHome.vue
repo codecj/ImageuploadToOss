@@ -41,7 +41,6 @@ import {
     Lazyload,
     Loadmore
 } from 'mint-ui'
-import storageJson from "./storage.json"
 
 export default {
     name: 'page-navbar',

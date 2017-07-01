@@ -29,7 +29,7 @@
 <script type="text/javascript">
 import Request from "../../util/API";
 import tools from "../../util/tools.js"
-import printJson from '../../views/carSale/print.json'
+
 export default {
         data(){
             return {

@@ -14,7 +14,6 @@ const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
 const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
-const test = resolve => require(['../views/carSale/test.vue'], resolve)
 const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
 import PageTransition from '../Components/carSale/PageTransition.vue'
 const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
@@ -69,9 +68,6 @@ export default {
                 },{
                     path:'/selectTrunckGoods',
                     component:selectTrunckGoods
-                },{
-                    path:'/test',
-                    component:test
                 },{
                     path: '/goodgocar',
                     component: goodgocar
