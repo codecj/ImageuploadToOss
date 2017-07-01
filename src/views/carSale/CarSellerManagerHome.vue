@@ -138,12 +138,13 @@ export default {
         getListData() { // 获取我的仓库列表信息
             Indicator.open();
             if (this.myStorageActive == false) { // 待装车
-                this.storageStatus = 'A'
+                this.storageStatus = 'A';
+                _this.waitCarData = {};
             } else { // 我的仓库
                 this.storageStatus = 'B'
+                _this.myStorageData = {};
             }
             var _this = this;
-
             let pargrmList = {
                 oper: 'getTruckListFour',
                 type: 'truck',
