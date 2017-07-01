@@ -1,7 +1,7 @@
 <template>
 	<div class="goodgocar">
 		<div class="header">
-			<span>选择商品回车仓库</span>
+			<span>退货回车</span>
 			<div><img src="../../assets/icon10.png" class="back" @click="back"></div>
 			<div class="scan"></div>
 		</div>
@@ -35,7 +35,7 @@
 	export default {
 		data(){
 			return{
-				isAllSelect:false,
+				isAllSelect:true,
 				isEnd: false,
 				allLoaded:false,
 				goodList:[],
@@ -49,13 +49,16 @@
                 	userno: this.$route.query.userno
             	},
             	goCarParam:{
-            		spUserName : "zhujyps01",
-            		spUserNo: "382005"
+            		spUserName : this.$route.query.username,
+            		spUserNo: this.$route.query.userno
             	}
 			}
 		},
 		computed:{
 			pkNos(){
+				if (this.goodList.length == 0){
+					return ''
+				}
 				var arrayX = []
 				for (var item of this.goodList){
 					if (item.isSelected){
@@ -81,6 +84,13 @@
 			},
 			fromCell(index, status){
 				this.goodList[index].isSelected = status
+				var flag = true
+				this.goodList.forEach(item =>{
+					if (!item.isSelected){
+						flag = false
+					}
+				})
+				this.isAllSelect = flag
 			},
 			ajax(){
 				Indicator.open();
@@ -93,21 +103,24 @@
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
+					Indicator.close();
+					if (getData.code !== "200") {
+						Toast({
+							message:getData.msg,
+							duration: 2000
+						});
+						return;
+					}
 					getData.data.forEach(value => {
-						this.$set(value,"isSelected", false)
+						this.$set(value,"isSelected", true)
 						this.goodList.push(value);
 					})
+
 					if (this.goodList.length == getData.pagination.totalcount){
 						this.isEnd = true;
 						Indicator.close();
 						return
 					}
-
-					if (getData.code !== "200") Toast({
-						message:getData.msg,
-						duration: 2000
-					});
-					Indicator.close();
 				}).catch(error => {
 					Indicator.close();
 					if (error.response){
@@ -120,19 +133,31 @@
 			},
 			goCar(){
 				if (this.pkNos.length == 0){
-					Toast("不选,让我怎么提交");
+					Toast("请先选择商品");
 					return;
 				}
 				Indicator.open();
-				this.param.pkNos = this.pkNos
+				this.goCarParam.pkNos = this.pkNos
 				const pargrmList = {
 					pagination: JSON.stringify(this.page),
 					oper: 'backToTruckFour',
 					type: 'truck',
-					para: JSON.stringify(this.param) 
+					para: JSON.stringify(this.goCarParam) 
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
+<<<<<<< HEAD
+					Indicator.close();
+					if (getData.code !== "200") {
+						Toast({
+							message:getData.msg,
+							duration: 2000
+						});
+						return;
+					}	
+	
+=======
+>>>>>>> d11af06df1ed8159af7602e8554f364bc093eb99
 						navBack()
 					if (this.goodList.length == getData.pagination.totalcount){
 						this.load = true;
@@ -140,12 +165,6 @@
 						Indicator.close();
 						return
 					}
-
-					if (getData.code !== "200") Toast({
-						message:getData.msg,
-						duration: 2000
-					});
-					Indicator.close();
 				}).catch(error => {
 					Indicator.close();
 					if (error.response){
@@ -214,8 +233,8 @@
 		position: absolute;
 	}
 	.content ul li:last-child{
-		margin-bottom: 99px;
-		border-bottom: 1px solid rgb(237, 238, 245);
+		padding-bottom: 99px;
+		background-color: white;
 	}
 	.footer{
 		position: fixed;

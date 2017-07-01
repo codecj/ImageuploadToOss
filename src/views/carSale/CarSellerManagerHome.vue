@@ -109,7 +109,7 @@ export default {
                 var resData = JSON.parse(response.data.result).data;
                 if (parseInt(JSON.parse(response.data.result).code) != 200) {
                     Toast({
-                        message: JSON.parse(response.data.result).msg,
+                        message: resData.msg,
                         duration: 2000
                     });
                 } else {
@@ -153,6 +153,13 @@ export default {
                 Indicator.close();
                 var resData = JSON.parse(response.data.result);
                 if (parseInt(resData.code) != 200) {
+                    if ((JSON.parse(response.data.result).code) == "4") {
+                        Toast({
+                            message: "暂无商品",
+                            duration: 2000
+                        });
+                        return;
+                    } 
                     Toast({
                         message: resData.msg,
                         duration: 2000
