@@ -81,7 +81,7 @@
 		bottom: 98px;
 		background-color: white;
 		height: 800px;
-		overflow-y: scroll;
+		
 	}
 	.addStkc .content .goodsInfo{
 		position: relative;
@@ -94,7 +94,7 @@
 		top:-25px;
 		width: 200px;
 		height: 200px;
-		background-color: white;
+		/*background-color: white;*/
 	}
 	.addStkc .content .goodsInfo .goodsName{
 		position: absolute;
@@ -129,6 +129,7 @@
 
 	.addStkc .content ul{
 		width: 100%;
+		overflow-y: scroll;
 	}
 
 	.addStkc .content ul li{
