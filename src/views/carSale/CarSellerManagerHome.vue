@@ -56,6 +56,7 @@ export default {
             waitCarActive: false,
             boxShowStatus: false,
             addStkcShow: false,
+            whcGetStatus: false,
             stkcItemData: {},
             elmHeight: '100px',
             keyword: '',
@@ -93,7 +94,6 @@ export default {
     },
     created() {
         this.getElementH();
-        this.getStorageList();
         this.getListData();
     },
     methods: {
@@ -108,10 +108,18 @@ export default {
             Request.post(pargrmList).then(function(response) {
                 Indicator.close();
                 var resData = JSON.parse(response.data.result).data;
-                if (resData.length != 0) {
-                    _this.whc = resData[0].WH_C; 
-                    _this.addStckParam.whc = resData[0].WH_C;
-                }
+                if (parseInt(JSON.parse(response.data.result).code) != 200) {
+                    Toast({
+                        message: JSON.parse(response.data.result).msg,
+                        duration: 2000
+                    });
+                } else {
+                    if (resData.length != 0) {
+                        _this.whc = resData[0].WH_C; 
+                        _this.addStckParam.whc = resData[0].WH_C;
+                        _this.whcGetStatus = true;
+                    }
+                }   
             }).catch(function(error) {
                 Indicator.close();
                 if (error.response) {
@@ -147,6 +155,15 @@ export default {
             Request.post(pargrmList).then(function(response) {
                 Indicator.close();
                 var resData = JSON.parse(response.data.result);
+                if (parseInt(resData.code) != 200) {
+                    Toast({
+                        message: resData.msg,
+                        duration: 2000
+                    });
+                }
+                if (_this.whcGetStatus == false) {
+                    _this.getStorageList();
+                }
                 if (_this.myStorageActive) {
                     _this.myStorageData = resData.data;
                 } else {
@@ -169,7 +186,8 @@ export default {
             })
         },
         deleteRemoteItem(index) { // 删除
-            var storageItemData = this.myStorageData[index];
+            var storageItemData = this.waitCarData[index];
+            console.log(storageItemData);
             Indicator.open();
             var _this = this;
             this.deleteRemoteItemParam.stkcs = storageItemData.BASE_STK_C;
@@ -180,7 +198,6 @@ export default {
             };
             Request.post(pargrmList).then(function(response) {
                 Indicator.close();
-                alert('1');
                 const getData = JSON.parse(response.data.result);
                 if (parseInt(getData.code) != 200) {
                     Toast({

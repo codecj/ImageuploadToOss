@@ -5,14 +5,13 @@
 	    <div><img v-lazy="item.URL_ADDR" alt=""></div>
 	    <div>
 	    	<p>{{item.STK_NAME}}</p>
-	    	<p>100个</p>
+	    	<p></p>
 	    	<p>
 	    		<span>{{item.STOCK}}</span>
 	    		<span @click="backDepot(item)">修改</span>
 	    	</p>
 	    </div>
-	  	
-	   
+	  	   
   	</div>
   </div>
   
@@ -99,6 +98,9 @@
 	font-size: 30px;
 	color: #3B456C;
 	letter-spacing: 0;
+	width:100%;
+	height:60px;
+	display:inline-block;
 }
 .depot div:nth-child(3) p:nth-child(3){
 	position: relative;

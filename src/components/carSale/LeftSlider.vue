@@ -90,7 +90,9 @@
             },
             deleteItem: function(index) {
                MessageBox.confirm('确定要删除吗?').then(action => {
-                 this.$emit('deleteItem', index);
+                this.txtStyle = "transform:translateX(0rem)";
+                this.zIndex = "z-index:" + -1;
+                this.$emit('deleteItem', index);
                 }).catch(action => {
                     
                 });
