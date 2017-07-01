@@ -31,7 +31,7 @@
   import Vue from 'vue'
   import { Lazyload } from 'mint-ui'
   import { Toast,Indicator } from 'mint-ui'
-
+  import { navBack,scan } from '../../util/JsBridge.js'
   export default({
       data(){
         return{
@@ -58,7 +58,7 @@
           backPagarm:{
             userno:this.$route.query.userno,
             username:this.$route.query.username,
-            whc:"QJ", 
+            whc:"", 
             name:this.$route.query.name,
             item:[]
           }
@@ -89,8 +89,11 @@
           }
           Request.post(pargrmList).then(res=>{
             let dataList = JSON.parse(res.data.result);
+            this.depotPagarm.whc = dataList.data[0].WH_C
+            this.getSearch();
             dataList.data.forEach(value=> {
               this.depotList.push(value)
+              // console.log(value)
             })           
             this.depotName = dataList.data[0].NAME;
             if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
@@ -202,7 +205,9 @@
           this.showDatail = false;
         },
         goback(){//返回按钮
-          this.$router.goBack();
+          // this.$router.goBack();
+          navBack();
+
         },
         search(key){//搜索
           this.stockList = [];
@@ -243,7 +248,7 @@
   
       },
       mounted(){
-        this.getSearch();
+        // this.getSearch();
         this.getList();
       }
 

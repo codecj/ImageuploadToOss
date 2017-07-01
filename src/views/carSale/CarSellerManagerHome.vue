@@ -229,7 +229,8 @@ export default {
                 query: {
                     username: this.username,
                     userno: this.userno,
-                    vusername: this.vusername
+                    vusername: this.vusername,
+                    name:this.name
                 }
             })
         },
