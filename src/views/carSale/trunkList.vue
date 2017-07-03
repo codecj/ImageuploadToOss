@@ -90,7 +90,6 @@
 	            Request.post(pargrmList).then(res => {
 	            	Indicator.close();
 	                const getData = JSON.parse(res.data.result);
-	 
 	                if (parseInt(getData.code) != 200) {
 	                    // console.log(getData.msg);
 	                    Toast({
@@ -125,10 +124,10 @@
 	                const getData = JSON.parse(res.data.result);
 	                // console.log(getData)
 	                if (parseInt(getData.code) == 4) {
-	                	 Toast({
-	                        message: getData.msg,
-	                        duration: 2000
-	                    });
+	                	Toast({
+	                         message: '无商品',
+	                         duration: 2000
+	                     });
 	                    return;
 	                }
 	                if (parseInt(getData.code) != 200) {
