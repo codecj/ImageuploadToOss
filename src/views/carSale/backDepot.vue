@@ -82,6 +82,7 @@
           this.showDev = !this.showDev;
         },
         getList(){//可选仓库列表接口
+          Indicator.open();
           this.depotList = [];
           const pargrmList = {
             oper: 'getVendorwhc',
@@ -89,6 +90,7 @@
             para: JSON.stringify(this.pagram) 
           }
           Request.post(pargrmList).then(res=>{
+            Indicator.close();
             let dataList = JSON.parse(res.data.result);
             this.depotPagarm.whc = dataList.data[0].WH_C
             this.backPagarm.whc = dataList.data[0].WH_C
@@ -101,6 +103,7 @@
             if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
             return
           }).catch(error=>{
+            Indicator.close();
              if (error.response) {
                 // 请求已发出，但服务器响应的状态码不在 2xx 范围内
                 Toast({
@@ -110,15 +113,17 @@
             }
           })
         },
-        getSearch(){//待装车和我的库存搜索接口
-          this.stockList=[];
-          Indicator.open();
+        getSearch(){//待装车和我的库存搜索接口   
+        Indicator.open();      
+          this.stockList=[];          
            const pargrmList = {
             oper: 'getTruckListFour',
             type: 'truck',
             para: JSON.stringify(this.depotPagarm) 
           }
           Request.post(pargrmList).then(res=>{
+            Indicator.close();
+
             let dataList = JSON.parse(res.data.result);
             if (parseInt(dataList.code) == 4) {
               Toast({ message: '无商品', duration: 2000 });
@@ -132,9 +137,8 @@
                 this.$set(temp,"qty",temp.STK_QTY);
               })   
             })  
-            if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
-             Indicator.close();
-             return
+            if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });           
+            return
           }).catch(error=>{
             Indicator.close();
              if (error.response) {
