@@ -2,9 +2,9 @@
 <template>
   <div class="selectCarGoods">
   	<div class="nav borderB">
-  			<label>仓库:{{dopName}}</label>
   			<img @click='navBack()'  class="left" src='../../assets/icon10.png'></img>
   			<img @click="selectDev()" class="right" src="../../assets/arrow-down.png"></img>
+  			<label>仓库:{{dopName}}</label>
   	</div>
   	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
   	</DepotList>
@@ -249,6 +249,12 @@ import {
 	                  //       message: getData.msg,
 	                  //       duration: 2000
 	                  //   });
+	                  if (this.baseStkcList.length == 0) {
+	                  	Toast({
+	                         message: '无商品',
+	                         duration: 2000
+	                     });
+	                  }
 	                    return;
 	                }
 	                if (parseInt(getData.code) != 200) {
@@ -381,6 +387,13 @@ import {
 		width: 50px;
 		margin-right: 37px;
 		margin-top: 30px;
+	}
+	.selectCarGoods .nav label{
+		display: -webkit-box;
+		overflow: hidden;
+    	-webkit-box-orient: vertical;
+    	text-overflow: ellipsis;
+    	-webkit-line-clamp: 1;
 	}
 
 	.selectCarGoods .search{

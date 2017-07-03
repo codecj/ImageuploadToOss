@@ -120,6 +120,10 @@
           }
           Request.post(pargrmList).then(res=>{
             let dataList = JSON.parse(res.data.result);
+            if (parseInt(dataList.code) == 4) {
+              Toast({ message: '无商品', duration: 2000 });
+              return;
+            }
             dataList.data.forEach(value=> {
               value.seletedStatus = true;
               this.selectStatus = true;

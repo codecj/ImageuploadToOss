@@ -185,6 +185,12 @@
 	                  //       message: getData.msg,
 	                  //       duration: 2000
 	                  //   });
+	                   	if(this.baseStkcList.length == 0) {
+		                  	Toast({
+		                         message: '无商品',
+		                         duration: 2000
+		                     });
+	                  	}
 	                    return;
 	                }
 	                if (parseInt(getData.code) != 200) {
