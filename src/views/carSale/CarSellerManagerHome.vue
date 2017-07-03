@@ -156,7 +156,7 @@ export default {
                 if (parseInt(resData.code) != 200) {
                     if ((JSON.parse(response.data.result).code) == "4") {
                         Toast({
-                            message: "商品列表暂无数据",
+                            message: "无商品",
                             duration: 2000
                         });
                         return;

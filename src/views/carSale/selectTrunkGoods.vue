@@ -251,7 +251,7 @@ import {
 	                  //   });
 	                  if (this.baseStkcList.length == 0) {
 	                  	Toast({
-	                         message: '商品列表暂无数据',
+	                         message: '无商品',
 	                         duration: 2000
 	                     });
 	                  }
