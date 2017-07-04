@@ -21,7 +21,7 @@ window.cellSwipe = function(){
                           if (X >= 0) {
                               obj.style.WebkitTransform = "translateX(" + 0 + "px)";
                           }
-                          else if (X < 0) {
+                          else if (X < 100) {
                               var l = Math.abs(X);
                               obj.style.WebkitTransform = "translateX(" + -l + "px)";
                               if(l>btnW){
