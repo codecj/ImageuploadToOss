@@ -35,7 +35,7 @@ module.exports = {
       //   }
       // }
       {test: /\.(png|jpg)$/, 
-        loader:"url-loader?limit=10000name=img/[name][hash:8].[ext]"
+        loader:"url-loader?limit=40000name=img/[name][hash:8].[ext]"
      }
     ]
   },
