@@ -10,21 +10,23 @@
   		</div>
   		<ul class="table list-ul">
 
-  			<li class="cell" v-for="(item,index) in this.baseStkcList">
-  				<LeftSlider :index = 'index' @deleteItem='deleteItem'>
+  			<li class="list-li" v-for="(item,index) in this.baseStkcList">
+  				<!-- <LeftSlider :index = 'index' @deleteItem='deleteItem'> -->
   					<img class="gooodImg" v-lazy="item.URL_ADDR">
                 	<label class="goodName">{{item.STK_NAME}}</label>
+                	 <div class="btn" @click.prevent="deleteItem(index)">删除</div>
                 	<!-- <label class="vendorName">库存:{{item.STOCK}}</label> -->
-       			</LeftSlider>
+       			<!-- </LeftSlider> -->
   			</li>
   		</ul>
 	</div>
 </template>
 <script>
 	import { navBack } from '../../util/JsBridge.js'
-	import LeftSlider from '../../components/carSale/LeftSlider.vue'
+	// import LeftSlider from '../../components/carSale/LeftSlider.vue'
 	import  Request from '../../util/API.js'
 	import {Toast,Indicator,Loadmore} from 'mint-ui'
+
 	export default {
 		data () {
 			return {
@@ -50,13 +52,76 @@
 		        baseStkcList:[]
 			}
 		},
+		created() {
+       
+        },
 		mounted(){
+			     	    var initX; //触摸位置
+    var moveX; //滑动时的位置
+    var X = 0; //移动距离
+    var objX = 0; //目标对象位置
+       var deviceW = document.documentElement.clientWidth;
+          var btnW = deviceW / 5;
+    window.addEventListener('touchstart', function(event) {
+
+        //event.preventDefault();
+        var obj = event.target;
+        if (obj.className != "list-li") {
+        	obj = event.target.parentNode;
+        }
+        if (obj.className == "list-li") {
+            initX = event.targetTouches[0].pageX;
+            objX = (obj.style.WebkitTransform.replace(/translateX\(/g, "").replace(/px\)/g, "")) * 1;
+        }
+
+     
+        
+            window.addEventListener('touchmove', function(event) {
+                //event.preventDefault();
+                var obj = event.target;
+               if (obj.className != "list-li") {
+        			obj = event.target.parentNode;
+        		}
+                if (obj.className == "list-li") {
+                    moveX = event.targetTouches[0].pageX;
+                    X = moveX - initX;
+                    if (X >= 80) {
+
+                        obj.style.WebkitTransform = "translateX(" + 0 + "px)";
+                    } else if (X < -100) {
+                        // var l = Math.abs(X);
+                         obj.style.WebkitTransform = "translateX(" + -btnW + "px)";
+                        // if (l > 500) {
+                        //     l = btnW;
+                        //     obj.style.WebkitTransform = "translateX(" + -l + "px)";
+                        // }
+                    }
+                }
+            });
+       
+
+    })
+    window.addEventListener('touchend', function(event) {
+       // event.preventDefault();
+        var obj = event.target.parentNode;
+        if (obj.className == "list-li") {
+            objX = (obj.style.WebkitTransform.replace(/translateX\(/g, "").replace(/px\)/g, "")) * 1;
+            if (objX > -btnW/2) {
+                obj.style.WebkitTransform = "translateX(" + 0 + "px)";
+                objX = 0;
+            } else {
+                obj.style.WebkitTransform = "translateX(" + -btnW + "px)";
+                objX = -btnW;
+            }
+        }
+    })
 			this.requestBaseStkc();
 		},
 	
 		methods:{
 			search(){
 	    		document.getElementById("search").blur();
+	    		this.baseStkcList = [];
 	    		this.baseStkcByDepotParam.key = this.keyWord;
 	    		this.requestBaseStkc();
 	    	},
@@ -97,7 +162,9 @@
 	                        duration: 2000
 	                    });
 	                } else {
-	                	this.baseStkcList.splice(index,1);
+	                	this.baseStkcList = [];
+	                	this.requestBaseStkc();
+	                	//this.baseStkcList.splice(index,1);
                 	}
 	            }).catch(error => {
 	            	Indicator.close();
@@ -154,7 +221,7 @@
 	    	}
 		},
 		components: {
-        	LeftSlider
+        	// LeftSlider
    		 },
 	}
 </script>
@@ -245,13 +312,16 @@
 		overflow-x:hidden;
 	}
 
-	.trunkList .table .cell{
+	.trunkList .table .list-li{
 		height:296px;width:100%;
+		/*line-height: 296px;*/
 		background-color: #ffffff;
+		display: block;
 		position: relative;
 		margin-top: 10px;
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
+		/*-webkit-transform: translateX(-80px);*/
 	}
 	.trunkList .table .gooodImg{
 		position: absolute;
@@ -277,6 +347,10 @@
     	text-overflow: ellipsis;
     	-webkit-line-clamp: 2;
 	}
+	.con{
+		width: 100%;
+		height: 100%;
+	}
 	
 	.trunkList .table .vendorName{
 		position: absolute;
@@ -294,6 +368,6 @@
     	-webkit-line-clamp: 2;
 	}
 	.list-ul{overflow-x:hidden;}
-	.list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;-webkit-transform: translateX(0px);}
+/*	.list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;-webkit-transform: translateX(0px);}*/
     .btn{ position: absolute; top: 0; right: -20%; text-align: center; background: #ffcb20; width: 20%;height: 298px;line-height: 298px;background-image: linear-gradient(17deg, #FF4848 2%, #FF8739 100%);font-size: 30px;color: #FFFFFF;}
 </style>
