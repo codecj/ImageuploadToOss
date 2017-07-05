@@ -12,7 +12,7 @@
 				<label class="spec">{{item.UOM +'(' + item.MODLE +')'}}</label>
 				<label class="price">¥{{item.NET_PRICE}}</label>
 				<img @click.stop="addStkc(item)" class="add" src="../../assets/icon9.png"></img>
-				<input type="tel"  class="amount" v-model="item.qty">
+				<input type="tel"  class="amount" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4)value=value.slice(0,4)" @keyup="onlyNum(item)" v-model="item.qty">
 				<img @click.stop="reduceStkc(item)" class="reduce" src="../../assets/icon3.png"></img>
 				<label class="stkcStock">库存 {{item.STKC_QTY}}</label>
 			</li>
@@ -56,6 +56,9 @@
 				}else{
 					item.qty--;
 				}
+			},
+            onlyNum(item){
+                item.qty=item.qty.replace(/[^\d]/g,'');
 			},
 			submitStkc(){
 				this.$emit('submitStkc',this.baseStkc);
