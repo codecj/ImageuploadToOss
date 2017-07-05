@@ -95,7 +95,7 @@
 				let itemList = [];
 	        	for (let i = 0; i < item.MODLE_LIST.length; i++) {
 	        		let temp = item.MODLE_LIST[i];
-	        		if (temp.STK_QTY > 0) {
+	        		// if (temp.STK_QTY > 0) {
 	        			let model = {};
 	        			model.vendorname = item.VENDOR_USER_NAME;
 	        			model.stkc = temp.STK_C;
@@ -107,15 +107,15 @@
 	        			model.qty = temp.STK_QTY+'';
 	        			model.basestkc = item.BASE_STK_C;
 	        			itemList.push(model);
-	        		}
+	        		// }
 	        	}
-	        	if (itemList.length == 0) {
-	        		 Toast({
-	                        message: '添加商品数量不能为空',
-	                        duration: 2000
-	                    });
-	        		 return;
-	        	}
+	        	// if (itemList.length == 0) {
+	        	// 	 Toast({
+	         //                message: '添加商品数量不能为空',
+	         //                duration: 2000
+	         //            });
+	        	// 	 return;
+	        	// }
 	        	this.addStckParam.item = JSON.stringify(itemList);
 	        	let pargrmList = {
                	 	oper: 'saveTruckIoItem',
