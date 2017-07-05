@@ -163,9 +163,11 @@
             }
             let arr = [];
             this.stockList.forEach(value=>{
-              	let param = {}
+              	// let param = {}
               	if(value.seletedStatus){
                		value.MODLE_LIST.forEach(item=>{
+                    if(item.qty > 0){
+                     let param = {}
 		                 param.cpmode = item.CP_MODE
 		                 param.pluc = item.PLU_CODE
 		                 param.urladdr = item.URL_ADDR
@@ -175,15 +177,13 @@
 		                 param.stdqty = item.STD_QTY
 		                 param.stkmodel = item.MODLE
 		                 param.qty = item.qty 
-
-                	})
-              	}
-              	if(param.qty > 0){
-               		 arr.push(param);
-               	}
+                    arr.push(param);
+                    }  
+                	})                 
+              	} 
             })
 
-            this.backPagarm.item = JSON.stringify(arr);
+            this.backPagarm.temp = JSON.stringify(arr);
             const pargrmList = {
             	oper: 'saveTruck_OFour',
             	type: 'truck',
