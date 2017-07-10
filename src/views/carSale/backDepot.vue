@@ -183,7 +183,7 @@
               	} 
             })
 
-            this.backPagarm.temp = JSON.stringify(arr);
+            this.backPagarm.item = JSON.stringify(arr);
             const pargrmList = {
             	oper: 'saveTruck_OFour',
             	type: 'truck',
@@ -250,7 +250,7 @@
         },
         submitStkc(basestkc){//更改回库列表的qty
           this.showDatail = false;
-         
+
         },
         scanData(data){//扫描结果
             this.depotPagarm.key = data;
