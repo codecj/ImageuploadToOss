@@ -379,7 +379,22 @@ export default {
             })
         },
         loadTop(){
-            // console.log(1)
+            alert(1);
+            Request.jsBbridge(bridge => {
+                window.WebViewJavascriptBridge.callHandler(
+                    'updateGPS', {
+                        'Data': 'json数据传给Android端'
+                    } //该类型是任意类型
+                    , (responseData) => {
+                        var res = responseData
+                        if ((typeof res) == 'string') {
+                            res = JSON.parse(responseData);
+                        }
+                        this.areaid = res.areaid;
+                        res.areaid == '' ? this.address = '全部区域' : this.address = res.address;
+                    }
+                );
+            })
             this.page.pageno='1'
             this.listDate=[]
             this.isEnd=false
