@@ -379,12 +379,36 @@ export default {
             })
         },
         loadTop(){
-            // console.log(1)
-            this.page.pageno='1'
-            this.listDate=[]
-            this.isEnd=false
-            this.ajax()
-            this.$refs.loadmore.onTopLoaded();
+            alert(1);
+            Request.jsBbridge(bridge => {
+                window.WebViewJavascriptBridge.callHandler(
+                    'updateGPS', {
+                        'Data': 'json数据传给Android端'
+                    } //该类型是任意类型
+                    , (responseData) => {
+                        var res = responseData
+                        if ((typeof res) == 'string') {
+                            res = JSON.parse(responseData);
+                        }
+                        if ((typeof res.error) == 'undefined') {
+                            alert(res.longitude);
+                            alert(res.latitude);
+                            this.gps.longitude = res.longitude;
+                            this.gps.latitude = res.latitude;
+                        } else {
+                            Toast({
+                                message: res.error,
+                                duration: 2000
+                            });
+                        }
+                        this.page.pageno='1'
+                        this.listDate=[]
+                        this.isEnd=false
+                        this.ajax()
+                        this.$refs.loadmore.onTopLoaded();
+                    }
+                );
+            })
         }　
     }
 }
