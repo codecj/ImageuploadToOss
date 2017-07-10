@@ -390,16 +390,25 @@ export default {
                         if ((typeof res) == 'string') {
                             res = JSON.parse(responseData);
                         }
-                        this.areaid = res.areaid;
-                        res.areaid == '' ? this.address = '全部区域' : this.address = res.address;
+                        if ((typeof res.error) == 'undefined') {
+                            alert(res.longitude);
+                            alert(res.latitude);
+                            this.gps.longitude = res.longitude;
+                            this.gps.latitude = res.latitude;
+                        } else {
+                            Toast({
+                                message: res.error,
+                                duration: 2000
+                            });
+                        }
+                        this.page.pageno='1'
+                        this.listDate=[]
+                        this.isEnd=false
+                        this.ajax()
+                        this.$refs.loadmore.onTopLoaded();
                     }
                 );
             })
-            this.page.pageno='1'
-            this.listDate=[]
-            this.isEnd=false
-            this.ajax()
-            this.$refs.loadmore.onTopLoaded();
         }　
     }
 }

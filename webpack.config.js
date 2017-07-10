@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: './dist/',
     filename: 'build.js'
   },
   module: {
@@ -35,7 +35,7 @@ module.exports = {
       //   }
       // }
       {test: /\.(png|jpg)$/, 
-        loader:"url-loader?limit=10000name=img/[name][hash:8].[ext]"
+        loader:"url-loader?limit=40000name=img/[name][hash:8].[ext]"
      }
     ]
   },
@@ -57,7 +57,7 @@ module.exports = {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-    host:'192.168.200.132',
+    // host:'192.168.200.132',
     historyApiFallback: true,
     noInfo: true
   },

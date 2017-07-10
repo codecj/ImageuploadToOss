@@ -21,6 +21,8 @@ export default {
        // data.url='https://testwl.11wlw.cn/api/execute.jhtml'
      data.url=window.location.protocol+'//'+window.location.hostname+'/api/execute.jhtml';
 
+       // data.url='https://testwl.11wlw.cn/api/execute.jhtml'
+     // data.url=window.location.protocol+'//'+window.location.hostname+'/api/execute.jhtml';
       // data.url='http://192.168.200.16:8089/api/execute.jhtml';
 
       return Qs.stringify(data)
