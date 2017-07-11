@@ -159,20 +159,21 @@ export default {
                             message: "无商品",
                             duration: 2000
                         });
-                        return;
-                    } 
-                    Toast({
-                        message: resData.msg,
-                        duration: 2000
-                    });
-                }
-                if (_this.whcGetStatus == false) {
-                    _this.getStorageList();
-                }
-                if (_this.myStorageActive) {
-                    _this.myStorageData = resData.data;
+                    } else {
+                        Toast({
+                            message: resData.msg,
+                            duration: 2000
+                        });
+                    }
                 } else {
-                    _this.waitCarData = resData.data;
+                    if (_this.whcGetStatus == false) {
+                        _this.getStorageList();
+                    }
+                    if (_this.myStorageActive) {
+                        _this.myStorageData = resData.data;
+                    } else {
+                        _this.waitCarData = resData.data;
+                    }
                 }
             }).catch(function(error) {
                 Indicator.close();
