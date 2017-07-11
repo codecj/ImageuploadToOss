@@ -15,7 +15,7 @@
   					<img class="gooodImg" v-lazy="item.URL_ADDR">
                 	<label class="goodName">{{item.STK_NAME}}</label>
                 	 <div class="btn" @click.prevent="deleteItem(index)">删除</div>
-                	<!-- <label class="vendorName">库存:{{item.STOCK}}</label> -->
+                	<!-- <label class="vendorName">库存:{{item.STKC_QTY}}</label> -->
        			<!-- </LeftSlider> -->
   			</li>
   		</ul>

@@ -104,6 +104,13 @@
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
 					Indicator.close();
+					if (parseInt(getData.code) == 4) {
+	                	Toast({
+	                         message: '无商品',
+	                         duration: 2000
+	                     });
+	                    return;
+	                }
 					if (getData.code !== "200") {
 						Toast({
 							message:getData.msg,

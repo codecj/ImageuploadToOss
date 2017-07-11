@@ -53,7 +53,7 @@
             vusername:this.$route.query.vusername,
             whc:"",
             truckType:"S",
-            storageStatus:"B"
+            storageStatus:"C"
           },
           backPagarm:{//点击确认回库
             userno:this.$route.query.userno,
@@ -97,7 +97,6 @@
             this.getSearch();
             dataList.data.forEach(value=> {
               this.depotList.push(value)
-              // console.log(value)
             })           
             this.depotName = dataList.data[0].NAME;
             if(dataList.code!=="200") Toast({ message: dataList.msg, duration: 2000 });
@@ -123,12 +122,12 @@
           }
           Request.post(pargrmList).then(res=>{
             Indicator.close();
-
             let dataList = JSON.parse(res.data.result);
             if (parseInt(dataList.code) == 4) {
               Toast({ message: '无商品', duration: 2000 });
               return;
             }
+
             dataList.data.forEach(value=> {
               value.seletedStatus = true;
               this.selectStatus = true;
@@ -195,6 +194,7 @@
                 Toast({message:getData.msg, duration: 2000 });
             }else{
                 Toast({message:"回库成功", duration: 2000 });
+                this.getSearch();
             }
             	return
 

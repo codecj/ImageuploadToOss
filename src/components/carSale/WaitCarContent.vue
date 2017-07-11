@@ -74,8 +74,6 @@ export default {
 }
 </script>
 
-
-
 <style type="text/css" scoped>
     .content .my-storage-content {width: 100%; height: 1000px;}
     .content .static-cell{width: 100%;height: 96px;background-color: white; box-sizing: border-box;padding-right: 20px;}
