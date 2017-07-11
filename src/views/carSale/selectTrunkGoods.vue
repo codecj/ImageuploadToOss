@@ -154,7 +154,45 @@ import {
 	    	
 	    	selectDev(){
 	    		// 选择仓库
-	    		this.showDepot = true;
+	    		Indicator.open();
+	    		let pargrmList = {
+               	 	oper: 'getVendorwhcFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.depotParam)
+            	};
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   this.depotList = getData.data;
+	                   if (this.depotList.length == 0) {
+	                   		return;
+	                   }
+	                   this.showDepot = true;
+	                }
+
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	    		
 	    	},
 
 	    	addGoodStkc(item){
