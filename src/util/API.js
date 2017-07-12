@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Qs from 'qs'
 export default {
-    //请求的地址
+    // //请求的地址
     // url:'https://testwl.11wlw.cn/handle/execute.jhtml',
     url:window.location.protocol+'//'+window.location.hostname+'/handle/execute.jhtml',
 

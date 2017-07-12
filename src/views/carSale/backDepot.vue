@@ -1,7 +1,7 @@
 <template>
   	<div>
       	<header>
-	        <div align="center" @click="goback"><img src="../../assets/icon10.png" alt=""></div>
+	        <div align="center" @click="goback" ><img src="../../assets/icon10.png" alt=""></div>
 	        <div>{{depotName}}</div>
 	        <div align="center" @click="selectDev"><img src="../../assets/icon10.png" alt=""></div>       
      	</header>  

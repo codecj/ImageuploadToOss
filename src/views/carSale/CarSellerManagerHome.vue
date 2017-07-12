@@ -1,14 +1,14 @@
 <template>
     <div id="carSellerManagerHome" :style='{height:elmHeight}'>
         <!-- 内容 -->
-        <div class="content">
+        <div>
             <div class="header">
-                <img class="left-btn" src="../../assets/icon10.png" @click="backToNative"></img>
+                <div class="left-btn" align="center"><img src="../../assets/icon10.png" @click="backToNative"></img><span></span></div>
                 <form @submit.prevent="submit">
                     <input class="header-search" id="search" placeholder="请输入关键字搜索商品" type="search" :value="keyword" v-model="keyword">
                 </form>
-                <img class='header-glass' src="../../assets/icon20.png" height="20" width="20"></img>
-                <img class="right-btn" src="../../assets/add.png" height="30" width="30" @click="showToolBox"></img>
+                <div class="right-btn" align="center"><img src="../../assets/add.png" height="30" width="30" @click="showToolBox"></img><span></span></div>
+                
             </div>
             <div class="tab-bar">
                 <div class="tab-bar-left" @click="switchToMyStorage"><span :class="{tabActive :myStorageActive}">我的库存</span></div>
@@ -375,7 +375,8 @@ export default {
 }
 
 .header {
-    height: 120px;
+    height: 88px;
+    line-height:88px;
     background-color: white;
     position: fixed;
     left: 0;
@@ -385,49 +386,43 @@ export default {
 }
 
 .header .left-btn {
-    margin: 50px 0 0 15px;
-    width: 62px;
-    height: 62px;
-}
+    width:10%;
+    height:100%;
+    float:left;
 
-.header .header-glass {
-    position: absolute;
-    left: 105px;
-    top: 60px;
 }
+.header .left-btn img,.header .right-btn  img{
+    width:62px;
+    height:62px;
+    vertical-align: middle;
 
-.header .right-btn {
-    width: 62px;
-    height: 62px;
-    position: absolute;
-    top: 50px;
-    right: 3%;
 }
-
-.header form {
-    position: absolute;
-    top: 50px;
-    left: 13%;
-    height: 62px;
-    right: 13%;
-}
-
 .header .header-search {
-    width: 100%;
+    float:left;
+    width: 80%;
     height: 62px;
     border: none;
-    background-color: #EBECF0;
     padding-left: 80px;
     color: #9DA2B5;
     font-size: 26px;
-    position: absolute;
-    top: 0;
+    background: url(../../assets/icon20.png) no-repeat 12px center #EBECF0;
+    background-size:7%;
+    margin-top:13px;
+
+}
+.header .right-btn {
+    width:10%;
+    height:100%;
+    float:left;
+}
+.header .right-btn  span,.header .left-btn span{
+    height:100%;
 }
 
 .tab-bar {
     position: fixed;
     left: 0;
-    top: 120px;
+    top: 88px;
     background-color: white;
     width: 100%;
     height: 99px;
@@ -459,7 +454,7 @@ export default {
 
 .content {
     position: absolute;
-    top: 120px;
+    top: 212px;
     width: 100%;
     left: 0;
 }
@@ -478,7 +473,7 @@ export default {
 
 .tool-box ul {
     position: absolute;
-    top: 128px;
+    top: 80px;
     right: 32px;
     opacity: 0.9;
     background: #333333;

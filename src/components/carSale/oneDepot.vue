@@ -11,6 +11,7 @@
 	    </div>
 	  	   
   	</div>
+  	
   </div>
   
 </template>
@@ -101,9 +102,13 @@
 .depot div:nth-child(3) p:nth-child(3) span:nth-child(1)
 {
 	color:#9DA2B5;
-	font-size:12px;
+	font-size:28px;
 	display:inline-block;
 	margin-right:20px;
+}
+.depot div:nth-child(3) p:nth-child(2) span:nth-child(2),
+.depot div:nth-child(3) p:nth-child(3) span:nth-child(1){
+	font-size:28px;
 }
 .depot div:nth-child(3) p:nth-child(4){
 	height:70px;
