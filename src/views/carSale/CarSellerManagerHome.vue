@@ -2,7 +2,7 @@
     <div id="carSellerManagerHome" :style='{height:elmHeight}'>
         <!-- 内容 -->
         <div class="content">
-            <div class="header">
+            <div class="header" v-show="headerShow">
                 <img class="left-btn" src="../../assets/icon10.png" @click="backToNative"></img>
                 <form @submit.prevent="submit">
                     <input class="header-search" id="search" placeholder="请输入关键字搜索商品" type="search" :value="keyword" v-model="keyword">
@@ -52,6 +52,7 @@ export default {
     data() {
         return {
             myStorageActive: true,
+            headerShow:true,
             waitCarActive: false,
             boxShowStatus: false,
             addStkcShow: false,
@@ -91,9 +92,11 @@ export default {
             }
         };
     },
-    created() {
-        this.getElementH();
-        this.getListData();
+    mounted() {
+        // this.$nextTick(() => {
+            this.getElementH();
+            this.getListData();
+        // })
     },
     methods: {
         getStorageList(){ // 获取仓库列表
@@ -251,7 +254,9 @@ export default {
         switchToWaitCar() { // 切换至待装车
             this.myStorageActive = false;
             this.waitCarActive = true;
-            this.getListData();
+            this.$nextTick(() => {
+                this.getListData();
+            })
         },
         getElementH() { // 获取屏幕的高度
             var deviceH = document.documentElement.clientHeight;

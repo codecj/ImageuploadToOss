@@ -379,7 +379,6 @@ export default {
             })
         },
         loadTop(){
-            alert(1);
             Request.jsBbridge(bridge => {
                 window.WebViewJavascriptBridge.callHandler(
                     'updateGPS', {
@@ -391,8 +390,6 @@ export default {
                             res = JSON.parse(responseData);
                         }
                         if ((typeof res.error) == 'undefined') {
-                            alert(res.longitude);
-                            alert(res.latitude);
                             this.gps.longitude = res.longitude;
                             this.gps.latitude = res.latitude;
                         } else {
