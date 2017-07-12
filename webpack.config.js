@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: './dist/',
     filename: 'build.js'
   },
   module: {
@@ -58,6 +58,7 @@ module.exports = {
   },
   devServer: {
     // host:'192.168.200.207',
+
     historyApiFallback: true,
     noInfo: true
   },

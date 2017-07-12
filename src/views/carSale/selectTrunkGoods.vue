@@ -149,7 +149,8 @@ import {
 	    	navBack(){
 	    		//调用router回退页面
         		 navBack();
-        		
+        		 // alert(1);
+        		 // this.$router.goBack();
 	    	},
 	    	
 	    	selectDev(){
