@@ -91,10 +91,6 @@ export default {
             }
         };
     },
-    created() {
-        this.getElementH();
-        this.getListData();
-    },
     methods: {
         getStorageList(){ // 获取仓库列表
             var _this = this;
@@ -361,7 +357,11 @@ export default {
                 }
             })
         }
-    }
+    },
+    mounted() {
+        this.getElementH();
+        this.getListData();
+    },
 };
 </script>
 
