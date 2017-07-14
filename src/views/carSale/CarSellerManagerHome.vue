@@ -91,7 +91,7 @@ export default {
             }
         };
     },
-    created() {
+    mounted() {
         this.getElementH();
         this.getListData();
     },
