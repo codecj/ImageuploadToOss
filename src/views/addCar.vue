@@ -27,8 +27,10 @@
                         <p>购买数量</p>
                         <ul>
                             <li v-show="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
+                           
                             <li v-show="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
-                            <li class="changeNum">{{count}}</li>
+                             <input type="tel"  class="changeNum" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4) value=value.slice(0,4)" @keyup="onlyNum(item)" v-model="count">
+                           <!--  <li class="changeNum">{{count}}</li> -->
                             <li @click="addCartNum()"><img src="../assets/icon9.png" alt=""></li>
                         </ul>
                     </div>
@@ -161,6 +163,9 @@ export default {
             },
             addCartNum() {
                 this.count++
+            },
+            onlyNum(item){
+                item.qty=item.qty.replace(/[^\d]/g,'');
             },
             addToCar() {
                 Indicator.open();
@@ -689,7 +694,9 @@ html {
     float: left;
 }
 
-#addCar .goodsNum li.changeNum {
+#addCar .goodsNum input.changeNum {
+    float: left;
+    border: none;
     color: #343657;
     font-size: 28px;
     width: 100px;
