@@ -75,6 +75,9 @@
 				return str
 			}
 		},
+		components:{
+			Cell
+		},
 		methods:{
 			allselect(){
 				 this.isAllSelect = !this.isAllSelect
@@ -103,6 +106,7 @@
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
+
 					Indicator.close();
 					if (parseInt(getData.code) == 4) {
 	                	Toast({
@@ -181,25 +185,18 @@
 			back(){
 				navBack();
 			},
-			scanData(data){
-				//扫描拿到的数据
-				alert(data)
-			},
 			goCarRequest(){
 				this.goCar();
 			},
 		},
-		components:{
-			Cell
-		},
 		mounted(){
-			 Request.jsBbridge(bridge => {
+			this.ajax(); 
+		 	Request.jsBbridge(bridge => {
 		        bridge.init(function(message, responseCallback) {
 		            var data = {};
 		            responseCallback(data);
 		        });
 		    })
-			this.ajax();
 		}
 	}
 </script>
