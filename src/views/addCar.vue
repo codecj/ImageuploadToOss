@@ -165,7 +165,7 @@ export default {
                 this.count++
             },
             onlyNum(){
-                count=count.replace(/[^\d]/g,'');
+                this.count=this.count.replace(/[^\d]/g,'');
             },
             addToCar() {
                 Indicator.open();

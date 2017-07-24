@@ -303,7 +303,7 @@ export default {
             let itemList = [];
             for (let i = 0; i < baseStkc.MODLE_LIST.length; i++) {
                 let temp = baseStkc.MODLE_LIST[i];
-                if (temp.qty > 0) {
+                // if (temp.qty > 0) {
                     let model = {};
                     model.vendorname = baseStkc.VENDOR_USER_NAME;
                     model.stkc = temp.STK_C;
@@ -314,15 +314,15 @@ export default {
                     model.stkmodel = temp.MODLE;
                     model.qty = temp.qty + '';
                     itemList.push(model);
-                }
+                // }
             }
-            if (itemList.length == 0) {
-                Toast({
-                    message: '添加商品数量不能为空',
-                    duration: 2000
-                });
-                return;
-            }
+            // if (itemList.length == 0) {
+            //     Toast({
+            //         message: '添加商品数量不能为空',
+            //         duration: 2000
+            //     });
+            //     return;
+            // }
             this.addStckParam.item = JSON.stringify(itemList);
 
             let pargrmList = {

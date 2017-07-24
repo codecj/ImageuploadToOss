@@ -73,7 +73,7 @@
           // atp :this.$route.query.atp,
           brandclist :this.$route.query.brandclist,
           // catidl2:this.$route.query.catidl2list,
-          keyword:""
+          keyword:this.$route.query.keyword
         },
         change:[
           {
