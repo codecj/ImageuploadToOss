@@ -154,7 +154,9 @@ export default {
         toSearch() {
             Request.jsBbridge(bridge => {
                 bridge.callHandler(
-                    'pushSearchWebClick'
+                    'pushSearchWebClick',{
+                        'type':this.typeD
+                    }
                 )
             })
         },

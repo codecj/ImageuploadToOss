@@ -54,7 +54,7 @@
 				codpng: false,
 				codpng2: true,
 				listDate: [],
-				typeD: 0,
+				typeD: this.$route.query.type,
 				menuList: [],
 				gps: {
 					latitude: this.$route.query.latitude,
@@ -104,8 +104,9 @@
 					pagination: JSON.stringify(this.page),
 					"oper": "getShopList",
 					"type": "wqCustomer",
-					para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": 0}'
+					para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": ' +parseInt(this.typeD)  + '}'
 				}
+				console.log(pargrm);
 				//ajax调用
 				Request.post(pargrm).then((res) => {
 					Indicator.close();
