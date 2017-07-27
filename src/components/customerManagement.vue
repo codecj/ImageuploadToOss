@@ -9,7 +9,7 @@
                     <div class="list-time">{{item.ORDERINFOR}}</div>
                 </div>
                 <div class="list-right">
-                    <span>{{item.DISTANCE}}km</span>
+                    <span>{{item.DISTANCE}}</span>
                 </div>
             </div>
             <div :class="{'list-menu show':item.whichTab,'list-menu':!item.whichTab}">
