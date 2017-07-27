@@ -201,7 +201,7 @@ import {
 	    		this.baseStkc = item;
 	    		for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
 	    			let temp = this.baseStkc.MODLE_LIST[i];
-	    			this.$set(temp,'qty',1);
+	    			this.$set(temp,'qty',0);
 	    		}
 	    	},
 
