@@ -54,7 +54,7 @@
 				codpng: false,
 				codpng2: true,
 				listDate: [],
-				typeD: this.$route.query.type,
+				typeD: this.$route.query.type?this.$route.query.type:0,
 				menuList: [],
 				gps: {
 					latitude: this.$route.query.latitude,
