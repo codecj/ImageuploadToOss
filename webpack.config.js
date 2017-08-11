@@ -1,11 +1,23 @@
 var path = require('path')
 var webpack = require('webpack')
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    app:'./src/main.js',
+    lib: [
+        'vue',
+        'axios',
+        'fastclick',
+        'lib-flexible',
+        'vue-focus',
+        'vue-router',
+        'mint-ui',
+        'vue-lazyload'
+    ]
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: './dist/',
-    filename: 'build.js'
+    filename: '[name].[hash:5].js'
   },
   module: {
     rules: [
@@ -51,13 +63,15 @@ module.exports = {
         remPrecision: 6         // rem precision (default: 6)
       })]
       }
-    })
+    }),
+    //公共模块抽取
+    new webpack.optimize.CommonsChunkPlugin('lib')
   ],
   resolve: {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-    // host:'192.168.200.175',
+    // host:'192.168.200.94',
     historyApiFallback: true,
     noInfo: true
   },

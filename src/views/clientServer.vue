@@ -29,44 +29,43 @@
             </div>
         </div>
         <mt-loadmore v-show="!userFliter" :top-method="loadTop" ref="loadmore" class="listBox" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
-            <customerlIst @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
+            <customerlIst v-if="showCell" @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom>
         </mt-loadmore>
-        <contactMsg v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>  
+        <contactMsg  v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>  
     </div>
 
 </template>
 <script type="text/javascript">
 import Request from "../util/API"
-import Vue from 'vue'
 import {
     Toast,
     Indicator,
-    Lazyload,
     Loadmore
 } from 'mint-ui'
 
 
-Vue.use(Lazyload, {
-    preLoad: 1.3,
-    lazyComponent: true,
-    error: require('../assets/holde.png'),
-    loading: require('../assets/holde.png'),
-    listenEvents: ['scroll']
-})
+// Vue.use(Lazyload, {
+//     preLoad: 1.3,
+//     lazyComponent: true,
+//     error: require('../assets/holde.png'),
+//     loading: require('../assets/holde.png'),
+//     listenEvents: ['scroll']
+// })
 
 
 import contactMsg from '../components/contactMsg.vue'
 import customerlIst from '../components/customerManagement.vue'
 import getbottom from '../components/getbottom.vue'
-import utils from '../util/utils'
-// console.log(utils.md5('1234'));
 
 export default {
     name: 'clientServer',
     data() {
         return {
             listH: false,
+            showCell:false,
+            showBottom:false,
+            showContract:false,
             gps: {
                 latitude: this.$route.query.latitude,
                 longitude: this.$route.query.longitude
@@ -119,6 +118,11 @@ export default {
         customerlIst,
         getbottom,
         contactMsg
+    },
+    created:function(){
+        setTimeout(() => {
+            this.showCell = true;
+        }, 0);
     },
     mounted: function() {
         this.$nextTick(() => {
