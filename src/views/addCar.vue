@@ -26,12 +26,12 @@
                     <div class="goodsNum borderBottom">
                         <p>购买数量</p>
                         <ul>
-                            <li v-show="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
+                            <li v-show="count>1" @click="reduceCartNum()"><i class="icon4"></i></li>
                            
-                            <li v-show="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
+                            <li v-show="count<=1" @click="reduceCartNum()"><i class="icon3"></i></li>
                              <input type="tel"  class="changeNum" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4) value=value.slice(0,4)" @keyup="onlyNum()" v-model="count">
                            <!--  <li class="changeNum">{{count}}</li> -->
-                            <li @click="addCartNum()"><img src="../assets/icon9.png" alt=""></li>
+                            <li @click="addCartNum()"><i class="icon9"></i></li>
                         </ul>
                     </div>
                 </div>
@@ -704,11 +704,14 @@ html {
     line-height: 60px;
 }
 
-#addCar .goodsNum li img {
+#addCar .goodsNum li i {
     width: 60px;
     height: 60px;
-    display: block
+    display: block;
 }
+.icon3 {background: url("../assets/icon3.png") no-repeat 100%/100%;}
+.icon4 {background: url("../assets/icon4.png") no-repeat 100%/100%;}
+.icon9 {background: url("../assets/icon9.png") no-repeat 100%/100%;}
 
 #addCar .addBtn {
     position: absolute;

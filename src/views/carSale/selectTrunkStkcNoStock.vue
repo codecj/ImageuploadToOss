@@ -18,8 +18,8 @@
                 	<img class="gooodImg" v-lazy="item.URL_ADDR">
                 	<label class="goodName">{{item.STK_NAME}}</label>
                 	<label class="vendorName">{{item.VENDOR_NAME}}</label>
-                	<img v-if="item.TRUCKFLG == 'N' " @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
-                	<img v-else @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon_del.png">
+					<em v-if="item.TRUCKFLG == 'N' " @click="addGoodStkc(item)" class="addGoods icon9"></em>
+					<em v-else @click="addGoodStkc(item)" class="addGoods icon_del"></em>
                 </div>  
     	</mt-loadmore>
 	</div>	
@@ -348,6 +348,9 @@
 		bottom:45px;
 		width: 48px;
 		height: 48px;
+		display: inline-block;
 	}
+	.icon9 {background: url("../../assets/icon9.png") no-repeat 100%/100%;}
+	.icon_del {background: url("../../assets/icon_del.png") no-repeat 100%/100%;}
 
 </style>

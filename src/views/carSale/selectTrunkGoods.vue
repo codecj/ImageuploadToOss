@@ -24,7 +24,7 @@
         	<img class="gooodImg" v-lazy="item.URL_ADDR">
         	<label class="goodName">{{item.STK_NAME}}</label>
         	<label class="vendorName">{{item.VENDOR_NAME}}</label>
-        	<img  @click="addGoodStkc(item)" class="addGoods" src="../../assets/icon9.png">
+			<em @click="addGoodStkc(item)" class="addGoods"></em>
 		</div>  
 
     </mt-loadmore>
@@ -508,6 +508,8 @@ import {
 		bottom:45px;
 		width: 48px;
 		height: 48px;
+		background: url("../../assets/icon9.png") no-repeat 100%/100%;
+		display: inline-block;
 	}
 
 
