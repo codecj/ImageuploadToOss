@@ -233,14 +233,7 @@
   width: 100%;
   background:#ebecf0;
   }
-/*  #oneprods{
-  position: absolute;
-  top:0;
-  bottom:0;
-  overflow-y:scroll;
-  -webkit-overflow-scrolling: touch;
-  background:#ebecf0;
-  }*/
+
 header{
   height:88px;
   line-height:88px;
