@@ -314,15 +314,7 @@ export default {
                     model.stkmodel = temp.MODLE;
                     model.qty = temp.qty + '';
                     itemList.push(model);
-                // }
             }
-            // if (itemList.length == 0) {
-            //     Toast({
-            //         message: '添加商品数量不能为空',
-            //         duration: 2000
-            //     });
-            //     return;
-            // }
             this.addStckParam.item = JSON.stringify(itemList);
 
             let pargrmList = {

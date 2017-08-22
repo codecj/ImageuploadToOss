@@ -17,7 +17,7 @@ const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve
 const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
 const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
 const prodsSearch = resolve => require(['../views/prodsSearch.vue'], resolve)
-
+const checkGood = resolve => require(['../views/carSale/checkGood.vue'], resolve)
 
 export default {
     // mode:'history',
@@ -78,6 +78,9 @@ export default {
                 },{
                     path:'/prodsSearch',
                     component:prodsSearch
+                },{
+                    path: '/checkgood',
+                    component: checkGood
                 }
         
     ]
