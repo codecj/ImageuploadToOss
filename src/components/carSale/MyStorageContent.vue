@@ -19,6 +19,10 @@
                     </div>
                 </li>
             </ul>
+            <div class="bottom-tool-bar">
+                <div>打印库存单</div>
+                <div>回库</div>
+            </div>
         </div>
     </div>
 </template>
@@ -45,12 +49,11 @@ import tools from "../../util/tools.js"
 
 
 <style type="text/css" scoped>
-    .content {position: absolute;top: 120px;width: 100%;left: 0;}
-    .content .my-storage-content {width: 100%; height: 1000px;}
-    .content .static-cell{width: 100%;height: 96px;background-color: white; box-sizing: border-box;padding-right: 20px;}
-    .content .static-cell div:nth-child(1){float: left;line-height: 96px;padding-left: 32px;font-size: 30px;color: #3B456C;}
-    .content .static-cell div:nth-child(2){float: right;line-height: 96px;padding-right: 52px;color: #9DA2B5;font-size: 26px;   background: url(../../assets/arrow-right@2x.png) center right no-repeat; background-size: 30px 30px;}
-    .content ul {margin-top: 24px;}
+    .my-storage-content {width: 100%; height: 1000px;}
+    .static-cell{width: 100%;height: 96px;background-color: white; box-sizing: border-box;padding-right: 20px;}
+    .static-cell div:nth-child(1){float: left;line-height: 96px;padding-left: 32px;font-size: 30px;color: #3B456C;}
+    .static-cell div:nth-child(2){float: right;line-height: 96px;padding-right: 52px;color: #9DA2B5;font-size: 26px;   background: url(../../assets/arrow-right@2x.png) center right no-repeat; background-size: 30px 30px;}
+    ul {margin-top: 24px;}
     
     
     .cell-content {height: 298px;width: 100%;position: relative;background-color: white;}
@@ -62,6 +65,9 @@ import tools from "../../util/tools.js"
     .list-ul{overflow: hidden;}
     .list-ul li {border-bottom: 24px solid rgb(237,238,245);}
     .storage-list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;}
+
+    .bottom-tool-bar{position: fixed;bottom: 0;left: 0;width: 100%;background-color: white;height: 96px;}
+    .bottom-tool-bar > div {width: 50%;border-left: 1px solid #e5e5e5;float: left;text-align: center;line-height: 96px;font-size: 30px;color: #3B456C;box-sizing: border-box;}
 </style>
 
 
