@@ -258,7 +258,8 @@ export default {
         },
         addGoods() { //alert("添加商品");
             this.$router.push({
-                path: 'selectTrunckGoods',
+                // path: 'selectTrunckGoods',
+                path:'selectTrunckGoodsWithCategory',
                 query: {
                     username: this.username,
                     userno: this.userno,
