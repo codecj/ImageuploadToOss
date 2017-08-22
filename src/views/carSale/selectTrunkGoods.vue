@@ -20,7 +20,7 @@
   	<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
   	class="table">
 
- 		<div v-for="item in this.baseStkcList" class="cell">
+ 		<div class="cell">
         	<img class="gooodImg" v-lazy="item.URL_ADDR">
         	<label class="goodName">{{item.STK_NAME}}</label>
         	<label class="vendorName">{{item.VENDOR_NAME}}</label>
@@ -149,8 +149,6 @@ import {
 	    	navBack(){
 	    		//调用router回退页面
         		 navBack();
-        		 // alert(1);
-        		 // this.$router.goBack();
 	    	},
 	    	
 	    	selectDev(){
