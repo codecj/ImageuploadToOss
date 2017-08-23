@@ -83,6 +83,9 @@ export default {
                 },{
                     path: '/suppliersgood',
                     component: suppliersGood
+                },{
+                    path: '/prodsSearch',
+                    component: prodsSearch
                 }
 
     ]
