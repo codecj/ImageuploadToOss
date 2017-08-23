@@ -5,6 +5,7 @@
 	    <div><img v-lazy="item.URL_ADDR" alt=""></div>
 	    <div>
 	    	<p>{{item.STK_NAME}}</p>
+	    	<p>dadsajkjdsdsjjjkjk</p>
 	    	<p><span>已添回库数</span><span>{{item.OLDQTY}}</span>	</p>
 	    	<p><span>车上库存</span><span>{{item.STOCK}}</span></p>
 	    	<p><span @click="backDepot(item)">修改</span></p>
@@ -72,7 +73,7 @@
 	height:208px;
 }
 .depot div:nth-child(3){
-	width:54%;
+	width:68%;
 	margin-left:2%;
 	position: relative;
 }
@@ -98,26 +99,33 @@
 	height:30px;
 	margin-bottom:10px;
 }
-.depot div:nth-child(3) p:nth-child(2) span:nth-child(1),
-.depot div:nth-child(3) p:nth-child(3) span:nth-child(1)
+.depot div:nth-child(3) p:nth-child(3){
+	color: #3B456C;
+	letter-spacing: 0;
+	width:100%;
+	height:30px;
+	margin-bottom:10px;
+}
+.depot div:nth-child(3) p:nth-child(3) span:nth-child(1),
+.depot div:nth-child(3) p:nth-child(4) span:nth-child(1)
 {
 	color:#9DA2B5;
 	font-size:28px;
 	display:inline-block;
 	margin-right:20px;
 }
-.depot div:nth-child(3) p:nth-child(2) span:nth-child(2),
-.depot div:nth-child(3) p:nth-child(3) span:nth-child(1){
+.depot div:nth-child(3) p:nth-child(3) span:nth-child(2),
+.depot div:nth-child(3) p:nth-child(4) span:nth-child(1){
 	font-size:28px;
 }
-.depot div:nth-child(3) p:nth-child(4){
+.depot div:nth-child(3) p:nth-child(5){
 	height:70px;
 	line-height: 70px;
 	position: absolute;
-	bottom:-60px;
+	bottom:-10px;
 	right:0;
 }
-.depot div:nth-child(3) p:nth-child(4) span{
+.depot div:nth-child(3) p:nth-child(5) span{
 	width:120px;
 	height:70px;
 	text-align: right;
