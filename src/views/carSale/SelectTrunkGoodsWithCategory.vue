@@ -3,7 +3,7 @@
 		<div class="nav borderB">
 			<img @click='navBack()' class="left" src='../../assets/icon10.png'></img>
   			<img @click="selectDev()" class="right" src="../../assets/arrow-down.png"></img>
-	  		<label>仓库:三墩来吃吧科技公司</label>
+	  		<label>仓库:{{dopName}}</label>
 	  	</div>
 
 	  	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
@@ -19,7 +19,7 @@
 			<Category :categoryList="categoryList" @categorySelected='categorySelected'></Category>
 			<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
   	class="table">
-				<div  class="cell borderB">
+				<!-- <div  class="cell borderB">
 		        	<img class="gooodImg">
 		        	<label class="goodName">卫龙辣条小面包880g豆丁文档吃的我的的我的我瞧得起我</label>
 		        	<label class="vendorName">江苏南通sop1</label>
@@ -54,7 +54,7 @@
 		        	<label class="goodName">卫龙辣条小面包880g</label>
 		        	<label class="vendorName">江苏南通sop1</label>
 					<em  class="addGoods"></em>
-				</div>           
+				</div>            -->
 			</mt-loadmore>
 		</div>
 		
@@ -143,14 +143,26 @@ export default {
 	    methods: {
 
 	    	requestMore(){
-	    		// alert('333');
+	    		if (this.currentDepot == null) {
+	    			this.requestDepot();
+	    			return;
+	    		}
 	    	},
 
 	    	loadTop(){
 
 	    	},
 	    	jumpSearchView(){
-
+	    	
+	    		this.$router.push({
+	                path: 'prodsSearch',
+	                query: {
+	                    username: this.$route.query.username,
+	                    userno: this.$route.query.userno,
+	                    vusername: this.$route.query.vusername,
+	                    whc:this.currentDepot.WH_C
+	                }
+            	})
 	    	},
 
 	    	navBack(){
@@ -203,6 +215,49 @@ export default {
 	            })
 	    		
 	    	},
+
+	    	requestDepot(){
+	    		Indicator.open();
+	    		let pargrmList = {
+               	 	oper: 'getVendorwhcFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.depotParam)
+            	};
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   this.depotList = getData.data;
+	                   if (this.depotList.length == 0) {
+	                   		return;
+	                   }
+	                   let depotModel = this.depotList[0];
+	                   this.currentDepot = depotModel;
+	                   this.dopName = depotModel.NAME;
+	                }
+
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	        },
 
 	    	//获取分类
 	    	queryCategory(){
