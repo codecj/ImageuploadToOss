@@ -13,7 +13,8 @@
       	</content>
       	<footer>
            <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
-           <div @click="sureBackDepot">确认回库</div>
+           <div @click="sureBackDepot">回库</div>
+           <div class="scan">查看</div>
         </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
        </depotlist>
@@ -340,7 +341,7 @@
   }
   footer div:nth-child(1){
     background: #fff;
-    width:75%;
+    /*width:75%;*/
     height:88px;
     /*padding-left:%;*/
   }
@@ -371,14 +372,28 @@
     margin-left:30px;
   }
   footer div:nth-child(2){
-    width:25%;
+    /*width:25%;*/
+    float: right;
     height:88px;
     line-height: 88px;
     font-size: 30px;
-    color: #FFFFFF;
+    color: #4D5679;
     letter-spacing: 0;
     text-align: center;
-    background: linear-gradient(-18deg, #FF4848 0%, #FF8739 100%);
+    padding: 0 30px 0 60px;
+    background: url(../../assets/iconfinish.png) no-repeat center left;
+    background-size: 50px 50px;
+  }
+  footer .scan{
+    height: 88px;
+    line-height: 88px;
+    font-size: 30px;
+    color: #4D5679;
+    width: 200px;
+    position: absolute;
+    left: 45%;
+    text-align: center;
+    background: url(../../assets/iconview-2.png) no-repeat center left;
   }
 </style>
 
