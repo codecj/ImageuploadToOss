@@ -44,12 +44,12 @@
 		position: relative;
 	}
 	.category ul li{
-		-webkit-box-sizing: border-box;
-		box-sizing: border-box;
-		padding-top: 30px;
-		padding-bottom: 30px;
+		/*-webkit-box-sizing: border-box;
+		box-sizing: border-box;*/
+		padding-top: 35px;
+		padding-bottom: 35px;
 		padding-left: 10px;
-		font-size: 14px;
+		font-size: 28px;
 		margin: 0px auto;
 		width: 100%;
 		/*height: 98px;*/

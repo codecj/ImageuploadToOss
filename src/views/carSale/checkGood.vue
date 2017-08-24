@@ -98,8 +98,13 @@ export default {
 	}
 	.checkBottom .bottomBtn
 	{
+		width:200px;
+		margin: 0 auto;
 		font-size: 30px;
-		color: #3B456C
+		color: #3B456C;
+		padding-left: 15px;
+		background: url(../../assets/iconprint.png) no-repeat center left;
+		background-size: 35px 35px;
 	}
 	
 </style>

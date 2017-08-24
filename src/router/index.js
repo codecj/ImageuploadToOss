@@ -86,6 +86,9 @@ export default {
                 },{
                     path: '/prodsSearch',
                     component: prodsSearch
+                },{
+                    path:'/selectTrunckGoodsWithCategory',
+                    component:selectTrunckGoodsWithCategory
                 }
 
     ]

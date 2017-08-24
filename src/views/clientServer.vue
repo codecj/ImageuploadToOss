@@ -29,7 +29,7 @@
             </div>
         </div>
         <mt-loadmore v-show="!userFliter" :top-method="loadTop" ref="loadmore" class="listBox" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
-            <customerlIst v-if="showCell" @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
+            <customerlIst  @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
             <getbottom v-show="isEnd"></getbottom>
         </mt-loadmore>
         <contactMsg  v-show="listH" @listSay="overHide" :phoneItem='phoneItem'></contactMsg>  
@@ -63,9 +63,6 @@ export default {
     data() {
         return {
             listH: false,
-            showCell:false,
-            showBottom:false,
-            showContract:false,
             gps: {
                 latitude: this.$route.query.latitude,
                 longitude: this.$route.query.longitude
@@ -120,9 +117,7 @@ export default {
         contactMsg
     },
     created:function(){
-        setTimeout(() => {
-            this.showCell = true;
-        }, 0);
+       
     },
     mounted: function() {
         this.$nextTick(() => {

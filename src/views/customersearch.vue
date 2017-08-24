@@ -1,16 +1,16 @@
 <template>
 	<div>
-		<div class="heards">
+		<!-- <div class="heards">
 			<span><img @click="back()" src="../assets/icon10.png"></span>
 			<form @submit.prevent="submit">
 				<div class="input-wrap">
 					<div>
-						<!--  <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false"> -->
-						<input id="search" placeholder="请输入要搜索的客户" type="search" :value="keyword" v-model="keyword">
+						 <input type="text" v-focus="focused" @focus="focused = true" @blur="focused = false">
+						<input ref="searchInput"  id="search" placeholder="请输入要搜索的客户" type="search" :value="keyword" v-model="keyword">
 					</div>
 				</div>
 			</form>
-		</div>
+		</div> -->
 		<div class="content-1" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" v-show="codpng2">
 			<customerlIst @contactMsg='contactMsg' :listDate='listDate' :menuList='menuList'></customerlIst>
 			<div class="content-3" v-show="bottom">
@@ -36,6 +36,7 @@
 	import customerlIst from '../components/customerManagement.vue';
 	import nosearch from '../components/nosearch.vue';
 	import getbottom from "../components/getbottom.vue"
+	import {searchShop} from "../util/JsBridge.js"
 	Vue.use(Lazyload, {
 		preLoad: 1.3,
 		lazyComponent: true,
@@ -79,10 +80,25 @@
             contactMsg
 		},
 		mounted() {
-			this.$nextTick(() => {
-                document.getElementById("search").click()
-				document.getElementById("search").focus()
-			})
+			Request.jsBbridge(bridge => {
+	            bridge.init(function(message, responseCallback) {
+	                var data = {};
+	                responseCallback(data);
+	            });
+       		});
+
+       		searchShop((data)=>{
+       			this.keyword = data;
+       			this.page.pageno = '1'
+				this.listDate = []
+				this.ajax();
+       		})
+			// this.$nextTick(() => {
+   //              document.getElementById("search").click();
+			// 	document.getElementById("search").focus();
+			// 	// this.$refs.searchInput.click();
+			// 	// this.$refs.searchInput.focus();
+			// })
 		},
 		methods: {
             contactMsg(data){
@@ -96,7 +112,7 @@
 				this.page.pageno = '1'
 				this.listDate = []
 				this.ajax();
-				document.getElementById("search").blur()
+				// document.getElementById("search").blur()
 			},
 			ajax() {
 				Indicator.open();
@@ -106,7 +122,7 @@
 					"type": "wqCustomer",
 					para: '{"latitude": "' + this.gps.latitude + '","longitude": "' + this.gps.longitude + '", "keywords":"' + this.keyword + '", "picno": "' + this.picno + '","type": ' +parseInt(this.typeD)  + '}'
 				}
-				console.log(pargrm);
+				// console.log(pargrm);
 				//ajax调用
 				Request.post(pargrm).then((res) => {
 					Indicator.close();
@@ -286,7 +302,7 @@
 	.content-1 {
 		width: 100%;
 		position: absolute;
-		top: 84px;
+		top: 0px;
 		overflow-y: scroll;
 		-webkit-overflow-scrolling: touch;
 		bottom: 0;

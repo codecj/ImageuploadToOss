@@ -39,6 +39,14 @@ export const scan = (cb) =>{
   })
 };
 
+export const searchShop = (cb) =>{
+   JsBridge(bridge => {
+      bridge.registerHandler('searchShop',(data,responseCallBack) => {
+          cb(data);
+      })
+  })
+}
+
  // Request.jsBbridge(bridge => {
  //                window.WebViewJavascriptBridge.callHandler(
  //                    'showAddressPicker', {

@@ -57,11 +57,11 @@ export default {
 	        	// key:'',
 	        	// truckType:'S'
 	        	//业务员userno
-	        	userno:"385734",
+	        	userno:this.$route.query.userno,
 	        	//业务员username
-	        	username:"JSNTSOP1Y1",
-	        	vname:"JSNTSOP1",
-	        	whc:'JSNTRD100',
+	        	username:this.$route.query.username,
+	        	vname:this.$route.query.vusername,
+	        	whc:this.$route.query.whc,
 	        	key:'',
 	        	truckType:'S'
 		   	},
@@ -71,11 +71,11 @@ export default {
 	        	// vname:this.$route.query.vusername,
 	        	// name:this.$route.query.name,
 	        	// userno:this.$route.query.userno,
-	        	whc:"JSNTRD100",
-	        	username:"JSNTSOP1Y1",
-	        	vname:"JSNTSOP1",
-	        	name:"JSNTSOP1Y1姓名",
-	        	userno:"385734",
+	        	whc:this.$route.query.whc,
+	        	username:this.$route.query.username,
+	        	vname:this.$route.query.vusername,
+	        	name:this.$route.query.name,
+	        	userno:this.$route.query.userno,
 	        	item:null,
 	        	truckType:'S'
 	        }
