@@ -7,7 +7,7 @@
             </div>
             <div class="prodDetail">
                 <p>{{item.NAME}}</p>
-                <p>第三方三十多</p>
+                <p>{{item.STK_NAME_EXT}}</p>
                 <p>规格：{{item.MODLE}}</p>
                 <p>
                     <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">

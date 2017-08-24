@@ -5,16 +5,13 @@
 	    <div><img v-lazy="item.URL_ADDR" alt=""></div>
 	    <div>
 	    	<p>{{item.STK_NAME}}</p>
-	    	<p>dadsajkjdsdsjjjkjk</p>
+	    	<p>123123232</p>
 	    	<p><span>已添回库数</span><span>{{item.OLDQTY}}</span>	</p>
 	    	<p><span>车上库存</span><span>{{item.STOCK}}</span></p>
 	    	<p><span @click="backDepot(item)">修改</span></p>
 	    </div>
-	  	   
   	</div>
-  	
   </div>
-  
 </template>
 
 <script type="text/javascript">
