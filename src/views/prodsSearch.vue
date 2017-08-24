@@ -42,17 +42,18 @@ export default {
 			isEnd:false,
 			baseStkc:null,
 			showDatail:false,
+			currentDepot:null,
 			page: {
             	pageno: "0",
             	pagesize: "10"
         	},	
-        	baseStkcByDepotParam:{
+        	baseStkcByDepotParam:{//获取数据列表的参数
 	        	// //业务员userno
 	        	// userno:this.$route.query.userno,
 	        	// //业务员username
 	        	// username:this.$route.query.username,
 	        	// vname:this.$route.query.vusername,
-	        	// whc:'',
+	        	// whc:this.$route.query.whc,
 	        	// key:'',
 	        	// truckType:'S'
 	        	//业务员userno
@@ -64,6 +65,20 @@ export default {
 	        	key:'',
 	        	truckType:'S'
 		   	},
+	        addStckParam:{//添加商品到待装车的参数
+	        	// whc:this.$route.query.whc,
+	        	// username:this.$route.query.username,
+	        	// vname:this.$route.query.vusername,
+	        	// name:this.$route.query.name,
+	        	// userno:this.$route.query.userno,
+	        	whc:this.$route.query.whc,
+	        	username:this.$route.query.username,
+	        	vname:this.$route.query.vusername,
+	        	name:this.$route.query.name,
+	        	userno:this.$route.query.userno,
+	        	item:null,
+	        	truckType:'S'
+	        }
 		}
 	},
 	components:{
@@ -83,6 +98,7 @@ export default {
 			});
 		},
 		submit(){//点击搜索
+			this.baseStkcList = [];
 			this.getDatas();
 
 		},
@@ -103,8 +119,7 @@ export default {
    			// this.baseStkcByDepotParam.key = "";
    			this.getDatas();
     	},
-		getDatas(){//获取数据
-
+		getDatas(){//获取列表数据
 			let pargrmList = {
 	        		pagination: JSON.stringify(this.page),
                	 	oper: 'getVendorStkFour',
@@ -155,13 +170,73 @@ export default {
 		addGoodStkc(item){//添加购物车
 			this.showDatail = !this.showDatail;
          	this.baseStkc = item; 
+         	for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
+    			let temp = this.baseStkc.MODLE_LIST[i];
+    			this.$set(temp,'qty',0);
+    		}
+
 		},
 		cancelAddStkcView(){//取消按钮
           this.showDatail = false;
         },
         submitStkc(basestkc){//更改回库列表的qty
           this.showDatail = false;
-        }
+          let itemList = [];
+	        	for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
+	        		let temp = this.baseStkc.MODLE_LIST[i];
+	        		if (temp.qty > 0) {
+	        			let model = {};
+	        			model.vendorname = this.baseStkc.VENDOR_USER_NAME;
+	        			model.stkc = temp.STK_C;
+	        			model.cpmode = temp.CP_MODE;
+	        			model.stkname = temp.NAME;
+	        			model.urladdr = temp.URL_ADDR;
+	        			model.pluc = temp.PLU_C;
+	        			model.stkmodel = temp.MODLE;
+	        			model.qty = temp.qty+'';
+	        			itemList.push(model);
+	        		}
+	        	}
+	        	if (itemList.length == 0) {
+	        		 Toast({
+	                        message: '添加商品数量不能为空',
+	                        duration: 2000
+	                    });
+	        		 return;
+	        	}
+	        	// this.addStckParam.whc =  this.baseStkcByDepotParam.whc;
+	        	this.addStckParam.item = JSON.stringify(itemList);
+	        	let pargrmList = {
+               	 	oper: 'saveTruckIoItem',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.addStckParam)
+            	};
+            	//ajax调用
+	            Request.post(pargrmList).then(res => {
+	                const getData = JSON.parse(res.data.result);
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   Toast({
+	                        message: '添加商品到待装车成功',
+	                        duration: 2000
+	                    });
+	                }
+
+	            }).catch(error => {
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	        }
 	},
 	mounted(){
 	}

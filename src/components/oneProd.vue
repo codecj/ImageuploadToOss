@@ -7,6 +7,7 @@
             </div>
             <div class="prodDetail">
                 <p>{{item.NAME}}</p>
+                <p>第三方三十多</p>
                 <p>规格：{{item.MODLE}}</p>
                 <p>
                     <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
@@ -70,10 +71,6 @@ export default ({
 })
 </script>
 <style scoped>
-.content .oneProd {
-    margin-bottom: 10px;
-    height: 594px;
-}
 
 .oneProd:nth-child(odd) {
     float: left;
@@ -87,11 +84,13 @@ export default ({
 /*changeItem竖着布局方式*/
 
 .changeItem .searchItem {
-    height: 198px;
+    height: 228px;
+    /*height: 198px;*/
     width: 100%;
-    /*border-top:2px solid #F1F2F7;*/
     background: #fff;
+    /*padding: 20px 40px 20px 32px;*/
     padding: 50px 40px 50px 32px;
+
 }
 
 .changeItem .searchItem .onephoto {
@@ -99,8 +98,8 @@ export default ({
 }
 
 .changeItem .searchItem .onephoto .photo {
-    width: 200px;
-    height: 200px;
+    width: 230px;
+    height: 230px;
 }
 
 .prodDetail {
@@ -109,7 +108,7 @@ export default ({
 }
 
 .changeItem .searchItem .prodDetail>p:nth-child(1) {
-    width: 80%;
+    width: 90%;
     height: 80px;
     float: left;
     font-size: 30px;
@@ -125,8 +124,16 @@ export default ({
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
-
-.changeItem .searchItem .prodDetail>p:nth-child(2) {
+.changeItem .searchItem .prodDetail>p:nth-child(2){
+    font-size: 26px;
+    width: 80%;
+    color: #FF783C;
+    letter-spacing: 0;
+    float: left;
+    width: 450px;
+    margin-left: 28px;
+}
+.changeItem .searchItem .prodDetail>p:nth-child(3) {
     font-size: 26px;
     width: 80%;
     color: #9DA2B5;
@@ -136,16 +143,20 @@ export default ({
     margin-left: 28px;
 }
 
-.changeItem .searchItem .prodDetail>p:nth-child(3) {
+.changeItem .searchItem .prodDetail>p:nth-child(4) {
     width: 80%;
-    height: 40px;
+    height:40px;
+    line-height: 40px;
     /*float:left;*/
     margin-top: 8px;
     margin-left: 32px;
     overflow: hidden;
 }
+.changeItem .searchItem .prodDetail>p:nth-child(4) span{
+    margin-right:5px;
 
-.changeItem .searchItem .prodDetail>p:nth-child(3) span {
+}
+.changeItem .searchItem .prodDetail>p:nth-child(5) span {
     float: left;
     font-size: 18px;
     color: #FF783C;
@@ -153,15 +164,15 @@ export default ({
     border-radius: 2px;
     display: inline-block;
     height: 32px;
-    line-height: 34px;
+    line-height: 34px;  
     /*  display:inline-block;
   padding:0 10px;*/
-    width: 110px;
+    /*width: 110px;*/
     text-align: center;
     margin: 3px 5px 3px 0;
 }
 
-.changeItem .searchItem .prodDetail>p:nth-child(4) {
+.changeItem .searchItem .prodDetail>p:nth-child(5) {
     margin-top: 4px;
     height: 44px;
     line-height: 44px;
@@ -171,13 +182,13 @@ export default ({
     position: relative;
 }
 
-.changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(1) {
+.changeItem .searchItem .prodDetail>p:nth-child(5) span:nth-child(1) {
     font-size: 30px;
     color: #FF783C;
     letter-spacing: 0;
 }
 
-.changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(2) {
+.changeItem .searchItem .prodDetail>p:nth-child(5) span:nth-child(2) {
     font-size: 18px;
     color: #FFFFFF;
     letter-spacing: 0;
@@ -188,9 +199,10 @@ export default ({
     text-align: center;
     display: inline-block;
     padding:5px 5px;
+
 }
 
-.changeItem .searchItem .prodDetail>p:nth-child(4) span:nth-child(3) {
+.changeItem .searchItem .prodDetail>p:nth-child(5) span:nth-child(3) {
     font-size: 22px;
     color: #FF783C;
     letter-spacing: 0;
@@ -200,17 +212,21 @@ export default ({
     width: 60px;
     height: 60px;
     position: absolute;
-    right: 0;
+    right: 30px;
     bottom: -8px;
 }
 
 
 /*content横着布局方式*/
+.content .oneProd {
+    margin-bottom: 10px;
+    height: 650px;
+}
 
 .content .searchItem:nth-child(even) {
     float: right;
     width: 367px;
-    height: 594px;
+    height: 650px;
     margin-top: 14px;
     background: #fff;
     position: relative;
@@ -219,7 +235,7 @@ export default ({
 .content .searchItem:nth-child(odd) {
     float: left;
     width: 367px;
-    height: 594px;
+    height: 650px;
     margin-top: 14px;
     background: #fff;
     position: relative;
@@ -254,16 +270,27 @@ export default ({
     -webkit-line-clamp: 2;
     /** 显示的行数 **/
 }
-
-.content .searchItem .prodDetail>p:nth-child(2) {
+.content .searchItem .prodDetail>p:nth-child(2){
+    font-size: 26px;
+    width: 330px;
+    color: #FF783C;
+    letter-spacing: 0;
+    float: left;
+    margin-left: 28px;
+}
+.content .searchItem .prodDetail>p:nth-child(3) {
     font-size: 22px;
     color: #9DA2B5;
     letter-spacing: 0;
-    height: 30px;
+    height: 40px;
     margin: 16px 0 10px 23px;
+    width: 330px;
+    float:left;
+
+
 }
 
-.content .searchItem .prodDetail>p:nth-child(4) span:nth-child(2) {
+.content .searchItem .prodDetail>p:nth-child(5) span:nth-child(2) {
     font-size: 18px;
     color: #FFFFFF;
     letter-spacing: 0;
@@ -278,11 +305,11 @@ export default ({
     margin-right: 0;
 }
 
-.content .searchItem .prodDetail>p:nth-child(4) span:nth-child(3) {
+.content .searchItem .prodDetail>p:nth-child(5) span:nth-child(3) {
     margin-left: 0;
 }
 
-.content .searchItem .prodDetail>p:nth-child(3) {
+.content .searchItem .prodDetail>p:nth-child(4) {
     height: 48px;
     padding-top: 10px;
     opacity: 0.9;
@@ -293,7 +320,7 @@ export default ({
     width: 357px;
 }
 
-.content .searchItem .prodDetail>p:nth-child(3) span {
+.content .searchItem .prodDetail>p:nth-child(4) span {
     font-size: 18px;
     color: #FF783C;
     letter-spacing: 0;
@@ -302,12 +329,16 @@ export default ({
     padding: 1px 6px 1px 6px;
 }
 
-.content .searchItem .prodDetail>p:nth-child(4) {
-    margin-top: 20px;
+.content .searchItem .prodDetail>p:nth-child(5) {
+    /*margin-top: 20px;*/
     position: relative;
+    width:100%;
+    height:40px;
+    float:left;
+    margin-left:10px;
 }
 
-.content .searchItem .prodDetail>p:nth-child(4) span {
+.content .searchItem .prodDetail>p:nth-child(5) span {
     font-size: 22px;
     color: #FF783C;
     letter-spacing: 0;

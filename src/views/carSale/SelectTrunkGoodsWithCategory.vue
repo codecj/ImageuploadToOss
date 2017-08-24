@@ -153,14 +153,14 @@ export default {
 
 	    	},
 	    	jumpSearchView(){
-	    	
 	    		this.$router.push({
 	                path: 'prodsSearch',
 	                query: {
 	                    username: this.$route.query.username,
 	                    userno: this.$route.query.userno,
 	                    vusername: this.$route.query.vusername,
-	                    whc:this.currentDepot.WH_C
+	                    whc:this.currentDepot.WH_C,
+	                    name:this.$route.query.name,
 	                }
             	})
 	    	},
