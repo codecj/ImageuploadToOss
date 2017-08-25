@@ -48,29 +48,20 @@ export default {
             	pagesize: "10"
         	},	
         	baseStkcByDepotParam:{//获取数据列表的参数
-	        	// //业务员userno
+	        	//业务员userno
 	        	// userno:this.$route.query.userno,
-	        	// //业务员username
+	        	userno:"385734",
+				username:"JSNTSOP1Y1",
+	        	vname:"JSNTSOP1",
+	        	whc:"JSNTRD100",
+	        	//业务员username
 	        	// username:this.$route.query.username,
 	        	// vname:this.$route.query.vusername,
 	        	// whc:this.$route.query.whc,
-	        	// key:'',
-	        	// truckType:'S'
-	        	//业务员userno
-	        	userno:this.$route.query.userno,
-	        	//业务员username
-	        	username:this.$route.query.username,
-	        	vname:this.$route.query.vusername,
-	        	whc:this.$route.query.whc,
 	        	key:'',
 	        	truckType:'S'
 		   	},
 	        addStckParam:{//添加商品到待装车的参数
-	        	// whc:this.$route.query.whc,
-	        	// username:this.$route.query.username,
-	        	// vname:this.$route.query.vusername,
-	        	// name:this.$route.query.name,
-	        	// userno:this.$route.query.userno,
 	        	whc:this.$route.query.whc,
 	        	username:this.$route.query.username,
 	        	vname:this.$route.query.vusername,
@@ -303,6 +294,7 @@ header div:nth-child(3) img{
 		bottom:0;
 		left:0;
 		right:0;
+		overflow-y: scroll;
 		/*width: 100%;
 		top:197px;
 		overflow-y: scroll;
