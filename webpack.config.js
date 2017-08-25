@@ -107,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
     filename: '[name].js'
   }
   module.exports.devServer = {
-    // host:'192.168.200.251',
+    host:'192.168.200.73',
     historyApiFallback: true,
     noInfo: true
   }
