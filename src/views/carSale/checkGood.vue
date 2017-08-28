@@ -45,8 +45,8 @@ export default {
                 	pagesize: "20"
             	},
             	param:{
-                	whc : 'JSNTRD100',
-                	userName: 'JSNTSOP1Y1'
+                	whc : this.$route.query.whc,
+                	userName: this.$route.query.username
             	},
 			}
 		},
