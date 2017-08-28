@@ -10,29 +10,8 @@
 		</div>
 		<div class="checkBody">
 			<ul>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
+				<li v-for="item in dataArray">
+					<cell :itemData='item'></cell>
 				</li>
 			</ul>
 		</div>
@@ -91,7 +70,6 @@ export default {
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
-					console.log(getData)
 					Indicator.close();
 					if (parseInt(getData.code) == 4) {
 	                	Toast({
@@ -107,8 +85,9 @@ export default {
 						});
 						return;
 					}
-					this.goodList = getData.data
-					if (this.goodList.length == getData.pagination.totalcount){
+					this.dataArray = getData.data
+					console.log(this.dataArray)
+					if (this.dataArray.length == getData.pagination.totalcount){
 						this.isEnd = true;
 						Indicator.close();
 						return
