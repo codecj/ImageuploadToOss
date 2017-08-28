@@ -14,7 +14,7 @@
       	<footer>
            <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
            <div @click="sureBackDepot">回库</div>
-           <div class="scan">查看</div>
+           <div class="scan" @click='look'>查看</div>
         </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
        </depotlist>
@@ -41,6 +41,7 @@
           showDatail:false,
           depotName:"",
           baseStkc:null,
+          scanwhc:"",
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
@@ -70,10 +71,13 @@
       },
       methods:{
         depotSelected(depot){//仓库title赋值
+          console.log(depot.WH_C)
           this.showDev = false;
           this.depotName = depot.NAME;
           this.depotPagarm.whc = depot.WH_C;
           this.backPagarm.whc = depot.WH_C;
+          this.scanwhc = depot.WH_C//点击查看的时候的传过去的whc
+
           this.getSearch();
         },
         cancelDepotList(){
@@ -83,7 +87,7 @@
           this.showDev = !this.showDev;
         },
         getList(){//可选仓库列表接口
-          Indicator.open();
+          // Indicator.open();
           this.depotList = [];
           const pargrmList = {
             oper: 'getVendorwhc',
@@ -95,6 +99,7 @@
             let dataList = JSON.parse(res.data.result);
             this.depotPagarm.whc = dataList.data[0].WH_C
             this.backPagarm.whc = dataList.data[0].WH_C
+            this.scanwhc = dataList.data[0].WH_C//点击查看的时候的传过去的whc
             this.getSearch();
             dataList.data.forEach(value=> {
               this.depotList.push(value)
@@ -114,7 +119,7 @@
           })
         },
         getSearch(){//待装车和我的库存搜索接口   
-        Indicator.open();      
+        // Indicator.open();      
           this.stockList=[];          
            const pargrmList = {
             oper: 'getTruckListFour',
@@ -256,6 +261,10 @@
         scanData(data){//扫描结果
             this.depotPagarm.key = data;
             this.getSearch();
+        },
+        look(){
+          this.$router.push({path:'checkgood',query:{username:this.pagram.username,whc:this.scanwhc}})
+
         }
   
       },
@@ -366,7 +375,7 @@
     display:inline-block;
     background:url(../../assets/icon59-1.png) no-repeat center left;
     background-size: 54px 54px;
-    font-size: 26px;
+    font-size: 30px;
     color: #4D5679;
     letter-spacing: 0;
     margin-left:30px;
@@ -393,7 +402,7 @@
     position: absolute;
     left: 45%;
     text-align: center;
-    background: url(../../assets/function-iconview.png) no-repeat center left;
+    background: url(../../assets/function-iconview-.png) no-repeat center left;
     background-size: 55px 55px;
   }
 </style>

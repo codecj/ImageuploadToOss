@@ -8,7 +8,11 @@
 	        </form>
 	        <div align="center" @click="selectScan"><img src="../assets/scan@2x.png" alt=""></div>       
 	 	</header>  
+
 	 	<div class="prodsList">
+
+		<input type="checkbox" id="check1" style="appearance:radio;background:#f00">你喜欢夏天吗?
+
 		 	<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
 	  	class="table">
 

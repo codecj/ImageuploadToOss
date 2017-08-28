@@ -4,40 +4,19 @@
 			<div class="headerTitle">
 				查看回库商品
 			</div>
-			<div class="headerBack">
+			<div class="headerBack" @click="naviBack">
 			<img src="../../assets/icon10.png">
 			</div>
 		</div>
 		<div class="checkBody">
 			<ul>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
+				<li v-for="item in dataArray">
+					<cell :itemData='item'></cell>
 				</li>
 			</ul>
 		</div>
 		<div class="checkBottom">
-			<div class="bottomBtn">
+			<div class="bottomBtn" @click="print">
 				打印回库单
 			</div>
 		</div>		
@@ -45,15 +24,95 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import cell from './checkGoodCell.vue'
+import Request from '../../util/API'
+import {
+    Toast,
+    Indicator,
+    Loadmore
+} from 'mint-ui'
+
+import {print} from '../../util/JsBridge.js';
+
+Vue.component(Loadmore.name, Loadmore)
+
 export default {
 		data(){
 			return{
 				title:'可口可乐2L',
+				dataArray:[],
+				page: {
+                	pageno: "0",
+                	pagesize: "20"
+            	},
+            	param:{
+                	// whc : this.$router.query.whc,
+                	// userName: this.$router.query.username
+                	whc:'JSNTRD100',
+                	userName:'JSNTSOP1Y1'
+            	},
 			}
 		},
 		components:{
 			cell,
+		},
+		methods:{
+			naviBack(){
+				this.$router.push({
+					path:'backdepot',
+				})
+			},
+			print(){
+				alert(1)
+				print(this.dataArray)
+			},
+			ajax(){
+				Indicator.open();
+				this.page.pageno = this.pageno
+				const pargrmList = {
+					pagination: JSON.stringify(this.page),
+					oper: 'truckIoMasBackDetail',
+					type: 'truck',
+					para: JSON.stringify(this.param) 
+				}
+				Request.post(pargrmList).then(res => {
+					const getData = JSON.parse(res.data.result)
+					Indicator.close();
+					if (parseInt(getData.code) == 4) {
+	                	Toast({
+	                         message: '无商品',
+	                         duration: 2000
+	                     });
+	                    return;
+	                }
+					if (getData.code !== "200") {
+						Toast({
+							message:getData.msg,
+							duration: 2000
+						});
+						return;
+					}
+					this.dataArray = getData.data
+					console.log(this.dataArray)
+					if (this.dataArray.length == getData.pagination.totalcount){
+						this.isEnd = true;
+						Indicator.close();
+						return
+					}
+				}).catch(error => {
+					Indicator.close();
+					if (error.response){
+						Toast({
+							message: error.response.status,
+							duration: 2000
+						});
+					}
+				})
+			},
+		},
+		mounted(){
+			this.ajax()
 		}
 }	
 </script>
