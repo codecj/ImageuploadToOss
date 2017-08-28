@@ -19,7 +19,8 @@
 			<Category :categoryList="categoryList" @categorySelected='categorySelected'></Category>
 			<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
   	class="table">
-				<!-- <div  class="cell borderB">
+  				
+				<div  class="cell borderB">
 		        	<img class="gooodImg">
 		        	<label class="goodName">卫龙辣条小面包880g豆丁文档吃的我的的我的我瞧得起我</label>
 		        	<label class="vendorName">江苏南通sop1</label>
@@ -54,10 +55,9 @@
 		        	<label class="goodName">卫龙辣条小面包880g</label>
 		        	<label class="vendorName">江苏南通sop1</label>
 					<em  class="addGoods"></em>
-				</div>            -->
+				</div>           
 			</mt-loadmore>
-		</div>
-		
+		</div>	
 	</div>
 </template>
 
@@ -148,7 +148,7 @@ export default {
 	    			return;
 	    		}
 	    	},
-
+	    	
 	    	loadTop(){
 
 	    	},

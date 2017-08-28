@@ -49,15 +49,15 @@ export default {
         	},	
         	baseStkcByDepotParam:{//获取数据列表的参数
 	        	//业务员userno
-	        	// userno:this.$route.query.userno,
-	        	userno:"385734",
-				username:"JSNTSOP1Y1",
-	        	vname:"JSNTSOP1",
-	        	whc:"JSNTRD100",
+	        	userno:this.$route.query.userno,
+	   //      	userno:"385734",
+				// username:"JSNTSOP1Y1",
+	   //      	vname:"JSNTSOP1",
+	   //      	whc:"JSNTRD100",
 	        	//业务员username
-	        	// username:this.$route.query.username,
-	        	// vname:this.$route.query.vusername,
-	        	// whc:this.$route.query.whc,
+	        	username:this.$route.query.username,
+	        	vname:this.$route.query.vusername,
+	        	whc:this.$route.query.whc,
 	        	key:'',
 	        	truckType:'S'
 		   	},
