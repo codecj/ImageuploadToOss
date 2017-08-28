@@ -45,6 +45,15 @@ export const searchShop = (cb) =>{
           cb(data);
       })
   })
+};
+
+//参数一互调方法名 参数二JS传原生数据  参数三是OC回调到JS数据
+export const print = (products)=>{
+  JsBridge(bridge =>{
+    bridge.callHandler('checkGoodPrint',products,(responseData) => {
+        
+    })
+  })
 }
 
  // Request.jsBbridge(bridge => {

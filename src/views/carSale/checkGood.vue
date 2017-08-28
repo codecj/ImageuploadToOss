@@ -16,7 +16,7 @@
 			</ul>
 		</div>
 		<div class="checkBottom">
-			<div class="bottomBtn">
+			<div class="bottomBtn" @click="print">
 				打印回库单
 			</div>
 		</div>		
@@ -33,6 +33,8 @@ import {
     Loadmore
 } from 'mint-ui'
 
+import {print} from '../../util/JsBridge.js';
+
 Vue.component(Loadmore.name, Loadmore)
 
 export default {
@@ -45,8 +47,10 @@ export default {
                 	pagesize: "20"
             	},
             	param:{
-                	whc : this.$route.query.whc,
-                	userName: this.$route.query.username
+                	// whc : this.$router.query.whc,
+                	// userName: this.$router.query.username
+                	whc:'JSNTRD100',
+                	userName:'JSNTSOP1Y1'
             	},
 			}
 		},
@@ -58,6 +62,10 @@ export default {
 				this.$router.push({
 					path:'backdepot',
 				})
+			},
+			print(){
+				alert(1)
+				print(this.dataArray)
 			},
 			ajax(){
 				Indicator.open();

@@ -76,8 +76,6 @@
           this.depotName = depot.NAME;
           this.depotPagarm.whc = depot.WH_C;
           this.backPagarm.whc = depot.WH_C;
-          // this.scanwhc = depot.WH_C//点击查看的时候的传过去的whc
-
           this.getSearch();
         },
         cancelDepotList(){
@@ -87,7 +85,7 @@
           this.showDev = !this.showDev;
         },
         getList(){//可选仓库列表接口
-          // Indicator.open();
+          Indicator.open();
           this.depotList = [];
           const pargrmList = {
             oper: 'getVendorwhc',
@@ -97,6 +95,7 @@
           Request.post(pargrmList).then(res=>{
             Indicator.close();
             let dataList = JSON.parse(res.data.result);
+            console.log(dataList)
             this.depotPagarm.whc = dataList.data[0].WH_C
             this.backPagarm.whc = dataList.data[0].WH_C
             this.scanwhc = dataList.data[0].WH_C//点击查看的时候的传过去的whc
@@ -263,9 +262,6 @@
             this.getSearch();
         },
         scan(){
-          console.log(this.pagram.username)
-          console.log(this.scanwhc)
-
           this.$router.push({path:'checkgood',query:{username:this.pagram.username,whc:this.scanwhc}})
 
         }
