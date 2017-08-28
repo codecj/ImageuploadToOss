@@ -381,8 +381,8 @@
     letter-spacing: 0;
     text-align: center;
     padding: 0 30px 0 60px;
-    background: url(../../assets/iconfinish.png) no-repeat center left;
-    background-size: 50px 50px;
+    background: url(../../assets/function-iconreturn.png) no-repeat center left;
+    background-size: 55px 55px;
   }
   footer .scan{
     height: 88px;
@@ -393,7 +393,8 @@
     position: absolute;
     left: 45%;
     text-align: center;
-    background: url(../../assets/iconview-2.png) no-repeat center left;
+    background: url(../../assets/function-iconview.png) no-repeat center left;
+    background-size: 55px 55px;
   }
 </style>
 
