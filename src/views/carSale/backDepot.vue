@@ -14,7 +14,7 @@
       	<footer>
            <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
            <div @click="sureBackDepot">回库</div>
-           <div class="scan">查看</div>
+           <div class="scan" @click='scan'>查看</div>
         </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
        </depotlist>
@@ -256,6 +256,11 @@
         scanData(data){//扫描结果
             this.depotPagarm.key = data;
             this.getSearch();
+        },
+        scan(){
+          this.$router.push({
+            path:'checkgood',
+          })
         }
   
       },
@@ -393,7 +398,7 @@
     position: absolute;
     left: 45%;
     text-align: center;
-    background: url(../../assets/function-iconview.png) no-repeat center left;
+    background: url(../../assets/function-iconview-.png) no-repeat center left;
     background-size: 55px 55px;
   }
 </style>

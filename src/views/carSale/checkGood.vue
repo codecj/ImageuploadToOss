@@ -4,7 +4,7 @@
 			<div class="headerTitle">
 				查看回库商品
 			</div>
-			<div class="headerBack">
+			<div class="headerBack" @click="naviBack">
 			<img src="../../assets/icon10.png">
 			</div>
 		</div>
@@ -45,15 +45,87 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import cell from './checkGoodCell.vue'
+import Request from '../../util/API'
+import {
+    Toast,
+    Indicator,
+    Loadmore
+} from 'mint-ui'
+
+Vue.component(Loadmore.name, Loadmore)
+
 export default {
 		data(){
 			return{
 				title:'可口可乐2L',
+				dataArray:[],
+				page: {
+                	pageno: "0",
+                	pagesize: "20"
+            	},
+            	param:{
+                	whc : 'JSNTRD100',
+                	userName: 'JSNTSOP1Y1'
+            	},
 			}
 		},
 		components:{
 			cell,
+		},
+		methods:{
+			naviBack(){
+				this.$router.push({
+					path:'backdepot',
+				})
+			},
+			ajax(){
+				Indicator.open();
+				this.page.pageno = this.pageno
+				const pargrmList = {
+					pagination: JSON.stringify(this.page),
+					oper: 'truckIoMasBackDetail',
+					type: 'truck',
+					para: JSON.stringify(this.param) 
+				}
+				Request.post(pargrmList).then(res => {
+					const getData = JSON.parse(res.data.result)
+					console.log(getData)
+					Indicator.close();
+					if (parseInt(getData.code) == 4) {
+	                	Toast({
+	                         message: '无商品',
+	                         duration: 2000
+	                     });
+	                    return;
+	                }
+					if (getData.code !== "200") {
+						Toast({
+							message:getData.msg,
+							duration: 2000
+						});
+						return;
+					}
+					this.goodList = getData.data
+					if (this.goodList.length == getData.pagination.totalcount){
+						this.isEnd = true;
+						Indicator.close();
+						return
+					}
+				}).catch(error => {
+					Indicator.close();
+					if (error.response){
+						Toast({
+							message: error.response.status,
+							duration: 2000
+						});
+					}
+				})
+			},
+		},
+		mounted(){
+			this.ajax()
 		}
 }	
 </script>
