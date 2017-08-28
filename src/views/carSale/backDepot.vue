@@ -41,6 +41,7 @@
           showDatail:false,
           depotName:"",
           baseStkc:null,
+          scanwhc:"",
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
@@ -70,10 +71,13 @@
       },
       methods:{
         depotSelected(depot){//仓库title赋值
+          console.log(depot.WH_C)
           this.showDev = false;
           this.depotName = depot.NAME;
           this.depotPagarm.whc = depot.WH_C;
           this.backPagarm.whc = depot.WH_C;
+          // this.scanwhc = depot.WH_C//点击查看的时候的传过去的whc
+
           this.getSearch();
         },
         cancelDepotList(){
@@ -83,7 +87,7 @@
           this.showDev = !this.showDev;
         },
         getList(){//可选仓库列表接口
-          Indicator.open();
+          // Indicator.open();
           this.depotList = [];
           const pargrmList = {
             oper: 'getVendorwhc',
@@ -95,6 +99,7 @@
             let dataList = JSON.parse(res.data.result);
             this.depotPagarm.whc = dataList.data[0].WH_C
             this.backPagarm.whc = dataList.data[0].WH_C
+            this.scanwhc = dataList.data[0].WH_C//点击查看的时候的传过去的whc
             this.getSearch();
             dataList.data.forEach(value=> {
               this.depotList.push(value)
@@ -114,7 +119,7 @@
           })
         },
         getSearch(){//待装车和我的库存搜索接口   
-        Indicator.open();      
+        // Indicator.open();      
           this.stockList=[];          
            const pargrmList = {
             oper: 'getTruckListFour',
@@ -258,9 +263,11 @@
             this.getSearch();
         },
         scan(){
-          this.$router.push({
-            path:'checkgood',
-          })
+          console.log(this.pagram.username)
+          console.log(this.scanwhc)
+
+          this.$router.push({path:'checkgood',query:{username:this.pagram.username,whc:this.scanwhc}})
+
         }
   
       },
