@@ -10,34 +10,13 @@
 		</div>
 		<div class="checkBody">
 			<ul>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
-				</li>
-				<li>
-					<cell></cell>
+				<li v-for="item in dataArray">
+					<cell :itemData='item'></cell>
 				</li>
 			</ul>
 		</div>
 		<div class="checkBottom">
-			<div class="bottomBtn">
+			<div class="bottomBtn" @click="print">
 				打印回库单
 			</div>
 		</div>		
@@ -54,6 +33,8 @@ import {
     Loadmore
 } from 'mint-ui'
 
+import {print} from '../../util/JsBridge.js';
+
 Vue.component(Loadmore.name, Loadmore)
 
 export default {
@@ -66,8 +47,10 @@ export default {
                 	pagesize: "20"
             	},
             	param:{
-                	whc : this.$route.query.whc,
-                	userName: this.$route.query.username
+                	// whc : this.$router.query.whc,
+                	// userName: this.$router.query.username
+                	whc:'JSNTRD100',
+                	userName:'JSNTSOP1Y1'
             	},
 			}
 		},
@@ -80,6 +63,10 @@ export default {
 					path:'backdepot',
 				})
 			},
+			print(){
+				alert(1)
+				print(this.dataArray)
+			},
 			ajax(){
 				Indicator.open();
 				this.page.pageno = this.pageno
@@ -91,7 +78,6 @@ export default {
 				}
 				Request.post(pargrmList).then(res => {
 					const getData = JSON.parse(res.data.result)
-					console.log(getData)
 					Indicator.close();
 					if (parseInt(getData.code) == 4) {
 	                	Toast({
@@ -107,8 +93,9 @@ export default {
 						});
 						return;
 					}
-					this.goodList = getData.data
-					if (this.goodList.length == getData.pagination.totalcount){
+					this.dataArray = getData.data
+					console.log(this.dataArray)
+					if (this.dataArray.length == getData.pagination.totalcount){
 						this.isEnd = true;
 						Indicator.close();
 						return

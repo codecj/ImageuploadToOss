@@ -2,9 +2,9 @@
 	<div>
 		<div class="line"></div>
 		<div class="content">
-			<img src="../../assets/placehold.png">
-			<div class="title">{{title}}</div>
-			<div class="number">12组4捆</div>
+			<img v-lazy="this.itemData.URL_ADDR">
+			<div class="title">{{this.itemData.NAME}}</div>
+			<div class="number">{{this.itemData.totalNum}}</div>
 		</div>
 	</div>
 </template>
@@ -13,9 +13,10 @@
 export default {
 		data(){
 			return{
-				title:'可口可乐2L可口可乐2L可口可乐2L可口可乐2L可口可乐2L可口可乐2L可口可乐2L',
+				
 			}
 		},
+		props:['itemData']
 }
 	
 </script>
