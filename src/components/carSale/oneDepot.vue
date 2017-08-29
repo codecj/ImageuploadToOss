@@ -70,7 +70,7 @@
 	height:208px;
 }
 .depot div:nth-child(3){
-	width:68%;
+	width:50%;
 	margin-left:2%;
 	position: relative;
 }
