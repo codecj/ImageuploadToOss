@@ -45,19 +45,19 @@
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
-            // vusername:this.$route.query.vusername,
-            // userno:this.$route.query.userno,
-            // username:this.$route.query.username
-            vusername:"JSNTSOP1",
-            userno:"385734",
-            username:"JSNTSOP1Y1"
+            vusername:this.$route.query.vusername,
+            userno:this.$route.query.userno,
+            username:this.$route.query.username
+            // vusername:"JSNTSOP1",
+            // userno:"385734",
+            // username:"JSNTSOP1Y1"
           },
           depotPagarm:{//待装车和我的库存搜索参数
             key:"",
-            // username:this.$route.query.username,
-            // vusername:this.$route.query.vusername,
-            username:"JSNTSOP1Y1",
-            vusername:"JSNTSOP1",
+            username:this.$route.query.username,
+            vusername:this.$route.query.vusername,
+            // username:"JSNTSOP1Y1",
+            // vusername:"JSNTSOP1",
             whc:"",
             truckType:"S",
             storageStatus:"C"
