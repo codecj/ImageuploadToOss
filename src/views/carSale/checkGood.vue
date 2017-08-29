@@ -27,6 +27,7 @@
 import Vue from 'vue';
 import cell from './checkGoodCell.vue'
 import Request from '../../util/API'
+import {navBack} from '../../util/JsBridge.js'
 import {
     Toast,
     Indicator,
@@ -59,9 +60,7 @@ export default {
 		},
 		methods:{
 			naviBack(){
-				this.$router.push({
-					path:'backdepot',
-				})
+				navBack()
 			},
 			print(){
 				alert(1)
@@ -117,7 +116,7 @@ export default {
 }	
 </script>
 
-<style>
+<style scoped>
 	.checkHeader{
 		height: 88px;
 		width: 100%;
