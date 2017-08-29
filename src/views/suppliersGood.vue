@@ -1,109 +1,33 @@
 <template>
-    <div>
+    <div id="prods">
         <div class="menu_container">
             <div class="food_container">
                 <div class="menu_left">
                     <ul>
-                        <li v-for="(navs,index) in nav" @click="selectmenu(index)" :class="{'activity_menu':ind === index}">{{navs}}</li>
+                        <li @click="selectmenu('-1',0)" :class="{'activity_menu':ind === 0}">常订商品</li>
+                        <li v-for="(navs,index) in nav" @click="selectmenu(navs.CAT_C,index+1)" :class="{'activity_menu':ind === index+1}">{{navs.NAME}}</li>
                     </ul>
                 </div>
                 <div class="menu_right">
-                    <ul>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装促销包装促销包装促销包装促销包装促销包装促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../assets/placehold.png" class="menu_food_img">
-                            <div class="menu_food_description">
-                                <p class="goodName">阿尔卑斯水果糖</p>
-                                <p class="vendorName">促销包装</p>
-                                <p class="specifications">规格：150g/包</p>
-                                <p class="goodPrice">￥<span>12.00</span></p>
-                                <em class="addGoods"></em>
-                            </div>
-                        </li>
+                    <ul id="oneprods" class="changeItem" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
+                        <oneprod v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod>
+                        <!--<li>-->
+                            <!--<img src="../assets/placehold.png" class="menu_food_img">-->
+                            <!--<div class="menu_food_description">-->
+                                <!--<p class="goodName">阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖阿尔卑斯水果糖</p>-->
+                                <!--<p class="vendorName">促销包装促销包装促销包装促销包装促销包装促销包装促销包装</p>-->
+                                <!--<p class="specifications">规格：150g/包</p>-->
+                                <!--<p class="goodPrice">￥<span>12.00</span></p>-->
+                                <!--<em class="addGoods"></em>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <getbottom v-show="show"></getbottom>
                     </ul>
                     <div class="buy_cart_container">
-                        <span>
-                            <em class="cart_icon"></em><a>购物车</a>
-                        </span>
+                        <shopcart style="position: relative;"></shopcart>
+                        <!--<p>-->
+                            <!--<img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">-->
+                        <!--</p>-->
                     </div>
                 </div>
             </div>
@@ -112,17 +36,126 @@
 </template>
 
 <script type="text/javascript">
+import Vue from 'vue'
+import oneprod from "../components/leftOneProd.vue"
+import shopcart from "../components/shopcart.vue"
+import getbottom from "../components/getbottom.vue"
+import Request from "../util/API"
+import { Lazyload } from 'mint-ui'
+import { Toast,Indicator } from 'mint-ui'
+// 懒加载效果
+Vue.use(Lazyload, {
+    preLoad: 1.3,
+    error: require('../assets/holde.png'),
+    loading: require('../assets/holde.png'),
+    attempt: 1
+})
 export default {
+    name:"prods",
     data () {
         return {
-            nav:['常订商品','粮油','乳制品','预定高级水产品','畅销乳酸菌饮料','膨化食品','坚果类','保养品','酒水','儿童小零食'],
-            ind:''
+            nav:[],
+            ind:0,
+            show: false,
+            load :false,
+            pagram:{
+                username:this.$route.query.username,
+                spuserno:this.$route.query.spuserno,
+                spusername:this.$route.query.spusername,
+                areaid:this.$route.query.areaid,
+                vendorusername:this.$route.query.vendorusername,
+                vendorcode:this.$route.query.vendorcode,
+                userno:this.$route.query.userno,
+                catidl3list:this.$route.query.catidl3list,
+                catidl2 :this.$route.query.catidl2,
+                // atp :this.$route.query.atp,
+                brandclist :this.$route.query.brandclist,
+                // catidl2:this.$route.query.catidl2list,
+                keyword:this.$route.query.keyword,
+                oldcode:this.$route.query.oldcode,
+                vendorCatId:''//默认打开请求常订商品
+            },
+            prodList:[],
+            page:{
+                pageno:"1",
+                pagesize:"20",
+                orderby: "ZH",
+                asc: true
+            },
+            pageSize:''
         }
     },
+    components: {
+        // proLists,
+        shopcart,
+        getbottom,
+        oneprod
+    },
     methods:{
-        selectmenu(index){
-            this.ind = index;
+        selectmenu(CAT_C,index){
+            if(this.ind!=index){
+                console.log(CAT_C);
+                this.page.pageno=1;
+                this.prodList = [];
+                this.show = false;
+                this.ind = index;
+                this.pagram.vendorCatId=CAT_C;
+                this.ajax();
+            }
+        },
+        ajax(num) {
+            Indicator.open();
+            const pargrmList = {
+                pagination: JSON.stringify(this.page),
+                oper: 'getWqSearchApp',
+                type: 'wqProduct',
+                para: JSON.stringify(this.pagram)
+            }
+
+            Request.post(pargrmList).then(res=>{
+                let getData = JSON.parse(res.data.result);
+                if(num==-1){
+                    getData.data.vendorCats.forEach(value=> {
+                        this.nav.push(value)
+                    });
+                }else{
+                    this.pageSize = getData.pagination.totalcount;
+                    getData.data.product.forEach(value=> {
+                        this.prodList.push(value)
+                    });
+                    if(this.prodList.length==getData.pagination.totalcount) {
+                        this.load=true;
+                        this.show = true;
+                        Indicator.close();
+                        return
+                    }
+                }
+                if(getData.code!=="200") Toast({ message: getData.msg, duration: 2000 });
+                Indicator.close();
+            }).catch(error=>{
+                Indicator.close();
+                if (error.response) {
+                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+                    Toast({
+                        message: error.response.status,
+                        duration: 2000
+                    });
+                }
+            })
+        },
+        loadMore() {
+            if(this.prodList.length==this.pageSize) return
+            if(this.prodList!=''){
+                this.loading = true;
+                this.page.pageno=parseInt(this.page.pageno)+1;
+                this.ajax();
+            }
         }
+    },
+    mounted() {
+        this.ajax(-1);//请求分类
+        this.pagram.vendorCatId='-1';
+        this.ajax();//请求常订商品
     }
 }
 </script>
@@ -182,51 +215,34 @@ export default {
         background:#fff;
         position: relative;
     }
-    .buy_cart_container{position: fixed; bottom: 0; width: 70.4%; left: 29.6%; height: 1.4rem; border-top: 1px solid #D2D7DF; background: #EBEDF1; text-align: right;}
-    .cart_icon{width: 0.6rem; height: 0.6rem; background: url("../assets/cart.png") no-repeat 100%/100%; display: inline-block;}
-    .buy_cart_container span{margin-right: 0.3rem; margin-top: 0.18rem; display: inline-block; text-align: center;}
-    .buy_cart_container a{display: block; font-size: 0.25rem; text-align: center; color: #888DA4;}
+    .buy_cart_container{position: fixed; bottom: 0; width: 70.4%; left: 29.6%; height: 1.4rem; text-align: right;}
+    .buy_cart_container p {
+        position: relative;
+        width: 112px;
+        height: 112px;
+        display: inline-block;
+        float: right;
+        text-align: center;
+    }
+
+    .buy_cart_container img {
+        display: inline-block;
+        width: 112px;
+        height: 112px;
+        float: right;
+        margin: 0px 20px 15px 0;
+    }
+    #scrolltop {
+        display: none;
+    }
     .menu_right ul{
-        padding-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
     }
     .menu_right li{
         border-bottom:1px solid #f8f8f8;
         padding:.4rem .3rem;
         position:relative;
         overflow:hidden;
-    }
-    .menu_food_img{width:2rem; height:2rem; margin-right:0.4rem; float:left;}
-    .menu_food_description{margin-left:2.4rem;}
-    .goodName{
-        font-family: PingFangSC-Medium;
-        font-size: 0.4rem;
-        color: #3B456C;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 2;
-    }
-    .vendorName,.specifications{
-        font-family: PingFangSC-Regular;
-        font-size: 0.38rem;
-        color: #3B456C;
-        opacity: 0.5;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 2;
-    }
-    .goodPrice{color:#FF0000; font-size:0.38rem;}
-    .goodPrice span{font-size:0.35rem;}
-    .addGoods{
-        position: absolute;
-        right: 0.34rem;
-        bottom: 0.46rem;
-        width: 0.6rem;
-        height: 0.6rem;
-        background: url("../assets/icon9.png") no-repeat 100%/100%;
-        display: inline-block;
+        list-style: none;
     }
 </style>
