@@ -7,7 +7,7 @@
             </div>
             <div class="prodDetail">
                 <p>{{item.NAME}}</p>
-                <p>{{item.STK_NAME_EXT}}</p>
+                <p><span>{{item.STK_NAME_EXT}}</span> <span v-if="item.RESALABLE_FLG == 'Y'">可退货</span><span v-if="item.RESALABLE_FLG == 'N'">不可退货</span></p>
                 <p>规格：{{item.MODLE}}</p>
                 <p>
                     <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
@@ -132,6 +132,7 @@ export default ({
     float: left;
     width: 450px;
     margin-left: 28px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .changeItem .searchItem .prodDetail>p:nth-child(3) {
     font-size: 26px;

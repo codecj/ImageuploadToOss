@@ -70,7 +70,7 @@
 	height:208px;
 }
 .depot div:nth-child(3){
-	width:68%;
+	width:50%;
 	margin-left:2%;
 	position: relative;
 }
@@ -119,7 +119,7 @@
 	height:70px;
 	line-height: 70px;
 	position: absolute;
-	bottom:-10px;
+	bottom:-40px;
 	right:0;
 }
 .depot div:nth-child(3) p:nth-child(5) span{

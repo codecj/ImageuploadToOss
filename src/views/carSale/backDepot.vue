@@ -45,14 +45,19 @@
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
-            vusername:this.$route.query.vusername,
-            userno:this.$route.query.userno,
-            username:this.$route.query.username
+            // vusername:this.$route.query.vusername,
+            // userno:this.$route.query.userno,
+            // username:this.$route.query.username
+            vusername:"JSNTSOP1",
+            userno:"385734",
+            username:"JSNTSOP1Y1"
           },
           depotPagarm:{//待装车和我的库存搜索参数
             key:"",
-            username:this.$route.query.username,
-            vusername:this.$route.query.vusername,
+            // username:this.$route.query.username,
+            // vusername:this.$route.query.vusername,
+            username:"JSNTSOP1Y1",
+            vusername:"JSNTSOP1",
             whc:"",
             truckType:"S",
             storageStatus:"C"
@@ -340,6 +345,10 @@
     position: fixed;
     bottom:0;
     left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
   }
   footer div{
     display: inline-block;
@@ -349,7 +358,7 @@
     background: #fff;
     /*width:75%;*/
     height:88px;
-    /*padding-left:%;*/
+    margin-left: 20px;
   }
   footer div:nth-child(1) .noselect{
     width:120px;
@@ -362,10 +371,8 @@
     font-size: 26px;
     color: #4D5679;
     letter-spacing: 0;
-    margin-left:30px;
   }
   footer div:nth-child(1) .selectAll{
-    width:120px;
     height:88px;
     line-height: 88px;
     text-align: right;
@@ -375,7 +382,7 @@
     font-size: 26px;
     color: #4D5679;
     letter-spacing: 0;
-    margin-left:30px;
+    
   }
   footer div:nth-child(2){
     float: right;
@@ -385,21 +392,23 @@
     color: #4D5679;
     letter-spacing: 0;
     text-align: center;
-    padding: 0 30px 0 60px;
+    padding: 0 0 0 60px;
     background: url(../../assets/function-iconreturn.png) no-repeat center left;
     background-size: 55px 55px;
+    margin-right: 20px;
   }
   footer .scan{
     height: 88px;
     line-height: 88px;
     font-size: 30px;
     color: #4D5679;
-    width: 200px;
-    position: absolute;
-    left: 45%;
+    /*width: 200px;*/
+/*    position: absolute;
+    left: 45%;*/
     text-align: center;
+    padding: 0 0 0 60px;
     background: url(../../assets/function-iconview-.png) no-repeat center left;
-    background-size: 55px 55px;
+    background-size: 54px 54px;
   }
 </style>
 
