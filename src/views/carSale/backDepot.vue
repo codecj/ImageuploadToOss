@@ -13,8 +13,8 @@
       	</content>
       	<footer>
            <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
-           <div @click="sureBackDepot">回库</div>
-           <div class="scan" @click='scan'>查看</div>
+           <div @click='scan'>查看</div>
+           <div class="huiku" @click="sureBackDepot">回库</div>
         </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
        </depotlist>
@@ -358,19 +358,20 @@
     background: #fff;
     /*width:75%;*/
     height:88px;
-    margin-left: 20px;
+    margin-left: 30px;
   }
   footer div:nth-child(1) .noselect{
-    width:120px;
+    /*width:120px;*/
     height:88px;
     line-height: 88px;
     text-align: right;
     display:inline-block;
     background:url(../../assets/icon59.png) no-repeat center left;
     background-size: 54px 54px;
-    font-size: 26px;
+    font-size: 30px;
     color: #4D5679;
     letter-spacing: 0;
+    padding: 0 0 0 60px; 
   }
   footer div:nth-child(1) .selectAll{
     height:88px;
@@ -379,13 +380,13 @@
     display:inline-block;
     background:url(../../assets/icon59-1.png) no-repeat center left;
     background-size: 54px 54px;
-    font-size: 26px;
+    font-size: 30px;
     color: #4D5679;
     letter-spacing: 0;
-    
+    padding: 0 0 0 60px;  
   }
   footer div:nth-child(2){
-    float: right;
+    /*float: right;*/
     height:88px;
     line-height: 88px;
     font-size: 30px;
@@ -393,22 +394,19 @@
     letter-spacing: 0;
     text-align: center;
     padding: 0 0 0 60px;
-    background: url(../../assets/function-iconreturn.png) no-repeat center left;
+    background: url(../../assets/function-iconview-.png) no-repeat center left;
     background-size: 55px 55px;
-    margin-right: 20px;
   }
-  footer .scan{
+  footer .huiku{
     height: 88px;
     line-height: 88px;
     font-size: 30px;
     color: #4D5679;
-    /*width: 200px;*/
-/*    position: absolute;
-    left: 45%;*/
     text-align: center;
     padding: 0 0 0 60px;
-    background: url(../../assets/function-iconview-.png) no-repeat center left;
+    background: url(../../assets/function-iconreturn.png) no-repeat center left;
     background-size: 54px 54px;
+    margin-right: 30px;
   }
 </style>
 
