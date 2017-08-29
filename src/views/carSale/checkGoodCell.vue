@@ -21,7 +21,7 @@ export default {
 	
 </script>
 
-<style>
+<style scoped>
 	.line{
 		background-color: #f2f2f2;
 		width: 100%;
@@ -30,15 +30,16 @@ export default {
 	.content{
 		height: 220px;
 		padding-left: 220px;
-		padding-top: 10px;
+		padding-top: 30px;
 		position: relative;
 	}
 	.content img{
 		position: absolute;
 		left: 10px;
 		top: 10px;
-		width: 200px;
-		height: 200px;
+		width: 180px;
+		height: 180px;
+		padding: 20px 30px 30px 20px;
 	}
 	.content .title{
 		color: #3b456c;
