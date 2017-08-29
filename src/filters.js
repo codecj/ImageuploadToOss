@@ -29,3 +29,12 @@ exports.formattimeFromTimestamp = (timestamp) => {
     var date = [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join('-');
     return [date, time].join(' ');
 }
+
+exports.subStringMax8 = (valuse) =>{
+    if (valuse.length > 8) {
+        return valuse.substring(0,8);
+    }else{
+        return valuse;
+    }
+}
+

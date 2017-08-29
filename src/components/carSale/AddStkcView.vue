@@ -10,14 +10,14 @@
 		<ul>
 			<li v-for="item in baseStkc.MODLE_LIST" class="borderB">
 				<label class="spec">{{item.UOM +'(' + item.MODLE +')'}}</label>
-				<label class="price">¥{{item.NET_PRICE}}</label>
+				<label class="price">￥{{item.NET_PRICE | float2bits}}</label>
+				<label class="extend">{{'[' +item.NAME_EXTEND + ']'}}<span v-if="item.RESALABLE_FLG == 'Y'">    [可退货]</span><span v-if="item.RESALABLE_FLG == 'N'">    [不可退货]</span></label>
 				<em @click.stop="addStkc(item)" class="add" ></em>
 				<input type="tel"  class="amount" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4)value=value.slice(0,4)" @keyup="onlyNum(item)" v-model="item.qty">
 				<em @click.stop="reduceStkc(item)" class="reduce"></em>
 				<label class="stkcStock">库存 {{item.STK_QTY}}</label>
 			</li>
 		</ul>
-  		
   	</div>
   	<div class="addBtn" @click.stop='submitStkc()'>添加</div>
   </div>
@@ -150,13 +150,20 @@
 	
 
 	.addStkc .content ul li .price{
+		/*position: absolute;
+		bottom: 25px;
+		left:34px;*/
+		font-size: 26px;
+		color: #C4C7D2;
+	}
+	.addStkc .content ul li .extend{
 		position: absolute;
 		bottom: 25px;
 		left:34px;
 		font-size: 26px;
-		color: #C4C7D2;
-	}
+		color: #FF783C;
 
+	}
 
 	.addStkc .content ul li .add{
 		position: absolute;
