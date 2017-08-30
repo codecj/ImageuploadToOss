@@ -355,4 +355,5 @@ export default ({
     right: -120px;
     bottom: -8px;
 }
+.border{white-space:nowrap; margin-right: 0.03rem;}
 </style>

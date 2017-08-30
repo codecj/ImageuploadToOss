@@ -98,8 +98,8 @@
         position: absolute;
         right: 0.34rem;
         bottom: 0.46rem;
-        width: 0.6rem;
-        height: 0.6rem;
+        width: 0.8rem;
+        height: 0.8rem;
         background: url("../assets/icon57.png") no-repeat 100%/100%;
         display: inline-block;
     }
@@ -107,9 +107,10 @@
         position: absolute;
         right: 0.34rem;
         bottom: 0.46rem;
-        width: 0.6rem;
-        height: 0.6rem;
+        width: 0.8rem;
+        height: 0.8rem;
         background: url("../assets/icon2.png") no-repeat 100%/100%;
         display: inline-block;
     }
+    .border{white-space:nowrap; margin-right: 0.03rem;}
 </style>

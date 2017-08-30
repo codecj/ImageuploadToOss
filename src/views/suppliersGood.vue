@@ -8,7 +8,7 @@
                         <li v-for="(navs,index) in nav" @click="selectmenu(navs.CAT_C,index+1)" :class="{'activity_menu':ind === index+1}">{{navs.NAME|subStringMaxnum(16)}}</li>
                     </ul>
                 </div>
-                <div class="menu_right">
+                <div class="menu_right" id="oneprodsparent">
                     <ul id="oneprods" class="changeItem" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="40">
                         <oneprod v-for="item in this.prodList" :item="item" :key="item.STK_NAME_EXT"></oneprod>
                         <!--<li>-->
@@ -25,9 +25,9 @@
                     </ul>
                     <div class="buy_cart_container">
                         <shopcart style="position: relative;"></shopcart>
-                        <!--<p>-->
-                            <!--<img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">-->
-                        <!--</p>-->
+                        <p>
+                            <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
+                        </p>
                     </div>
                 </div>
             </div>
@@ -150,12 +150,27 @@ export default {
                 this.page.pageno=parseInt(this.page.pageno)+1;
                 this.ajax();
             }
+        },
+        onScroll() {
+            this.scrolled=document.getElementById("oneprodsparent").scrollTop;
+            let scrolltop = document.getElementById('scrolltop');
+            if(this.scrolled>10){
+                scrolltop.style.display = 'block';
+            }else{
+                scrolltop.style.display = 'none';
+            }
+        },
+        scrollTop() {
+            let scrolltop = document.getElementById('oneprodsparent');
+            scrolltop.scrollTop=0;
         }
     },
     mounted() {
         this.ajax(-1);//请求分类
         this.pagram.vendorCatId='-1';
         this.ajax();//请求常订商品
+        var scroll = document.getElementById("oneprodsparent");
+        scroll.addEventListener('scroll', this.onScroll);
     }
 }
 </script>
