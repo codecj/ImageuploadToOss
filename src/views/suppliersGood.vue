@@ -5,7 +5,7 @@
                 <div class="menu_left">
                     <ul>
                         <li @click="selectmenu('-1',0)" :class="{'activity_menu':ind === 0}">常订商品</li>
-                        <li v-for="(navs,index) in nav" @click="selectmenu(navs.CAT_C,index+1)" :class="{'activity_menu':ind === index+1}">{{navs.NAME}}</li>
+                        <li v-for="(navs,index) in nav" @click="selectmenu(navs.CAT_C,index+1)" :class="{'activity_menu':ind === index+1}">{{navs.NAME|subStringMaxnum(16)}}</li>
                     </ul>
                 </div>
                 <div class="menu_right">
