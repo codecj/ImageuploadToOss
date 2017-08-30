@@ -82,7 +82,8 @@ export default {
                 orderby: "ZH",
                 asc: true
             },
-            pageSize:''
+            pageSize:'',
+            timer:null
         }
     },
     components: {
@@ -159,10 +160,21 @@ export default {
             }else{
                 scrolltop.style.display = 'none';
             }
+            if(this.scrolled==0){
+                clearInterval(this.timer);
+            }
+
         },
         scrollTop() {
             let scrolltop = document.getElementById('oneprodsparent');
-            scrolltop.scrollTop=0;
+            this.timer = setInterval(function(){
+                var osTop = scrolltop.scrollTop;
+                var speed = Math.floor(-osTop / 3);
+                scrolltop.scrollTop = osTop + speed;
+                if(osTop == 0){
+                    clearInterval(this.timer);
+                }
+            },50);
         }
     },
     mounted() {
