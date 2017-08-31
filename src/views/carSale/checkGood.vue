@@ -63,7 +63,6 @@ export default {
 				navBack()
 			},
 			print(){
-				alert(1)
 				print(this.dataArray)
 			},
 			ajax(){
