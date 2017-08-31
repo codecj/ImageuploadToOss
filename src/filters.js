@@ -37,4 +37,44 @@ exports.subStringMax8 = (valuse) =>{
         return valuse;
     }
 }
+/*
+* num 最大显示位数 必填
+* ellipsis 是否显示‘...’ true显示 false不显示 默认不显示 非必填
+* 说明：截取已半角占位为计算单位，即一个中文字为2个字符
+* */
+exports.subStringMaxnum = (valuse,num,ellipsis) =>{
+    var lenCount=0;
+    var cutString='';
+    var strLen=valuse.length;
+    for (var i = 0; i < strLen ; i++ ) {
+        if (isFull(valuse.charAt(i))) {
+            lenCount += 2;
+        } else {
+            lenCount += 1;
+        }
+        if(lenCount>num){
+            cutString=valuse.substring(0, i);
+            break;
+        }else if(lenCount==num){
+            cutString=valuse.substring(0, i+1);
+            break;
+        }
+        if((strLen-1)==i){
+            cutString=valuse;
+        }
+    }
+    if(ellipsis){
+        cutString+='...';
+    }
+    return cutString;
+    function isFull (pChar) {
+        for (var i = 0; i < pChar.strLen ; i++ ) {
+            if ((pChar.charCodeAt(i) > 128)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+}
 

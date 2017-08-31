@@ -92,7 +92,8 @@
           orderby: "ZH",
           asc: true
         },
-        pageSize:''
+        pageSize:'',
+        timer:null
       }
     },
     components: {
@@ -122,7 +123,6 @@
         Request.post(pargrmList).then(res=>{
             let getData = JSON.parse(res.data.result)
             this.pageSize = getData.pagination.totalcount
-            console.log(getData)
             getData.data.product.forEach(value=> {
               this.prodList.push(value)
             })
@@ -177,7 +177,6 @@
           }else{
             this.page.orderby = "AA";
           }
-          console.log(this.price)
         }else{
           if (this.price == true) {
             this.page.orderby = "BS";
@@ -212,10 +211,20 @@
         }else{
           scrolltop.style.display = 'none';
         }
+        if(this.scrolled==0){
+            clearInterval(this.timer);
+        }
       },
       scrollTop() {
         var oTop = document.getElementById("oneprods");
-        oTop.scrollTop = 0;      
+        this.timer = setInterval(function(){
+            var osTop = oTop.scrollTop;
+            var speed = Math.floor(-osTop / 3);
+            oTop.scrollTop = osTop + speed;
+            if(osTop == 0){
+                clearInterval(this.timer);
+            }
+        },50);
       }
     },
     mounted() {
