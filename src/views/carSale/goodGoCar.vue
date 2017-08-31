@@ -14,7 +14,6 @@
 		</div>
 		<div class="footer">
 			<span class="select-title" :class="{noselect:!isAllSelect,isselect:isAllSelect}" @click="allselect">全选</span>
-			<span class="check">查看</span>
 			<span class="btnCar" @click="goCarRequest">回车销售</span>
 		</div>
 	</div>
@@ -273,14 +272,6 @@
 		font-size: 30px;
 		color: #fff;
 		background: linear-gradient(-18deg, #FF4848 0%, #FF8739 100%);
-	}
-	.footer .check{
-		position: absolute;
-    	left: 50%;
-    	width: 80px;
-    	margin-left: -40px;
-    	line-height: 98px;
-    	font-size: 26px;
 	}
 
 </style>
