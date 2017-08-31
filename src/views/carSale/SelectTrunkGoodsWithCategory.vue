@@ -292,7 +292,7 @@ export default {
 	    		Indicator.open();
 	    		let pargrmList = {
                	 	oper: 'getStkCatsForCheXiaoManage',
-                	type: 'wqProduct',
+                	type: 'truck',
                	 	para: JSON.stringify(this.categoryParam)
             	};
 
@@ -340,7 +340,7 @@ export default {
 	        	let pargrmList = {
 	        		pagination: JSON.stringify(this.page),
                	 	oper: 'getStkByCatId',
-                	type: 'wqProduct',
+                	type: 'truck',
                	 	para: JSON.stringify(this.baseStkcByCategoryParam)
             	};
             	Indicator.open();

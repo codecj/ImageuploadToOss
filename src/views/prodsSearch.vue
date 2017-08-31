@@ -98,9 +98,10 @@ export default {
 		requestMore(){//上拉请求更多
     		if (!this.isEnd) {
                 this.page.pageno = parseInt(this.page.pageno) + 1;
-                if(this.baseStkcByDepotParam.key != ""){
-                	this.getDatas();
-                }
+                this.getDatas();
+                // if(this.baseStkcByDepotParam.key != ""){
+                // 	this.getDatas();
+                // }
 
        		}
     	},

@@ -7,7 +7,7 @@
             </div>
             <div class="prodDetail">
                 <p>{{item.NAME}}</p>
-                <p><span>[{{item.STK_NAME_EXT}}]  </span> <span v-if="item.RESALABLE_FLG == 'Y'">[可退货]</span><span v-else="item.RESALABLE_FLG == 'N'">[不可退货]</span></p>
+                <p><span>[{{item.STK_NAME_EXT}}]  </span> <span v-if="item.RESALABLE_FLG == 'Y'"></span><span v-else>[不可退货]</span></p>
                 <p>规格：{{item.MODLE}}</p>
                 <p>
                     <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
