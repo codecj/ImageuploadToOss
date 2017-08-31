@@ -95,7 +95,8 @@ export default {
 	            	truckType:'S',
 	            	key:'',
 	            	vusername:this.$route.query.vusername,
-	            	storageStatus:'B'
+	            	storageStatus:'',
+	            	whc:''
 	            },
 		        depotParam:{
 		        	//业务员userno
@@ -110,11 +111,11 @@ export default {
 		        	userNo:this.$route.query.userno,
 		        	//业务员username
 		        	userName:this.$route.query.username,
-		        	vname:this.$route.query.vusername,
+		        	vusername:this.$route.query.vusername,
 		        	whc:'',
 		        	key:'',
 		        	catId:'',
-		        	storageStatus:'B',
+		        	storageStatus:'',
 		        	truckType:'S'
 		        },
 		        //添加商品到待装车
@@ -193,7 +194,6 @@ export default {
 	    	},
 	    	//选择某个分类回调
 	    	categorySelected(category){
-	    		alert(category.CATID);
 	    		this.page.pageno = "1";
 	   			this.baseStkcList = [];	
 	   			this.baseStkcByCategoryParam.catId = category.CATID;
@@ -288,6 +288,7 @@ export default {
 
 	    	//获取分类
 	    	queryCategory(){
+	    		this.categoryParam.whc = this.currentDepot.WH_C;
 	    		Indicator.open();
 	    		let pargrmList = {
                	 	oper: 'getStkCatsForCheXiaoManage',
@@ -393,7 +394,7 @@ export default {
 	   			this.isEnd = false;
 	   			this.page.pageno = "1";
 	   			this.baseStkcList = [];	
-	   			this.quertStkc();
+	   			this.queryCategory();
 	   		},
 	   		//仓库列表取消回调
 	   		cancelDepotList(){
@@ -403,6 +404,15 @@ export default {
 	   		cancelAddStkcView(){
 	   			this.showStkcView = false;
 	   		},
+
+	   		addGoodStkc(item){
+	    		this.showStkcView = true;
+	    		this.baseStkc = item;
+	    		for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
+	    			let temp = this.baseStkc.MODLE_LIST[i];
+	    			this.$set(temp,'qty',0);
+	    		}
+	    	},
 	   		submitStkc(baseStkc){
 	        	this.showStkcView = false;
 	        	let itemList = [];

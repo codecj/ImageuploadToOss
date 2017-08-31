@@ -1,7 +1,7 @@
 <template>
   <div  class="category">
   	<ul>
-  		<li v-for="item in categoryList" class="borderB" :class="{selected:item.isSelected}" @click=selectCategory(item)>{{item.CATID}}</li >
+  		<li v-for="item in categoryList" class="borderB" :class="{selected:item.isSelected}" @click=selectCategory(item)>{{item.CATNAME | subStringMax8}}</li >
   	</ul>
   </div>
 </template>
