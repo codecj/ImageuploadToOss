@@ -16,13 +16,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-<<<<<<< HEAD
-    publicPath: 'dist/',
-    filename: 'build.js'
-=======
     publicPath: './dist/',
     filename: '[name].[hash:5].js'
->>>>>>> 821972810d6c1a0c22566e5505da87aff4b8df16
   },
   module: {
     rules: [
@@ -76,11 +71,7 @@ module.exports = {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-<<<<<<< HEAD
     host:'192.168.200.91',
-=======
-    // host:'192.168.200.207',
->>>>>>> 821972810d6c1a0c22566e5505da87aff4b8df16
     historyApiFallback: true,
     noInfo: true
   },
@@ -116,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
     filename: '[name].js'
   }
   module.exports.devServer = {
-    host:'192.168.200.33',
+    host:'192.168.200.91',
     historyApiFallback: true,
     noInfo: true
   }
