@@ -237,7 +237,8 @@ export default {
     }
     .menu_right{
         flex: 4;
-        overflow-y: auto;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
         margin-left:1.6%;
         background:#fff;
         position: relative;

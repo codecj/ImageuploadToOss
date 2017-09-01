@@ -532,6 +532,7 @@ export default {
 		width:74%;
 		height: 100%;
 		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
 		position: absolute;
 		right:0;
 		bottom:0;
