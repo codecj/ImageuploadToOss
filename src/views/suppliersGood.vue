@@ -23,12 +23,12 @@
                         <!--</li>-->
                         <getbottom v-show="show"></getbottom>
                     </ul>
-                    <div class="buy_cart_container">
-                        <shopcart style="position: relative;"></shopcart>
-                        <p>
-                            <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
-                        </p>
-                    </div>
+                </div>
+                <div class="buy_cart_container">
+                    <shopcart style="position: relative;"></shopcart>
+                    <p>
+                        <img src="../assets/icon54.png" alt="" id="scrolltop" @click="scrollTop">
+                    </p>
                 </div>
             </div>
         </div>
@@ -240,6 +240,7 @@ export default {
         overflow-y: auto;
         margin-left:1.6%;
         background:#fff;
+        -webkit-overflow-scrolling: touch;
         position: relative;
     }
     .buy_cart_container{position: fixed; bottom: 0; width: 70.4%; left: 29.6%; height: 1.4rem; text-align: right;}
