@@ -9,11 +9,8 @@
 	    	<p><span>车上库存</span><span>{{item.STOCK}}</span></p>
 	    	<p><span @click="backDepot(item)">修改</span></p>
 	    </div>
-	  	   
   	</div>
-  	
   </div>
-  
 </template>
 
 <script type="text/javascript">
@@ -72,7 +69,7 @@
 	height:208px;
 }
 .depot div:nth-child(3){
-	width:54%;
+	width:50%;
 	margin-left:2%;
 	position: relative;
 }
@@ -91,6 +88,7 @@
 	width:100%;
 	height:80px;
 }
+
 .depot div:nth-child(3) p:nth-child(2){
 	color: #3B456C;
 	letter-spacing: 0;
@@ -114,7 +112,7 @@
 	height:70px;
 	line-height: 70px;
 	position: absolute;
-	bottom:-60px;
+	bottom:-50px;
 	right:0;
 }
 .depot div:nth-child(3) p:nth-child(4) span{

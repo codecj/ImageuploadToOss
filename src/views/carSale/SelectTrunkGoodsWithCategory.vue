@@ -3,7 +3,7 @@
 		<div class="nav borderB">
 			<img @click='navBack()' class="left" src='../../assets/icon10.png'></img>
   			<img @click="selectDev()" class="right" src="../../assets/arrow-down.png"></img>
-	  		<label>仓库:三墩来吃吧科技公司</label>
+	  		<label>仓库:{{dopName}}</label>
 	  	</div>
 
 	  	<DepotList v-show="showDepot" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>	
@@ -19,7 +19,13 @@
 			<Category :categoryList="categoryList" @categorySelected='categorySelected'></Category>
 			<mt-loadmore v-infinite-scroll="requestMore" :top-method="loadTop" ref="loadmore"  infinite-scroll-distance="40" 
   	class="table">
-				<div  class="cell borderB">
+  				<div v-for="item in this.baseStkcList" class="cell">
+			    	<img class="gooodImg" v-lazy="item.URL_ADDR">
+			    	<label class="goodName">{{item.STK_NAME}}</label>
+			    	<label class="vendorName">{{item.VENDOR_NAME}}</label>
+					<em @click="addGoodStkc(item)" class="addGoods"></em>
+				</div>  
+				<!-- <div  class="cell borderB">
 		        	<img class="gooodImg">
 		        	<label class="goodName">卫龙辣条小面包880g豆丁文档吃的我的的我的我瞧得起我</label>
 		        	<label class="vendorName">江苏南通sop1</label>
@@ -54,10 +60,9 @@
 		        	<label class="goodName">卫龙辣条小面包880g</label>
 		        	<label class="vendorName">江苏南通sop1</label>
 					<em  class="addGoods"></em>
-				</div>           
+				</div>            -->
 			</mt-loadmore>
-		</div>
-		
+		</div>	
 	</div>
 </template>
 
@@ -85,6 +90,14 @@ export default {
 	            baseStkcList:[],
 	            baseStkc:null,
 	            keyWord:'',
+	            categoryParam:{
+	            	username:this.$route.query.username,
+	            	truckType:'S',
+	            	key:'',
+	            	vusername:this.$route.query.vusername,
+	            	storageStatus:'',
+	            	whc:''
+	            },
 		        depotParam:{
 		        	//业务员userno
 		        	userno:this.$route.query.userno,
@@ -93,14 +106,16 @@ export default {
 		        	//业务员username
 		        	username:this.$route.query.username
 		        },
-		        baseStkcByDepotParam:{
+		        baseStkcByCategoryParam:{
 		        	//业务员userno
-		        	userno:this.$route.query.userno,
+		        	userNo:this.$route.query.userno,
 		        	//业务员username
-		        	username:this.$route.query.username,
-		        	vname:this.$route.query.vusername,
+		        	userName:this.$route.query.username,
+		        	vusername:this.$route.query.vusername,
 		        	whc:'',
 		        	key:'',
+		        	catId:'',
+		        	storageStatus:'',
 		        	truckType:'S'
 		        },
 		        //添加商品到待装车
@@ -121,16 +136,16 @@ export default {
 			}
 		},
 		created(){
-			let tempCategory1 = {isSelected:true,categoryName:'常订商品'};
-			let tempCategory2 = {isSelected:false,categoryName:'牛奶饮品'};
-			let tempCategory3 = {isSelected:false,categoryName:'畜牧类'};
-			let tempCategory4 = {isSelected:false,categoryName:'酒水饮料'};
-			let tempCategory5 = {isSelected:false,categoryName:'粮油副食'};
-			this.categoryList.push(tempCategory1);
-			this.categoryList.push(tempCategory2);
-			this.categoryList.push(tempCategory3);
-			this.categoryList.push(tempCategory4);
-			this.categoryList.push(tempCategory5);
+			// let tempCategory1 = {isSelected:true,categoryName:'常订商品'};
+			// let tempCategory2 = {isSelected:false,categoryName:'牛奶饮品'};
+			// let tempCategory3 = {isSelected:false,categoryName:'畜牧类'};
+			// let tempCategory4 = {isSelected:false,categoryName:'酒水饮料'};
+			// let tempCategory5 = {isSelected:false,categoryName:'粮油副食'};
+			// this.categoryList.push(tempCategory1);
+			// this.categoryList.push(tempCategory2);
+			// this.categoryList.push(tempCategory3);
+			// this.categoryList.push(tempCategory4);
+			// this.categoryList.push(tempCategory5);
 		},
 		mounted(){
 		    Request.jsBbridge(bridge => {
@@ -143,14 +158,34 @@ export default {
 	    methods: {
 
 	    	requestMore(){
-	    		// alert('333');
+	    		if (this.currentDepot == null) {
+	    			this.requestDepot();
+	    			return;
+	    		}
+	    		if (!this.isEnd) {
+	                this.page.pageno = parseInt(this.page.pageno) + 1
+	              	this.quertStkc();
+           		}
 	    	},
 
 	    	loadTop(){
-
+	    		this.$refs.loadmore.onTopLoaded();
+	    		this.isEnd = false;
+	   			this.page.pageno = "1";
+	   			this.baseStkcList = [];	
+	   			this.quertStkc();
 	    	},
 	    	jumpSearchView(){
-
+	    		this.$router.push({
+	                path: 'prodsSearch',
+	                query: {
+	                    username: this.$route.query.username,
+	                    userno: this.$route.query.userno,
+	                    vusername: this.$route.query.vusername,
+	                    whc:this.currentDepot.WH_C,
+	                    name:this.$route.query.name,
+	                }
+            	})
 	    	},
 
 	    	navBack(){
@@ -159,7 +194,10 @@ export default {
 	    	},
 	    	//选择某个分类回调
 	    	categorySelected(category){
-	    		alert(category.categoryName);
+	    		this.page.pageno = "1";
+	   			this.baseStkcList = [];	
+	   			this.baseStkcByCategoryParam.catId = category.CATID;
+	   			this.quertStkc();
 	    	},
 	    	selectDev(){
 	    		// 选择仓库
@@ -204,9 +242,149 @@ export default {
 	    		
 	    	},
 
+	    	requestDepot(){
+	    		Indicator.open();
+	    		let pargrmList = {
+               	 	oper: 'getVendorwhcFour',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.depotParam)
+            	};
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                   this.depotList = getData.data;
+	                   if (this.depotList.length == 0) {
+	                   		return;
+	                   }
+	                   let depotModel = this.depotList[0];
+	                   this.currentDepot = depotModel;
+	                   this.dopName = depotModel.NAME;
+	                   this.queryCategory();
+	                }
+
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	        },
+
 	    	//获取分类
 	    	queryCategory(){
+	    		this.categoryParam.whc = this.currentDepot.WH_C;
+	    		Indicator.open();
+	    		let pargrmList = {
+               	 	oper: 'getStkCatsForCheXiaoManage',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.categoryParam)
+            	};
 
+            	 Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                	Toast({
+	                         message: '暂无分类',
+	                         duration: 2000
+	                     });
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                  this.categoryList = getData.data.catList;
+	                  for (let i = 0; i < this.categoryList.length; i++) {
+	                  	let temp = this.categoryList[i];
+	                  	this.$set(temp,'isSelected',false);
+	                  }
+	                  this.categoryList[0].isSelected = true;
+	                  this.baseStkcByCategoryParam.catId = this.categoryList[0].CATID;
+	                  this.quertStkc();
+	                }
+
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
+	    	},
+	    	quertStkc(){
+	    		this.baseStkcByCategoryParam.whc = this.currentDepot.WH_C;
+	        	let pargrmList = {
+	        		pagination: JSON.stringify(this.page),
+               	 	oper: 'getStkByCatId',
+                	type: 'truck',
+               	 	para: JSON.stringify(this.baseStkcByCategoryParam)
+            	};
+            	Indicator.open();
+	            //ajax调用
+	            Request.post(pargrmList).then(res => {
+	            	Indicator.close();
+	                const getData = JSON.parse(res.data.result);
+	                // console.log(getData)
+	                if (parseInt(getData.code) == 4) {
+	                
+	                  if (this.baseStkcList.length == 0) {
+	                  	Toast({
+	                         message: '无商品',
+	                         duration: 2000
+	                     });
+	                  }
+	                    return;
+	                }
+	                if (parseInt(getData.code) != 200) {
+	                    // console.log(getData.msg);
+	                    Toast({
+	                        message: getData.msg,
+	                        duration: 2000
+	                    });
+	                } else {
+	                	  getData.data.forEach(value => {
+                   			 this.baseStkcList.push(value)
+               			 })
+	                  
+	                  	//this.item = this.baseStkcList[0];
+	                   if (this.baseStkcList.length == getData.pagination.totalcount) {
+                   			this.isEnd = true;
+                   		}
+                	}
+	            }).catch(error => {
+	            	Indicator.close();
+	                if (error.response) {
+	                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+	                    Toast({
+	                        message: error.response.status,
+	                        duration: 2000
+	                    });
+	                }
+	            })
 	    	},
 	    	//选择某个仓库回调
 	    	depotSelected(depot){
@@ -216,6 +394,7 @@ export default {
 	   			this.isEnd = false;
 	   			this.page.pageno = "1";
 	   			this.baseStkcList = [];	
+	   			this.queryCategory();
 	   		},
 	   		//仓库列表取消回调
 	   		cancelDepotList(){
@@ -225,6 +404,15 @@ export default {
 	   		cancelAddStkcView(){
 	   			this.showStkcView = false;
 	   		},
+
+	   		addGoodStkc(item){
+	    		this.showStkcView = true;
+	    		this.baseStkc = item;
+	    		for (let i = 0; i < this.baseStkc.MODLE_LIST.length; i++) {
+	    			let temp = this.baseStkc.MODLE_LIST[i];
+	    			this.$set(temp,'qty',0);
+	    		}
+	    	},
 	   		submitStkc(baseStkc){
 	        	this.showStkcView = false;
 	        	let itemList = [];

@@ -13,7 +13,8 @@
       	</content>
       	<footer>
            <div><span :class="{'noselect':!selectStatus,'selectAll':selectStatus}" @click="selectAll()">全选</span></div>
-           <div @click="sureBackDepot">确认回库</div>
+           <div @click='scan'>查看</div>
+           <div class="huiku" @click="sureBackDepot">回库</div>
         </footer>
        <depotlist v-show="showDev" :depotList="depotList" @depotSelected='depotSelected' @cancelDepotList='cancelDepotList'>
        </depotlist>
@@ -40,17 +41,23 @@
           showDatail:false,
           depotName:"",
           baseStkc:null,
+          scanwhc:"",
           stockList:[],//库存列表
           depotList:[],//仓库名称列表
           pagram:{//可选仓库参数
             vusername:this.$route.query.vusername,
             userno:this.$route.query.userno,
             username:this.$route.query.username
+            // vusername:"JSNTSOP1",
+            // userno:"385734",
+            // username:"JSNTSOP1Y1"
           },
           depotPagarm:{//待装车和我的库存搜索参数
             key:"",
             username:this.$route.query.username,
             vusername:this.$route.query.vusername,
+            // username:"JSNTSOP1Y1",
+            // vusername:"JSNTSOP1",
             whc:"",
             truckType:"S",
             storageStatus:"C"
@@ -73,6 +80,8 @@
           this.depotName = depot.NAME;
           this.depotPagarm.whc = depot.WH_C;
           this.backPagarm.whc = depot.WH_C;
+          this.scanwhc = depot.WH_C//点击查看的时候的传过去的whc
+
           this.getSearch();
         },
         cancelDepotList(){
@@ -94,6 +103,7 @@
             let dataList = JSON.parse(res.data.result);
             this.depotPagarm.whc = dataList.data[0].WH_C
             this.backPagarm.whc = dataList.data[0].WH_C
+            this.scanwhc = dataList.data[0].WH_C//点击查看的时候的传过去的whc
             this.getSearch();
             dataList.data.forEach(value=> {
               this.depotList.push(value)
@@ -162,7 +172,6 @@
             }
             let arr = [];
             this.stockList.forEach(value=>{
-              	// let param = {}
               	if(value.seletedStatus){
                		value.MODLE_LIST.forEach(item=>{
                     if(item.qty > 0){
@@ -255,6 +264,9 @@
         scanData(data){//扫描结果
             this.depotPagarm.key = data;
             this.getSearch();
+        },
+        scan(){//点击查看
+          this.$router.push({path:'checkgood',query:{username:this.pagram.username,whc:this.scanwhc}})
         }
   
       },
@@ -333,6 +345,10 @@
     position: fixed;
     bottom:0;
     left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
   }
   footer div{
     display: inline-block;
@@ -340,45 +356,57 @@
   }
   footer div:nth-child(1){
     background: #fff;
-    width:75%;
+    /*width:75%;*/
     height:88px;
-    /*padding-left:%;*/
+    margin-left: 30px;
   }
   footer div:nth-child(1) .noselect{
-    width:120px;
+    /*width:120px;*/
     height:88px;
     line-height: 88px;
     text-align: right;
     display:inline-block;
     background:url(../../assets/icon59.png) no-repeat center left;
     background-size: 54px 54px;
-    font-size: 26px;
+    font-size: 30px;
     color: #4D5679;
     letter-spacing: 0;
-    margin-left:30px;
+    padding: 0 0 0 60px; 
   }
   footer div:nth-child(1) .selectAll{
-    width:120px;
     height:88px;
     line-height: 88px;
     text-align: right;
     display:inline-block;
     background:url(../../assets/icon59-1.png) no-repeat center left;
     background-size: 54px 54px;
-    font-size: 26px;
+    font-size: 30px;
     color: #4D5679;
     letter-spacing: 0;
-    margin-left:30px;
+    padding: 0 0 0 60px;  
   }
   footer div:nth-child(2){
-    width:25%;
+    /*float: right;*/
     height:88px;
     line-height: 88px;
     font-size: 30px;
-    color: #FFFFFF;
+    color: #4D5679;
     letter-spacing: 0;
     text-align: center;
-    background: linear-gradient(-18deg, #FF4848 0%, #FF8739 100%);
+    padding: 0 0 0 60px;
+    background: url(../../assets/function-iconview-.png) no-repeat center left;
+    background-size: 55px 55px;
+  }
+  footer .huiku{
+    height: 88px;
+    line-height: 88px;
+    font-size: 30px;
+    color: #4D5679;
+    text-align: center;
+    padding: 0 0 0 60px;
+    background: url(../../assets/function-iconreturn.png) no-repeat center left;
+    background-size: 54px 54px;
+    margin-right: 30px;
   }
 </style>
 
