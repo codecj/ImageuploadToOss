@@ -2,10 +2,6 @@
 <template>
     <div>
         <div class="my-storage-content">
-            <div class="static-cell" @click="jumpToDepot">
-                <div>商品回库</div>
-                <div>未售完商品退回至仓库</div>
-            </div>
             <ul class="list-ul">
                 <li class="borderBottom" v-for='(item,index) in myStorageData'>
                     <div class="storage-list-li">
@@ -20,8 +16,8 @@
                 </li>
             </ul>
             <div class="bottom-tool-bar">
-                <div>打印库存单</div>
-                <div>回库</div>
+                <div @click="print">打印库存单</div>
+                <div @click="jumpToDepot">回库</div>
             </div>
         </div>
     </div>
@@ -29,22 +25,26 @@
 
 <script type="text/javascript">
 import tools from "../../util/tools.js"
-	export default {
-		data(){
-			return{
-
-			}
-		},
+import Request from "../../util/API";
+    export default {
         methods:{
             jumpToDepot(){
                 this.$emit('toDepot')
+            },
+            print(){
+                Request.jsBbridge(bridge => {
+                    window.WebViewJavascriptBridge.callHandler(
+                        'printMyStorageData', {
+                            'Data':this.myStorageData
+                        },(responseData) => {
+                            
+                        }
+                    );
+                })
             }
         },
-		props:['myStorageData'],
-		created(){
-            
-		}
-	}
+        props:['myStorageData']
+    }
 </script>
 
 
@@ -53,8 +53,7 @@ import tools from "../../util/tools.js"
     .static-cell{width: 100%;height: 96px;background-color: white; box-sizing: border-box;padding-right: 20px;}
     .static-cell div:nth-child(1){float: left;line-height: 96px;padding-left: 32px;font-size: 30px;color: #3B456C;}
     .static-cell div:nth-child(2){float: right;line-height: 96px;padding-right: 52px;color: #9DA2B5;font-size: 26px;   background: url(../../assets/arrow-right@2x.png) center right no-repeat; background-size: 30px 30px;}
-    ul {margin-top: 24px;}
-    
+    ul {padding: 12px 0 96px 0;}
     
     .cell-content {height: 298px;width: 100%;position: relative;background-color: white;}
     .cell-content .goodsImg {position: absolute;top: 48px;left: 32px;width: 200px;height: 200px;border: 1px solid #fff;}

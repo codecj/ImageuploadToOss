@@ -10,6 +10,7 @@
                         <p>¥{{chose.netprice}}<span><!-- .00 --></span></p>
                         <p>商品编号: {{chose.pluc}}</p>
                         <p>库存: {{chose.stdQty}}</p>
+                        <P>{{'[' + chose.nameExtend + ']'}}<span v-if="chose.resalableFlg=='N'">[不可退货]</span></P>
                     </div>
                     <div @click="closeSku()" class="close">
                     </div>
@@ -26,12 +27,12 @@
                     <div class="goodsNum borderBottom">
                         <p>购买数量</p>
                         <ul>
-                            <li v-show="count>1" @click="reduceCartNum()"><img src="../assets/icon4.png" alt=""></li>
+                            <li v-show="count>1" @click="reduceCartNum()"><i class="icon4"></i></li>
                            
-                            <li v-show="count<=1" @click="reduceCartNum()"><img src="../assets/icon3.png" alt=""></li>
+                            <li v-show="count<=1" @click="reduceCartNum()"><i class="icon3"></i></li>
                              <input type="tel"  class="changeNum" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4) value=value.slice(0,4)" @keyup="onlyNum()" v-model="count">
                            <!--  <li class="changeNum">{{count}}</li> -->
-                            <li @click="addCartNum()"><img src="../assets/icon9.png" alt=""></li>
+                            <li @click="addCartNum()"><i class="icon9"></i></li>
                         </ul>
                     </div>
                 </div>
@@ -631,7 +632,11 @@ html {
 .goodsMsg p:nth-of-type(3) {
     color: #3B456C;
 }
-
+#addCar .goodsMsg p:nth-of-type(4) {
+    margin-top: 5px;
+    font-size: 26px;
+    color: #FF783C;
+}
 #addCar .close {
     width: 80px;
     height: 80px;
@@ -704,11 +709,14 @@ html {
     line-height: 60px;
 }
 
-#addCar .goodsNum li img {
+#addCar .goodsNum li i {
     width: 60px;
     height: 60px;
-    display: block
+    display: block;
 }
+.icon3 {background: url("../assets/icon3.png") no-repeat 100%/100%;}
+.icon4 {background: url("../assets/icon4.png") no-repeat 100%/100%;}
+.icon9 {background: url("../assets/icon9.png") no-repeat 100%/100%;}
 
 #addCar .addBtn {
     position: absolute;

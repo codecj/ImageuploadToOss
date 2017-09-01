@@ -1,11 +1,28 @@
 var path = require('path')
 var webpack = require('webpack')
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    app:'./src/main.js',
+    lib: [
+        'vue',
+        'axios',
+        'fastclick',
+        'lib-flexible',
+        'vue-focus',
+        'vue-router',
+        'mint-ui',
+        'vue-lazyload'
+    ]
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
+<<<<<<< HEAD
     publicPath: 'dist/',
     filename: 'build.js'
+=======
+    publicPath: './dist/',
+    filename: '[name].[hash:5].js'
+>>>>>>> 821972810d6c1a0c22566e5505da87aff4b8df16
   },
   module: {
     rules: [
@@ -51,13 +68,19 @@ module.exports = {
         remPrecision: 6         // rem precision (default: 6)
       })]
       }
-    })
+    }),
+    //公共模块抽取
+    new webpack.optimize.CommonsChunkPlugin('lib')
   ],
   resolve: {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
+<<<<<<< HEAD
     host:'192.168.200.91',
+=======
+    // host:'192.168.200.207',
+>>>>>>> 821972810d6c1a0c22566e5505da87aff4b8df16
     historyApiFallback: true,
     noInfo: true
   },
@@ -86,4 +109,29 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     })
   ])
+}else{
+  module.exports.output = {
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/dist/',
+    filename: '[name].js'
+  }
+  module.exports.devServer = {
+    host:'192.168.200.33',
+    historyApiFallback: true,
+    noInfo: true
+  }
+  module.exports.plugins = [
+    new webpack.LoaderOptionsPlugin({
+      vue: {
+        // use custom postcss plugins
+      postcss: [require('postcss-px2rem')({
+        baseDpr: 2,             // base device pixel ratio (default: 2)
+        threeVersion: false,    // whether to generate @1x, @2x and @3x version (default: false)
+        remVersion: true,       // whether to generate rem version (default: true)
+        remUnit: 75,            // rem unit value (default: 75)
+        remPrecision: 6         // rem precision (default: 6)
+      })]
+      }
+    })
+  ]
 }

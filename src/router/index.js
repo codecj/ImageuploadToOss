@@ -15,16 +15,15 @@ const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerMana
 const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
 const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
 const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
-import PageTransition from '../Components/carSale/PageTransition.vue'
 const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
+const prodsSearch = resolve => require(['../views/prodsSearch.vue'], resolve)
+const checkGood = resolve => require(['../views/carSale/checkGood.vue'], resolve)
+const selectTrunckGoodsWithCategory = resolve => require(['../views/carSale/SelectTrunkGoodsWithCategory.vue'],resolve)
+const suppliersGood = resolve => require(['../views/suppliersGood.vue'], resolve)
 
 export default {
     // mode:'history',
-    routes: [{
-            path: '/',
-            name: 'PageTransition',
-            component: PageTransition,
-            children:[
+    routes: [
                 {
                     path: '/clientServer',//客户服务首页
                     component: clientServer
@@ -78,9 +77,19 @@ export default {
                 },{
                     path:'/selectTrunckGoodsWithNoStock',
                     component:selectTrunckGoodsWithNoStock
-                },{ path: '*', redirect: '/clientServer'} 
-            ]
-        } 
-        
+                },{
+                    path: '/checkgood',
+                    component: checkGood
+                },{
+                    path: '/suppliersgood',
+                    component: suppliersGood
+                },{
+                    path: '/prodsSearch',
+                    component: prodsSearch
+                },{
+                    path:'/selectTrunckGoodsWithCategory',
+                    component:selectTrunckGoodsWithCategory
+                }
+
     ]
 }
