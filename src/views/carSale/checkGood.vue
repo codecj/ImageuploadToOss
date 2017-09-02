@@ -136,8 +136,13 @@ export default {
 		left: 37px;
 		bottom: 14px;
 	}
+	.checkBody{
+		overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+	}
 	.checkBody ul li:last-child{
 		padding-bottom: 99px;
+
 	}
 	.checkBody ul li:first-child{
 		padding-top: 88px;

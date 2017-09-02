@@ -326,7 +326,8 @@
     background:#f1f2f7;
     height:auto;
     width:100%;
-    overflow: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 
   }
   .searchs{
