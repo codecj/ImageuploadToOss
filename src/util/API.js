@@ -2,7 +2,7 @@ import axios from 'axios'
 import Qs from 'qs'
 export default {
     // //请求的地址
-    //url:'https://testwl.11wlw.cn/handle/execute.jhtml',
+    // url:'https://testwl.11wlw.cn/handle/execute.jhtml',
     // url:'https://demowl.11wlw.cn/handle/execute.jhtml',
     //url:'http://192.168.200.16:8080/handle/execute.jhtml',
 
@@ -21,7 +21,7 @@ export default {
       data.version=100;
       //参数里面的地址
 
-      //data.url='https://testwl.11wlw.cn/api/execute.jhtml';
+      // data.url='https://testwl.11wlw.cn/api/execute.jhtml';
       // data.url='https://demowl.11wlw.cn/api/execute.jhtml'
 
       data.url=window.location.protocol+'//'+window.location.hostname+'/api/execute.jhtml';
