@@ -3,9 +3,9 @@ import Qs from 'qs'
 export default {
     // //请求的地址
     //url:'https://testwl.11wlw.cn/handle/execute.jhtml',
-
     // url:'https://demowl.11wlw.cn/handle/execute.jhtml',
     //url:'http://192.168.200.16:8080/handle/execute.jhtml',
+
     url:window.location.protocol+'//'+window.location.hostname+'/handle/execute.jhtml',
 
     isMobile: function() {
