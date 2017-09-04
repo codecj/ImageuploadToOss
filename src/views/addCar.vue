@@ -30,7 +30,7 @@
                             <li v-show="count>1" @click="reduceCartNum()"><i class="icon4"></i></li>
                            
                             <li v-show="count<=1" @click="reduceCartNum()"><i class="icon3"></i></li>
-                             <input type="tel"  class="changeNum" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4) value=value.slice(0,4)" @keyup="onlyNum()" v-model="count">
+                             <input type="tel"  class="changeNum" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4) value=value.slice(0,4)" @keyup="onlyNum()" @focus="key_down()" v-model="count">
                            <!--  <li class="changeNum">{{count}}</li> -->
                             <li @click="addCartNum()"><i class="icon9"></i></li>
                         </ul>
@@ -168,7 +168,17 @@ export default {
             onlyNum(){
                 this.count=this.count.replace(/[^\d]/g,'');
             },
+            key_down(){
+                this.count = '';
+            },
             addToCar() {
+                if (this.count == '') {
+                     Toast({
+                        message: '商品数量不能为空',
+                        duration: 2000
+                    });
+                    return
+                }
                 Indicator.open();
                 let select_ids = this._getSelAttrId();
                 if (this.defalutRule.length !== select_ids.length){

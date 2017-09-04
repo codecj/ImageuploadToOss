@@ -4,7 +4,7 @@
             <img alt="" v-lazy="item.URL_ADDR" class="menu_food_img">
             <div class="menu_food_description">
                 <p class="goodName">{{item.NAME}}</p>
-                <p class="vendorName">{{item.STK_NAME_EXT}}</p>
+                <p class="vendorName"><span v-show="item.STK_NAME_EXT">[{{item.STK_NAME_EXT}}]  </span> <span v-if="item.RESALABLE_FLG == 'Y'"></span><span v-else>[不可退货]</span></p>
                 <p class="specifications">规格：{{item.MODLE}}</p>
                 <p>
                     <span v-for="act in item.PROM_MAS_CODES" v-if="act=='WEBPROMA'" class="border">
@@ -81,7 +81,20 @@
         text-overflow: ellipsis;
         -webkit-line-clamp: 2;
     }
-    .vendorName,.specifications{
+
+    .vendorName{
+         font-family: PingFangSC-Regular;
+        font-size: 0.38rem;
+        color: #FF783C;
+        /*opacity: 0.5;*/
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+    }
+
+    .specifications{
         font-family: PingFangSC-Regular;
         font-size: 0.38rem;
         color: #3B456C;
