@@ -1,10 +1,6 @@
 <!-- 待装车 -->
 <template>
     <div class="wait-car-content">
-        <div class="static-cell" @click="printGoodsDetail">
-            <div>打印明细</div>
-            <div>打印待装车商品明细</div>
-        </div>
         <ul class="list-ul">
             <li class="borderBottom" v-for="(item,index) in waitCarData">
                 <div class="cell-header borderBottom">
@@ -23,6 +19,10 @@
                 </div>
             </li>
         </ul>
+        <div class="static-cell" @click="printGoodsDetail">
+            <div>打印明细</div>
+            <div>打印待装车商品明细</div>
+        </div>
     </div>
 </template>
 
@@ -76,10 +76,10 @@ export default {
 
 <style type="text/css" scoped>
     .content .my-storage-content {width: 100%; height: 1000px;}
-    .content .static-cell{width: 100%;height: 96px;background-color: white; box-sizing: border-box;padding-right: 20px;}
+    .content .static-cell{width: 100%;height: 96px;background-color: white; box-sizing: border-box;padding-right: 20px; position: fixed; bottom: 0;}
     .content .static-cell div:nth-child(1){float: left;line-height: 96px;padding-left: 32px;font-size: 30px;color: #3B456C;}
     .content .static-cell div:nth-child(2){float: right;line-height: 96px;padding-right: 52px;color: #9DA2B5;font-size: 26px;   background: url(../../assets/arrow-right@2x.png) center right no-repeat; background-size: 30px 30px;}
-    .content ul {margin-top: 24px;}
+    .content ul { padding-bottom: 95px;}
     
 
     .cell-content {height: 298px;width: 100%;position: relative;background-color: white;}

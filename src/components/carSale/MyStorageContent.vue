@@ -7,9 +7,9 @@
                     <div class="storage-list-li">
                         <div class="con">
                             <div class="cell-content">
-                                <img v-lazy="item.URL_ADDR" class="goodsImg">
-                                <h4 class="goodsName">{{item.STK_NAME}}</h4>
-                                <h5 class="goodsSpec">{{item.STOCK}}</h5>
+                                <img v-lazy="item.URL_ADDR" class="goods-img">
+                                <h4 class="goods-name">{{item.STK_NAME}}</h4>
+                                <h5 class="goods-spec">{{item.STOCK}}</h5>
                             </div>
                         </div>
                     </div>
@@ -56,12 +56,12 @@ import Request from "../../util/API";
     ul {padding: 12px 0 96px 0;}
     
     .cell-content {height: 298px;width: 100%;position: relative;background-color: white;}
-    .cell-content .goodsImg {position: absolute;top: 48px;left: 32px;width: 200px;height: 200px;border: 1px solid #fff;}
-    .cell-content .goodsName {position: absolute;width: 60%;top: 48px;left: 260px;height: 80px;font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 40px;display: -webkit-box;overflow: hidden;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;}
-    .cell-content .goodsSpec {position: absolute;left: 260px;top: 182px;font-size: 26px;color: #3B456C; width: 60%;}
+    .cell-content .goods-img {position: absolute;top: 48px;left: 32px;width: 200px;height: 200px;border: 1px solid #fff;}
+    .cell-content .goods-name {position: absolute;width: 60%;top: 48px;left: 260px;height: 80px;font-size: 30px;color: #3B456C;letter-spacing: 0;line-height: 40px;display: -webkit-box;overflow: hidden;-webkit-box-orient: vertical;text-overflow: ellipsis;-webkit-line-clamp: 2;}
+    .cell-content .goods-spec {position: absolute;left: 260px;top: 182px;font-size: 26px;color: #3B456C; width: 60%;}
 
     /*list-li*/
-    .list-ul{overflow: hidden;}
+    .list-ul{overflow: hidden; padding-top: 0;}
     .list-ul li {border-bottom: 24px solid rgb(237,238,245);}
     .storage-list-li{border-bottom: 1px solid #fcfcfc; position:relative; color: #666;background: #f2f2f2;}
 
