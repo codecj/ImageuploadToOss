@@ -29,7 +29,10 @@
 <script type="text/javascript">
 import Request from "../../util/API";
 import tools from "../../util/tools.js"
-
+import {
+        Toast,
+        Indicator
+    } from 'mint-ui';
 export default {
         data(){
             return {
@@ -51,6 +54,13 @@ export default {
                 this.$emit('deleteRemoteItem',index);
             },
             printGoodsDetail() { // alert("打印订单")
+                if (this.waitCarData.length == 0) {
+                    Toast({
+                            message: "当前无待装车订单",
+                            duration: 2000
+                        });
+                    return
+                }
                 Request.jsBbridge(bridge => {
                     window.WebViewJavascriptBridge.callHandler(
                         'printGoodsDetail', {
