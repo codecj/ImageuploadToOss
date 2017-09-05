@@ -10,7 +10,7 @@
                         <p>¥{{chose.netprice}}<span><!-- .00 --></span></p>
                         <p>商品编号: {{chose.pluc}}</p>
                         <p>库存: {{chose.stdQty}}</p>
-                        <P>{{'[' + chose.nameExtend + ']'}}<span v-if="chose.resalableFlg=='N'">[不可退货]</span></P>
+                        <P v-if="chose.nameExtend">[{{chose.nameExtend}}]<span v-if="chose.resalableFlg=='N'">[不可退货]</span></P>
                     </div>
                     <div @click="closeSku()" class="close">
                     </div>
@@ -224,7 +224,6 @@ export default {
                 }
                 Request.post(pargrmList).then(res => {
                     let getData = JSON.parse(res.data.result)
-
                     if (getData.code !== "200") Toast({
                         message: getData.msg,
                         duration: 2000
