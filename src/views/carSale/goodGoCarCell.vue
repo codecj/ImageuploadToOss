@@ -6,6 +6,7 @@
 			<div class="cell-title">
 				{{this.good.STK_NAME}}
 			</div>
+			 <P v-if="this.good.NAME_EXTEND">[{{this.good.NAME_EXTEND}}]<span v-if="this.good.RESALABLE_FLG=='N'">[不可退货]</span></P>
 			<div class="cell-num">
 				{{this.good.UOM_QTY}}
 			</div>
@@ -90,6 +91,11 @@ Vue.use(Lazyload, {
   		-webkit-line-clamp:2;
   		-webkit-box-orient: vertical;
   		display: -webkit-box;
+	}
+	.cell-msg p{
+		font-size: 26px;
+		color: #FF783C;
+		margin: 16px 36px 16px 28px;
 	}
 	.cell-msg .cell-num{
 		margin: 16px 36px 16px 28px;
