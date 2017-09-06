@@ -42,6 +42,9 @@
 		margin-top: 2px;
 		margin-right: 1px;
 		position: relative;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-webkit-overflow-scrolling: touch;
 	}
 	.category ul li{
 		/*-webkit-box-sizing: border-box;

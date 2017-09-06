@@ -599,7 +599,7 @@ export default {
 	.SelectTrunkGoodsWithCategory .search{
 		width: 100%;
 		background-color: #ffffff;
-		position: absolute;
+		position: fixed;
 		height: 88px;
 		top:103px;
 	}
