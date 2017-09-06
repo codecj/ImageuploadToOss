@@ -298,6 +298,7 @@ header div:nth-child(3) img{
 		left:0;
 		right:0;
 		overflow-y: scroll;
+    	-webkit-overflow-scrolling: touch;
 		/*width: 100%;
 		top:197px;
 		overflow-y: scroll;

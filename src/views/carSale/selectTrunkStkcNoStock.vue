@@ -286,7 +286,8 @@
 	.selectTrunkGoods .table{
 		width: 100%;
 		top:197px;
-		overflow-y: auto;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
 		position: absolute;
 		background-color: #f1f2f7;
 		bottom: 0px;

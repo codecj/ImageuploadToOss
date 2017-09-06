@@ -37,7 +37,6 @@ import {
 import {print} from '../../util/JsBridge.js';
 
 Vue.component(Loadmore.name, Loadmore)
-
 export default {
 		data(){
 			return{
@@ -48,8 +47,8 @@ export default {
                 	pagesize: "20"
             	},
             	param:{
-                	whc : this.$router.query.whc,
-                	userName: this.$router.query.username
+                	whc : this.$route.query.whc,
+                	userName: this.$route.query.username
                 	// whc:'JSNTRD100',
                 	// userName:'JSNTSOP1Y1'
             	},

@@ -11,9 +11,9 @@
 			<li v-for="item in baseStkc.MODLE_LIST" class="borderB">
 				<label class="spec">{{item.UOM +'(' + item.MODLE +')'}}</label>
 				<label class="price">￥{{item.NET_PRICE | float2bits}}</label>
-				<label class="extend">{{'[' +item.NAME_EXTEND + ']'}}<span v-if="item.RESALABLE_FLG == 'N'">    [不可退货]</span></label>
+				<label class="extend"><span v-show="item.NAME_EXTEND">{{'[' +item.NAME_EXTEND + ']'}}</span><span v-if="item.RESALABLE_FLG == 'N'">    [不可退货]</span></label>
 				<em @click.stop="addStkc(item)" class="add" ></em>
-				<input type="tel"  class="amount" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4)value=value.slice(0,4)" @keyup="onlyNum(item)" v-model="item.qty">
+				<input type="tel"  class="amount" pattern="[0-9]*" maxlength="4" oninput="if(value.length>4)value=value.slice(0,4)" @keyup="onlyNum(item)" @focus="key_down(item)" v-model="item.qty">
 				<em @click.stop="reduceStkc(item)" class="reduce"></em>
 				<label class="stkcStock">库存 {{item.STK_QTY}}</label>
 			</li>
@@ -59,6 +59,9 @@
 			},
             onlyNum(item){
                 item.qty=item.qty.replace(/[^\d]/g,'');
+			},
+			key_down(item){
+				item.qty = "";
 			},
 			submitStkc(){
 				this.$emit('submitStkc',this.baseStkc);

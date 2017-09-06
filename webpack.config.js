@@ -71,7 +71,6 @@ module.exports = {
     alias: {vue: 'vue/dist/vue.js'}
   },
   devServer: {
-    host:'192.168.200.207',
     historyApiFallback: true,
     noInfo: true
   },
@@ -107,7 +106,7 @@ if (process.env.NODE_ENV === 'production') {
     filename: '[name].js'
   }
   module.exports.devServer = {
-    // host:'192.168.200.33',
+    host:'192.168.200.33',
     historyApiFallback: true,
     noInfo: true
   }
