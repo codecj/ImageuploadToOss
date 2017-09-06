@@ -317,7 +317,7 @@ export default ({
     opacity: 0.9;
     background: #fff;
     position: absolute;
-    margin-top: -210px;
+    margin-top: -156px;
     padding-left: 10px;
     width: 357px;
 }
