@@ -52,7 +52,7 @@ Vue.use(Lazyload, {
 		background-color: #fff;
 		width: 100%;
 		height: 296px;
-		border-top: 1px solid rgb(237, 238, 245);
+		/*border-top: 1px solid rgb(237, 238, 245);*/
 		border-bottom: 1px solid rgb(237, 238, 245);
 		position: relative;
 	}
@@ -82,7 +82,7 @@ Vue.use(Lazyload, {
 		height: 200px;
 	}
 	.cell-msg .cell-title{
-		margin: 52px 36px 0px 28px;
+		padding: 52px 36px 0px 28px;
 		color: #3b456c;
 		font-size: 30px;
 		height: 90px;
