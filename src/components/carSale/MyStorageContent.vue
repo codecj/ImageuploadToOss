@@ -26,13 +26,19 @@
 <script type="text/javascript">
 import tools from "../../util/tools.js"
 import Request from "../../util/API";
+import {
+        Toast,
+        Indicator
+    } from 'mint-ui';
     export default {
         methods:{
             jumpToDepot(){
                 this.$emit('toDepot')
             },
             print(){
+                var flag = false;
                 Request.jsBbridge(bridge => {
+                    flag = true;
                     window.WebViewJavascriptBridge.callHandler(
                         'printMyStorageData', {
                             'Data':this.myStorageData
@@ -41,6 +47,14 @@ import Request from "../../util/API";
                         }
                     );
                 })
+                setTimeout(function(){
+                    if (flag === false) {
+                        Toast({
+                            message: "请升级客户端版本后使用",
+                            duration: 1000
+                        });
+                    }
+                },100)
             }
         },
         props:['myStorageData']
