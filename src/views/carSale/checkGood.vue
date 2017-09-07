@@ -64,6 +64,13 @@ export default {
 			print(){
 				var flag = false;
 				var products = this.dataArray;
+				if (products.length == 0) {
+					Toast({
+				            message: "当前无回库商品",
+				            duration: 2000
+				        });
+					return;
+				}
 				Request.jsBbridge(bridge =>{
 				    flag = true;
 				    bridge.callHandler('checkGoodPrint',{'Data':products},(responseData) => {
