@@ -55,6 +55,7 @@ Vue.use(Lazyload, {
 		/*border-top: 1px solid rgb(237, 238, 245);*/
 		border-bottom: 1px solid rgb(237, 238, 245);
 		position: relative;
+		overflow: hidden;
 	}
 	.cell-msg{
 		margin-left: 300px;
@@ -85,7 +86,7 @@ Vue.use(Lazyload, {
 		padding: 52px 36px 0px 28px;
 		color: #3b456c;
 		font-size: 30px;
-		height: 90px;
+		line-height: 45px;
 		overflow: hidden;
   		text-overflow: ellipsis;
   		-webkit-line-clamp:2;
