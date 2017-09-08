@@ -102,10 +102,6 @@ export default ({
     height: 230px;
 }
 
-.prodDetail {
-    width: 65%;
-    float: left;
-}
 
 .changeItem .searchItem .prodDetail>p:nth-child(1) {
     width: 90%;
@@ -217,8 +213,18 @@ export default ({
     right: 30px;
     bottom: -8px;
 }
+.changeItem .prodDetail {
+    width: 65%;
+    float: left;
+}
 
-
+.content .prodDetail {
+    width: 100%;
+    height:280px;
+    /*overflow: hidden;*/
+    float: left;
+    position: relative;
+}
 /*content横着布局方式*/
 .content .oneProd {
     margin-bottom: 10px;
@@ -256,7 +262,7 @@ export default ({
 
 .content .searchItem .prodDetail>p:nth-child(1) {
     width: 330px;
-    /*height: 80px;*/
+    height: 80px;
     font-size: 30px;
     color: #3B456C;
     letter-spacing: 0;
@@ -353,7 +359,7 @@ export default ({
     float: right;
     margin-right: 24px;
     position: absolute;
-    right: -120px;
+    right: 0px;
     bottom: -8px;
 }
 .border{white-space:nowrap; margin-right: 0.03rem;}
