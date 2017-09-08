@@ -5,7 +5,8 @@
   			<img class="goodsImg" v-lazy="baseStkc.URL_ADDR"></img>
   			<label class="goodsName">{{baseStkc.STK_NAME}}</label>
   			<img @click.stop="backTap()" class="cancel" src="../../assets/icon18.png"></img>
-			<label class="stock">库存:{{baseStkc.STOCK}}</label>
+			<label v-if="baseStkc.STOCK != ''" class="stock">库存:{{baseStkc.STOCK}}</label>
+			<label class="stock" v-else>库存:0</label>
   		</div>
 		<ul>
 			<li v-for="item in baseStkc.MODLE_LIST" class="borderB">

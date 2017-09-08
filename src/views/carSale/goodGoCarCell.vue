@@ -6,7 +6,7 @@
 			<div class="cell-title">
 				{{this.good.STK_NAME}}
 			</div>
-			 <P v-if="this.good.NAME_EXTEND">[{{this.good.NAME_EXTEND}}]<span v-if="this.good.RESALABLE_FLG=='N'">[不可退货]</span></P>
+			 <div class="extend" v-if="this.good.NAME_EXTEND">[{{this.good.NAME_EXTEND}}]<span v-if="this.good.RESALABLE_FLG=='N'">[不可退货]</span></div>
 			<div class="cell-num">
 				{{this.good.UOM_QTY}}
 			</div>
@@ -52,9 +52,10 @@ Vue.use(Lazyload, {
 		background-color: #fff;
 		width: 100%;
 		height: 296px;
-		border-top: 1px solid rgb(237, 238, 245);
+		/*border-top: 1px solid rgb(237, 238, 245);*/
 		border-bottom: 1px solid rgb(237, 238, 245);
 		position: relative;
+		overflow: hidden;
 	}
 	.cell-msg{
 		margin-left: 300px;
@@ -82,23 +83,23 @@ Vue.use(Lazyload, {
 		height: 200px;
 	}
 	.cell-msg .cell-title{
-		margin: 52px 36px 16px 28px;
+		padding: 52px 36px 0px 28px;
 		color: #3b456c;
 		font-size: 30px;
-		height: 90px;
+		line-height: 45px;
 		overflow: hidden;
   		text-overflow: ellipsis;
   		-webkit-line-clamp:2;
   		-webkit-box-orient: vertical;
   		display: -webkit-box;
 	}
-	.cell-msg p{
+	.cell-msg .extend{
 		font-size: 26px;
 		color: #FF783C;
-		margin: 16px 36px 16px 28px;
+		margin: 5px 36px 0px 28px;
 	}
 	.cell-msg .cell-num{
-		margin: 16px 36px 16px 28px;
+		margin: 10px 36px 0px 28px;
 		color: #9da2b5;
 		font-size: 22px;
 	}

@@ -47,13 +47,24 @@ export const searchShop = (cb) =>{
   })
 };
 
+
 //参数一互调方法名 参数二JS传原生数据  参数三是OC回调到JS数据
 export const print = (products)=>{
+  var flag = false;
   JsBridge(bridge =>{
+    flag = true;
     bridge.callHandler('checkGoodPrint',{'Data':products},(responseData) => {
         
     })
   })
+  setTimeout(function(){
+    if (flag === false) {
+        Toast({
+            message: "请升级客户端版本后使用",
+            duration: 1000
+        });
+    }
+  },100)
 }
 
  // Request.jsBbridge(bridge => {

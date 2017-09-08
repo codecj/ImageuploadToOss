@@ -6,7 +6,7 @@ export default {
     // url:'https://demowl.11wlw.cn/handle/execute.jhtml',
     //url:'http://192.168.200.16:8080/handle/execute.jhtml',
 
-    //url:window.location.protocol+'//'+window.location.hostname+'/handle/execute.jhtml',
+    // url:window.location.protocol+'//'+window.location.hostname+'/handle/execute.jhtml',
 
 
     isMobile: function() {
@@ -24,7 +24,7 @@ export default {
       data.url='https://testwl.11wlw.cn/api/execute.jhtml';
       // data.url='https://demowl.11wlw.cn/api/execute.jhtml'
 
-      //data.url=window.location.protocol+'//'+window.location.hostname+'/api/execute.jhtml';
+      // data.url=window.location.protocol+'//'+window.location.hostname+'/api/execute.jhtml';
      //data.url='http://192.168.200.16:8080/api/execute.jhtml';
 
       return Qs.stringify(data)

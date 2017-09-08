@@ -47,6 +47,8 @@
             	param:{
                 	username : this.$route.query.username,
                 	userno: this.$route.query.userno
+                	// username: "JSNTSOP1Y1",
+                	// userno: "333606"
             	},
             	goCarParam:{
             		spUserName : this.$route.query.username,
