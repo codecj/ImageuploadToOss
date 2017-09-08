@@ -256,7 +256,7 @@ export default ({
 
 .content .searchItem .prodDetail>p:nth-child(1) {
     width: 330px;
-    height: 80px;
+    /*height: 80px;*/
     font-size: 30px;
     color: #3B456C;
     letter-spacing: 0;
