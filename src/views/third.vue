@@ -22,7 +22,7 @@ export default {
 	},
 	activated(){
 		if(!this.$router.ifBack){
-			alert("第三页")
+			console.log("第三页")
         }
 	},
 	// mounted(){
