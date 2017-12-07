@@ -23,7 +23,7 @@ if ('addEventListener' in document) {
     FastClick.attach(document.body);  
   }, false);  
 }
-
+//返回按钮
 VueRouter.prototype.goBack = function(){
 	window.history.go(-1);
 	this.isBack = true;

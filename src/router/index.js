@@ -1,95 +1,42 @@
+import PageTransition from '../Components/PageTransition.vue'
+
 //路由懒加载
-const trunkList = resolve => require(['../views/carSale/trunkList.vue'],resolve)
-const MyCommission = resolve => require(['../views/MyCommission.vue'], resolve)
-const SettledCommission = resolve => require(['../views/SettledCommission.vue'], resolve)
-const PresettleCommission = resolve => require(['../views/PresettleCommission.vue'], resolve)
-const clientServer = resolve => require(['../views/clientServer.vue'], resolve)
-const addCar = resolve => require(['../views/addCar.vue'], resolve)
-const searchList = resolve => require(['../views/listcomponent.vue'], resolve)
-const search = resolve => require(['../views/customersearch.vue'], resolve)
-const changding = resolve => require(['../views/changding.vue'], resolve)
-const yongjin = resolve => require(['../views/yongjinshangpin.vue'], resolve)
-const xinpin = resolve => require(['../views/xinpin.vue'], resolve)
-const nosearch = resolve => require(['../views/nosearch.vue'], resolve)
-const carSellerManagerHome = resolve => require(['../views/carSale/CarSellerManagerHome.vue'], resolve)
-const selectTrunckGoods = resolve => require(['../views/carSale/selectTrunkGoods.vue'], resolve)
-const backdepot = resolve => require(['../views/carSale/backDepot.vue'], resolve)
-const goodgocar = resolve => require(['../views/carSale/goodGoCar.vue'], resolve)
-const selectTrunckGoodsWithNoStock = resolve => require(['../views/carSale/selectTrunkStkcNoStock.vue'], resolve)
-const prodsSearch = resolve => require(['../views/prodsSearch.vue'], resolve)
-const checkGood = resolve => require(['../views/carSale/checkGood.vue'], resolve)
-const selectTrunckGoodsWithCategory = resolve => require(['../views/carSale/SelectTrunkGoodsWithCategory.vue'],resolve)
-const suppliersGood = resolve => require(['../views/suppliersGood.vue'], resolve)
+const index = resolve => require(['../views/index.vue'],resolve)
+const second = resolve => require(['../views/second.vue'],resolve)
+const third = resolve => require(['../views/third.vue'],resolve)
+const forth = resolve => require(['../views/forth.vue'],resolve)
+
+
+
 
 export default {
-    // mode:'history',
-    routes: [
+    mode:'history',
+    routes: [{
+            path: '/',
+            name: 'PageTransition',
+            component: PageTransition,
+            children: [
                 {
-                    path: '/clientServer',//客户服务首页
-                    component: clientServer
-                },{
-                    path: '/list',//商品列表
-                    component: searchList //商品列表
-                }, {
-                    path: '/search', //客户列表搜索
-                    component: search
-                }, {
-                    path: '/myCommission', // 我的佣金
-                    component: MyCommission
-                }, {
-                    path: '/settledCommission', // 佣金结算明细->已结算
-                    component: SettledCommission
-                }, {
-                    path: '/presettleCommission', // 佣金结算明细 -> 待结算
-                    component: PresettleCommission
-                }, {
-                    path: '/changding',//常定商品列表
-                    component: changding
-                }, {
-                    path: '/yongjin',//佣金商品列表
-                    component: yongjin
-                }, {
-                    path: '/xinpin',//新增商品列表
-                    component: xinpin
-                }, {
-                    path: '/addCar',//加入购物车弹窗
-                    component: addCar
-                },{
-                    path: '/backdepot',//返回仓库
-                    component: backdepot
+                    path: '/index',//首页
+                    name:"index",
+                    component: index,
+                },
+                  {
+                    path: '/second',//第二页
+                    name:"second",
+                    component: second,
+                },
+                  {
+                    path: '/third',//第三页
+                    name:"third",
+                    component: third,
                 },
                 {
-                    path:'/nosearch',
-                    component:nosearch
-                },{
-                    path: '/carSellerManagerHome',
-                    component: carSellerManagerHome
-                },{
-                    path:'/selectTrunckGoods',
-                    component:selectTrunckGoods
-                },{
-                    path: '/goodgocar',
-                    component: goodgocar
-
-                },{
-                    path:'/trunkList',
-                    component:trunkList
-                },{
-                    path:'/selectTrunckGoodsWithNoStock',
-                    component:selectTrunckGoodsWithNoStock
-                },{
-                    path: '/checkgood',
-                    component: checkGood
-                },{
-                    path: '/suppliersgood',
-                    component: suppliersGood
-                },{
-                    path: '/prodsSearch',
-                    component: prodsSearch
-                },{
-                    path:'/selectTrunckGoodsWithCategory',
-                    component:selectTrunckGoodsWithCategory
-                }
-
-    ]
+                    path: '/forth',//第三页
+                    name:"forth",
+                    component: forth,
+                },
+               
+            ]}  
+     ]
 }
