@@ -47,7 +47,7 @@ module.exports = {
       //   }
       // }
       {test: /\.(png|jpg)$/, 
-        loader:"url-loader?limit=40000000name=img/[name][hash:8].[ext]"
+        loader:"url-loader?limit=8000000name=img/[name][hash:8].[ext]"
      }
     ]
   },
@@ -107,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
   }
   module.exports.devServer = {
 
-    host:'192.168.200.85',
+    host:'192.168.200.23',
     historyApiFallback: true,
     noInfo: true
   }

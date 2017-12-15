@@ -1,6 +1,6 @@
 <template>
   <div class="second">
-		<p @click="back()"  style="margin-bottom:20px">点击返回</p>
+		<p @click="back()"  style="margin-bottom:50px">点击返回</p>
 		<p @click="goPage()">点击进入第3页</p>
 		
   </div>
@@ -21,7 +21,7 @@ export default {
 	},
 
 	activated(){
-        // console.log(this.$router.ifBack)
+        console.log(this.$router.ifBack)
         if(!this.$router.ifBack){
 			console.log("第二页")
         }

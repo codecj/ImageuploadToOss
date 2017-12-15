@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="index">
 		<p @click="goPage()">点击进入第二页</p>
 	
@@ -17,6 +17,7 @@ export default {
 		}
 	},
 	activated(){
+		console.log(this.$router.ifBack)
 		 if(!this.$router.ifBack){
 			console.log("第一页")
         }
@@ -32,4 +33,4 @@ export default {
 </script>
 <style scoped>
 	
-</style>
+</style> -->

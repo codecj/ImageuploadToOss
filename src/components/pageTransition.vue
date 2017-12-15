@@ -29,7 +29,6 @@
         this.transitionName = 'slide-left'
         this.$router.ifBack = false;
 
-
       }
       this.$router.isBack = false
       next()
@@ -53,11 +52,3 @@
     transform: translate(-100%, 0);
   }
 </style>
-
-
-
-
-
-
-
-
